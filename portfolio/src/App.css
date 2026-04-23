@@ -1,1 +1,58 @@
 @import "tailwindcss";
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #000;
+}
+
+.app-shell {
+  position: relative;
+  min-height: 100dvh;
+  background: #000;
+  overflow: hidden;
+}
+
+.hero-layer,
+.intro-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-layer {
+  z-index: 0;
+  opacity: 0;
+  transform: translateY(10dvh) scale(0.985);
+  filter: blur(10px);
+  transition:
+    opacity 900ms ease,
+    transform 900ms ease,
+    filter 900ms ease;
+}
+
+.hero-layer--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+.intro-layer {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 900ms ease,
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0ms linear 900ms;
+}
+
+.intro-layer--fade-out {
+  opacity: 0;
+  transform: translateY(-100%);
+  visibility: hidden;
+}

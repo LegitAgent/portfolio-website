@@ -1,0 +1,18 @@
+.hero-screen {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  background: #000;
+  color: #f1fff2;
+}
+
+.hero-title {
+  margin: 0;
+  font-family: "Courier New", monospace;
+  font-size: clamp(2.8rem, 9vw, 6rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 18px rgba(103, 255, 141, 0.2),
+    0 0 32px rgba(46, 129, 71, 0.14);
+}

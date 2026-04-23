@@ -1,0 +1,674 @@
+.binary-cover,
+.binary-cover * {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.binary-cover {
+  /* black base on purpose so the green glow does all the work */
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #000;
+  color: #d7d7d7;
+  animation: cover-boot 1.2s ease-out both;
+}
+
+.binary-cover::before {
+  /* Subtle grid texture behind the binary rain. */
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: '';
+  background:
+    linear-gradient(rgba(143, 188, 143, 0.032) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143, 188, 143, 0.026) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 86%);
+  animation: grid-boot 1.6s ease-out both;
+}
+
+.binary-cover::after {
+  /* No bottom fade so the rain stays visible through the full viewport height. */
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  height: 34vh;
+  content: '';
+  background: transparent;
+  pointer-events: none;
+}
+
+.binary-grid {
+  /* parent layer for the falling 0/1 columns */
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  color: rgba(82, 255, 122, 0.78);
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.8rem, 1.2vw, 1.08rem);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: 0;
+  text-shadow:
+    0 0 8px rgba(71, 255, 105, 0.34),
+    0 0 18px rgba(25, 133, 53, 0.22);
+  pointer-events: none;
+}
+
+.binary-column {
+  /* the tsx feeds these vars in so each stream can have its own timing/position */
+  position: absolute;
+  top: 0;
+  left: min(var(--stream-left), calc(100% - 1ch));
+  width: 1ch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: var(--stream-opacity);
+  filter: blur(var(--stream-blur));
+  animation:
+    stream-boot 0.6s ease-out var(--intro-delay) both,
+    binary-rain var(--stream-duration) linear var(--stream-delay) infinite;
+  transform-origin: top center;
+  transform: translateY(-120%);
+  will-change: transform;
+}
+
+.binary-column__trail {
+  white-space: pre;
+  font-size: calc(1rem * var(--stream-size));
+  line-height: 0.82;
+  color: rgba(73, 255, 111, 0.72);
+  text-shadow:
+    0 0 6px rgba(73, 255, 111, 0.38),
+    0 0 14px rgba(25, 133, 53, 0.28);
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.3) 18%,
+    rgba(0, 0, 0, 0.12) 62%,
+    #000 100%
+  );
+}
+
+.binary-column__head {
+  margin-top: -0.08em;
+  font-size: calc(1rem * var(--stream-size));
+  line-height: 0.82;
+  color: #f3fff2;
+  text-shadow:
+    0 0 8px rgba(241, 255, 244, 0.95),
+    0 0 18px rgba(115, 255, 147, 0.9),
+    0 0 32px rgba(39, 196, 75, 0.62);
+}
+
+.binary-glow {
+  /* super subtle on purpose, otherwise this starts looking neon in a bad way */
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
+  pointer-events: none;
+  animation: glow-boot 1.4s ease-out both;
+}
+
+.binary-scanline {
+  /* fake crt scanlines, opacity only so it doesn't jiggle layout */
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(225, 255, 234, 0.03) 0,
+    rgba(225, 255, 234, 0.03) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  mix-blend-mode: screen;
+  opacity: 0.24;
+  pointer-events: none;
+  animation: scanline-flicker 2.6s steps(1, end) infinite;
+}
+
+.glitch-subtitle {
+  animation:
+    text-boot 0.85s ease-out 0.35s both,
+    subtitle-glitch 2s steps(1, end) 0.9s infinite;
+}
+
+.glitch-title {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  color: #ecfdf5;
+  line-height: 0.9;
+  text-shadow:
+    0 0 18px rgba(143, 188, 143, 0.26),
+    0 0 42px rgba(143, 188, 143, 0.1);
+  text-transform: uppercase;
+  animation:
+    title-boot 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both,
+    title-glitch 1.7s steps(1, end) 1s infinite;
+}
+
+.glitch-title::before,
+.glitch-title::after {
+  /* Duplicate title layers that get clipped and shifted to fake RGB glitching. */
+  position: absolute;
+  inset: 0;
+  content: attr(data-text);
+  pointer-events: none;
+}
+
+.glitch-title::before {
+  color: rgba(180, 180, 180, 0.42);
+  text-shadow: -2px 0 rgba(120, 160, 120, 0.45);
+  transform: translateX(-1px);
+  clip-path: inset(0 0 54% 0);
+  animation: glitch-channel-top 1.5s steps(1, end) infinite;
+}
+
+.glitch-title::after {
+  color: rgba(143, 188, 143, 0.44);
+  text-shadow: 2px 0 rgba(210, 210, 210, 0.32);
+  transform: translateX(1px);
+  clip-path: inset(48% 0 0 0);
+  animation: glitch-channel-bottom 1.6s steps(1, end) infinite;
+}
+
+.terminal-stack {
+  display: grid;
+  justify-items: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.terminal-sequence {
+  width: min(100%, 38rem);
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid rgba(143, 188, 143, 0.18);
+  border-radius: 0.8rem;
+  background:
+    linear-gradient(180deg, rgba(10, 20, 10, 0.82), rgba(2, 6, 2, 0.74)),
+    rgba(0, 0, 0, 0.76);
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  text-align: left;
+  animation: panel-boot 0.9s ease-out 0.7s both;
+}
+
+.terminal-line {
+  /* width + steps() is the whole typing trick. it's not real typing, just clipping the line */
+  margin: 0;
+  overflow: hidden;
+  width: 0;
+  color: rgba(215, 245, 220, 0.86);
+  font-family: "Courier New", monospace;
+  font-size: clamp(0.88rem, 1.8vw, 1rem);
+  line-height: 1.45;
+  white-space: nowrap;
+  opacity: 0;
+  animation:
+    terminal-line-reveal 0.7s steps(28, end) forwards,
+    terminal-line-flicker 1.2s steps(1, end) infinite;
+}
+
+.terminal-line--1 {
+  animation-delay: 0.95s, 1.8s;
+}
+
+.terminal-line--2 {
+  animation-delay: 1.8s, 2.5s;
+}
+
+.terminal-line--3 {
+  animation-delay: 2.65s, 3.3s;
+}
+
+.terminal-line--4 {
+  animation-delay: 3.5s, 4.1s;
+}
+
+.terminal-prompt {
+  margin-right: 0.7rem;
+  color: #7cff9b;
+}
+
+.terminal-caret {
+  display: inline-block;
+  width: 0.65ch;
+  height: 1em;
+  margin-left: 0.32rem;
+  vertical-align: -0.16em;
+  background: #eaffee;
+  box-shadow: 0 0 8px rgba(234, 255, 238, 0.7);
+  animation: caret-blink 0.9s steps(1, end) infinite;
+}
+
+.terminal-card {
+  animation: panel-boot 0.9s ease-out 0.75s both;
+  border: 1px solid rgba(143, 188, 143, 0.18);
+  border-radius: 0.6rem;
+  background:
+    linear-gradient(180deg, rgba(16, 16, 16, 0.88), rgba(5, 5, 5, 0.78)),
+    rgba(5, 5, 5, 0.86);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(215, 215, 215, 0.06);
+  padding: 1.25rem;
+  backdrop-filter: blur(10px);
+}
+
+@keyframes binary-rain {
+  /* start above the screen, fall through, then snap back up for the loop */
+  0% {
+    transform: translate3d(0, -120%, 0);
+    opacity: 0;
+  }
+
+  7% {
+    opacity: var(--stream-opacity);
+  }
+
+  92% {
+    opacity: var(--stream-opacity);
+  }
+
+  100% {
+    transform: translate3d(0, 120dvh, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes cover-boot {
+  0% {
+    filter: brightness(0.2) saturate(0.4);
+  }
+
+  100% {
+    filter: brightness(1) saturate(1);
+  }
+}
+
+@keyframes grid-boot {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes glow-boot {
+  0% {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes stream-boot {
+  0% {
+    filter: brightness(0);
+  }
+
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@keyframes text-boot {
+  0% {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes title-boot {
+  0% {
+    opacity: 0;
+    transform: translateY(1.5rem) scale(0.96);
+    filter: blur(8px);
+  }
+
+  55% {
+    opacity: 1;
+    transform: translateY(0) scale(1.03);
+    filter: blur(0);
+  }
+
+  65% {
+    transform: translateX(-0.35rem) skewX(8deg);
+  }
+
+  74% {
+    transform: translateX(0.28rem) skewX(-6deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes scanline-flicker {
+  0%,
+  72%,
+  100% {
+    opacity: 0.18;
+  }
+
+  73% {
+    opacity: 0.3;
+  }
+
+  74% {
+    opacity: 0.08;
+  }
+
+  76% {
+    opacity: 0.22;
+  }
+}
+
+@keyframes title-glitch {
+  0%,
+  58%,
+  100% {
+    transform: translate(0);
+    filter: none;
+  }
+
+  59% {
+    transform: translate(-2px, 1px) skewX(2deg);
+    filter: contrast(1.25);
+  }
+
+  61% {
+    transform: translate(2px, -1px) skewX(-2deg);
+  }
+
+  64% {
+    transform: translate(-1px, 0);
+    filter: brightness(1.15);
+  }
+
+  67% {
+    transform: translate(2px, 0) skewX(3deg);
+  }
+
+  69% {
+    transform: translate(-1px, -1px);
+  }
+}
+
+@keyframes glitch-channel-top {
+  0%,
+  56%,
+  100% {
+    clip-path: inset(0 0 54% 0);
+    transform: translateX(-2px);
+    opacity: 0.55;
+  }
+
+  57% {
+    clip-path: inset(12% 0 62% 0);
+    transform: translate(-5px, -1px);
+    opacity: 0.7;
+  }
+
+  60% {
+    clip-path: inset(3% 0 76% 0);
+    transform: translate(4px, 1px);
+  }
+
+  64% {
+    clip-path: inset(28% 0 50% 0);
+    transform: translate(-3px, 0);
+  }
+
+  67% {
+    clip-path: inset(8% 0 70% 0);
+    transform: translate(3px, -1px);
+  }
+}
+
+@keyframes glitch-channel-bottom {
+  0%,
+  54%,
+  100% {
+    clip-path: inset(48% 0 0 0);
+    transform: translateX(2px);
+    opacity: 0.5;
+  }
+
+  55% {
+    clip-path: inset(62% 0 10% 0);
+    transform: translate(5px, 1px);
+    opacity: 0.7;
+  }
+
+  58% {
+    clip-path: inset(42% 0 34% 0);
+    transform: translate(-4px, -1px);
+  }
+
+  62% {
+    clip-path: inset(70% 0 4% 0);
+    transform: translate(3px, 0);
+  }
+
+  66% {
+    clip-path: inset(52% 0 18% 0);
+    transform: translate(-2px, 1px);
+  }
+}
+
+@keyframes subtitle-glitch {
+  0%,
+  62%,
+  100% {
+    transform: translateX(0);
+    text-shadow: none;
+  }
+
+  63% {
+    transform: translateX(3px);
+    text-shadow: -1px 0 #8fbc8f, 1px 0 #d7d7d7;
+  }
+
+  66% {
+    transform: translateX(-2px);
+  }
+
+  69% {
+    transform: translateX(1px);
+  }
+}
+
+@keyframes panel-boot {
+  0% {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes terminal-line-reveal {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes terminal-line-flicker {
+  0%,
+  88%,
+  100% {
+    text-shadow: none;
+  }
+
+  89% {
+    text-shadow: -1px 0 rgba(124, 255, 155, 0.8), 1px 0 rgba(215, 215, 215, 0.8);
+  }
+
+  91% {
+    text-shadow: 1px 0 rgba(124, 255, 155, 0.8), -1px 0 rgba(215, 215, 215, 0.55);
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  48% {
+    opacity: 1;
+  }
+
+  49%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  /* mobile gets fixed columns so the rain actually covers the screen edge to edge */
+  .binary-grid {
+    font-size: clamp(0.7rem, 3vw, 0.95rem);
+  }
+
+  .terminal-sequence {
+    width: min(100%, 30rem);
+    padding: 1rem 1rem 1.1rem;
+  }
+
+  .terminal-line {
+    font-size: 0.88rem;
+  }
+
+  .binary-column:nth-child(1) {
+    left: 0%;
+  }
+
+  .binary-column:nth-child(2) {
+    left: 6%;
+  }
+
+  .binary-column:nth-child(3) {
+    left: 12%;
+  }
+
+  .binary-column:nth-child(4) {
+    left: 18%;
+  }
+
+  .binary-column:nth-child(5) {
+    left: 24%;
+  }
+
+  .binary-column:nth-child(6) {
+    left: 30%;
+  }
+
+  .binary-column:nth-child(7) {
+    left: 36%;
+  }
+
+  .binary-column:nth-child(8) {
+    left: 42%;
+  }
+
+  .binary-column:nth-child(9) {
+    left: 48%;
+  }
+
+  .binary-column:nth-child(10) {
+    left: 54%;
+  }
+
+  .binary-column:nth-child(11) {
+    left: 60%;
+  }
+
+  .binary-column:nth-child(12) {
+    left: 66%;
+  }
+
+  .binary-column:nth-child(13) {
+    left: 72%;
+  }
+
+  .binary-column:nth-child(14) {
+    left: 78%;
+  }
+
+  .binary-column:nth-child(15) {
+    left: 84%;
+  }
+
+  .binary-column:nth-child(16) {
+    left: 90%;
+  }
+
+  .binary-column:nth-child(17) {
+    left: 94%;
+  }
+
+  .binary-column:nth-child(18) {
+    left: 98%;
+  }
+
+  .binary-column:nth-child(n + 19) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Respect users who prefer less motion. */
+  .binary-column,
+  .binary-cover,
+  .binary-cover::before,
+  .binary-glow,
+  .binary-scanline,
+  .glitch-subtitle,
+  .glitch-title,
+  .glitch-title::before,
+  .glitch-title::after,
+  .terminal-card,
+  .terminal-sequence,
+  .terminal-line,
+  .terminal-caret {
+    animation: none;
+  }
+}
+
+.binary-cover ::selection,
+.terminal-card ::selection {
+  background: #264f78;
+  color: #f3f3f3;
+}
