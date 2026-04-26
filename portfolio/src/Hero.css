@@ -1,18 +1,132 @@
-.hero-screen {
-  min-height: 100dvh;
-  display: grid;
-  place-items: center;
-  background: #000;
-  color: #f1fff2;
+#portfolioPicture {
+  border-radius: inherit;
+  position: relative;
+  border-radius: 50%;
+  padding: 5px;
 }
 
-.hero-title {
-  margin: 0;
-  font-family: "Courier New", monospace;
-  font-size: clamp(2.8rem, 9vw, 6rem);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-shadow:
-    0 0 18px rgba(103, 255, 141, 0.2),
-    0 0 32px rgba(46, 129, 71, 0.14);
+.hero {
+  min-height: 100dvh;
+  padding: 1rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.introduction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  padding: clamp(1rem, 5vw, 50px);
+  gap: clamp(1.5rem, 5vw, 50px);
+}
+
+.pictureWrap {
+  flex: 0 0 auto;
+}
+
+.introductionContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 540px);
+  gap: 9px;
+}
+
+.nameTitle {
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+
+.aboutMeContent {
+  padding: 10px;
+  color: white;
+}
+
+.heroTilt {
+  display: block;
+  transform-style: preserve-3d;
+}
+
+.heroCard {
+  --border-size: 4px;
+
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(35, 29, 29, 0.5));
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  isolation: isolate;
+}
+
+.heroCard::after,
+.heroCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  padding: var(--border-size);
+  border-radius: inherit;
+  pointer-events: none;
+
+  background-image: conic-gradient(from var(--angle), transparent 50%, white);
+  animation: 5s spin linear infinite;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+}
+
+.heroCard::before {
+  filter: blur(1.5rem);
+}
+
+/* select every child of .heroCard and apply these */
+.heroCard > * {
+  position: relative;
+  z-index: 1;
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (min-width: 768px) {
+  .introduction {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .introductionContent {
+    align-items: flex-start;
+  }
+
+  .nameTitle {
+    text-align: left;
+  }
 }
