@@ -10,15 +10,15 @@
 
 @keyframes backgroundDrift {
   0% {
-    background-position: 0% 45%, 100% 50%, 50% 0%;
+    background-position: 44% 48%, 54% 50%, 48% 46%;
   }
 
   50% {
-    background-position: 100% 55%, 0% 45%, 50% 100%;
+    background-position: 56% 52%, 46% 48%, 52% 54%;
   }
 
   100% {
-    background-position: 0% 45%, 100% 50%, 50% 0%;
+    background-position: 44% 48%, 54% 50%, 48% 46%;
   }
 }
 
@@ -66,8 +66,8 @@
     radial-gradient(circle at 15% 20%, rgba(var(--glow-cyan), 0.16), transparent 32%),
     radial-gradient(circle at 85% 80%, rgba(var(--glow-violet), 0.18), transparent 34%),
     linear-gradient(180deg, var(--bg-blue), var(--bg-navy) 58%, #02040b);
-  background-size: 220% 220%, 160% 160%, 180% 180%, 100% 100%;
-  animation: backgroundDrift 22s ease-in-out infinite;
+  background-size: 180% 180%, 145% 145%, 155% 155%, 100% 100%;
+  animation: backgroundDrift 42s ease-in-out infinite;
 }
 
 .gradient-bg::after {

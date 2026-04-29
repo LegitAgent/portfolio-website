@@ -1,7 +1,7 @@
-import './Hero.css'
+import './Home.css'
 // import Tilty from 'react-tilty'
 
-function Hero() {
+function Home() {
   const redirect = (link:string) => {
     window.open(link, '_blank')
   };
@@ -76,4 +76,4 @@ function Hero() {
   )
 }
 
-export default Hero
+export default Home

@@ -43,7 +43,6 @@
   color: white;
   display: flex;
   gap: 8px;
-  justify-content: center;
 }
 
 .aboutMeBox,
@@ -188,6 +187,7 @@
 
   .nameTitle {
     text-align: left;
+    align-items: center;
   }
 
   .contactLinks {

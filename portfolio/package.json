@@ -13,6 +13,7 @@
   "dependencies": {
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-router-dom": "^7.14.2",
     "react-tilty": "^3.0.0"
   },
   "devDependencies": {

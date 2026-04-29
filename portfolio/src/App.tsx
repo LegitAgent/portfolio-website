@@ -1,18 +1,29 @@
 import './App.css'
-import Background from './Background.tsx'
-import Hero from './Hero.tsx'
-import Navbar from './Navbar.tsx'
+import Background from './components/Background/Background'
+import Navbar from './components/Navbar/Navbar'
+import Home from './pages/Home/Home'
+import Resume from './pages/Home/Resume.tsx'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 
 function App() {
 
   return (
-    <main className="app-shell">
-      <Background />
-      <div className="page-shell">
-        <Navbar />
-        <Hero />
-      </div>
-    </main>
+    <HashRouter>
+      <main className="app-shell">
+        <Background />
+        <div className="page-shell">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/profession" element={<Home />} />
+            <Route path="/projects" element={<Home />} />
+            <Route path="/contact" element={<Home />} />
+            <Route path="/resume" element={<Resume />} />
+            <Route path="*" element={<Home />} />
+          </Routes>
+        </div>
+      </main>
+    </HashRouter>
   )
 }
 

@@ -1,24 +1,23 @@
 .navbar {
   position: fixed;
   top: 0;
-  left: 0;
   bottom: 0;
-  z-index: 10;
-  width: 5rem;
+  z-index: 999;
+  width: 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.9rem;
-  padding: 1rem 0.65rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  gap: 0.75rem;
+  padding: 1rem 0.35rem;
+  border-right: 1px solid rgba(90, 150, 220, 0.12);
   background:
-    linear-gradient(90deg, rgba(3, 10, 25, 0.88), rgba(3, 7, 18, 0.68)),
-    rgba(3, 7, 18, 0.72);
+    linear-gradient(90deg, rgba(6, 19, 45, 0.48), rgba(8, 24, 58, 0.22)),
+    rgba(7, 26, 61, 0.18);
   box-shadow:
-    18px 0 50px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(14px);
+    12px 0 34px rgba(0, 0, 0, 0.16),
+    inset -1px 0 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
 }
 
 .navbar__links {
@@ -33,11 +32,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 3.25rem;
+  height: 3.25rem;
+  border: 1px solid rgba(130, 180, 255, 0.1);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(20, 58, 112, 0.14);
   color: rgba(255, 255, 255, 0.84);
   text-decoration: none;
   transition:
@@ -49,8 +48,8 @@
 }
 
 .navbar__iconLink svg {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.45rem;
+  height: 1.45rem;
   fill: currentColor;
 }
 
@@ -63,18 +62,30 @@
   box-shadow: 0 10px 25px rgba(255, 255, 255, 0.12);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .navbar {
-    width: 4.5rem;
-    padding: 0.75rem 0.5rem;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: auto;
+    height: 4.5rem;
+    width: 100%;
+    flex-direction: row;
+    padding: 0.75rem 0.25rem;
   }
 
   .navbar__iconLink {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .navbar__iconLink svg {
+    width: 1.35rem;
+    height: 1.35rem;
   }
 
   .navbar__links {
     gap: 0.45rem;
+    flex-direction: row;
   }
 }
