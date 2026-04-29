@@ -2,6 +2,7 @@ import './Navbar.css'
 import { Link } from 'react-router-dom'
 
 function Navbar() {
+  
   return (
     <nav className="navbar" role="navigation">
       <Link className="navbar__iconLink" to="/" aria-label="Home">

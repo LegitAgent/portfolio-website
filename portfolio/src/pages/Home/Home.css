@@ -148,6 +148,13 @@
   animation: fadeIn 1s ease-in-out forwards;
 }
 
+.resumeViewer {
+  width: min(50%, 600px);
+  margin-top: 40px;
+  padding: 10px;
+  background: black;
+}
+
 @property --angle {
   syntax: "<angle>";
   initial-value: 0deg;
@@ -187,7 +194,6 @@
 
   .nameTitle {
     text-align: left;
-    align-items: center;
   }
 
   .contactLinks {

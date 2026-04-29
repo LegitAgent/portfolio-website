@@ -10,7 +10,7 @@
   min-height: 100dvh;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 1150px) {
   .app-shell {
     padding-bottom: 4.5rem;
   }

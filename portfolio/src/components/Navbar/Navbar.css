@@ -62,7 +62,7 @@
   box-shadow: 0 10px 25px rgba(255, 255, 255, 0.12);
 }
 
-@media (max-width: 850px) {
+@media (max-width: 1150px) {
   .navbar {
     bottom: 0;
     right: 0;
