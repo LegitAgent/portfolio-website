@@ -1,29 +1,75 @@
 import './Hero.css'
-import Tilty from 'react-tilty'
+// import Tilty from 'react-tilty'
 
 function Hero() {
+  const redirect = (link:string) => {
+    window.open(link, '_blank')
+  };
+
   return (
     <section className="hero">
+      
       <div className="introduction">
         <div className="pictureWrap">
-          <img id="portfolioPicture" className="w-28 sm:w-32 md:w-36 lg:w-50" src="/portfolio_pic.png" alt="Portfolio Picture" />
+          <img id="portfolioPicture" className="w-28 sm:w-32 md:w-50 lg:w-55" src="/portfolio_pic.png" alt="Portfolio Picture" />
         </div>
         <div className="introductionContent">
           <div className="nameTitle">
-            <p>Hello, I am Martin Darius Alba</p>
-          </div>
-          <Tilty
-            className="heroTilt w-full max-w-[360px] sm:max-w-[380px] md:max-w-[420px] lg:max-w-[460px] xl:max-w-[500px] 2xl:max-w-[540px] min-h-[220px] md:min-h-0 md:aspect-[10/4]"
-            perspective={800}
-            easing="cubic-bezier(0.03,0.98,0.52,0.99)"
-            speed={1000}
-          >
-            <div className="heroCard">
-              <p className="aboutMeContent">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-              </p>
+            <p>Martin Darius Alba</p>
+            <div className="switching">
+              switch me
             </div>
-          </Tilty>
+          </div>
+
+            <div className="currentRole">
+              Student
+            </div>
+
+            <div className="introContent">
+              Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. 
+              Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. 
+              Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+            </div>
+            {/* <div className="heroCard aboutMeContent text-justify aboutMeBox">
+              Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. 
+              Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. 
+              Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+            </div> */}
+
+          <div className="contactLinks">
+            {/* must have arrow func for funcs with args in react */}
+            <button onClick={() => redirect("https://github.com/LegitAgent")} className="cursor-pointer buttonContact">
+              <div className="contactLinkContent">
+                <img src="/github.svg" alt="GitHub" /> GitHub
+              </div>
+            </button>
+
+            <button onClick={() => redirect("https://www.linkedin.com/in/martin-darius-alba-836826294/")} className="cursor-pointer buttonContact">
+              <div className="contactLinkContent">
+                <img src="/linkedin.svg" alt="GitHub" /> LinkedIn
+              </div>
+            </button>
+
+            <button onClick={() => redirect("https://www.w3schools.com/React/react_events.asp")} className="cursor-pointer buttonContact">
+              <div className="contactLinkContent">
+                <img src="/email.svg" alt="GitHub" /> More contacts
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="otherSection">
+        <div className="otherBox">
+          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+        </div>
+
+        <div className="otherBox">
+          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+        </div>
+
+        <div className="otherBox">
+          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
         </div>
       </div>
     </section>

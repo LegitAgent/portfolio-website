@@ -1,169 +1,155 @@
-html, body {
-  font-family: 'Dongle', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
 :root {
-  --color-bg1: black;
-  --color1: 0, 176, 0;
-  --color2: 32, 194, 14;
-  --color3: 32, 194, 14;
-  --color4: 32, 194, 14;
-  --color5: 32, 194, 14;
-  --color-interactive: 0, 0, 255;
-  --circle-size: 60%;
-  --blending: screen;
+  --bg-navy: #030712;
+  --bg-blue: rgb(7, 26, 61);
+  --bg-indigo: rgb(13, 23, 57);
+  --glow-cyan: 13, 23, 57;
+  --glow-blue: 7, 26, 6;
+  --glow-violet: 238, 130, 238;
+  --glow-interactive: 37,159,255
 }
 
-@keyframes moveInCircle {
+@keyframes backgroundDrift {
   0% {
-    transform: rotate(0deg);
+    background-position: 0% 45%, 100% 50%, 50% 0%;
   }
+
   50% {
-    transform: rotate(180deg);
+    background-position: 100% 55%, 0% 45%, 50% 100%;
   }
+
   100% {
-    transform: rotate(360deg);
+    background-position: 0% 45%, 100% 50%, 50% 0%;
   }
 }
 
-@keyframes moveVertical {
-  0% {
-    transform: translateY(-50%);
-  }
-  50% {
-    transform: translateY(50%);
-  }
+@keyframes glowFloatOne {
+  0%,
   100% {
-    transform: translateY(-50%);
+    transform: translate3d(-8%, -6%, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(10%, 8%, 0) scale(1.08);
   }
 }
 
-@keyframes moveHorizontal {
-  0% {
-    transform: translateX(-50%) translateY(-10%);
-  }
-  50% {
-    transform: translateX(50%) translateY(10%);
-  }
+@keyframes glowFloatTwo {
+  0%,
   100% {
-    transform: translateX(-50%) translateY(-10%);
+    transform: translate3d(8%, 6%, 0) scale(1.05);
+  }
+
+  50% {
+    transform: translate3d(-10%, -4%, 0) scale(0.96);
   }
 }
 
+@keyframes glowFloatThree {
+  0%,
+  100% {
+    transform: translate3d(-4%, 8%, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(6%, -10%, 0) scale(1.12);
+  }
+}
 
 .gradient-bg {
   position: fixed;
   inset: 0;
-  overflow: hidden;
-  background: var(--color-bg1);
   z-index: 0;
+  overflow: hidden;
   pointer-events: none;
+  background:
+    linear-gradient(120deg, rgba(5, 14, 33, 0.9), rgba(13, 42, 89, 0.72), rgba(3, 7, 18, 0.95)),
+    radial-gradient(circle at 15% 20%, rgba(var(--glow-cyan), 0.16), transparent 32%),
+    radial-gradient(circle at 85% 80%, rgba(var(--glow-violet), 0.18), transparent 34%),
+    linear-gradient(180deg, var(--bg-blue), var(--bg-navy) 58%, #02040b);
+  background-size: 220% 220%, 160% 160%, 180% 180%, 100% 100%;
+  animation: backgroundDrift 22s ease-in-out infinite;
+}
 
-  svg {
-    position: fixed;
-    top:0;
-    left:0;
-    width: 0;
-    height: 0;
+.gradient-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent 70%);
+}
+
+.gradient-glow {
+  position: absolute;
+  width: min(70vw, 900px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.38;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.gradient-glow--one {
+  top: -24%;
+  left: -14%;
+  background: radial-gradient(circle, rgba(var(--glow-cyan), 0.46), transparent 62%);
+  animation: glowFloatOne 24s ease-in-out infinite;
+}
+
+.gradient-glow--two {
+  right: -18%;
+  bottom: -26%;
+  background: radial-gradient(circle, rgba(var(--glow-blue), 0.48), transparent 64%);
+  animation: glowFloatTwo 28s ease-in-out infinite;
+}
+
+.gradient-glow--three {
+  top: 28%;
+  left: 36%;
+  width: min(54vw, 720px);
+  background: radial-gradient(circle, rgba(var(--glow-violet), 0.32), transparent 66%);
+  animation: glowFloatThree 32s ease-in-out infinite;
+}
+
+.interactive {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(46vw, 560px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--glow-interactive), 0.36), transparent 62%);
+  filter: blur(52px);
+  mix-blend-mode: screen;
+  opacity: 0.72;
+  will-change: transform;
+}
+
+@media (max-width: 767px) {
+  .gradient-glow {
+    width: 120vw;
+    filter: blur(64px);
+    opacity: 0.32;
   }
 
-
-  .gradients-container {
-    filter: url(#goo) blur(40px) ;
-    position: absolute;
-    inset: 0;
+  .gradient-glow--three {
+    width: 95vw;
+    left: 10%;
   }
-
-  /* .g1 {
-    position: absolute;
-    background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
-    mix-blend-mode: var(--blending);
-
-    width: var(--circle-size);
-    height: var(--circle-size);
-    top: calc(50% - var(--circle-size) / 2 - 300px);
-    left: calc(50% - var(--circle-size) / 2 - 400px);
-
-    transform-origin: center center;
-    animation: moveVertical 30s ease infinite;
-
-    opacity: 1;
-  }
-
-  .g2 {
-    position: absolute;
-    background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
-    mix-blend-mode: var(--blending);
-
-    width: var(--circle-size);
-    height: var(--circle-size);
-    top: calc(50% - var(--circle-size) / 2 + 100px);
-    left: calc(50% - var(--circle-size) / 2 + 100px);
-
-    transform-origin: calc(50% - 400px);
-    animation: moveInCircle 10s infinite;
-
-    opacity: 1;
-  }
-
-  .g3 {
-    position: absolute;
-    background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
-    mix-blend-mode: var(--blending);
-
-    width: var(--circle-size);
-    height: var(--circle-size);
-    top: calc(50% - var(--circle-size) / 2 - 200px);
-    left: calc(50% - var(--circle-size) / 2 + 500px);
-
-    transform-origin: calc(50% + 400px);
-    animation: moveHorizontal 50s linear infinite;
-
-    opacity: 1;
-  }
-
-  .g4 {
-    position: absolute;
-    background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
-    mix-blend-mode: var(--blending);
-
-    width: var(--circle-size);
-    height: var(--circle-size);
-    top: calc(50% - var(--circle-size) / 2);
-    left: calc(50% - var(--circle-size) / 2);
-
-    transform-origin: calc(50% - 200px);
-    animation: moveHorizontal 30s ease infinite;
-
-    opacity: 0.7;
-  }
-
-  .g5 {
-    position: absolute;
-    background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
-    mix-blend-mode: var(--blending);
-
-    width: calc(var(--circle-size) * 2);
-    height: calc(var(--circle-size) * 2);
-    top: calc(50% - var(--circle-size));
-    left: calc(50% - var(--circle-size));
-
-    transform-origin: calc(50% - 800px) calc(50% + 200px);
-    animation: moveInCircle 30s ease infinite;
-
-    opacity: 1;
-  } */
 
   .interactive {
-    position: absolute;
-    background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
-    mix-blend-mode: var(--blending);
+    width: 72vw;
+    filter: blur(44px);
+    opacity: 0.56;
+  }
+}
 
-    width: 100%;
-    height: 100%;
-
-    opacity: 0.7;
+@media (prefers-reduced-motion: reduce) {
+  .gradient-bg,
+  .gradient-glow {
+    animation: none;
   }
 }

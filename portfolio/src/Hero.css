@@ -9,8 +9,8 @@
   min-height: 100dvh;
   padding: 1rem 1rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .introduction {
@@ -29,27 +29,31 @@
 }
 
 .introductionContent {
+  --content-width: 360px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: min(100%, 540px);
-  gap: 9px;
+  width: min(100%, var(--content-width));
+  gap: 12px;
 }
 
 .nameTitle {
   width: 100%;
   color: white;
-  text-align: center;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.aboutMeBox,
+.contactLinks {
+  width: 100%;
 }
 
 .aboutMeContent {
   padding: 10px;
   color: white;
-}
-
-.heroTilt {
-  display: block;
-  transform-style: preserve-3d;
 }
 
 .heroCard {
@@ -59,8 +63,14 @@
   border-radius: 25px;
   display: flex;
   align-items: center;
+  min-height: inherit;
   position: relative;
   isolation: isolate;
+}
+
+.contactLinkContent {
+  display: flex;
+  gap: 8px;
 }
 
 .heroCard::after,
@@ -89,8 +99,51 @@
   filter: blur(1.5rem);
 }
 
+.aboutMeBox {
+  min-height: clamp(220px, 28vw, 260px);
+}
+
+.otherSection {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.otherBox {
+  background: black;
+  width: max(200px, 10%);
+  height: max(300px, 30%);
+  padding: 50px 10px;
+}
+
+.contactLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.contactLinks img {
+  width: 25px;
+  filter: invert(40%) sepia(100%) saturate(2000%) hue-rotate(190deg) brightness(110%) contrast(105%);
+}
+
+.buttonContact {
+  background: black;
+  border-radius: 25px;
+  width: fit-content;
+  padding: 10px;
+  opacity: 0.5;
+}
+
+.nameSwitch {
+  display: flex;
+  flex-direction: row;
+  gap: 20px
+}
+
 /* select every child of .heroCard and apply these */
-.heroCard > * {
+.introduction > * {
   position: relative;
   z-index: 1;
   animation: fadeIn 1s ease-in-out forwards;
@@ -116,6 +169,12 @@
   to { opacity: 1; }
 }
 
+@media (min-width: 640px) {
+  .introductionContent {
+    --content-width: 380px;
+  }
+}
+
 @media (min-width: 768px) {
   .introduction {
     flex-direction: row;
@@ -123,10 +182,16 @@
   }
 
   .introductionContent {
+    --content-width: 420px;
     align-items: flex-start;
   }
 
   .nameTitle {
     text-align: left;
   }
+
+  .contactLinks {
+    justify-content: flex-start;
+  }
 }
+
