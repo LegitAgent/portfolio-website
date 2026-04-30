@@ -1,0 +1,37 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  background: black;
+  color: white;
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  z-index: 1000;
+  min-width: 12rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  transform: translateY(-10%);
+  gap: 10px;
+}
+
+.linkImage {
+  width: 10px;
+  aspect-ratio: 1/1;
+}
+
+.linkName {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid wheat;
+  border-radius: 5px;
+  gap: 10px;
+}
+
+@media (max-width: 1150px) {
+  .box {
+    left: 50%;
+    top: auto;
+    bottom: calc(100% + 10px);
+    transform: translateX(-50%);
+  }
+}

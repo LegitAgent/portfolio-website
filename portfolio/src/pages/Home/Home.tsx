@@ -2,7 +2,7 @@ import './Home.css'
 import { useNavigate } from 'react-router-dom';
 import { redirect } from '../../imports/routing';
 import { GITHUB_URL, LINKEDIN_URL } from '../../imports/constants';
-export { GITHUB_URL, LINKEDIN_URL } from '../../imports/constants'
+
 // import Tilty from 'react-tilty'
 
 function Home() {
@@ -76,7 +76,7 @@ function Home() {
       </div>
 
       <button onClick={() => navigate("/resume")} className="resumeViewer ">
-        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+        Resume <br /> Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
       </button>
     </section>
   )

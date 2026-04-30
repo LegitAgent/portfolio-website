@@ -6,8 +6,6 @@
   width: 4rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 0.75rem;
   padding: 1rem 0.35rem;
   border-right: 1px solid rgba(90, 150, 220, 0.12);
@@ -23,8 +21,11 @@
 .navbar__links {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 0.55rem;
+}
+
+.navbar__item {
+  position: relative;
 }
 
 .navbar__iconLink {
@@ -53,6 +54,14 @@
   fill: currentColor;
 }
 
+.focus-anim {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+  transform: translateX(2px);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.12);
+}
+
 .navbar__iconLink:hover,
 .navbar__iconLink:focus-visible {
   background: #fff;
@@ -72,6 +81,8 @@
     width: 100%;
     flex-direction: row;
     padding: 0.75rem 0.25rem;
+    align-items: center;
+    justify-content: center;
   }
 
   .navbar__iconLink {
