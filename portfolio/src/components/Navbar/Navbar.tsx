@@ -1,12 +1,12 @@
-import './Navbar.css'
-import { Link } from 'react-router-dom'
-import { NavDropDown } from '../NavDropDown/NavDropDown.tsx'
+import './Navbar.css';
+import { Link } from 'react-router-dom';
+import { NavDropDown } from '../NavDropDown/NavDropDown.tsx';
 // type keyword needed since ts technically is still js and type checking disappears (import types with type keyword)
-import type { LinkItem } from '../NavDropDown/NavDropDown.tsx'
-import { useState } from 'react'
+import type { LinkItem } from '../NavDropDown/NavDropDown.tsx';
+import { useState } from 'react';
 
 function Navbar() {
-  const [showProfessionalDropdown, setProfessionalDropdown] = useState(false)
+  const [showProfessionalDropdown, setProfessionalDropdown] = useState(false);
   // const [showStatsDropdown, setStatsDropdown] = useState(false)
   // const [showProfessionalDropdown, setProfessionalDropdown] = useState(false)
 
@@ -16,7 +16,7 @@ function Navbar() {
     {path: '/certificates', name: 'Certificates', img_path: '/temp.jpg'},
     {path: '/resume', name: 'Resume', img_path: '/temp.jpg'},
     {path: '/skills', name: 'Skills', img_path: '/temp.jpg'}
-  ]
+  ];
 
   return (
     <nav className="navbar" role="navigation">
@@ -49,7 +49,7 @@ function Navbar() {
         </Link>
       </div>
     </nav>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

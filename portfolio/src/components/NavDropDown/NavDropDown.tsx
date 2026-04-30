@@ -1,5 +1,5 @@
-import './NavDropDown.css'
-import { Link } from 'react-router-dom'
+import './NavDropDown.css';
+import { Link } from 'react-router-dom';
 
 export interface LinkItem {
   path: string
@@ -23,10 +23,10 @@ export function NavDropDown({itemsArray, dropdownType}: NavDropDownProps) {
             <img src={item.img_path} className="linkImage" />
             {item.name}
           </Link>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
-export default NavDropDown
+export default NavDropDown;

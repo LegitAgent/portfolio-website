@@ -1,11 +1,11 @@
-import './Resume.css'
-import { redirect } from '../../imports/routing'
-import { RESUME_NAME, RESUME_ICON } from '../../imports/constants'
-import { useNavigate } from 'react-router-dom'
+import './Resume.css';
+import { redirect } from '../../imports/routing';
+import { RESUME_NAME, RESUME_ICON } from '../../imports/constants';
+import { useNavigate } from 'react-router-dom';
 
 function Resume() {
-  const resume:string = `${RESUME_NAME}#zoom=80%&pagemode=none`
-  const navigate = useNavigate()
+  const resume:string = `${RESUME_NAME}#zoom=80%&pagemode=none`;
+  const navigate = useNavigate();
 
   return (
     <section className="resumeView">
@@ -32,7 +32,7 @@ function Resume() {
         />
       </div>
     </section>
-  )
+  );
 }
 
-export default Resume
+export default Resume;
