@@ -1,7 +1,7 @@
 import './Home.css'
 import { useNavigate } from 'react-router-dom';
 import { redirect } from '../../imports/routing';
-import { GITHUB_URL, LINKEDIN_URL } from '../../imports/constants';
+import { GITHUB_URL, LINKEDIN_URL, GITHUB_ICON, LINKEDIN_ICON, EMAIL_ICON, PROFILE_PICTURE } from '../../imports/constants';
 
 // import Tilty from 'react-tilty'
 
@@ -13,7 +13,7 @@ function Home() {
       
       <div className="introduction">
         <div className="pictureWrap">
-          <img id="portfolioPicture" className="w-28 sm:w-32 md:w-50 lg:w-55" src="/portfolio_pic.png" alt="Portfolio Picture" />
+          <img id="portfolioPicture" className="w-28 sm:w-32 md:w-50 lg:w-55" src={PROFILE_PICTURE} alt="Portfolio Picture" />
         </div>
         <div className="introductionContent">
           <div className="nameTitle">
@@ -42,19 +42,19 @@ function Home() {
             {/* must have arrow func for funcs with args in react */}
             <button onClick={() => redirect(GITHUB_URL)} className=" buttonContact">
               <div className="contactLinkContent">
-                <img src="/github.svg" alt="GitHub" /> GitHub
+                <img src={GITHUB_ICON} alt="GitHub" /> GitHub
               </div>
             </button>
 
             <button onClick={() => redirect(LINKEDIN_URL)} className=" buttonContact">
               <div className="contactLinkContent">
-                <img src="/linkedin.svg" alt="GitHub" /> LinkedIn
+                <img src={LINKEDIN_ICON} alt="LinkedIn" /> LinkedIn
               </div>
             </button>
 
             <button onClick={() => navigate("/contacts")} className=" buttonContact">
               <div className="contactLinkContent">
-                <img src="/email.svg" alt="GitHub" /> More contacts
+                <img src={EMAIL_ICON} alt="Contacts" /> More contacts
               </div>
             </button>
           </div>

@@ -1,6 +1,6 @@
 import './Resume.css'
 import { redirect } from '../../imports/routing'
-import { RESUME_NAME } from '../../imports/constants'
+import { RESUME_NAME, RESUME_ICON } from '../../imports/constants'
 import { useNavigate } from 'react-router-dom'
 
 function Resume() {
@@ -11,7 +11,7 @@ function Resume() {
     <section className="resumeView">
       <div className="flex flex-row items-center gap-3">
         <h1 className="text-5xl">Resume</h1>
-        <img src="/resume.svg" alt="Resume Image" className="w-15 h-15" /> 
+        <img src={RESUME_ICON} alt="Resume Image" className="w-15 h-15" /> 
       </div>
 
       <div className="update"> 

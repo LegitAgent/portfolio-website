@@ -12,6 +12,7 @@
   border-radius: 0.75rem;
   transform: translateY(-10%);
   gap: 10px;
+  background-color: rgba(0, 0, 0, 0.5);;
 }
 
 .linkImage {

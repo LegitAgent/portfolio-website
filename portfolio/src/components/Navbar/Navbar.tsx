@@ -7,12 +7,14 @@ import { useState } from 'react'
 
 function Navbar() {
   const [showProfessionalDropdown, setProfessionalDropdown] = useState(false)
+  // const [showStatsDropdown, setStatsDropdown] = useState(false)
+  // const [showProfessionalDropdown, setProfessionalDropdown] = useState(false)
 
   const ProfessionalLinks: LinkItem[] = [
     {path: '/experience', name: 'Experience', img_path: '/temp.jpg'},
     {path: '/projects', name: 'Projects', img_path: '/temp.jpg'},
-    {path: '/certifcation', name: 'Certificates', img_path: '/temp.jpg'},
-    {path: '/resume', name: 'Resume', img_path: '/resume.svg'},
+    {path: '/certificates', name: 'Certificates', img_path: '/temp.jpg'},
+    {path: '/resume', name: 'Resume', img_path: '/temp.jpg'},
     {path: '/skills', name: 'Skills', img_path: '/temp.jpg'}
   ]
 
@@ -25,7 +27,7 @@ function Navbar() {
       </Link>
 
       <div className="navbar__links">
-        {/* onclick does NOT render anything, just executes, so no rendering, so make usestate instead */}
+        {/* onclick does NOT render anything, just executes, so no rendering, so use usestate instead */}
         <div className="navbar__item">
           <button className={showProfessionalDropdown ? "navbar__iconLink focus-anim" : "navbar__iconLink"} onClick={() => setProfessionalDropdown(!showProfessionalDropdown)}>
             <svg viewBox="0 0 24 24" aria-hidden="true">
