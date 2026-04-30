@@ -18,23 +18,23 @@ import Certificates from './pages/Professional/Certificates.tsx';
 import WrongPage from './pages/Misc/WrongPage.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-interface RoutingLinks{
-  url: string
-  redirectElement: React.ReactElement
+interface RoutingLinks {
+  url: string;
+  redirectElement: React.ReactElement;
 }
 
 function App() {
   const routes: Array<RoutingLinks> = [
     // home
-    {url: "/", redirectElement: <Home />},
+    { url: '/', redirectElement: <Home /> },
     // professionals
-    {url: "/experience", redirectElement: <Experience />},
-    {url: "/projects", redirectElement: <Projects />},
-    {url: "/certificates", redirectElement: <Certificates />},
-    {url: "/resume", redirectElement: <Resume />},
-    {url: "/skills", redirectElement: <Skills />},
+    { url: '/experience', redirectElement: <Experience /> },
+    { url: '/projects', redirectElement: <Projects /> },
+    { url: '/certificates', redirectElement: <Certificates /> },
+    { url: '/resume', redirectElement: <Resume /> },
+    { url: '/skills', redirectElement: <Skills /> },
     // misc.
-    {url: "*", redirectElement: <WrongPage />},
+    { url: '*', redirectElement: <WrongPage /> },
   ];
 
   return (
@@ -44,17 +44,9 @@ function App() {
         <div className="page-shell">
           <Navbar />
           <Routes>
-            {routes.map((route => {
-              return(
-                <Route path={route.url} element={route.redirectElement} />
-              );
-            }))}
-            {/* <Route path="/" element={<Home />} />
-            <Route path="/experience" element={<Experience />} />
-            <Route path="/projects" element={<Home />} />
-            <Route path="/contact" element={<Home />} />
-            <Route path="/resume" element={<Resume />} />
-            <Route path="*" element={<WrongPage />} /> */}
+            {routes.map((route) => {
+              return <Route path={route.url} element={route.redirectElement} />;
+            })}
           </Routes>
         </div>
       </main>

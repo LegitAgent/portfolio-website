@@ -138,7 +138,7 @@
 .nameSwitch {
   display: flex;
   flex-direction: row;
-  gap: 20px
+  gap: 20px;
 }
 
 /* select every child of .heroCard and apply these */
@@ -156,7 +156,7 @@
 }
 
 @property --angle {
-  syntax: "<angle>";
+  syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
 }
@@ -171,8 +171,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (min-width: 640px) {

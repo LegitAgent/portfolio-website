@@ -2,19 +2,18 @@ import './NavDropDown.css';
 import { Link } from 'react-router-dom';
 
 export interface LinkItem {
-  path: string
-  name: string
-  img_path: string
+  path: string;
+  name: string;
+  img_path: string;
 }
 
 interface NavDropDownProps {
-  itemsArray: LinkItem[]
-  dropdownType: string
+  itemsArray: LinkItem[];
+  dropdownType: string;
 }
 
-
-export function NavDropDown({itemsArray, dropdownType}: NavDropDownProps) {
-  return(
+export function NavDropDown({ itemsArray, dropdownType }: NavDropDownProps) {
+  return (
     <div className="box">
       <p>{dropdownType}</p>
       {itemsArray.map((item) => {

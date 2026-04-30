@@ -5,20 +5,29 @@
   --glow-cyan: 13, 23, 57;
   --glow-blue: 7, 26, 6;
   --glow-violet: 238, 130, 238;
-  --glow-interactive: 37,159,255
+  --glow-interactive: 37, 159, 255;
 }
 
 @keyframes backgroundDrift {
   0% {
-    background-position: 44% 48%, 54% 50%, 48% 46%;
+    background-position:
+      44% 48%,
+      54% 50%,
+      48% 46%;
   }
 
   50% {
-    background-position: 56% 52%, 46% 48%, 52% 54%;
+    background-position:
+      56% 52%,
+      46% 48%,
+      52% 54%;
   }
 
   100% {
-    background-position: 44% 48%, 54% 50%, 48% 46%;
+    background-position:
+      44% 48%,
+      54% 50%,
+      48% 46%;
   }
 }
 
@@ -66,7 +75,11 @@
     radial-gradient(circle at 15% 20%, rgba(var(--glow-cyan), 0.16), transparent 32%),
     radial-gradient(circle at 85% 80%, rgba(var(--glow-violet), 0.18), transparent 34%),
     linear-gradient(180deg, var(--bg-blue), var(--bg-navy) 58%, #02040b);
-  background-size: 180% 180%, 145% 145%, 155% 155%, 100% 100%;
+  background-size:
+    180% 180%,
+    145% 145%,
+    155% 155%,
+    100% 100%;
   animation: backgroundDrift 42s ease-in-out infinite;
 }
 

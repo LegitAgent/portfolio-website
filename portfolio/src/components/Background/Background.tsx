@@ -4,7 +4,9 @@ import { useEffect } from 'react';
 function Background() {
   useEffect(() => {
     const interactiveBubble = document.querySelector<HTMLDivElement>('.interactive');
-    if (!interactiveBubble) return;
+    if (!interactiveBubble) {
+      return;
+    }
 
     let curX = 0;
     let curY = 0;
