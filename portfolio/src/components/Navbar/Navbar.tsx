@@ -30,19 +30,15 @@ function Navbar() {
         {/* onclick does NOT render anything, just executes, so no rendering, so use usestate instead */}
         <div className="navbar__item">
           <button
-            className={
-              showProfessionalDropdown ? 'navbar__iconLink focus-anim' : 'navbar__iconLink'
-            }
+            className={showProfessionalDropdown ? 'navbar__iconLink focus-anim' : 'navbar__iconLink'}
             onClick={() => setProfessionalDropdown(!showProfessionalDropdown)}
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M8 6V4.75C8 3.78 8.78 3 9.75 3h4.5C15.22 3 16 3.78 16 4.75V6h1.5A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-8A2.5 2.5 0 0 1 6.5 6H8Zm1.5 0h5V4.75a.25.25 0 0 0-.25-.25h-4.5a.25.25 0 0 0-.25.25V6ZM5.5 10v6.5c0 .55.45 1 1 1h11c.55 0 1-.45 1-1V10h-5v1a.75.75 0 0 1-.75.75h-1.5A.75.75 0 0 1 10.5 11v-1h-5Z" />
             </svg>
           </button>
-          {/* note that for props you can only pass one instance */}
-          {showProfessionalDropdown && (
-            <NavDropDown itemsArray={ProfessionalLinks} dropdownType="Professional" />
-          )}
+          {/* note that for props you can only pass one instance through the component file itself */}
+          {showProfessionalDropdown && <NavDropDown itemsArray={ProfessionalLinks} dropdownType="Professional" />}
         </div>
         <Link className="navbar__iconLink" to="/projects" aria-label="Projects">
           <svg viewBox="0 0 24 24" aria-hidden="true">
