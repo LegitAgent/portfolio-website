@@ -7,18 +7,27 @@ aws lambda update-function-code --function-name portfolio-api --zip-file fileb:/
  */
 
 export const handler = async (event) => {
-  // TODO implement
-  const data = {
-    'message' : 'This is from AWS lambda VSC!'
+  const method = event.requestContext.http.method;
+  const path = event.rawPath
+
+  if (method === 'GET' && path === '/projects') {
+    return jsonResponse({
+      message: 'This is from AWS lambda VSC!'
+    });
   }
-  const response = {
-    statusCode: 200,
-    headers:
-      { 'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
-    body: JSON.stringify(data),
-  };
-  return response;
+
+  return jsonResponse({error: 'Not found'}, 404);
 };
+
+
+function jsonResponse(data, statusCode = 200) {
+  return {
+    statusCode,
+    headers:
+    { 'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+    body: JSON.stringify(data)
+  };
+}
