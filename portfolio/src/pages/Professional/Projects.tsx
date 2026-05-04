@@ -9,6 +9,7 @@ interface ProjectResponse {
 function Projects() {
   const [isLoading, setIsLoading] = useState(true);
   const [testing, setTesting] = useState<ProjectResponse | null>(null);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     fetch('https://z4xczkan20.execute-api.ap-southeast-1.amazonaws.com/projects') // testing url
@@ -19,8 +20,13 @@ function Projects() {
     })
     .catch((error) => {
       console.error(error);
+      setHasError(true);
     });
   }, []);
+  
+  if(hasError) {
+    return (<div className="flex items-center justify-center text-9xl">ERROR, please refresh the page</div>);
+  }
 
   if(isLoading) {
     return (<div className="flex items-center justify-center text-9xl">Nothing to see here</div>);
