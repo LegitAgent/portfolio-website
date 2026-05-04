@@ -15,3 +15,4 @@ export const PROFILE_PICTURE = profilePicture;
 // URL's
 export const GITHUB_URL = 'https://github.com/LegitAgent';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/martin-darius-alba-836826294/';
+export const AWS_API_GATEWAY = 'https://z4xczkan20.execute-api.ap-southeast-1.amazonaws.com';

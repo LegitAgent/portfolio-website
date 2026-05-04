@@ -1,4 +1,5 @@
 import './Projects.css';
+import { AWS_API_GATEWAY } from '../../imports/constants';
 
 import { useState, useEffect } from 'react';
 
@@ -6,20 +7,23 @@ interface ProjectResponse {
   message: string
 }
 
+const projectGatewayURL = AWS_API_GATEWAY + '/projects';
+
 function Projects() {
   const [isLoading, setIsLoading] = useState(true);
   const [testing, setTesting] = useState<ProjectResponse | null>(null);
   const [hasError, setHasError] = useState(false);
 
+
+
   useEffect(() => {
-    fetch('https://z4xczkan20.execute-api.ap-southeast-1.amazonaws.com/projects') // testing url
+    fetch(projectGatewayURL) // testing url
     .then((data) => data.json())
     .then((json) => {
       setTesting(json);
       setIsLoading(false);
     })
-    .catch((error) => {
-      console.error(error);
+    .catch(() => {
       setHasError(true);
     });
   }, []);
