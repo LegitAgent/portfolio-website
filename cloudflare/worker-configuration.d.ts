@@ -8,7 +8,11 @@ declare namespace Cloudflare {
 	interface Env {
 	}
 }
-interface Env extends Cloudflare.Env {}
+interface Env extends Cloudflare.Env {
+  ORIGIN: any;
+  API_RATE_LIMIT: any;
+  portfolio_db: any;
+}
 
 // Begin runtime types
 /*! *****************************************************************************
