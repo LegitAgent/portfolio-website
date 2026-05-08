@@ -21,21 +21,27 @@
 			"database_id": "251f75ba-905c-4154-a406-c285738752f8"
 		}
 	],
-  "ratelimits": [
-    {
-      "name": "PORTFOLIO_LIMITER",
-      // An identifier you define, that is unique to your Cloudflare account.
-      // Must be an integer.
-      "namespace_id": "1001",
-      // Limit: the number of tokens allowed within a given period in a single
-      // Cloudflare location
-      // Period: the duration of the period, in seconds. Must be either 10 or 60
-      "simple": {
-        "limit": 100,
-        "period": 60
-      }
-    }
-  ]
+	"ratelimits": [
+		{
+			"name": "PORTFOLIO_LIMITER",
+			// An identifier you define, that is unique to your Cloudflare account.
+			// Must be an integer.
+			"namespace_id": "1001",
+			// Limit: the number of tokens allowed within a given period in a single
+			// Cloudflare location
+			// Period: the duration of the period, in seconds. Must be either 10 or 60
+			"simple": {
+				"limit": 100,
+				"period": 60
+			}
+		}
+	],
+	"r2_buckets": [
+		{
+			"bucket_name": "portfolio-bucket",
+			"binding": "portfolio_bucket"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
