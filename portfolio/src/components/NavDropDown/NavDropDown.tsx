@@ -18,7 +18,7 @@ export function NavDropDown({ itemsArray, dropdownType }: NavDropDownProps) {
       <p>{dropdownType}</p>
       {itemsArray.map((item) => {
         return (
-          <Link className="linkName" to={item.path} aria-label={item.name}>
+          <Link className="linkName" key={item.name} to={item.path} aria-label={item.name}>
             <img src={item.img_path} className="linkImage" />
             {item.name}
           </Link>

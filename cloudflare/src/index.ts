@@ -15,10 +15,10 @@ function json(data: unknown, status = 200, origin = "*") {
   return new Response(JSON.stringify(data), { // actual data
     status,
     headers: {
-      "Content-Type": "application/json", // tells client the response is JSON
-      "Access-Control-Allow-Origin": origin, // the origins that are allowed to acces this response
-      "Access-Control-Allow-Methods": "GET, OPTIONS", // allowed HTTP methods
-      "Access-Control-Allow-Headers": "Content-Type" // allowed request headers
+      "Content-Type": "application/json", 
+      "Access-Control-Allow-Origin": origin, 
+      "Access-Control-Allow-Methods": "GET, OPTIONS", 
+      "Access-Control-Allow-Headers": "Content-Type"
     }
   });
 }

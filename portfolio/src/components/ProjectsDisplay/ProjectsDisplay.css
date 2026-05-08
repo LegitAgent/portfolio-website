@@ -1,0 +1,7 @@
+.projectDisplay {
+  display: flex;
+  gap: 8px;
+  background-color: black;
+  flex-direction: column;
+  margin: 20px;
+}
