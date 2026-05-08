@@ -1,27 +1,26 @@
 import './Projects.css';
-import { CLOUDFLARE_GATEWAY } from '../../imports/constants';
+import { CLOUDFLARE_GATEWAY, CLOUDFLARE_R2_BUCKET } from '../../imports/constants';
 
 import { useState, useEffect } from 'react';
 
-// https://stackoverflow.com/questions/25469244/how-can-i-define-an-interface-for-an-array-of-objects
+// test                                                                                                                                                                                                 
 interface Project {
-  CustomerId: number;
-  CompanyName: string;
-  ContactName: string;
+  project_name: string;
+  project_description: string;
+  project_img_url: string;
+  project_link: string;
 }
 
 interface ProjectResponse {
-  projects: Project[];
+  results: Project[];
 }
 
-const projectGatewayURL = CLOUDFLARE_GATEWAY + 'api/beverages';
+const projectGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/projects';
 
 function Projects() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [testing, setTesting] = useState<ProjectResponse | null>(null);
-  const [hasError, setHasError] = useState(false);
-
-
+  const [hasError, setHasError] = useState<boolean>(false);
 
   useEffect(() => {
     fetch(projectGatewayURL) // testing url
@@ -48,7 +47,10 @@ function Projects() {
   return (
     <>
       <div className="flex items-center justify-center text-9xl">Projects</div>
-      <div className="flex items-center justify-center text-7xl">{testing?.results[0]?.CustomerId}</div>
+      <div className="flex items-center justify-center text-7xl">
+        <img src={CLOUDFLARE_R2_BUCKET + '/Projects/testing.jpg'} />
+        {testing?.results[0]?.project_description}
+      </div>
     </>
   );
 }
