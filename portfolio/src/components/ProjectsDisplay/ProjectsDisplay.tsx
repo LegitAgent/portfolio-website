@@ -8,14 +8,13 @@ interface ProjectDisplayProps {
 
 function ProjectsDisplay({project}: ProjectDisplayProps) {
   const imageUrl = new URL(project.project_img_url, CLOUDFLARE_R2_BUCKET).toString();
-  console.log(imageUrl);
 
   return(
     <div className='projectDisplay'>
+      <img className='projectImage' src={imageUrl} alt={project.project_name}/>
       {project.project_name}
       <br />
       {project.project_description}
-      <img src={imageUrl} alt={project.project_name}/>
       <a href={project.project_link} target="_blank" rel="noreferrer"> link</a>
     </div>
   );

@@ -38,9 +38,9 @@ function handleOptions(request: Request, env: Env) {
   return new Response(null, {
     status: 204,
     headers: {
-        "Access-Control-Allow-Origin": allowedOrigin,
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type"
+      "Access-Control-Allow-Origin": allowedOrigin,
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
     }
   });
 }
@@ -95,8 +95,24 @@ export default {
       if (url.pathname === "/api/db/projects") {
         // If you did not use `DB` as your binding name, change it here
         const { results } = await env.portfolio_db
-          .prepare("SELECT * FROM Projects")
+          .prepare("SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, a.pArticle_slug FROM Projects AS p LEFT JOIN ProjectArticles AS a ON a.project_name = p.project_name")
           .run();
+
+        return json({results}, 200, allowedOrigin);
+      }
+
+      if (url.pathname.startsWith('/api/articles/')) {
+        const slug = url.pathname.replace('/api/articles/', '');
+
+        const { results } = await env.portfolio_db
+          .prepare("SELECT a.pArticle_title, a.pArticle_tech_stack, pArticle_image_url, a.pArticle_slug, a.pArticle_content, p.project_github FROM ProjectArticles AS a JOIN Projects AS p ON a.project_name = p.project_name WHERE a.pArticle_slug = ?")
+          .bind(slug)
+          .run();
+
+        if (!results) {
+          return json({ error: 'Article not found' }, 404, allowedOrigin);
+        }
+
         return json({results}, 200, allowedOrigin);
       }
 

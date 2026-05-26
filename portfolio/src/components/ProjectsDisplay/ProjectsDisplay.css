@@ -1,7 +1,15 @@
-.projectDisplay {
-  display: flex;
-  gap: 8px;
-  background-color: black;
-  flex-direction: column;
-  margin: 20px;
+  .projectDisplay {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: black;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+.projectImage {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
 }

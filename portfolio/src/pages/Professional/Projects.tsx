@@ -45,13 +45,15 @@ function Projects() {
   return (
     <>
       <div className="flex items-center justify-center text-9xl">Projects</div>
-      <div className="projectList">
-        {projects?.results?.map((projectStuff) => {
-          return (
-            <ProjectsDisplay key={projectStuff.project_name} project={projectStuff}/>
-          );
-        })}
+      <div className='projectBox'>
+        <div className="projectList">
+          {projects?.results?.map((projectStuff) => {
+            return (
+              <ProjectsDisplay key={projectStuff.project_name} project={projectStuff}/>
+            );
+          })}
 
+        </div>
       </div>
     </>
   );
