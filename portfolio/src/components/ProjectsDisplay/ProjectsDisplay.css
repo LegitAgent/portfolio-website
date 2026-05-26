@@ -1,15 +1,29 @@
-  .projectDisplay {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    background-color: black;
-    border-radius: 12px;
-    overflow: hidden;
-  }
+.projectDisplay {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: black;
+  border-radius: 12px;
+  overflow: hidden;
+}
 
 .projectImage {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
   display: block;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.textContent {
+  padding: 0px 10px 5px;
+}
+
+.title {
+  padding: 8px;
 }

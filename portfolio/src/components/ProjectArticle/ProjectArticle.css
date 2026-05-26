@@ -1,0 +1,21 @@
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.projectArticleImage {
+  width: 80vw;
+  height: 40vh;
+}
+
+.techStacks {
+  display: flex;
+  gap: 8px;
+}
+
+.techStackButton {
+  background-color: green;
+  border-radius: 25px;
+}

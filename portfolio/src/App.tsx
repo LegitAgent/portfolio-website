@@ -14,6 +14,9 @@ import Skills from './pages/Professional/Skills.tsx';
 import Projects from './pages/Professional/Projects.tsx';
 import Certificates from './pages/Professional/Certificates.tsx';
 
+// dynamic
+import ProjectArticle from './components/ProjectArticle/ProjectArticle.tsx';
+
 // misc.
 import WrongPage from './pages/Misc/WrongPage.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -33,6 +36,8 @@ function App() {
     { url: '/certificates', redirectElement: <Certificates /> },
     { url: '/resume', redirectElement: <Resume /> },
     { url: '/skills', redirectElement: <Skills /> },
+    // dynamic
+    { url: '/projects/:slug', redirectElement: <ProjectArticle />},
     // misc.
     { url: '*', redirectElement: <WrongPage /> },
   ];

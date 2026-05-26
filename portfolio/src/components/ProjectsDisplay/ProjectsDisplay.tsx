@@ -1,5 +1,6 @@
 import './ProjectsDisplay.css';
 import type { Project } from '../../pages/Professional/Projects';
+import { Link } from 'react-router-dom';
 import { CLOUDFLARE_R2_BUCKET } from '../../imports/constants';
 
 interface ProjectDisplayProps {
@@ -12,10 +13,16 @@ function ProjectsDisplay({project}: ProjectDisplayProps) {
   return(
     <div className='projectDisplay'>
       <img className='projectImage' src={imageUrl} alt={project.project_name}/>
-      {project.project_name}
-      <br />
-      {project.project_description}
-      <a href={project.project_link} target="_blank" rel="noreferrer"> link</a>
+      <p className='title'>{project.project_name}</p>
+      <div className='textContent'>
+        <p className='description'>{project.project_description}</p>
+        <div className='links'>
+          <a href={project.project_github} target='_blank' rel='noreferrer'>Github</a>
+          <Link className="projectLink" to={`/projects/${project.pArticle_slug}`} aria-label="Article" >
+            Read More
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

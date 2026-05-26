@@ -15,5 +15,5 @@ export const PROFILE_PICTURE = profilePicture;
 // URL's
 export const GITHUB_URL = 'https://github.com/LegitAgent';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/martin-darius-alba-836826294/';
-export const CLOUDFLARE_GATEWAY = 'https://cloudflare.albamartindarius.workers.dev/';
+export const CLOUDFLARE_GATEWAY = 'https://portfolio_worker.albamartindarius.workers.dev/';
 export const CLOUDFLARE_R2_BUCKET = 'https://pub-301ee5c2e9c34bb9961b75fd092e680d.r2.dev/'; // shift to custom domain for money

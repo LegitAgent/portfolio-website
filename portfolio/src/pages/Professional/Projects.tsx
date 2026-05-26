@@ -1,14 +1,17 @@
 import './Projects.css';
 import { CLOUDFLARE_GATEWAY } from '../../imports/constants.ts';
 import ProjectsDisplay from '../../components/ProjectsDisplay/ProjectsDisplay.tsx';
+import LoadingScreen from '../Misc/LoadingScreen.tsx';
+import ErrorScreen from '../Misc/ErrorScreen.tsx';
 
 import { useState, useEffect } from 'react';
 
 export interface Project {
   project_name: string;
   project_description: string;
+  project_github: string;
   project_img_url: string;
-  project_link: string;
+  pArticle_slug: string;
 }
 
 interface ProjectResponse {
@@ -23,28 +26,34 @@ function Projects() {
   const [hasError, setHasError] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch(projectGatewayURL) // testing url
-    .then((data) => data.json())
+    fetch(projectGatewayURL)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Request failed ${response.status}`);
+      }
+      return response.json();
+    })
     .then((json) => {
       setProjects(json);
       setIsLoading(false);
     })
     .catch(() => {
       setHasError(true);
+      setIsLoading(false);
     });
   }, []);
-  
+
   if(hasError) {
-    return (<div className="flex items-center justify-center text-9xl">ERROR, please refresh the page</div>);
+    return (<ErrorScreen />);
   }
 
   if(isLoading) {
-    return (<div className="flex items-center justify-center text-9xl">Nothing to see here</div>);
+    return (<LoadingScreen />);
   }
   
   return (
     <>
-      <div className="flex items-center justify-center text-9xl">Projects</div>
+      <div className="flex items-center justify-center text-7xl">Projects</div>
       <div className='projectBox'>
         <div className="projectList">
           {projects?.results?.map((projectStuff) => {

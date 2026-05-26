@@ -8,6 +8,7 @@
   flex-direction: column;
   gap: 0.75rem;
   padding: 1rem 0.35rem;
+  align-items: center;
   border-right: 1px solid rgba(90, 150, 220, 0.12);
   background: linear-gradient(90deg, rgba(6, 19, 45, 0.48), rgba(8, 24, 58, 0.22)), rgba(7, 26, 61, 0.18);
   box-shadow:
@@ -20,6 +21,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
+  flex: 0 0 auto;
 }
 
 .navbar__item {
@@ -28,6 +30,7 @@
 
 .navbar__iconLink {
   position: relative;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,16 +74,21 @@
 
 @media (max-width: 1150px) {
   .navbar {
-    bottom: 0;
-    right: 0;
-    left: 0;
+    bottom: 0.75rem;
+    right: auto;
+    left: 50%;
     top: auto;
-    height: 4.5rem;
-    width: 100%;
+    width: max-content;
+    max-width: calc(100vw - 1rem);
+    height: auto;
     flex-direction: row;
-    padding: 0.75rem 0.25rem;
+    padding: 0.55rem;
     align-items: center;
     justify-content: center;
+    transform: translateX(-50%);
+    border-right: 0;
+    border: 1px solid rgba(90, 150, 220, 0.12);
+    border-radius: 999px;
   }
 
   .navbar__iconLink {
