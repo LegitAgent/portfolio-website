@@ -10,7 +10,7 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
-
+// npx wrangler deploy
 function json(data: unknown, status = 200, origin = "*") {
   return new Response(JSON.stringify(data), { // actual data
     status,
@@ -99,6 +99,14 @@ export default {
           .run();
 
         return json({results}, 200, allowedOrigin);
+      }
+
+      if (url.pathname === "/api/db/certificates") {
+        const { results: certificates } = await env.portfolio_db // relabel as certificates for results
+        .prepare("SELECT * FROM Certificates")
+        .run(); // test
+
+        return json({certificates}, 200, allowedOrigin);
       }
 
       if (url.pathname.startsWith('/api/articles/')) {
