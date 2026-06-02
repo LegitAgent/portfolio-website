@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import LoadingScreen from '../../pages/Misc/LoadingScreen.tsx';
 import ErrorScreen from '../../pages/Misc/ErrorScreen.tsx';
+import WrongPage from '../../pages/Misc/WrongPage.tsx';
 
 export interface Article {
   pArticle_title: string;
@@ -46,11 +47,15 @@ function ProjectArticle() {
     });
   }, [articleGateway]);
 
-  if(hasError) {
+  if (hasError) {
     return (<ErrorScreen />);
   }
 
-  if(isLoading) {
+  if (article?.results.length === 0) {
+    return (<WrongPage />);
+  }
+
+  if (isLoading) {
     return (<LoadingScreen />);
   }
 

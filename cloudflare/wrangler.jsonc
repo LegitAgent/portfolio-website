@@ -26,7 +26,7 @@
 			"name": "PORTFOLIO_LIMITER",
 			// An identifier you define, that is unique to your Cloudflare account.
 			// Must be an integer.
-			"namespace_id": "1001",
+			"namespace_id": "1002", // 1001 = timezone proxy
 			// Limit: the number of tokens allowed within a given period in a single
 			// Cloudflare location
 			// Period: the duration of the period, in seconds. Must be either 10 or 60
