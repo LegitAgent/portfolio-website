@@ -1,7 +1,7 @@
 import './ProjectsDisplay.css';
-import type { Project } from '../../pages/Professional/Projects';
+import type { Project } from '../../pages/Professional/Projects.tsx';
 import { Link } from 'react-router-dom';
-import { CLOUDFLARE_R2_BUCKET } from '../../imports/constants';
+import { CLOUDFLARE_R2_BUCKET } from '../../imports/constants.ts';
 
 interface ProjectDisplayProps {
   project: Project;

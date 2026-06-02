@@ -44,7 +44,7 @@ function ProjectArticle() {
       setHasError(true);
       setIsLoading(false);
     });
-  }, );
+  }, [articleGateway]);
 
   if(hasError) {
     return (<ErrorScreen />);
