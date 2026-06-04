@@ -22,7 +22,7 @@ interface CertificateResponse {
   certificates: Certificate[];
 }
 
-const projectGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/certificates'; // path to certificates db
+const certificateGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/certificates'; // path to certificates db
 
 function Certificates() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -30,7 +30,7 @@ function Certificates() {
   const [hasError, setHasError] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch(projectGatewayURL)
+    fetch(certificateGatewayURL)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`Request failed ${response.status}`);

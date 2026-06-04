@@ -1,13 +1,13 @@
 import './WrongPage.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function WrongPage() {
+  const navigate = useNavigate();
+
   return (
     <div className="wrong">
       WRONG PAGE
-      <Link to="/" className="highlight">
-        BACK
-      </Link>
+      <button className='highlight' onClick={() => navigate(-1)}>Back</button>
     </div>
   );
 }
