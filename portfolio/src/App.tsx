@@ -14,6 +14,9 @@ import Skills from './pages/Professional/Skills.tsx';
 import Projects from './pages/Professional/Projects.tsx';
 import Certificates from './pages/Professional/Certificates.tsx';
 
+// contacts
+import Contacts from './pages/Contacts/Contacts.tsx';
+
 // dynamic
 import ProjectArticle from './components/ProjectArticle/ProjectArticle.tsx';
 
@@ -36,6 +39,8 @@ function App() {
     { url: '/certificates', redirectElement: <Certificates /> },
     { url: '/resume', redirectElement: <Resume /> },
     { url: '/skills', redirectElement: <Skills /> },
+    // contacts
+    { url: '/contacts', redirectElement: <Contacts />},
     // dynamic
     { url: '/projects/:slug', redirectElement: <ProjectArticle />},
     // misc.

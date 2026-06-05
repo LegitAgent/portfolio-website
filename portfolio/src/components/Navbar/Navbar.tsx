@@ -45,7 +45,7 @@ function Navbar() {
             <path d="M4 5.75A1.75 1.75 0 0 1 5.75 4h12.5A1.75 1.75 0 0 1 20 5.75v12.5A1.75 1.75 0 0 1 18.25 20H5.75A1.75 1.75 0 0 1 4 18.25V5.75Zm3 1.75v9h10v-9H7Zm1.5 1.5h7v1.5h-7V9Zm0 3h7V13.5h-7V12Z" />
           </svg>
         </Link>
-        <Link className="navbar__iconLink" to="/contact" aria-label="Contact">
+        <Link className="navbar__iconLink" to="/contacts" aria-label="Contact">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 6.75A1.75 1.75 0 0 1 5.75 5h12.5A1.75 1.75 0 0 1 20 6.75v10.5A1.75 1.75 0 0 1 18.25 19H5.75A1.75 1.75 0 0 1 4 17.25V6.75Zm1.78-.25L12 11.26l6.22-4.76H5.78ZM18.5 8l-6.04 4.62a.75.75 0 0 1-.92 0L5.5 8v9.25c0 .14.11.25.25.25h12.5c.14 0 .25-.11.25-.25V8Z" />
           </svg>

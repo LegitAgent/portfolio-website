@@ -1,0 +1,78 @@
+.contactContainer {
+  display: flex;
+  align-items: center;
+  padding-top: 5vh;
+  flex-direction: column;
+  gap: 25px
+}
+
+.emailCopy {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.linkBoxGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.interestsGroup {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 240px;
+  height: 180px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  perspective: 1000px;
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms ease;
+  transform-style: preserve-3d;
+}
+
+.card.flipped .cardInner {
+  transform: rotateY(180deg);
+}
+
+.cardFace {
+  position: absolute;
+  inset: 0;
+  padding: 1rem;
+  border-radius: 16px;
+  background: black;
+  color: white;
+  backface-visibility: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.cardBack {
+  transform: rotateY(180deg);
+}
+
+.green {
+  background-color: green;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.red {
+  background-color: red;
+}
+
