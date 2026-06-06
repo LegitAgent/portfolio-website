@@ -16,7 +16,7 @@ function CertificateDisplay({certificate}: CertificateDisplayProps) {
       <p className='title'>{certificate.title}</p>
       <div className='textContent'>
         {/* <p className='description'>{certificate.project_description}</p> */}
-        <button onClick={() => redirect(certificate.certificate_url)} className="openPDFButton">
+        <button onClick={() => redirect(certificate.certificate_url)} className='openPDFButton'>
           Open PDF
         </button>
         </div>

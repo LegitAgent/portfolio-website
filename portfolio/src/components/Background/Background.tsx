@@ -36,11 +36,11 @@ function Background() {
   }, []);
 
   return (
-    <div className="gradient-bg" aria-hidden="true">
-      <div className="gradient-glow gradient-glow--one"></div>
-      <div className="gradient-glow gradient-glow--two"></div>
-      <div className="gradient-glow gradient-glow--three"></div>
-      <div className="interactive"></div>
+    <div className='gradient-bg' aria-hidden='true'>
+      <div className='gradient-glow gradient-glow--one'></div>
+      <div className='gradient-glow gradient-glow--two'></div>
+      <div className='gradient-glow gradient-glow--three'></div>
+      <div className='interactive'></div>
     </div>
   );
 }

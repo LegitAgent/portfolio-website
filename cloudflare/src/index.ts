@@ -11,14 +11,14 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 // npx wrangler deploy
-function json(data: unknown, status = 200, origin = "*") {
+function json(data: unknown, status = 200, origin = '*') {
   return new Response(JSON.stringify(data), { // actual data
     status,
     headers: {
-      "Content-Type": "application/json", 
-      "Access-Control-Allow-Origin": origin, 
-      "Access-Control-Allow-Methods": "GET, OPTIONS", 
-      "Access-Control-Allow-Headers": "Content-Type"
+      'Content-Type': 'application/json', 
+      'Access-Control-Allow-Origin': origin, 
+      'Access-Control-Allow-Methods': 'GET, OPTIONS', 
+      'Access-Control-Allow-Headers': 'Content-Type'
     }
   });
 }
@@ -27,7 +27,7 @@ function text(data: any, status = 200) {
   return new Response(data, {
     status,
     headers: {
-      "Content-Type": "text/plain; charset=utf-8"
+      'Content-Type': 'text/plain; charset=utf-8'
     }
   });
 }
@@ -38,9 +38,9 @@ function handleOptions(request: Request, env: Env) {
   return new Response(null, {
     status: 204,
     headers: {
-      "Access-Control-Allow-Origin": allowedOrigin,
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type"
+      'Access-Control-Allow-Origin': allowedOrigin,
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
     }
   });
 }
@@ -71,12 +71,12 @@ export default {
     const isAllowed = isAllowedOrigin(request, env);
 
     // for ai dudes
-    if (url.pathname === "/robots.txt") {
-      return text("User-agent: *\nDisallow: /\n")
+    if (url.pathname === '/robots.txt') {
+      return text('User-agent: *\nDisallow: /\n')
     }
 
     // preflight request
-    if (request.method === "OPTIONS") {
+    if (request.method === 'OPTIONS') {
       if (!isAllowed) {
         return json({error: 'Forbidden'}, 403, allowedOrigin);
       }
@@ -84,7 +84,7 @@ export default {
       return handleOptions(request, env);
     }
 
-    const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
     const { success } = await env.PORTFOLIO_LIMITER.limit({key: `${ip}:${url.pathname}`});
 
     if (!success) {
@@ -92,18 +92,18 @@ export default {
     }
 
     try {
-      if (url.pathname === "/api/db/projects") {
+      if (url.pathname === '/api/db/projects') {
         // If you did not use `DB` as your binding name, change it here
         const { results } = await env.portfolio_db
-          .prepare("SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, a.pArticle_slug FROM Projects AS p LEFT JOIN ProjectArticles AS a ON a.project_name = p.project_name")
+          .prepare('SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, a.pArticle_slug FROM Projects AS p LEFT JOIN ProjectArticles AS a ON a.project_name = p.project_name')
           .run();
 
         return json({results}, 200, allowedOrigin);
       }
 
-      if (url.pathname === "/api/db/certificates") {
+      if (url.pathname === '/api/db/certificates') {
         const { results: certificates } = await env.portfolio_db // relabel as certificates for results
-        .prepare("SELECT * FROM Certificates")
+        .prepare('SELECT * FROM Certificates')
         .run(); // test
 
         return json({certificates}, 200, allowedOrigin);
@@ -113,7 +113,7 @@ export default {
         const slug = url.pathname.replace('/api/articles/', '');
 
         const { results } = await env.portfolio_db
-          .prepare("SELECT a.pArticle_title, a.pArticle_tech_stack, pArticle_image_url, a.pArticle_slug, a.pArticle_content, p.project_github FROM ProjectArticles AS a JOIN Projects AS p ON a.project_name = p.project_name WHERE a.pArticle_slug = ?")
+          .prepare('SELECT a.pArticle_title, a.pArticle_tech_stack, pArticle_image_url, a.pArticle_slug, a.pArticle_content, p.project_github FROM ProjectArticles AS a JOIN Projects AS p ON a.project_name = p.project_name WHERE a.pArticle_slug = ?')
           .bind(slug)
           .run();
 
@@ -124,9 +124,17 @@ export default {
         return json({results}, 200, allowedOrigin);
       }
 
-      return json({error: "End point does not exist"}, 404, allowedOrigin)
+      if (url.pathname === 'api/db/tags') {
+        const { results: tags } = await env.portfolio_db
+        .prepare('SELECT * FROM Tags')
+        .run();
+
+        return json({tags}, 200, allowedOrigin);
+      }
+
+      return json({error: 'End point does not exist'}, 404, allowedOrigin)
     } catch(error) {
-      return json({error: "Internal server error"}, 500, allowedOrigin)
+      return json({error: 'Internal server error'}, 500, allowedOrigin)
     }
 	},
 } satisfies ExportedHandler<Env>;

@@ -18,7 +18,7 @@ function ProjectsDisplay({project}: ProjectDisplayProps) {
         <p className='description'>{project.project_description}</p>
         <div className='links'>
           <a href={project.project_github} target='_blank' rel='noreferrer'>Github</a>
-          <Link className="projectLink" to={`/projects/${project.pArticle_slug}`} aria-label="Article" >
+          <Link className='projectLink' to={`/projects/${project.pArticle_slug}`} aria-label='Article' >
             Read More
           </Link>
         </div>

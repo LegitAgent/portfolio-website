@@ -8,9 +8,8 @@ import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home/Home';
 
 // professional pages
-import Experience from './pages/Professional/Experience.tsx';
+import SkillsExperience from './pages/Professional/SkillsExperience.tsx';
 import Resume from './pages/Professional/Resume.tsx';
-import Skills from './pages/Professional/Skills.tsx';
 import Projects from './pages/Professional/Projects.tsx';
 import Certificates from './pages/Professional/Certificates.tsx';
 
@@ -34,11 +33,10 @@ function App() {
     // home
     { url: '/', redirectElement: <Home /> },
     // professionals
-    { url: '/experience', redirectElement: <Experience /> },
+    { url: '/skills_experience', redirectElement: <SkillsExperience /> },
     { url: '/projects', redirectElement: <Projects /> },
     { url: '/certificates', redirectElement: <Certificates /> },
     { url: '/resume', redirectElement: <Resume /> },
-    { url: '/skills', redirectElement: <Skills /> },
     // contacts
     { url: '/contacts', redirectElement: <Contacts />},
     // dynamic
@@ -49,9 +47,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <main className="app-shell">
+      <main className='app-shell'>
         <Background />
-        <div className="page-shell">
+        <div className='page-shell'>
           <Navbar />
           <Routes>
             {routes.map((route) => {

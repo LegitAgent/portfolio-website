@@ -11,11 +11,10 @@ function Navbar() {
   // const [showProfessionalDropdown, setProfessionalDropdown] = useState(false)
 
   const ProfessionalLinks: LinkItem[] = [
-    { path: '/experience', name: 'Experience', img_path: '/temp.jpg' },
+    { path: '/skills_experience', name: 'Skills & Experience', img_path: '/temp.jpg' },
     { path: '/projects', name: 'Projects', img_path: '/temp.jpg' },
     { path: '/certificates', name: 'Certificates', img_path: '/temp.jpg' },
     { path: '/resume', name: 'Resume', img_path: '/temp.jpg' },
-    { path: '/skills', name: 'Skills', img_path: '/temp.jpg' },
   ];
 
   return (
@@ -40,9 +39,9 @@ function Navbar() {
           {/* note that for props you can only pass one instance through the component file itself */}
           {showProfessionalDropdown && <NavDropDown itemsArray={ProfessionalLinks} dropdownType="Professional" />}
         </div>
-        <Link className="navbar__iconLink" to="/projects" aria-label="Projects">
+        <Link className="navbar__iconLink" to="/stats" aria-label="Statistics">
           <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 5.75A1.75 1.75 0 0 1 5.75 4h12.5A1.75 1.75 0 0 1 20 5.75v12.5A1.75 1.75 0 0 1 18.25 20H5.75A1.75 1.75 0 0 1 4 18.25V5.75Zm3 1.75v9h10v-9H7Zm1.5 1.5h7v1.5h-7V9Zm0 3h7V13.5h-7V12Z" />
+            <path d="M5.25 19.5A1.25 1.25 0 0 1 4 18.25v-5.5a1.25 1.25 0 0 1 2.5 0v5.5c0 .69-.56 1.25-1.25 1.25Zm6.75 0a1.25 1.25 0 0 1-1.25-1.25V8.75a1.25 1.25 0 0 1 2.5 0v9.5A1.25 1.25 0 0 1 12 19.5Zm6.75 0a1.25 1.25 0 0 1-1.25-1.25V4.75a1.25 1.25 0 0 1 2.5 0v13.5a1.25 1.25 0 0 1-1.25 1.25Z" />
           </svg>
         </Link>
         <Link className="navbar__iconLink" to="/contacts" aria-label="Contact">

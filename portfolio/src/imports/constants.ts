@@ -30,4 +30,3 @@ export const FREELANCE_AVAILABILITY = YES;
 export const POSITION_DESC = 'im at hackazouk rn';
 export const COLLAB_DESC = 'HELL YEAH!';
 export const FREELANCE_DESC = 'maybe, we shall see depending on circumstances';
-

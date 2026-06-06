@@ -53,9 +53,9 @@ function Projects() {
   
   return (
     <>
-      <div className="flex items-center justify-center text-7xl">Projects</div>
+      <div className='flex items-center justify-center text-7xl'>Projects</div>
       <div className='projectBox'>
-        <div className="projectList">
+        <div className='projectList'>
           {projects?.results?.map((projectStuff) => {
             return (
               <ProjectsDisplay key={projectStuff.project_name} project={projectStuff}/>

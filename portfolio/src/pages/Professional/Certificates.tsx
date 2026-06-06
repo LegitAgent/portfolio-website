@@ -57,7 +57,7 @@ function Certificates() {
 
   return (
     <>
-      <div className="flex items-center justify-center text-7xl">Certificates</div>
+      <div className='flex items-center justify-center text-7xl'>Certificates</div>
       <div className='certificateBox'>
         <div className='certificateList'>
           {certificates?.certificates?.map((certificateStuff) => {
