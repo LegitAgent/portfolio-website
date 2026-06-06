@@ -20,14 +20,12 @@ export const CLOUDFLARE_R2_BUCKET = 'https://pub-301ee5c2e9c34bb9961b75fd092e680
 // updatables
 export const RESUME_NAME = '/resume-03-01-2026.pdf';
 
-/** for availability
- *  0 - red (no)
- *  1 - yellow (maybe)
- *  2 - green (yes)
- */
-export const POSITION_AVAILABILITY = 0;
-export const COLLAB_AVAILABILITY = 2;
-export const FREELANCE_AVAILABILITY = 1;
+const NO = 0;
+const MAYBE = 1;
+const YES = 2;
+export const POSITION_AVAILABILITY = NO;
+export const COLLAB_AVAILABILITY = MAYBE;
+export const FREELANCE_AVAILABILITY = YES;
 
 export const POSITION_DESC = 'im at hackazouk rn';
 export const COLLAB_DESC = 'HELL YEAH!';
