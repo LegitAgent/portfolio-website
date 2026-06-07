@@ -104,7 +104,7 @@ export default {
       if (url.pathname === '/api/db/certificates') {
         const { results: certificates } = await env.portfolio_db // relabel as certificates for results
         .prepare('SELECT * FROM Certificates')
-        .run(); // test
+        .run();
 
         return json({certificates}, 200, allowedOrigin);
       }
@@ -124,9 +124,9 @@ export default {
         return json({results}, 200, allowedOrigin);
       }
 
-      if (url.pathname === 'api/db/tags') {
+      if (url.pathname === '/api/db/tags') {
         const { results: tags } = await env.portfolio_db
-        .prepare('SELECT * FROM Tags')
+        .prepare('SELECT * FROM Tag')
         .run();
 
         return json({tags}, 200, allowedOrigin);
