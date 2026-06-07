@@ -93,7 +93,6 @@ export default {
 
     try {
       if (url.pathname === '/api/db/projects') {
-        // If you did not use `DB` as your binding name, change it here
         const { results } = await env.portfolio_db
           .prepare('SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, pa.pArticle_slug FROM Projects AS p LEFT JOIN ProjectArticles AS pa ON pa.project_name = p.project_name')
           .run();
@@ -109,8 +108,24 @@ export default {
         return json({certificates}, 200, allowedOrigin);
       }
 
-      if (url.pathname.startsWith('/api/articles/')) {
-        const slug = url.pathname.replace('/api/articles/', '');
+      if (url.pathname === '/api/db/tags') {
+        const { results: tags } = await env.portfolio_db
+        .prepare('SELECT * FROM Tag')
+        .run();
+
+        return json({tags}, 200, allowedOrigin);
+      }
+
+      if (url.pathname === '/api/db/work') {
+        const { results } = await env.portfolio_db
+          .prepare('SELECT * FROM WorkExperience')
+          .run();
+
+        return json({results}, 200, allowedOrigin);
+      }
+
+      if (url.pathname.startsWith('/api/project_articles/')) {
+        const slug = url.pathname.replace('/api/project_articles/', '');
 
         const { results } = await env.portfolio_db
           .prepare('SELECT pa.pArticle_title, pArticle_image_url, pa.pArticle_slug, pa.pArticle_content, p.project_github FROM ProjectArticles AS pa JOIN Projects AS p ON pa.project_name = p.project_name WHERE pa.pArticle_slug = ?')
@@ -133,20 +148,28 @@ export default {
         return json({results, tags}, 200, allowedOrigin);
       }
 
-      if (url.pathname === '/api/db/tags') {
-        const { results: tags } = await env.portfolio_db
-        .prepare('SELECT * FROM Tag')
-        .run();
+      if (url.pathname.startsWith('/api/work_articles/')) {
+        const slug = url.pathname.replace('/api/work_articles/', '');
 
-        return json({tags}, 200, allowedOrigin);
-      }
-
-      if (url.pathname === '/api/db/work') {
         const { results } = await env.portfolio_db
-          .prepare('SELECT * FROM WorkExperience')
+          .prepare('SELECT wa.article_title, wa.article_summary, wa.article_content, wa.article_image_url, wa.responsibilities, wa.achievements, we.company_name, we.role_title, we.company_website FROM WorkArticle AS wa JOIN WorkExperience AS we ON wa.work_id = we.work_id WHERE we.work_slug = ?')
+          .bind(slug)
           .run();
 
-        return json({results}, 200, allowedOrigin);
+        const { results: tags }= await env.portfolio_db
+          .prepare('SELECT t.tag_name FROM WorkArticle AS wa JOIN WorkTag wt ON wa.work_id = wt.work_id JOIN Tag t ON wt.tag_name = t.tag_name JOIN WorkExperience AS we ON wa.work_id = we.work_id WHERE we.work_slug = ?')
+          .bind(slug)
+          .run();
+
+        if (!results) {
+          return json({ error: 'Article not found' }, 404, allowedOrigin);
+        }
+
+        if (!tags) {
+          return json({ error: 'Tags not found'}, 404, allowedOrigin);
+        }
+
+        return json({results, tags}, 200, allowedOrigin);
       }
 
       return json({error: 'End point does not exist'}, 404, allowedOrigin)

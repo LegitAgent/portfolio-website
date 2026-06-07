@@ -6,7 +6,7 @@ import LoadingScreen from '../../pages/Misc/LoadingScreen.tsx';
 import ErrorScreen from '../../pages/Misc/ErrorScreen.tsx';
 import WrongPage from '../../pages/Misc/WrongPage.tsx';
 
-interface Article {
+interface ProjectArticle {
   pArticle_title: string;
   pArticle_image_url: string;
   pArticle_slug: string;
@@ -14,12 +14,12 @@ interface Article {
   project_github: string;
 }
 
-interface Tag {
+export interface Tag {
   tag_name: string;
 }
 
 interface ArticleResponse {
-  results: Article[];
+  results: ProjectArticle[];
   tags: Tag[];
 }
 
@@ -27,7 +27,7 @@ function ProjectArticle() {
   const navigate = useNavigate();
 
   const slug = useParams();
-  const articleGateway = CLOUDFLARE_GATEWAY + 'api/articles/' + slug.slug;
+  const articleGateway = CLOUDFLARE_GATEWAY + 'api/project_articles/' + slug.slug;
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [article, setArticle] = useState<ArticleResponse | null>(null);
