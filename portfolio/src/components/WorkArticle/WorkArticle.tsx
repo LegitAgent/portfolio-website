@@ -72,6 +72,7 @@ function WorkArticle() {
 
   return (
     <section className='workArticleContainer'>
+      <img src={imageURL} alt={articleContent?.article_title} />
       {articleContent?.article_title}
       <div className='techStacks'>
         {articleSkills?.map((skill) => {
