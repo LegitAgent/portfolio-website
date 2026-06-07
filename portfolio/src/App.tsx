@@ -18,6 +18,7 @@ import Contacts from './pages/Contacts/Contacts.tsx';
 
 // dynamic
 import ProjectArticle from './components/ProjectArticle/ProjectArticle.tsx';
+import WorkArticle from './components/WorkArticle/WorkArticle.tsx';
 
 // misc.
 import WrongPage from './pages/Misc/WrongPage.tsx';
@@ -41,6 +42,7 @@ function App() {
     { url: '/contacts', redirectElement: <Contacts />},
     // dynamic
     { url: '/projects/:slug', redirectElement: <ProjectArticle />},
+    { url: '/skills_experience/:slug', redirectElement: <WorkArticle />},
     // misc.
     { url: '*', redirectElement: <WrongPage /> },
   ];

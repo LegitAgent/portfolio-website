@@ -141,6 +141,14 @@ export default {
         return json({tags}, 200, allowedOrigin);
       }
 
+      if (url.pathname === '/api/db/work') {
+        const { results } = await env.portfolio_db
+          .prepare('SELECT * FROM WorkExperience')
+          .run();
+
+        return json({results}, 200, allowedOrigin);
+      }
+
       return json({error: 'End point does not exist'}, 404, allowedOrigin)
     } catch(error) {
       return json({error: 'Internal server error'}, 500, allowedOrigin)

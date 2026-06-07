@@ -1,6 +1,7 @@
 import './SkillsExperience.css';
 import { CLOUDFLARE_GATEWAY } from '../../imports/constants';
 import { useEffect, useState } from 'react';
+import WorkDisplay from '../../components/WorkDisplay/WorkDisplay.tsx';
 import ErrorScreen from '../Misc/ErrorScreen';
 import LoadingScreen from '../Misc/LoadingScreen';
 
@@ -9,16 +10,37 @@ interface Tags {
   skill_type: string;
 }
 
+export interface WorkExperience {
+  work_id: number;
+  company_name: string;
+  role_title: string;
+  employment_type: string;
+  location: string | null;
+  start_date: string;
+  end_date: string | null;
+  is_current: number;
+  short_description: string;
+  company_logo_url: string;
+  company_website: string | null;
+  display_order: number;
+  work_slug: string;
+}
+
 interface TagsResponse {
   tags: Tags[];
 }
 
-const tagsGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/tags'; // path to project db
+interface WorkExperienceResponse {
+  results: WorkExperience[];
+}
+
+const tagsGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/tags'; // path to tags db
+const workGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/work'; // path to work db
 
 function SkillsExperience() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoadingTag, setIsLoadingTag] = useState<boolean>(true);
   const [tag, setTag] = useState<TagsResponse | null>(null);
-  const [hasError, setHasError] = useState<boolean>(false);
+  const [hasErrorTag, setHasErrorTag] = useState<boolean>(false);
 
   const findSkill = (skill_type: string, skills: TagsResponse): Tags[] => {
     return skills.tags.filter(tag => tag.skill_type === skill_type);
@@ -34,19 +56,41 @@ function SkillsExperience() {
     })
     .then((json) => {
       setTag(json);
-      setIsLoading(false);
+      setIsLoadingTag(false);
     })
     .catch(() => {
-      setHasError(true);
-      setIsLoading(false);
+      setHasErrorTag(true);
+      setIsLoadingTag(false);
     });
   }, []);
 
-  if (hasError) {
+  const [isLoadingWork, setIsLoadingWork] = useState<boolean>(true);
+  const [work, setWork] = useState<WorkExperienceResponse | null>(null);
+  const [hasErrorWork, setHasErrorWork] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetch(workGatewayURL)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Request failed ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((json) => {
+      setWork(json);
+      setIsLoadingWork(false);
+    })
+    .catch(() => {
+      setHasErrorTag(true);
+      setHasErrorWork(false);
+    });
+  }, []);
+
+  if (hasErrorTag || hasErrorWork) {
     return (<ErrorScreen />);
   }
 
-  if (isLoading || !tag) {
+  if (isLoadingTag || !tag || isLoadingWork) {
     return (<LoadingScreen />);
   }
 
@@ -71,7 +115,7 @@ function SkillsExperience() {
           <div className='skillContainer'>
             {language.map((tag) => {
               return (
-                <div className='tag'>{tag.tag_name}</div>
+                <div className='tag' key={tag.tag_name}>{tag.tag_name}</div>
               );
             })}
           </div>
@@ -80,7 +124,7 @@ function SkillsExperience() {
           <div className='skillContainer'>
             {frontend.map((tag) => {
               return (
-                <div className='tag'>{tag.tag_name}</div>
+                <div className='tag' key={tag.tag_name}>{tag.tag_name}</div>
               );
             })}
           </div>
@@ -89,7 +133,7 @@ function SkillsExperience() {
           <div className='skillContainer'>
             {backend.map((tag) => {
               return (
-                <div className='tag'>{tag.tag_name}</div>
+                <div className='tag' key={tag.tag_name}>{tag.tag_name}</div>
               );
             })}
           </div>
@@ -98,7 +142,7 @@ function SkillsExperience() {
           <div className='skillContainer'>
             {database.map((tag) => {
               return (
-                <div className='tag'>{tag.tag_name}</div>
+                <div className='tag' key={tag.tag_name}>{tag.tag_name}</div>
               );
             })}
           </div>
@@ -107,7 +151,7 @@ function SkillsExperience() {
           <div className='skillContainer'>
             {cloud.map((tag) => {
               return (
-                <div className='tag'>{tag.tag_name}</div>
+                <div className='tag' key={tag.tag_name}>{tag.tag_name}</div>
               );
             })}
           </div>
@@ -116,7 +160,7 @@ function SkillsExperience() {
           <div className='skillContainer'>
             {developerTool.map((tag) => {
               return (
-                <div className='tag'>{tag.tag_name}</div>
+                <div className='tag' key={tag.tag_name}>{tag.tag_name}</div>
               );
             })}
           </div>
@@ -125,7 +169,7 @@ function SkillsExperience() {
           <div className='skillContainer'>
             {systems.map((tag) => {
               return (
-                <div className='tag'>{tag.tag_name}</div>
+                <div className='tag' key={tag.tag_name}>{tag.tag_name}</div>
               );
             })}
           </div>
@@ -134,7 +178,7 @@ function SkillsExperience() {
           <div className='skillContainer'>
             {gameDevelopment.map((tag) => {
               return (
-                <div className='tag'>{tag.tag_name}</div>
+                <div className='tag' key={tag.tag_name}>{tag.tag_name}</div>
               );
             })}
           </div>
@@ -143,7 +187,7 @@ function SkillsExperience() {
           <div className='skillContainer'>
               {apiIntegration.map((tag) => {
                 return (
-                  <div className='tag'>{tag.tag_name}</div>
+                  <div className='tag' key={tag.tag_name}>{tag.tag_name}</div>
                 );
               })}
           </div>
@@ -152,8 +196,17 @@ function SkillsExperience() {
       </section>
 
       <section className='experienceContainer'>
-        <h1>Experiences</h1>
-        these are my experiences
+        <h1>Work Experience</h1>
+        <p className='experienceDescription'>these are my work experiences vrodie</p>
+        <section className='workTree'>
+          <div className='workList'>
+            {work?.results?.map((workStuff) => {
+              return (
+                <WorkDisplay key={workStuff.work_id} work={workStuff}/>
+              );
+            })}
+          </div>
+        </section>
       </section>
     </section>
   );
