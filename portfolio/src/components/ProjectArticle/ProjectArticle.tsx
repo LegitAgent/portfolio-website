@@ -6,17 +6,21 @@ import LoadingScreen from '../../pages/Misc/LoadingScreen.tsx';
 import ErrorScreen from '../../pages/Misc/ErrorScreen.tsx';
 import WrongPage from '../../pages/Misc/WrongPage.tsx';
 
-export interface Article {
+interface Article {
   pArticle_title: string;
-  pArticle_tech_stack: string;
   pArticle_image_url: string;
   pArticle_slug: string;
   pArticle_content: string;
   project_github: string;
 }
 
+interface Tag {
+  tag_name: string;
+}
+
 interface ArticleResponse {
   results: Article[];
+  tags: Tag[];
 }
 
 function ProjectArticle() {
@@ -60,7 +64,7 @@ function ProjectArticle() {
   }
 
   const articleContent = article?.results[0];
-  const techStack = articleContent?.pArticle_tech_stack.split(' ');
+  const articleSkills = article?.tags;
 
   const imageURL = CLOUDFLARE_R2_BUCKET + articleContent?.pArticle_image_url;
 
@@ -71,10 +75,10 @@ function ProjectArticle() {
         {articleContent?.pArticle_title}
       </p>
       <div className='techStacks'>
-        {techStack?.map((stack) => {
+        {articleSkills?.map((skill) => {
           return (
-            <div className='techStackButton' key={stack}>
-              {stack}
+            <div className='techStackButton' key={skill.tag_name}>
+              {skill.tag_name}
             </div>
           );
         })}

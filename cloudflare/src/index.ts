@@ -95,7 +95,7 @@ export default {
       if (url.pathname === '/api/db/projects') {
         // If you did not use `DB` as your binding name, change it here
         const { results } = await env.portfolio_db
-          .prepare('SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, a.pArticle_slug FROM Projects AS p LEFT JOIN ProjectArticles AS a ON a.project_name = p.project_name')
+          .prepare('SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, pa.pArticle_slug FROM Projects AS p LEFT JOIN ProjectArticles AS pa ON pa.project_name = p.project_name')
           .run();
 
         return json({results}, 200, allowedOrigin);
@@ -113,7 +113,12 @@ export default {
         const slug = url.pathname.replace('/api/articles/', '');
 
         const { results } = await env.portfolio_db
-          .prepare('SELECT a.pArticle_title, a.pArticle_tech_stack, pArticle_image_url, a.pArticle_slug, a.pArticle_content, p.project_github FROM ProjectArticles AS a JOIN Projects AS p ON a.project_name = p.project_name WHERE a.pArticle_slug = ?')
+          .prepare('SELECT pa.pArticle_title, pArticle_image_url, pa.pArticle_slug, pa.pArticle_content, p.project_github FROM ProjectArticles AS pa JOIN Projects AS p ON pa.project_name = p.project_name WHERE pa.pArticle_slug = ?')
+          .bind(slug)
+          .run();
+
+        const { results: tags }= await env.portfolio_db
+          .prepare('SELECT t.tag_name FROM ProjectArticles pa JOIN ProjectTag pt ON pa.project_name = pt.project_name JOIN Tag t ON pt.tag_name = t.tag_name WHERE pa.pArticle_slug = ?')
           .bind(slug)
           .run();
 
@@ -121,7 +126,11 @@ export default {
           return json({ error: 'Article not found' }, 404, allowedOrigin);
         }
 
-        return json({results}, 200, allowedOrigin);
+        if (!tags) {
+          return json({ error: 'Tags not found'}, 404, allowedOrigin);
+        }
+
+        return json({results, tags}, 200, allowedOrigin);
       }
 
       if (url.pathname === '/api/db/tags') {
