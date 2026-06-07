@@ -1,11 +1,9 @@
 import './WorkDisplay.css';
-import type { WorkExperience } from '../../pages/Professional/SkillsExperience.tsx';
+import type { WorkDisplayProps } from '../../types/work.ts';
 import { Link } from 'react-router-dom';
-import { CLOUDFLARE_R2_BUCKET } from '../../imports/constants.ts';
+import { CLOUDFLARE_R2_BUCKET } from '../../config/constants.ts';
 
-interface WorkDisplayProps {
-  work: WorkExperience;
-}
+
 
 function WorkDisplay({work}: WorkDisplayProps) {
   const imageUrl = new URL(work.company_logo_url, CLOUDFLARE_R2_BUCKET).toString();

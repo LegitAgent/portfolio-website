@@ -1,7 +1,7 @@
 import './Contacts.css';
 import { useEffect, useState } from 'react';
 import { COLLAB_AVAILABILITY, POSITION_AVAILABILITY, FREELANCE_AVAILABILITY,
-         COLLAB_DESC, POSITION_DESC, FREELANCE_DESC } from '../../imports/constants';
+         COLLAB_DESC, POSITION_DESC, FREELANCE_DESC } from '../../config/constants';
 
 interface ProfessionalLink {
   img_url: string;

@@ -1,22 +1,10 @@
 import './Projects.css';
-import { CLOUDFLARE_GATEWAY } from '../../imports/constants.ts';
+import { CLOUDFLARE_GATEWAY } from '../../config/constants.ts';
 import ProjectsDisplay from '../../components/ProjectsDisplay/ProjectsDisplay.tsx';
 import LoadingScreen from '../Misc/LoadingScreen.tsx';
 import ErrorScreen from '../Misc/ErrorScreen.tsx';
-
 import { useState, useEffect } from 'react';
-
-export interface Project {
-  project_name: string;
-  project_description: string;
-  project_github: string;
-  project_img_url: string;
-  pArticle_slug: string;
-}
-
-interface ProjectResponse {
-  results: Project[];
-}
+import type { ProjectResponse } from '../../types/project.ts';
 
 const projectGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/projects'; // path to project db
 

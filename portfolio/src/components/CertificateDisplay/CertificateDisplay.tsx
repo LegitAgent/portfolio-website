@@ -1,7 +1,7 @@
 import './CertificateDisplay.css';
-import type { Certificate } from '../../pages/Professional/Certificates.tsx';
-import { redirect } from '../../imports/routing.ts';
-import { CLOUDFLARE_R2_BUCKET } from '../../imports/constants';
+import type { Certificate } from '../../types/certificate.ts';
+import { redirect } from '../../config/routing.ts';
+import { CLOUDFLARE_R2_BUCKET } from '../../config/constants.ts';
 
 interface CertificateDisplayProps {
   certificate: Certificate;

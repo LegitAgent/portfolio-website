@@ -1,11 +1,7 @@
 import './ProjectsDisplay.css';
-import type { Project } from '../../pages/Professional/Projects.tsx';
+import type { ProjectDisplayProps } from '../../types/project.ts';
 import { Link } from 'react-router-dom';
-import { CLOUDFLARE_R2_BUCKET } from '../../imports/constants.ts';
-
-interface ProjectDisplayProps {
-  project: Project;
-}
+import { CLOUDFLARE_R2_BUCKET } from '../../config/constants.ts';
 
 function ProjectsDisplay({project}: ProjectDisplayProps) {
   const imageUrl = new URL(project.project_img_url, CLOUDFLARE_R2_BUCKET).toString();

@@ -16,6 +16,9 @@ import Certificates from './pages/Professional/Certificates.tsx';
 // contacts
 import Contacts from './pages/Contacts/Contacts.tsx';
 
+// dev stats
+import Stats from './pages/Stats/Stats.tsx';
+
 // dynamic
 import ProjectArticle from './components/ProjectArticle/ProjectArticle.tsx';
 import WorkArticle from './components/WorkArticle/WorkArticle.tsx';
@@ -40,6 +43,8 @@ function App() {
     { url: '/resume', redirectElement: <Resume /> },
     // contacts
     { url: '/contacts', redirectElement: <Contacts />},
+    // dev stats
+    { url: '/stats', redirectElement: <Stats />},
     // dynamic
     { url: '/projects/:slug', redirectElement: <ProjectArticle />},
     { url: '/skills_experience/:slug', redirectElement: <WorkArticle />},

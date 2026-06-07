@@ -1,27 +1,12 @@
 import './ProjectArticle.css';
-import { CLOUDFLARE_GATEWAY, CLOUDFLARE_R2_BUCKET } from '../../imports/constants';
+import { CLOUDFLARE_GATEWAY, CLOUDFLARE_R2_BUCKET } from '../../config/constants.ts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import LoadingScreen from '../../pages/Misc/LoadingScreen.tsx';
 import ErrorScreen from '../../pages/Misc/ErrorScreen.tsx';
 import WrongPage from '../../pages/Misc/WrongPage.tsx';
+import type { ArticleResponse } from '../../types/project.ts';
 
-interface ProjectArticle {
-  pArticle_title: string;
-  pArticle_image_url: string;
-  pArticle_slug: string;
-  pArticle_content: string;
-  project_github: string;
-}
-
-export interface Tag {
-  tag_name: string;
-}
-
-interface ArticleResponse {
-  results: ProjectArticle[];
-  tags: Tag[];
-}
 
 function ProjectArticle() {
   const navigate = useNavigate();

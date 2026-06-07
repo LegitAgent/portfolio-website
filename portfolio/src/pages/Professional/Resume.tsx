@@ -1,6 +1,6 @@
 import './Resume.css';
-import { redirect } from '../../imports/routing';
-import { RESUME_NAME, RESUME_ICON } from '../../imports/constants';
+import { redirect } from '../../config/routing';
+import { RESUME_NAME, RESUME_ICON } from '../../config/constants';
 import { useNavigate } from 'react-router-dom';
 
 function Resume() {

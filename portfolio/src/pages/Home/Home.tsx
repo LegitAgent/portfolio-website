@@ -1,7 +1,7 @@
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
-import { redirect } from '../../imports/routing';
-import { GITHUB_URL, LINKEDIN_URL, GITHUB_ICON, LINKEDIN_ICON, EMAIL_ICON, PROFILE_PICTURE } from '../../imports/constants';
+import { redirect } from '../../config/routing';
+import { GITHUB_URL, LINKEDIN_URL, GITHUB_ICON, LINKEDIN_ICON, EMAIL_ICON, PROFILE_PICTURE } from '../../config/constants';
 
 // import Tilty from 'react-tilty'
 

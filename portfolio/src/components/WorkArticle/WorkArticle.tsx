@@ -1,29 +1,11 @@
 import './WorkArticle.css';
-import { CLOUDFLARE_GATEWAY, CLOUDFLARE_R2_BUCKET } from '../../imports/constants';
+import { CLOUDFLARE_GATEWAY, CLOUDFLARE_R2_BUCKET } from '../../config/constants.ts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import type { Tag } from '../ProjectArticle/ProjectArticle.tsx';
 import LoadingScreen from '../../pages/Misc/LoadingScreen.tsx';
 import ErrorScreen from '../../pages/Misc/ErrorScreen.tsx';
 import WrongPage from '../../pages/Misc/WrongPage.tsx';
-
-interface WorkArticle {
-  article_title: string;
-  article_summary: string | null;
-  article_content: string;
-  article_image_url: string | null;
-  responsibilities: string | null;
-  achievements: string | null;
-  company_name: string;
-  role_title: string;
-  company_website: string | null;
-  work_slug: string;
-}
-
-interface WorkResponse {
-  results : WorkArticle[];
-  tags: Tag[];
-}
+import type { WorkResponse } from '../../types/work.ts';
 
 function WorkArticle() {
   const navigate = useNavigate();

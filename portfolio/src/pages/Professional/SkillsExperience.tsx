@@ -1,38 +1,11 @@
 import './SkillsExperience.css';
-import { CLOUDFLARE_GATEWAY } from '../../imports/constants';
+import { CLOUDFLARE_GATEWAY } from '../../config/constants.ts';
 import { useEffect, useState } from 'react';
 import WorkDisplay from '../../components/WorkDisplay/WorkDisplay.tsx';
 import ErrorScreen from '../Misc/ErrorScreen';
 import LoadingScreen from '../Misc/LoadingScreen';
-
-interface Tags {
-  tag_name: string;
-  skill_type: string;
-}
-
-export interface WorkExperience {
-  work_id: number;
-  company_name: string;
-  role_title: string;
-  employment_type: string;
-  location: string | null;
-  start_date: string;
-  end_date: string | null;
-  is_current: number;
-  short_description: string;
-  company_logo_url: string;
-  company_website: string | null;
-  display_order: number;
-  work_slug: string;
-}
-
-interface TagsResponse {
-  tags: Tags[];
-}
-
-interface WorkExperienceResponse {
-  results: WorkExperience[];
-}
+import type { Tag, TagsResponse } from '../../types/tag.ts';
+import type { WorkExperienceResponse } from '../../types/work.ts';
 
 const tagsGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/tags'; // path to tags db
 const workGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/work'; // path to work db
@@ -42,7 +15,7 @@ function SkillsExperience() {
   const [tag, setTag] = useState<TagsResponse | null>(null);
   const [hasErrorTag, setHasErrorTag] = useState<boolean>(false);
 
-  const findSkill = (skill_type: string, skills: TagsResponse): Tags[] => {
+  const findSkill = (skill_type: string, skills: TagsResponse): Tag[] => {
     return skills.tags.filter(tag => tag.skill_type === skill_type);
   };
 

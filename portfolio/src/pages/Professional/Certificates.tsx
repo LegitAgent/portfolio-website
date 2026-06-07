@@ -1,26 +1,11 @@
 import './Certificates.css';
-import { CLOUDFLARE_GATEWAY } from '../../imports/constants.ts';
+import { CLOUDFLARE_GATEWAY } from '../../config/constants.ts';
 import CertificateDisplay from '../../components/CertificateDisplay/CertificateDisplay.tsx';
 import LoadingScreen from '../Misc/LoadingScreen.tsx';
 import ErrorScreen from '../Misc/ErrorScreen.tsx';
+import type { CertificateResponse } from '../../types/certificate.ts';
 
 import { useState, useEffect } from 'react';
-
-export interface Certificate {
-  id: number;
-  title: string;
-  issuer: string;
-  completion_date: string;
-  credential_url: string | null;
-  certificate_url: string;
-  image_alt: string;
-  skills: string;
-  image_url: string;
-}
-
-interface CertificateResponse {
-  certificates: Certificate[];
-}
 
 const certificateGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/certificates'; // path to certificates db
 
