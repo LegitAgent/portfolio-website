@@ -20,6 +20,10 @@ function SkillsExperience() {
   const [tag, setTag] = useState<TagsResponse | null>(null);
   const [hasError, setHasError] = useState<boolean>(false);
 
+  const findSkill = (skill_type: string, skills: TagsResponse): Tags[] => {
+    return skills.tags.filter(tag => tag.skill_type === skill_type);
+  };
+
   useEffect(() => {
     fetch(tagsGatewayURL)
     .then((response) => {
@@ -42,22 +46,113 @@ function SkillsExperience() {
     return (<ErrorScreen />);
   }
 
-  if (isLoading) {
+  if (isLoading || !tag) {
     return (<LoadingScreen />);
   }
 
-
+  const language = findSkill('Language', tag);
+  const frontend = findSkill('Frontend', tag);
+  const backend = findSkill('Backend', tag);
+  const database = findSkill('Database', tag);
+  const cloud = findSkill('Cloud', tag);
+  const developerTool = findSkill('Developer Tool', tag);
+  const systems = findSkill('Systems', tag);
+  const gameDevelopment = findSkill('Game Development', tag);
+  const apiIntegration = findSkill('API / Integration', tag);
+  
   return (
     <section className='seContainer'>
       <section className='skillsContainer'>
-        <h1>Skills</h1>
-        {tag?.tags[0]?.skill_type}
+        <h1>Technical Skills</h1>
         <p className='skillsDescription'>these are my skills gang</p>
         <section className='technicalSkills'>
-          <h2>Technical Skills</h2>
+
+          <p className='skillType'>Languages</p>
+          <div className='skillContainer'>
+            {language.map((tag) => {
+              return (
+                <div className='tag'>{tag.tag_name}</div>
+              );
+            })}
+          </div>
+
+          <p className='skillType'>Front-End</p>
+          <div className='skillContainer'>
+            {frontend.map((tag) => {
+              return (
+                <div className='tag'>{tag.tag_name}</div>
+              );
+            })}
+          </div>
+
+          <p className='skillType'>Back-End</p>
+          <div className='skillContainer'>
+            {backend.map((tag) => {
+              return (
+                <div className='tag'>{tag.tag_name}</div>
+              );
+            })}
+          </div>
+        
+          <p className='skillType'>Database</p>
+          <div className='skillContainer'>
+            {database.map((tag) => {
+              return (
+                <div className='tag'>{tag.tag_name}</div>
+              );
+            })}
+          </div>
+
+          <p className='skillType'>Cloud</p>  
+          <div className='skillContainer'>
+            {cloud.map((tag) => {
+              return (
+                <div className='tag'>{tag.tag_name}</div>
+              );
+            })}
+          </div>
+
+          <p className='skillType'>Developer Tools</p>
+          <div className='skillContainer'>
+            {developerTool.map((tag) => {
+              return (
+                <div className='tag'>{tag.tag_name}</div>
+              );
+            })}
+          </div>
+
+          <p className='skillType'>Systems</p>
+          <div className='skillContainer'>
+            {systems.map((tag) => {
+              return (
+                <div className='tag'>{tag.tag_name}</div>
+              );
+            })}
+          </div>
+
+          <p className='skillType'>Game Development</p>
+          <div className='skillContainer'>
+            {gameDevelopment.map((tag) => {
+              return (
+                <div className='tag'>{tag.tag_name}</div>
+              );
+            })}
+          </div>
+          
+          <p className='skillType'>API / Integration</p>
+          <div className='skillContainer'>
+              {apiIntegration.map((tag) => {
+                return (
+                  <div className='tag'>{tag.tag_name}</div>
+                );
+              })}
+          </div>
+
         </section>
       </section>
+
       <section className='experienceContainer'>
+        <h1>Experiences</h1>
         these are my experiences
       </section>
     </section>
