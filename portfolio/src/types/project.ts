@@ -8,16 +8,16 @@ interface Project {
   pArticle_slug: string;
 }
 
-export interface ProjectResponse {
-  results: Project[];
-}
-
 interface ProjectArticle {
   pArticle_title: string;
   pArticle_image_url: string;
   pArticle_slug: string;
   pArticle_content: string;
   project_github: string;
+}
+
+export interface ProjectResponse {
+  results: Project[];
 }
 
 export interface ArticleResponse {

@@ -11,6 +11,8 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 // npx wrangler deploy
+import { getLeetCodeStats } from "./services/leetcode";
+
 function json(data: unknown, status = 200, origin = '*') {
   return new Response(JSON.stringify(data), { // actual data
     status,
@@ -170,6 +172,20 @@ export default {
         }
 
         return json({results, tags}, 200, allowedOrigin);
+      }
+
+      if (url.pathname.startsWith('/api/leetcode/')) {
+        const username = url.pathname.replace('/api/leetcode/', '');
+        if (!username) {
+          return json({ error: 'Username is required' }, 400, allowedOrigin);
+        }
+
+        const stats = await getLeetCodeStats(username);
+        if (!stats) {
+          return json({ error: 'LeetCode user not found' }, 400, allowedOrigin);
+        }
+
+        return json({stats}, 200, allowedOrigin);
       }
 
       return json({error: 'End point does not exist'}, 404, allowedOrigin)
