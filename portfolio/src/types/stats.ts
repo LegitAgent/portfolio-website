@@ -13,6 +13,16 @@ interface LeetCodeStats {
 
   hardSolved: number;
   totalHard: number;
+
+  fundamentalSkills: Array<SkillCount>,
+  intermediateSkills: Array<SkillCount>,
+  advancedSkills: Array<SkillCount>,
+}
+
+interface SkillCount {
+  tagName: string;
+  tagSlug: string;
+  problemsSolved: number;
 }
 
 export interface LeetCodeStatsResponse {

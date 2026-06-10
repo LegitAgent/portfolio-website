@@ -54,8 +54,8 @@ function SkillsExperience() {
       setIsLoadingWork(false);
     })
     .catch(() => {
-      setHasErrorTag(true);
-      setHasErrorWork(false);
+      setHasErrorWork(true);
+      setIsLoadingWork(false);
     });
   }, []);
 

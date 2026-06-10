@@ -1,6 +1,18 @@
+interface DifficultyCount {
+  difficulty: string;
+  count: number;
+}
+
+interface SkillCount {
+  tagName: string;
+  tagSlug: string;
+  problemsSolved: number;
+}
+
 const LEETCODE_API = 'https://leetcode.com/graphql';
 
 // for more information: https://leetcode.com/discuss/post/1297705/is-there-public-api-endpoints-available-h0661/
+
 const query = `
   query userSessionProgress($username: String!) {
     allQuestionsCount {
@@ -13,6 +25,23 @@ const query = `
         acSubmissionNum {
           difficulty
           count
+        }
+      }
+      tagProblemCounts {
+        advanced {
+          tagName
+          tagSlug
+          problemsSolved
+        }
+        intermediate {
+          tagName
+          tagSlug
+          problemsSolved
+        }
+        fundamental {
+          tagName
+          tagSlug
+          problemsSolved
         }
       }
     }
@@ -39,37 +68,37 @@ export async function getLeetCodeStats(username: string) {
   // data area of the leetcode response
   const body = await response.json<{
     data?: {
-      allQuestionsCount: Array<{
-        difficulty: string,
-        count: number
-      }>;
+      allQuestionsCount: Array<DifficultyCount>;
       matchedUser: {
         username: string;
         submitStats: {
-          acSubmissionNum: Array<{
-            difficulty: string;
-            count: number;
-          }>;
+          acSubmissionNum: Array<DifficultyCount>;
+        };
+        tagProblemCounts: {
+          advanced: Array<SkillCount>;
+          intermediate: Array<SkillCount>;
+          fundamental: Array<SkillCount>;
         };
       } | null;
+      errors?: Array<{ message: string }>;
     };
-    errors?: Array<{ message: string }>;
   }>();
 
-  if (body.errors?.length) {
-    throw new Error(body.errors[0].message);
+  if (body.data?.errors?.length) {
+    throw new Error(body.data?.errors[0].message);
   }
 
-  if (!body.data?.matchedUser) {
+  if (!body?.data?.matchedUser) {
     return null;
   }
 
-  const submissions = body.data.matchedUser.submitStats.acSubmissionNum;
-  const totalProblems = body.data.allQuestionsCount;
+  const submissions = body.data?.matchedUser.submitStats.acSubmissionNum;
+  const totalProblems = body.data?.allQuestionsCount;
+  const tagProblems = body.data?.matchedUser.tagProblemCounts;
 
   // Leetcode response object
   return {
-    username: body.data.matchedUser.username,
+    username: body.data?.matchedUser.username,
     totalSolved: findCount(submissions, 'All'),
     totalProblems: findCount(totalProblems, 'All'),
 
@@ -81,6 +110,10 @@ export async function getLeetCodeStats(username: string) {
 
     hardSolved: findCount(submissions, 'Hard'),
     totalHard: findCount(totalProblems, 'Hard'),
+
+    fundamentalSkills: tagProblems.fundamental,
+    intermediateSkills: tagProblems.intermediate,
+    advancedSkills: tagProblems.advanced,
   };
 }
 

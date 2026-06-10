@@ -16,9 +16,18 @@ async function fetchLeetcodeStats() {
 
 function Stats() {
   const [leetcode, setLeetcode] = useState<LeetCodeStatsResponse | null>(null);
+  const [isLoadingLeet, setIsLoadingLeet] = useState<boolean>(true);
+  const [hasErrorLeet, setHasErrorLeet] = useState<boolean>(false);
+
   useEffect(() => {
     async function setLeetcodeStats() {
-      setLeetcode(await fetchLeetcodeStats());
+      try {
+        setLeetcode(await fetchLeetcodeStats());
+      } catch {
+        setHasErrorLeet(true);
+      } finally {
+        setIsLoadingLeet(false);
+      }
     }
 
     setLeetcodeStats();
