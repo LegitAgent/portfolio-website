@@ -9,6 +9,24 @@ interface SkillCount {
   problemsSolved: number;
 }
 
+interface LeetcodeResponse {
+  data?: {
+    allQuestionsCount: Array<DifficultyCount>;
+    matchedUser: {
+      username: string;
+      submitStats: {
+        acSubmissionNum: Array<DifficultyCount>;
+      };
+      tagProblemCounts: {
+        advanced: Array<SkillCount>;
+        intermediate: Array<SkillCount>;
+        fundamental: Array<SkillCount>;
+      };
+    } | null;
+  };
+  errors?: Array<{ message: string }>;
+}
+
 const LEETCODE_API = 'https://leetcode.com/graphql';
 
 // for more information: https://leetcode.com/discuss/post/1297705/is-there-public-api-endpoints-available-h0661/
@@ -62,30 +80,16 @@ export async function getLeetCodeStats(username: string) {
   });
 
   if (!response.ok) {
-    throw new Error(`LeetCode returned ${response.status}`);
+    const details = await response.text();
+
+    throw new Error(`Leetcode returned ${response.status}: ${details}`);
   }
 
   // data area of the leetcode response
-  const body = await response.json<{
-    data?: {
-      allQuestionsCount: Array<DifficultyCount>;
-      matchedUser: {
-        username: string;
-        submitStats: {
-          acSubmissionNum: Array<DifficultyCount>;
-        };
-        tagProblemCounts: {
-          advanced: Array<SkillCount>;
-          intermediate: Array<SkillCount>;
-          fundamental: Array<SkillCount>;
-        };
-      } | null;
-      errors?: Array<{ message: string }>;
-    };
-  }>();
+  const body = await response.json<LeetcodeResponse>();
 
-  if (body.data?.errors?.length) {
-    throw new Error(body.data?.errors[0].message);
+  if (body.errors?.length) {
+    throw new Error(body.errors[0].message);
   }
 
   if (!body?.data?.matchedUser) {

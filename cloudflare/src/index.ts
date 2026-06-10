@@ -12,6 +12,8 @@
  */
 // npx wrangler deploy
 import { getLeetCodeStats } from "./services/leetcode";
+import { getGithubStats } from "./services/github";
+import { stat } from "node:fs";
 
 function json(data: unknown, status = 200, origin = '*') {
   return new Response(JSON.stringify(data), { // actual data
@@ -180,17 +182,34 @@ export default {
           return json({ error: 'Username is required' }, 400, allowedOrigin);
         }
 
-        const stats = await getLeetCodeStats(username);
-        if (!stats) {
+        const leetcodeStats = await getLeetCodeStats(username);
+        if (!leetcodeStats) {
           return json({ error: 'LeetCode user not found' }, 400, allowedOrigin);
         }
 
-        return json({stats}, 200, allowedOrigin);
+        return json({leetcodeStats}, 200, allowedOrigin);
+      }
+
+      if (url.pathname.startsWith('/api/github/')) {
+        const username = url.pathname.replace('/api/github/', '');
+        if (!username) {
+          return json({ error: 'Username is required' }, 400, allowedOrigin);
+        }
+
+        const githubStats = await getGithubStats(username, env);
+        if (!githubStats) {
+          return json({ error: 'Github user not found' }, 400, allowedOrigin);
+        }
+
+        return json({githubStats}, 200, allowedOrigin);
       }
 
       return json({error: 'End point does not exist'}, 404, allowedOrigin)
     } catch(error) {
-      return json({error: 'Internal server error'}, 500, allowedOrigin)
+
+      return json({
+        error: error instanceof Error ? error.message : "Unknown error",
+      }, 500, allowedOrigin);
     }
 	},
 } satisfies ExportedHandler<Env>;

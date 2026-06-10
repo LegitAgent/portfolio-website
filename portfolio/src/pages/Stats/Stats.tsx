@@ -14,6 +14,17 @@ async function fetchLeetcodeStats() {
   return data;
 }
 
+async function fetchGithubStats() {
+  const response = await fetch(`${CLOUDFLARE_GATEWAY}api/github/LegitAgent`);
+
+  if (!response.ok) {
+    throw new Error('Could not load Github statistics');
+  }
+
+  const data = await response.json();
+  return data;
+}
+
 function Stats() {
   const [leetcode, setLeetcode] = useState<LeetCodeStatsResponse | null>(null);
   const [isLoadingLeet, setIsLoadingLeet] = useState<boolean>(true);
@@ -33,7 +44,26 @@ function Stats() {
     setLeetcodeStats();
   }, []);
   
+  const [github, setGithub] = useState<LeetCodeStatsResponse | null>(null);
+  const [isLoadingGit, setIsLoadingGit] = useState<boolean>(true);
+  const [hasErrorGit, setHasErrorGit] = useState<boolean>(false);
+
+  useEffect(() => {
+    async function setLeetcodeStats() {
+      try {
+        setGithub(await fetchGithubStats());
+      } catch {
+        setHasErrorGit(true);
+      } finally {
+        setIsLoadingGit(false);
+      }
+    }
+
+    setLeetcodeStats();
+  }, []);
+
   console.log(leetcode);
+  console.log(github);
 
   return (
     <></>
