@@ -3,6 +3,14 @@ interface GithubResponse {
     user: {
       name: string | null;
       login: string;
+      status: {
+        message: string;
+        emoji: string;
+      } | null;
+      contributionsCollection: {
+        totalCommitContributions: number;
+        restrictedContributionsCount: number;
+      };
       repositories: {
         nodes: Array<{
           name: string;
@@ -11,7 +19,7 @@ interface GithubResponse {
           isPrivate: boolean;
           stargazerCount: number;
         } | null>;
-        pageInfo: {
+        pageInfo: { // for pagination
           endCursor: string | null;
           hasNextPage: boolean;
         };
@@ -24,10 +32,18 @@ interface GithubResponse {
 const GITHUB_API = 'https://api.github.com/graphql';
 
 const query = `
-  query UserRepositories($login: String!) {
+  query UserRepositories($login: String!, $fromYear: DateTime, $toYear: DateTime) {
     user(login: $login) {
       name
       login
+      status {
+        message
+        emoji
+      }
+      contributionsCollection(from: $fromYear, to: $toYear) {
+        totalCommitContributions
+        restrictedContributionsCount
+      }
       repositories(
         first: 10
         orderBy: { field: UPDATED_AT, direction: DESC }
@@ -48,7 +64,7 @@ const query = `
   }
 `;
 
-export async function getGithubStats(username: string, env: Env) {
+export async function getGithubStats(username: string, env: Env, fromDate: string, toDate: string) {
   const response = await fetch(GITHUB_API, {
     method: 'POST',
     headers: {
@@ -58,7 +74,11 @@ export async function getGithubStats(username: string, env: Env) {
     },
     body: JSON.stringify({
       query,
-      variables: { login: username },
+      variables: {
+        login: username,
+        fromYear: fromDate,
+        toYear: toDate,
+      },
     }),
   });
 
@@ -71,8 +91,43 @@ export async function getGithubStats(username: string, env: Env) {
   const body = await response.json<GithubResponse>();
 
   if (body.errors?.length) {
-    throw new Error(body.errors[0].message);
+    const message = body.errors[0].message;
+
+    if (message.includes('Could not resolve to a User')) {
+      return null;
+    }
+
+    throw new Error(message);
   }
 
-  return body;
+  const user = body.data?.user;
+
+  if (!user) {
+    return null;
+  }
+
+  const { name, login, status, contributionsCollection, repositories } = user;
+
+  return {
+    name,
+    login,
+    status: status ? {
+      message: status.message,
+      emoji: status.emoji,
+    } : null,
+    contributions: {
+      commits: contributionsCollection.totalCommitContributions,
+      restricted: contributionsCollection.restrictedContributionsCount,
+    },
+    // map repos
+    repositories: repositories.nodes
+      .filter((repository) => repository !== null)
+      .map((repository) => ({
+        name: repository.name,
+        description: repository.description,
+        url: repository.url,
+        isPrivate: repository.isPrivate,
+        stars: repository.stargazerCount,
+      })),
+  };
 }

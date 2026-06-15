@@ -126,7 +126,7 @@ async function cachedJson(request: Request, ctx: ExecutionContext, ttl: number, 
   const response = json(data, status, allowedOrigin);
   response.headers.set('Cache-Control', `public, s-maxage=${ttl}`);
 
-  if (response.ok) {
+  if (response.ok && ttl > 0) {
     ctx.waitUntil(cache.put(cacheKey, response.clone()));
   }
   
@@ -160,7 +160,7 @@ export default {
       return json({error: `Rate limit exceeded for ${url.pathname}`}, 429, allowedOrigin)
     }
 
-    const TTL_TIME = 3600;
+    const TTL_TIME = 0;
     // routes
     if (request.method === 'GET') {
       try {
@@ -339,7 +339,9 @@ export default {
               };
             }
 
-            const githubStats = await getGithubStats(username, env);
+            const fromDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString(); // new date - 1 year
+            const toDate = new Date().toISOString();
+            const githubStats = await getGithubStats(username, env, fromDate, toDate);
             if (!githubStats) {
               return {
                 data: { error: 'Github user not found' },

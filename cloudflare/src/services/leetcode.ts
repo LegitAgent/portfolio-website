@@ -87,9 +87,15 @@ export async function getLeetCodeStats(username: string) {
 
   // data area of the leetcode response
   const body = await response.json<LeetcodeResponse>();
-
+  
   if (body.errors?.length) {
-    throw new Error(body.errors[0].message);
+    const message = body.errors[0].message;
+
+    if (message.includes('That user does not exist.')) {
+      return null;
+    }
+
+    throw new Error(message);
   }
 
   if (!body?.data?.matchedUser) {
