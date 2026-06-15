@@ -3,6 +3,8 @@ interface GithubResponse {
     user: {
       name: string | null;
       login: string;
+      bio: string;
+      avatarUrl: string;
       status: {
         message: string;
         emoji: string;
@@ -36,6 +38,8 @@ const query = `
     user(login: $login) {
       name
       login
+      bio
+      avatarUrl
       status {
         message
         emoji
@@ -106,11 +110,13 @@ export async function getGithubStats(username: string, env: Env, fromDate: strin
     return null;
   }
 
-  const { name, login, status, contributionsCollection, repositories } = user;
+  const { name, login, bio, avatarUrl, status, contributionsCollection, repositories } = user;
 
   return {
     name,
     login,
+    bio,
+    avatarUrl,
     status: status ? {
       message: status.message,
       emoji: status.emoji,

@@ -1,4 +1,10 @@
-interface LeetCodeStats {
+interface SkillCount {
+  tagName: string;
+  tagSlug: string;
+  problemsSolved: number;
+}
+
+export interface LeetCodeStats {
   username: string;
   ranking: number | null;
 
@@ -19,12 +25,29 @@ interface LeetCodeStats {
   advancedSkills: Array<SkillCount>,
 }
 
-interface SkillCount {
-  tagName: string;
-  tagSlug: string;
-  problemsSolved: number;
+interface Repository {
+  name: string;
+  description: string | null;
+  url: string;
+  isPrivate: boolean;
+  stars: number;
 }
 
-export interface LeetCodeStatsResponse {
-  stats: LeetCodeStats;
+export interface GithubStats {
+  name: string | null;
+  login: string;
+  bio: string;
+  avatarUrl: string;
+
+  status: {
+    message: string;
+    emoji: string;
+  } | null;
+
+  contributions: {
+    commits: number;
+    restricted: number;
+  };
+
+  repositories: Array<Repository>;
 }

@@ -1,5 +1,5 @@
 import './Stats.css';
-import type { LeetCodeStatsResponse } from '../../types/stats';
+import type { LeetCodeStats, GithubStats } from '../../types/stats';
 import { CLOUDFLARE_GATEWAY } from '../../config/constants';
 import { useEffect, useState } from 'react';
 
@@ -26,7 +26,7 @@ async function fetchGithubStats() {
 }
 
 function Stats() {
-  const [leetcode, setLeetcode] = useState<LeetCodeStatsResponse | null>(null);
+  const [leetcode, setLeetcode] = useState<LeetCodeStats | null>(null);
   const [isLoadingLeet, setIsLoadingLeet] = useState<boolean>(true);
   const [hasErrorLeet, setHasErrorLeet] = useState<boolean>(false);
 
@@ -44,7 +44,7 @@ function Stats() {
     setLeetcodeStats();
   }, []);
   
-  const [github, setGithub] = useState<LeetCodeStatsResponse | null>(null);
+  const [github, setGithub] = useState<GithubStats | null>(null);
   const [isLoadingGit, setIsLoadingGit] = useState<boolean>(true);
   const [hasErrorGit, setHasErrorGit] = useState<boolean>(false);
 
