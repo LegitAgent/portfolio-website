@@ -16,41 +16,38 @@ function Certificates() {
 
   useEffect(() => {
     fetch(certificateGatewayURL)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Request failed ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((json) => {
-      setCertificates(json);
-      setIsLoading(false);
-    })
-    .catch(() => {
-      setHasError(true);
-      setIsLoading(false);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Request failed ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((json) => {
+        setCertificates(json);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setHasError(true);
+        setIsLoading(false);
+      });
   }, []);
 
-  if(hasError) {
-    return (<ErrorScreen />);
+  if (hasError) {
+    return <ErrorScreen />;
   }
 
-  if(isLoading) {
-    return (<LoadingScreen />);
+  if (isLoading) {
+    return <LoadingScreen />;
   }
 
   return (
     <>
-      <div className='flex items-center justify-center text-7xl'>Certificates</div>
-      <div className='certificateBox'>
-        <div className='certificateList'>
+      <div className="flex items-center justify-center text-7xl">Certificates</div>
+      <div className="certificateBox">
+        <div className="certificateList">
           {certificates?.certificates?.map((certificateStuff) => {
-            return (
-              <CertificateDisplay key={certificateStuff.id} certificate={certificateStuff}/>
-            );
+            return <CertificateDisplay key={certificateStuff.id} certificate={certificateStuff} />;
           })}
-
         </div>
       </div>
     </>

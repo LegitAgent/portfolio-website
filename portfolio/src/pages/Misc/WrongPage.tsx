@@ -5,9 +5,11 @@ function WrongPage() {
   const navigate = useNavigate();
 
   return (
-    <div className='wrong'>
+    <div className="wrong">
       WRONG PAGE
-      <button className='highlight' onClick={() => navigate(-1)}>Back</button>
+      <button className="highlight" onClick={() => navigate(-1)}>
+        Back
+      </button>
     </div>
   );
 }

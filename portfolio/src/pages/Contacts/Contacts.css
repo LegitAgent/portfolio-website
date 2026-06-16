@@ -3,7 +3,7 @@
   align-items: center;
   padding-top: 5vh;
   flex-direction: column;
-  gap: 25px
+  gap: 25px;
 }
 
 .emailCopy {
@@ -75,4 +75,3 @@
 .red {
   background-color: red;
 }
-

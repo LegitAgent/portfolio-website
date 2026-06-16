@@ -3,18 +3,20 @@ import type { ProjectDisplayProps } from '../../types/project.ts';
 import { Link } from 'react-router-dom';
 import { CLOUDFLARE_R2_BUCKET } from '../../config/constants.ts';
 
-function ProjectsDisplay({project}: ProjectDisplayProps) {
+function ProjectsDisplay({ project }: ProjectDisplayProps) {
   const imageUrl = new URL(project.project_img_url, CLOUDFLARE_R2_BUCKET).toString();
 
-  return(
-    <div className='projectDisplay'>
-      <img className='projectImage' src={imageUrl} alt={project.project_name}/>
-      <p className='title'>{project.project_name}</p>
-      <div className='textContent'>
-        <p className='description'>{project.project_description}</p>
-        <div className='links'>
-          <a href={project.project_github} target='_blank' rel='noreferrer'>Github</a>
-          <Link className='projectLink' to={`/projects/${project.pArticle_slug}`} aria-label='Article' >
+  return (
+    <div className="projectDisplay">
+      <img className="projectImage" src={imageUrl} alt={project.project_name} />
+      <p className="title">{project.project_name}</p>
+      <div className="textContent">
+        <p className="description">{project.project_description}</p>
+        <div className="links">
+          <a href={project.project_github} target="_blank" rel="noreferrer">
+            Github
+          </a>
+          <Link className="projectLink" to={`/projects/${project.pArticle_slug}`} aria-label="Article">
             Read More
           </Link>
         </div>

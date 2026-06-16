@@ -2,6 +2,8 @@ import './Stats.css';
 import type { LeetCodeStats, GithubStats } from '../../types/stats';
 import { CLOUDFLARE_GATEWAY } from '../../config/constants';
 import { useEffect, useState } from 'react';
+import LoadingScreen from '../Misc/LoadingScreen';
+import ErrorScreen from '../Misc/ErrorScreen';
 
 async function fetchLeetcodeStats() {
   const response = await fetch(`${CLOUDFLARE_GATEWAY}api/leetcode/albamartindarius`);
@@ -43,7 +45,7 @@ function Stats() {
 
     setLeetcodeStats();
   }, []);
-  
+
   const [github, setGithub] = useState<GithubStats | null>(null);
   const [isLoadingGit, setIsLoadingGit] = useState<boolean>(true);
   const [hasErrorGit, setHasErrorGit] = useState<boolean>(false);
@@ -62,12 +64,18 @@ function Stats() {
     setLeetcodeStats();
   }, []);
 
+  if (isLoadingLeet || isLoadingGit) {
+    return <LoadingScreen />;
+  }
+
+  if (hasErrorLeet || hasErrorGit) {
+    return <ErrorScreen />;
+  }
+
   console.log(leetcode);
   console.log(github);
 
-  return (
-    <></>
-  );
+  return <></>;
 }
 
 export default Stats;

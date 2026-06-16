@@ -42,21 +42,21 @@ function App() {
     { url: '/certificates', redirectElement: <Certificates /> },
     { url: '/resume', redirectElement: <Resume /> },
     // contacts
-    { url: '/contacts', redirectElement: <Contacts />},
+    { url: '/contacts', redirectElement: <Contacts /> },
     // dev stats
-    { url: '/stats', redirectElement: <Stats />},
+    { url: '/stats', redirectElement: <Stats /> },
     // dynamic
-    { url: '/projects/:slug', redirectElement: <ProjectArticle />},
-    { url: '/skills_experience/:slug', redirectElement: <WorkArticle />},
+    { url: '/projects/:slug', redirectElement: <ProjectArticle /> },
+    { url: '/skills_experience/:slug', redirectElement: <WorkArticle /> },
     // misc.
     { url: '*', redirectElement: <WrongPage /> },
   ];
 
   return (
     <BrowserRouter>
-      <main className='app-shell'>
+      <main className="app-shell">
         <Background />
-        <div className='page-shell'>
+        <div className="page-shell">
           <Navbar />
           <Routes>
             {routes.map((route) => {

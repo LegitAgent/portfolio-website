@@ -15,41 +15,38 @@ function Projects() {
 
   useEffect(() => {
     fetch(projectGatewayURL)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Request failed ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((json) => {
-      setProjects(json);
-      setIsLoading(false);
-    })
-    .catch(() => {
-      setHasError(true);
-      setIsLoading(false);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Request failed ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((json) => {
+        setProjects(json);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setHasError(true);
+        setIsLoading(false);
+      });
   }, []);
 
-  if(hasError) {
-    return (<ErrorScreen />);
+  if (hasError) {
+    return <ErrorScreen />;
   }
 
-  if(isLoading) {
-    return (<LoadingScreen />);
+  if (isLoading) {
+    return <LoadingScreen />;
   }
-  
+
   return (
     <>
-      <div className='flex items-center justify-center text-7xl'>Projects</div>
-      <div className='projectBox'>
-        <div className='projectList'>
+      <div className="flex items-center justify-center text-7xl">Projects</div>
+      <div className="projectBox">
+        <div className="projectList">
           {projects?.results?.map((projectStuff) => {
-            return (
-              <ProjectsDisplay key={projectStuff.project_name} project={projectStuff}/>
-            );
+            return <ProjectsDisplay key={projectStuff.project_name} project={projectStuff} />;
           })}
-
         </div>
       </div>
     </>

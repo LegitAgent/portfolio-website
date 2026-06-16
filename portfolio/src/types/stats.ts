@@ -20,9 +20,9 @@ export interface LeetCodeStats {
   hardSolved: number;
   totalHard: number;
 
-  fundamentalSkills: Array<SkillCount>,
-  intermediateSkills: Array<SkillCount>,
-  advancedSkills: Array<SkillCount>,
+  fundamentalSkills: Array<SkillCount>;
+  intermediateSkills: Array<SkillCount>;
+  advancedSkills: Array<SkillCount>;
 }
 
 interface Repository {

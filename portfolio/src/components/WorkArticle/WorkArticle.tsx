@@ -19,53 +19,55 @@ function WorkArticle() {
 
   useEffect(() => {
     fetch(workArticleGateway)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Request failed ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((json) => {
-      setArticle(json);
-      setIsLoading(false);
-    })
-    .catch(() => {
-      setHasError(true);
-      setIsLoading(false);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Request failed ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((json) => {
+        setArticle(json);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setHasError(true);
+        setIsLoading(false);
+      });
   }, [workArticleGateway]);
 
   if (hasError) {
-    return (<ErrorScreen />);
+    return <ErrorScreen />;
   }
 
   if (article?.results.length === 0) {
-    return (<WrongPage />);
+    return <WrongPage />;
   }
 
   if (isLoading) {
-    return (<LoadingScreen />);
+    return <LoadingScreen />;
   }
-  
+
   const articleContent = article?.results[0];
   const articleSkills = article?.tags;
 
   const imageURL = CLOUDFLARE_R2_BUCKET + articleContent?.article_image_url; // TODO
 
   return (
-    <section className='workArticleContainer'>
+    <section className="workArticleContainer">
       <img src={imageURL} alt={articleContent?.article_title} />
       {articleContent?.article_title}
-      <div className='techStacks'>
+      <div className="techStacks">
         {articleSkills?.map((skill) => {
           return (
-            <div className='techStackButton' key={skill.tag_name}>
+            <div className="techStackButton" key={skill.tag_name}>
               {skill.tag_name}
             </div>
           );
         })}
       </div>
-      <button className='text-2xl' onClick={() => navigate(-1)}>Back</button> 
+      <button className="text-2xl" onClick={() => navigate(-1)}>
+        Back
+      </button>
     </section>
   );
 }
