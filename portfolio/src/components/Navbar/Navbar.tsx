@@ -1,5 +1,5 @@
 import './Navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { NavDropDown } from '../NavDropDown/NavDropDown.tsx';
 // type keyword needed since ts technically is still js and type checking disappears (import types with type keyword)
 import type { LinkItem } from '../NavDropDown/NavDropDown.tsx';
@@ -7,9 +7,8 @@ import { useState } from 'react';
 
 function Navbar() {
   const [showProfessionalDropdown, setProfessionalDropdown] = useState(false);
-  // const [showStatsDropdown, setStatsDropdown] = useState(false)
-  // const [showProfessionalDropdown, setProfessionalDropdown] = useState(false)
-
+  const location = useLocation();
+  
   const ProfessionalLinks: LinkItem[] = [
     { path: '/skills_experience', name: 'Skills & Experience', img_path: '/temp.jpg' },
     { path: '/projects', name: 'Projects', img_path: '/temp.jpg' },
@@ -17,9 +16,15 @@ function Navbar() {
     { path: '/resume', name: 'Resume', img_path: '/temp.jpg' },
   ];
 
+  const isPathActive = (path: string) => {
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+  };
+
+  const isProfessionalActive = ProfessionalLinks.some((link) => isPathActive(link.path));
+
   return (
     <nav className="navbar" role="navigation">
-      <Link className="navbar__iconLink" to="/" aria-label="Home">
+      <Link className={location.pathname === '/' ? 'navbar__iconLink is-active' : 'navbar__iconLink'} to="/" aria-label="Home">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 3.5 4 10v10.5h5.5v-6h5v6H20V10l-8-6.5Z" />
         </svg>
@@ -29,7 +34,7 @@ function Navbar() {
         {/* onclick does NOT render anything, just executes, so no rendering, so use usestate instead */}
         <div className="navbar__item">
           <button
-            className={showProfessionalDropdown ? 'navbar__iconLink focus-anim' : 'navbar__iconLink'}
+            className={showProfessionalDropdown || isProfessionalActive ? 'navbar__iconLink focus-anim is-active' : 'navbar__iconLink'}
             onClick={() => setProfessionalDropdown(!showProfessionalDropdown)}
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -37,14 +42,14 @@ function Navbar() {
             </svg>
           </button>
           {/* note that for props you can only pass one instance through the component file itself */}
-          {showProfessionalDropdown && <NavDropDown itemsArray={ProfessionalLinks} dropdownType="Professional" />}
+          <NavDropDown itemsArray={ProfessionalLinks} dropdownType="Professional" isOpen={showProfessionalDropdown} />
         </div>
-        <Link className="navbar__iconLink" to="/stats" aria-label="Statistics">
+        <Link className={isPathActive('/stats') ? 'navbar__iconLink is-active' : 'navbar__iconLink'} to="/stats" aria-label="Statistics">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M5.25 19.5A1.25 1.25 0 0 1 4 18.25v-5.5a1.25 1.25 0 0 1 2.5 0v5.5c0 .69-.56 1.25-1.25 1.25Zm6.75 0a1.25 1.25 0 0 1-1.25-1.25V8.75a1.25 1.25 0 0 1 2.5 0v9.5A1.25 1.25 0 0 1 12 19.5Zm6.75 0a1.25 1.25 0 0 1-1.25-1.25V4.75a1.25 1.25 0 0 1 2.5 0v13.5a1.25 1.25 0 0 1-1.25 1.25Z" />
           </svg>
         </Link>
-        <Link className="navbar__iconLink" to="/contacts" aria-label="Contact">
+        <Link className={isPathActive('/contacts') ? 'navbar__iconLink is-active' : 'navbar__iconLink'} to="/contacts" aria-label="Contact">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 6.75A1.75 1.75 0 0 1 5.75 5h12.5A1.75 1.75 0 0 1 20 6.75v10.5A1.75 1.75 0 0 1 18.25 19H5.75A1.75 1.75 0 0 1 4 17.25V6.75Zm1.78-.25L12 11.26l6.22-4.76H5.78ZM18.5 8l-6.04 4.62a.75.75 0 0 1-.92 0L5.5 8v9.25c0 .14.11.25.25.25h12.5c.14 0 .25-.11.25-.25V8Z" />
           </svg>
