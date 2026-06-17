@@ -2,14 +2,333 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 5vh;
-  gap: 25px;
+  width: min(100% - 2rem, 1080px);
+  margin: 0 auto;
+  padding: 5vh 0 6rem;
+  gap: 2rem;
+}
+
+.skillsContainer,
+.experienceContainer {
+  width: 100%;
+  animation: seFadeUp 520ms ease-out both;
+}
+
+.experienceContainer {
+  animation-delay: 120ms;
+}
+
+.skillsContainer h1,
+.experienceContainer h1 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1;
+  font-weight: 760;
+  letter-spacing: 0;
+}
+
+.skillsDescription,
+.experienceDescription {
+  margin-top: 0.55rem;
+  color: rgba(214, 229, 245, 0.72);
+  line-height: 1.6;
+}
+
+.technicalSkills {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.35rem;
+}
+
+.skillGroup {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid rgba(125, 188, 235, 0.14);
+  border-radius: 1rem;
+  background:
+    linear-gradient(180deg, rgba(8, 25, 58, 0.48), rgba(1, 8, 22, 0.68)),
+    rgba(2, 8, 22, 0.62);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.16);
+  animation: seFadeUp 520ms ease-out both;
+}
+
+.skillGroup:nth-child(1) {
+  animation-delay: 80ms;
+}
+
+.skillGroup:nth-child(2) {
+  animation-delay: 140ms;
+}
+
+.skillGroup:nth-child(3) {
+  animation-delay: 200ms;
+}
+
+.skillGroup:nth-child(4) {
+  animation-delay: 260ms;
+}
+
+.skillType {
+  margin: 0 0 0.75rem;
+  color: rgba(175, 220, 255, 0.94);
+  font-size: 0.84rem;
+  font-weight: 820;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .skillContainer {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.15rem;
+  padding: 0.38rem 0.68rem 0.38rem 0.45rem;
+  border: 1px solid rgba(125, 188, 235, 0.16);
+  border-radius: 999px;
+  color: rgba(238, 247, 255, 0.92);
+  background: rgba(6, 18, 42, 0.54);
+  font-size: 0.92rem;
+  font-weight: 700;
+  animation: tagPop 420ms ease-out both;
+}
+
+.tag:nth-child(2n) {
+  animation-delay: 45ms;
+}
+
+.tag:nth-child(3n) {
+  animation-delay: 90ms;
+}
+
+.tagIcon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+  opacity: 0.82;
+}
+
+.workTree {
+  position: relative;
+  margin-top: 1.75rem;
+  --tree-tail-extension: 6rem;
+  padding: 0.5rem 0;
+}
+
+.workTree::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: calc(-1 * var(--tree-tail-extension));
+  z-index: 0;
+  width: 2px;
+  height: var(--tree-tail-extension);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(125, 188, 235, 0.18), rgba(125, 188, 235, 0.08));
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.workList {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.workList::before {
+  content: '';
+  position: absolute;
+  top: 2.25rem;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, transparent, rgba(125, 188, 235, 0.22) 8%, rgba(125, 188, 235, 0.18) 92%, transparent),
+    rgba(125, 188, 235, 0.08);
+  transform: translateX(-50%);
+}
+
+.workMapItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
+  align-items: center;
+  min-height: 18rem;
+  padding: 2.4rem 0;
+  animation: workPathIn 620ms ease-out both;
+}
+
+.workMapItem:nth-child(1) {
+  animation-delay: 120ms;
+}
+
+.workMapItem:nth-child(2) {
+  animation-delay: 220ms;
+}
+
+.workMapItem:nth-child(3) {
+  animation-delay: 320ms;
+}
+
+.workMapItem:nth-child(4) {
+  animation-delay: 420ms;
+}
+
+.workMapItem:nth-child(n + 5) {
+  animation-delay: 520ms;
+}
+
+.workMapItem > .workDisplay {
+  position: relative;
+  z-index: 3;
+  grid-row: 1;
+  width: min(100%, 29rem);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    opacity 220ms ease;
+}
+
+.workMapItem--left > .workDisplay {
+  grid-column: 1;
+  justify-self: end;
+  margin-right: 1.35rem;
+}
+
+.workMapItem--right > .workDisplay {
+  grid-column: 3;
+  justify-self: start;
+  margin-left: 1.35rem;
+}
+
+.workMapNode {
+  position: relative;
+  z-index: 4;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border: 1px solid rgba(125, 188, 235, 0.22);
+  border-radius: 999px;
+  background: rgba(2, 8, 22, 0.86);
+  box-shadow:
+    0 0 0 0 rgba(125, 188, 235, 0),
+    inset 0 0 0 4px rgba(2, 8, 22, 0.92);
+  transition:
+    border-color 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.workMapNode span {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: inherit;
+  background: rgba(125, 188, 235, 0.42);
+  transition:
+    background-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.workMapCurve {
+  position: absolute;
+  top: 50%;
+  z-index: 0;
+  width: clamp(2.5rem, 7vw, 5.75rem);
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(125, 188, 235, 0.02), rgba(125, 188, 235, 0.22), rgba(125, 188, 235, 0.02));
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition:
+    background-color 220ms ease,
+    filter 220ms ease,
+    opacity 220ms ease;
+}
+
+.workMapItem--left .workMapCurve {
+  right: calc(50% + 1.15rem);
+}
+
+.workMapItem--right .workMapCurve {
+  left: calc(50% + 1.15rem);
+}
+
+.workMapItem.is-active .workMapNode {
+  border-color: rgba(134, 239, 172, 0.78);
+  background: rgba(8, 26, 32, 0.96);
+  box-shadow:
+    0 0 0 7px rgba(134, 239, 172, 0.08),
+    0 0 24px rgba(34, 197, 94, 0.28),
+    inset 0 0 0 4px rgba(2, 8, 22, 0.92);
+  transform: scale(1.05);
+}
+
+.workMapItem.is-active .workMapNode span {
+  background: rgba(134, 239, 172, 0.96);
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.62);
+  transform: scale(1.15);
+}
+
+.workMapItem.is-active .workMapCurve {
+  background: linear-gradient(90deg, rgba(134, 239, 172, 0.02), rgba(134, 239, 172, 0.58), rgba(134, 239, 172, 0.02));
+  filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.24));
+}
+
+.workMapItem.is-active > .workDisplay {
+  transform: translateY(-3px);
+  border-color: rgba(134, 239, 172, 0.24);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.24);
+}
+
+@keyframes seFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tagPop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes workPathIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 :root[data-theme='light'] .seContainer {
@@ -25,4 +344,147 @@
   color: rgba(18, 32, 52, 0.9);
   background: rgba(255, 255, 255, 0.72);
   border-color: rgba(72, 98, 135, 0.16);
+}
+
+:root[data-theme='light'] .skillGroup {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(236, 243, 252, 0.86)),
+    rgba(247, 250, 255, 0.78);
+  border-color: rgba(72, 98, 135, 0.14);
+  box-shadow: 0 16px 38px rgba(55, 80, 120, 0.1);
+}
+
+:root[data-theme='light'] .skillType {
+  color: rgba(42, 82, 134, 0.9);
+}
+
+:root[data-theme='light'] .tagIcon {
+  opacity: 0.72;
+}
+
+:root[data-theme='light'] .workList::before {
+  background:
+    linear-gradient(180deg, transparent, rgba(55, 96, 150, 0.2) 8%, rgba(55, 96, 150, 0.16) 92%, transparent),
+    rgba(55, 96, 150, 0.08);
+}
+
+:root[data-theme='light'] .workTree::after {
+  background: linear-gradient(180deg, rgba(55, 96, 150, 0.16), rgba(55, 96, 150, 0.07));
+}
+
+:root[data-theme='light'] .workMapNode {
+  background: rgba(248, 251, 255, 0.94);
+  border-color: rgba(55, 96, 150, 0.22);
+  box-shadow:
+    0 0 0 0 rgba(55, 96, 150, 0),
+    inset 0 0 0 4px rgba(255, 255, 255, 0.92);
+}
+
+:root[data-theme='light'] .workMapNode span {
+  background: rgba(55, 96, 150, 0.42);
+}
+
+:root[data-theme='light'] .workMapItem--left .workMapCurve,
+:root[data-theme='light'] .workMapItem--right .workMapCurve {
+  background: linear-gradient(90deg, rgba(55, 96, 150, 0.02), rgba(55, 96, 150, 0.2), rgba(55, 96, 150, 0.02));
+}
+
+:root[data-theme='light'] .workMapItem.is-active .workMapNode {
+  border-color: rgba(22, 120, 68, 0.62);
+  background: rgba(248, 255, 250, 0.98);
+  box-shadow:
+    0 0 0 7px rgba(22, 120, 68, 0.08),
+    0 0 24px rgba(22, 120, 68, 0.2),
+    inset 0 0 0 4px rgba(255, 255, 255, 0.94);
+}
+
+:root[data-theme='light'] .workMapItem.is-active .workMapNode span {
+  background: rgba(22, 120, 68, 0.9);
+  box-shadow: 0 0 14px rgba(22, 120, 68, 0.36);
+}
+
+:root[data-theme='light'] .workMapItem.is-active .workMapCurve {
+  background: linear-gradient(90deg, rgba(22, 120, 68, 0.02), rgba(22, 120, 68, 0.46), rgba(22, 120, 68, 0.02));
+  filter: drop-shadow(0 0 7px rgba(22, 120, 68, 0.16));
+}
+
+:root[data-theme='light'] .workMapItem.is-active > .workDisplay {
+  border-color: rgba(22, 120, 68, 0.2);
+  box-shadow: 0 22px 54px rgba(55, 80, 120, 0.16);
+}
+
+@media (max-width: 1150px) {
+  .seContainer {
+    padding-bottom: 7.5rem;
+  }
+
+  .workTree {
+    --tree-tail-extension: 7.5rem;
+  }
+}
+
+@media (max-width: 780px) {
+  .technicalSkills {
+    grid-template-columns: 1fr;
+  }
+
+  .workList::before {
+    left: 1.15rem;
+  }
+
+  .workTree::after {
+    left: 1.15rem;
+  }
+
+  .workMapItem {
+    grid-template-columns: 2.3rem minmax(0, 1fr);
+    min-height: 0;
+    padding: 1.55rem 0;
+  }
+
+  .workMapItem > .workDisplay,
+  .workMapItem--left > .workDisplay,
+  .workMapItem--right > .workDisplay {
+    grid-column: 2;
+    justify-self: stretch;
+    width: auto;
+    max-width: 100%;
+    margin: 0 0 0 0.75rem;
+  }
+
+  .workMapNode {
+    grid-column: 1;
+    justify-self: start;
+    width: 2.3rem;
+    height: 2.3rem;
+  }
+
+  .workMapCurve {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .seContainer {
+    width: min(100% - 1.25rem, 1080px);
+    padding-top: 2rem;
+  }
+
+  .skillGroup {
+    padding: 0.85rem;
+  }
+
+  .tag {
+    font-size: 0.86rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skillsContainer,
+  .experienceContainer,
+  .skillGroup,
+  .tag,
+  .workMapItem {
+    animation: none;
+  }
 }

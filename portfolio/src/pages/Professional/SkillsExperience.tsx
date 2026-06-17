@@ -1,6 +1,6 @@
 import './SkillsExperience.css';
 import { CLOUDFLARE_GATEWAY } from '../../config/constants.ts';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import WorkDisplay from '../../components/WorkDisplay/WorkDisplay.tsx';
 import ErrorScreen from '../Misc/ErrorScreen';
 import LoadingScreen from '../Misc/LoadingScreen';
@@ -9,6 +9,21 @@ import type { WorkExperienceResponse } from '../../types/work.ts';
 
 const tagsGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/tags'; // path to tags db
 const workGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/work'; // path to work db
+
+const skillIconSources: Record<string, string> = {
+  default: '/temp.svg',
+};
+
+function SkillTag({ skill }: { skill: Tag }) {
+  const iconSrc = skillIconSources[skill.tag_name] ?? skillIconSources.default;
+
+  return (
+    <div className="tag" key={skill.tag_name}>
+      <img className="tagIcon" src={iconSrc} alt="" aria-hidden="true" />
+      <span>{skill.tag_name}</span>
+    </div>
+  );
+}
 
 function SkillsExperience() {
   const [isLoadingTag, setIsLoadingTag] = useState<boolean>(true);
@@ -40,6 +55,8 @@ function SkillsExperience() {
   const [isLoadingWork, setIsLoadingWork] = useState<boolean>(true);
   const [work, setWork] = useState<WorkExperienceResponse | null>(null);
   const [hasErrorWork, setHasErrorWork] = useState<boolean>(false);
+  const [activeWorkIndex, setActiveWorkIndex] = useState(0);
+  const workItemRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   useEffect(() => {
     fetch(workGatewayURL)
@@ -59,6 +76,53 @@ function SkillsExperience() {
       });
   }, []);
 
+  // for the green button light up
+  useEffect(() => {
+    if (!work?.results?.length) {
+      return;
+    }
+
+    let animationFrameId = 0;
+
+    const updateActiveWork = () => {
+      const focusY = window.innerHeight * 0.55;
+      let closestIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      workItemRefs.current.forEach((item, index) => {
+        if (!item) {
+          return;
+        }
+
+        const rect = item.getBoundingClientRect();
+        const itemCenterY = rect.top + rect.height / 2;
+        const distance = Math.abs(itemCenterY - focusY);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveWorkIndex(closestIndex);
+    };
+
+    const requestUpdate = () => {
+      window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = window.requestAnimationFrame(updateActiveWork);
+    };
+
+    requestUpdate();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('scroll', requestUpdate);
+      window.removeEventListener('resize', requestUpdate);
+    };
+  }, [work?.results?.length]);
+
   if (hasErrorTag || hasErrorWork) {
     return <ErrorScreen />;
   }
@@ -73,100 +137,61 @@ function SkillsExperience() {
   const database = findSkill('Database', tag);
   const cloud = findSkill('Cloud', tag);
   const developerTool = findSkill('Developer Tool', tag);
-  const systems = findSkill('Systems', tag);
+
+  const skillGroups = [
+    { title: 'Languages', skills: language },
+    { title: 'Front-End', skills: frontend },
+    { title: 'Back-End', skills: [...backend, ...database, ...cloud] },
+    { title: 'DevOps', skills: developerTool },
+  ].filter((group) => group.skills.length > 0);
+  const orderedWork = [...(work?.results ?? [])].sort((first, second) => first.display_order - second.display_order);
 
   return (
     <section className="seContainer">
       <section className="skillsContainer">
         <h1>Technical Skills</h1>
-        <p className="skillsDescription">these are my skills gang</p>
+        <p className="skillsDescription">Here are some of the frameworks, languages, and infrastructure tools I use to design, build, and deploy reliable software, and I'm always learning more.</p>
         <section className="technicalSkills">
-          <p className="skillType">Languages</p>
-          <div className="skillContainer">
-            {language.map((tag) => {
-              return (
-                <div className="tag" key={tag.tag_name}>
-                  {tag.tag_name}
+          {skillGroups.map((group) => {
+            return (
+              <div className="skillGroup" key={group.title}>
+                <p className="skillType">{group.title}</p>
+                <div className="skillContainer">
+                  {group.skills.map((skill) => {
+                    return <SkillTag skill={skill} key={skill.tag_name} />;
+                  })}
                 </div>
-              );
-            })}
-          </div>
-
-          <p className="skillType">Front-End</p>
-          <div className="skillContainer">
-            {frontend.map((tag) => {
-              return (
-                <div className="tag" key={tag.tag_name}>
-                  {tag.tag_name}
-                </div>
-              );
-            })}
-          </div>
-
-          <p className="skillType">Back-End</p>
-          <div className="skillContainer">
-            {backend.map((tag) => {
-              return (
-                <div className="tag" key={tag.tag_name}>
-                  {tag.tag_name}
-                </div>
-              );
-            })}
-          </div>
-
-          <p className="skillType">Database</p>
-          <div className="skillContainer">
-            {database.map((tag) => {
-              return (
-                <div className="tag" key={tag.tag_name}>
-                  {tag.tag_name}
-                </div>
-              );
-            })}
-          </div>
-
-          <p className="skillType">Cloud</p>
-          <div className="skillContainer">
-            {cloud.map((tag) => {
-              return (
-                <div className="tag" key={tag.tag_name}>
-                  {tag.tag_name}
-                </div>
-              );
-            })}
-          </div>
-
-          <p className="skillType">Developer Tools</p>
-          <div className="skillContainer">
-            {developerTool.map((tag) => {
-              return (
-                <div className="tag" key={tag.tag_name}>
-                  {tag.tag_name}
-                </div>
-              );
-            })}
-          </div>
-
-          <p className="skillType">Systems</p>
-          <div className="skillContainer">
-            {systems.map((tag) => {
-              return (
-                <div className="tag" key={tag.tag_name}>
-                  {tag.tag_name}
-                </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </section>
       </section>
 
       <section className="experienceContainer">
         <h1>Work Experience</h1>
-        <p className="experienceDescription">these are my work experiences vrodie</p>
+        <p className="experienceDescription">I’m looking for opportunities that push my boundaries and expand my technical toolkit. I am still early in my journey, but I am incredibly excited to get more exposure, tackle fresh challenges, and build awesome software!</p>
         <section className="workTree">
           <div className="workList">
-            {work?.results?.map((workStuff) => {
-              return <WorkDisplay key={workStuff.work_id} work={workStuff} />;
+            {orderedWork.map((workStuff, index) => {
+              const isActive = index === activeWorkIndex;
+              const itemClassName = `workMapItem ${index % 2 === 0 ? 'workMapItem--left' : 'workMapItem--right'} ${isActive ? 'is-active' : ''}`;
+
+              return (
+                <div
+                  className={itemClassName}
+                  data-work-index={index}
+                  key={workStuff.work_id}
+                  ref={(element) => {
+                    workItemRefs.current[index] = element;
+                  }}
+                >
+                  <span className="workMapCurve" aria-hidden="true"></span>
+                  <span className="workMapNode" aria-hidden="true">
+                    <span></span>
+                  </span>
+                  <WorkDisplay work={workStuff} />
+                </div>
+              );
             })}
           </div>
         </section>

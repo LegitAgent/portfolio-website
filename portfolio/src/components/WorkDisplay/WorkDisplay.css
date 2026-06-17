@@ -1,3 +1,138 @@
+.workDisplay {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid rgba(125, 188, 235, 0.14);
+  border-radius: 1rem;
+  color: rgba(238, 247, 255, 0.92);
+  background:
+    linear-gradient(180deg, rgba(8, 25, 58, 0.5), rgba(1, 8, 22, 0.72)),
+    rgba(2, 8, 22, 0.66);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.18);
+}
+
+.workDisplay.is-current {
+  border-color: rgba(134, 239, 172, 0.42);
+  box-shadow:
+    0 0 0 1px rgba(134, 239, 172, 0.08),
+    0 0 24px rgba(34, 197, 94, 0.18),
+    0 16px 38px rgba(0, 0, 0, 0.18);
+}
+
+.workDisplay.is-current::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid rgba(134, 239, 172, 0.42);
+  border-radius: inherit;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.32));
+}
+
+.workHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.workImage {
+  flex: 0 0 auto;
+  width: 3.25rem;
+  height: 3.25rem;
+  object-fit: contain;
+  border-radius: 0.8rem;
+  background: rgba(1, 8, 22, 0.38);
+}
+
+.workHeading {
+  min-width: 0;
+}
+
+.workTitle {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 820;
+}
+
+.workRole {
+  margin: 0.18rem 0 0;
+  color: rgba(214, 229, 245, 0.72);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.workMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.workMeta span {
+  width: fit-content;
+  border: 1px solid rgba(125, 188, 235, 0.14);
+  border-radius: 999px;
+  padding: 0.3rem 0.55rem;
+  color: rgba(214, 229, 245, 0.72);
+  background: rgba(1, 8, 22, 0.28);
+  font-size: 0.78rem;
+  font-weight: 720;
+}
+
+.workMeta .workCurrentBadge {
+  color: rgba(205, 255, 220, 0.96);
+  background: rgba(34, 197, 94, 0.14);
+  border-color: rgba(134, 239, 172, 0.32);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.12);
+}
+
+.workTextContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.workDescription {
+  margin: 0;
+  color: rgba(214, 229, 245, 0.72);
+  line-height: 1.58;
+}
+
+.workLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.workLinks a,
+.workLink {
+  width: fit-content;
+  border: 1px solid rgba(125, 188, 235, 0.16);
+  border-radius: 999px;
+  padding: 0.48rem 0.72rem;
+  color: rgba(175, 220, 255, 0.94);
+  font-size: 0.86rem;
+  font-weight: 760;
+  text-decoration: none;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.workLinks a:hover,
+.workLinks a:focus-visible,
+.workLink:hover,
+.workLink:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(44, 119, 190, 0.18);
+  border-color: rgba(125, 188, 235, 0.42);
+  outline: none;
+}
+
 :root[data-theme='light'] .workDisplay {
   color: rgba(18, 32, 52, 0.94);
   background:
@@ -8,7 +143,73 @@
   box-shadow: 0 18px 44px rgba(55, 80, 120, 0.12);
 }
 
+:root[data-theme='light'] .workDisplay.is-current {
+  border-color: rgba(22, 120, 68, 0.34);
+  box-shadow:
+    0 0 0 1px rgba(22, 120, 68, 0.06),
+    0 0 24px rgba(22, 120, 68, 0.14),
+    0 18px 44px rgba(55, 80, 120, 0.12);
+}
+
+:root[data-theme='light'] .workDisplay.is-current::before {
+  border-color: rgba(22, 120, 68, 0.34);
+  filter: drop-shadow(0 0 10px rgba(22, 120, 68, 0.2));
+}
+
+:root[data-theme='light'] .workImage {
+  background: rgba(255, 255, 255, 0.62);
+}
+
+:root[data-theme='light'] .workRole,
+:root[data-theme='light'] .workDescription {
+  color: rgba(34, 49, 72, 0.68);
+}
+
+:root[data-theme='light'] .workMeta span {
+  color: rgba(34, 49, 72, 0.68);
+  background: rgba(255, 255, 255, 0.58);
+  border-color: rgba(72, 98, 135, 0.14);
+}
+
+:root[data-theme='light'] .workMeta .workCurrentBadge {
+  color: rgba(12, 85, 45, 0.96);
+  background: rgba(201, 240, 214, 0.72);
+  border-color: rgba(22, 120, 68, 0.24);
+}
+
 :root[data-theme='light'] .workDisplay a,
 :root[data-theme='light'] .workDisplay button {
   color: rgba(42, 82, 134, 0.95);
+}
+
+:root[data-theme='light'] .workLinks a,
+:root[data-theme='light'] .workLink {
+  border-color: rgba(72, 98, 135, 0.16);
+}
+
+:root[data-theme='light'] .workLinks a:hover,
+:root[data-theme='light'] .workLinks a:focus-visible,
+:root[data-theme='light'] .workLink:hover,
+:root[data-theme='light'] .workLink:focus-visible {
+  background: rgba(224, 235, 249, 0.88);
+  border-color: rgba(55, 96, 150, 0.32);
+}
+
+@media (max-width: 520px) {
+  .workDisplay {
+    padding: 0.9rem;
+  }
+
+  .workHeader {
+    align-items: flex-start;
+  }
+
+  .workImage {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
+  .workMeta span {
+    font-size: 0.74rem;
+  }
 }
