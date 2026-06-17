@@ -5,86 +5,157 @@ import { GITHUB_URL, LINKEDIN_URL, GITHUB_ICON, LINKEDIN_ICON, EMAIL_ICON, PROFI
 
 // import Tilty from 'react-tilty'
 
+type HomeIcon = 'skills' | 'projects' | 'focus' | 'resume';
+
+interface HomeCard {
+  title: string;
+  description: string;
+  action?: string;
+  path?: string;
+  icon: HomeIcon;
+}
+
+function HomeCardIcon({ icon }: { icon: HomeIcon }) {
+  if (icon === 'projects') {
+    return (
+      <svg viewBox='0 0 24 24' aria-hidden='true'>
+        <path d='M4.75 5.5h14.5v10.25H4.75V5.5Zm0 10.25 4.25-4 3 2.7 2.35-2.15 4.9 3.45M8.5 19h7' />
+      </svg>
+    );
+  }
+
+  if (icon === 'focus') {
+    return (
+      <svg viewBox='0 0 24 24' aria-hidden='true'>
+        <path d='M12 4.5v3M12 16.5v3M4.5 12h3M16.5 12h3M8.05 8.05l2.12 2.12M13.83 13.83l2.12 2.12M15.95 8.05l-2.12 2.12M10.17 13.83l-2.12 2.12' />
+        <circle cx='12' cy='12' r='2.75' />
+      </svg>
+    );
+  }
+
+  if (icon === 'resume') {
+    return (
+      <svg viewBox='0 0 24 24' aria-hidden='true'>
+        <path d='M7 3.75h7.25L18 7.5v12.75H7V3.75Z' />
+        <path d='M14 3.75V7.8h4M9.5 11.5h5M9.5 14.5h5M9.5 17.5h3' />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox='0 0 24 24' aria-hidden='true'>
+      <path d='M7.5 5.25h9M7.5 9.75h9M7.5 14.25h9M5.25 5.25h.01M5.25 9.75h.01M5.25 14.25h.01' />
+      <path d='M4 19h16' />
+    </svg>
+  );
+}
+
 function Home() {
   const navigate = useNavigate();
 
+  const homeCards: HomeCard[] = [
+    {
+      title: 'Experience & Skills',
+      description: 
+        'See the technologies I work with, the experience I’ve gained, and the areas I’m currently growing in as a developer.',
+      action: 'View Experience & Skills',
+      path: '/skills_experience',
+      icon: 'skills',
+    },
+    {
+      title: 'Projects',
+      description:
+        'I build projects to explore ideas, solve problems, and learn new technologies hands-on. See what I’ve made and how each one helped me grow.',
+      action: 'View Projects',
+      path: '/projects',
+      icon: 'projects',
+    },
+    {
+      title: 'Current Focus',
+      description:
+        'Right now, I’m improving my full-stack skills through React, TypeScript, Cloudflare Workers, databases, cleaner design, algorithms, and systems concepts.',
+      icon: 'focus',
+    },
+  ];
+
   return (
-    <section className="hero">
-      <div className="introduction">
-        <div className="pictureWrap">
-          <img id="portfolioPicture" className="w-28 sm:w-32 md:w-50 lg:w-55" src={PROFILE_PICTURE} alt="Portfolio Picture" />
+    <section className='hero'>
+      <div className='introduction'>
+        <div className='pictureWrap'>
+          <img id='portfolioPicture' src={PROFILE_PICTURE} alt='Martin Darius Alba' />
         </div>
-        <div className="introductionContent">
-          <div className="nameTitle">
+        <div className='introductionContent'>
+          <div className='nameTitle'>
             <p>Martin Darius Alba</p>
-            <div className="switching">switch me</div>
           </div>
 
-          <div className="currentRole">Student</div>
+          <div className='currentRole'>Aspiring Student</div>
 
-          <div className="introContent">
-            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi
-            pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
-            Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-            conubia nostra inceptos himenaeos.
+          <div className='introContent'>
+            I’m a computer science student who likes building practical software and experimenting with different kinds of projects. From websites and extensions to backend tools and games, I enjoy learning by making things that people can actually use.
           </div>
-          {/* <div className='heroCard aboutMeContent text-justify aboutMeBox'>
-              Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. 
-              Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. 
-              Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-            </div> */}
 
-          <div className="contactLinks">
+          <div className='contactLinks'>
             {/* must have arrow func for funcs with args in react */}
-            <button onClick={() => redirect(GITHUB_URL)} className=" buttonContact">
-              <div className="contactLinkContent">
-                <img src={GITHUB_ICON} alt="GitHub" /> GitHub
+            <button onClick={() => redirect(GITHUB_URL)} className=' buttonContact'>
+              <div className='contactLinkContent'>
+                <img src={GITHUB_ICON} alt='GitHub' /> GitHub
               </div>
             </button>
 
-            <button onClick={() => redirect(LINKEDIN_URL)} className=" buttonContact">
-              <div className="contactLinkContent">
-                <img src={LINKEDIN_ICON} alt="LinkedIn" /> LinkedIn
+            <button onClick={() => redirect(LINKEDIN_URL)} className=' buttonContact'>
+              <div className='contactLinkContent'>
+                <img src={LINKEDIN_ICON} alt='LinkedIn' /> LinkedIn
               </div>
             </button>
 
-            <button onClick={() => navigate('/contacts')} className=" buttonContact">
-              <div className="contactLinkContent">
-                <img src={EMAIL_ICON} alt="Contacts" /> More contacts
+            <button onClick={() => navigate('/contacts')} className=' buttonContact'>
+              <div className='contactLinkContent'>
+                <img src={EMAIL_ICON} alt='Contacts' /> More contacts
               </div>
             </button>
           </div>
         </div>
       </div>
 
-      <div className="otherSection">
-        <div className="otherBox">
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium
-          tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa
-          nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra
-          inceptos himenaeos.
-        </div>
+      <div className='otherSection'>
+        {homeCards.map((card) => {
+          const cardContent = (
+            <>
+              <span className='homeCardIcon'>
+                <HomeCardIcon icon={card.icon} />
+              </span>
+              <span className='homeCardTitle'>{card.title}</span>
+              <span className='homeCardDescription'>{card.description}</span>
+              {card.action && <span className='homeCardAction'>{card.action}</span>}
+            </>
+          );
 
-        <div className="otherBox">
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium
-          tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa
-          nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra
-          inceptos himenaeos.
-        </div>
+          const path = card.path;
 
-        <div className="otherBox">
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium
-          tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa
-          nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra
-          inceptos himenaeos.
-        </div>
+          if (path) {
+            return (
+              <button className='otherBox' onClick={() => navigate(path)} key={card.title}>
+                {cardContent}
+              </button>
+            );
+          }
+
+          return (
+            <article className='otherBox' key={card.title}>
+              {cardContent}
+            </article>
+          );
+        })}
       </div>
 
-      <button onClick={() => navigate('/resume')} className="resumeViewer">
-        Resume <br /> Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus
-        mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
-        Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-        conubia nostra inceptos himenaeos.
+      <button onClick={() => navigate('/resume')} className='resumeViewer'>
+        <span className='homeCardIcon'>
+          <HomeCardIcon icon='resume' />
+        </span>
+        <span className='homeCardTitle'>Resume</span>
+        <span className='homeCardDescription'>View my resume for a quick overview of my education, projects, technical skills, and experience.</span>
+        <span className='homeCardAction'>Open Resume</span>
       </button>
     </section>
   );

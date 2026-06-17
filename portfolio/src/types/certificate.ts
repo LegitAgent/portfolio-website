@@ -8,6 +8,7 @@ export interface Certificate {
   image_alt: string;
   skills: string;
   image_url: string;
+  description: string;
 }
 
 export interface CertificateResponse {

@@ -10,6 +10,16 @@
   color: white;
 }
 
+::selection {
+  color: #f4fbff;
+  background: rgba(72, 170, 235, 0.32);
+}
+
+::-moz-selection {
+  color: #f4fbff;
+  background: rgba(72, 170, 235, 0.32);
+}
+
 html {
   scroll-behavior: smooth;
 }

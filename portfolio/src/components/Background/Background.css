@@ -300,9 +300,7 @@
   }
 
   .interactive {
-    width: 78vw;
-    filter: blur(42px);
-    opacity: 0.5;
+    display: none;
   }
 
   .click-particle {

@@ -11,8 +11,8 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 // npx wrangler deploy
-import { getLeetCodeStats } from "./services/leetcode";
-import { getGithubStats } from "./services/github";
+import { getLeetCodeStats } from './services/leetcode';
+import { getGithubStats } from './services/github';
 
 interface LoadResult {
   data: unknown;
@@ -362,7 +362,7 @@ export default {
       } catch(error) {
 
         return json({
-          error: error instanceof Error ? error.message : "Unknown error",
+          error: error instanceof Error ? error.message : 'Unknown error',
         }, 500, allowedOrigin);
       }
     } else {

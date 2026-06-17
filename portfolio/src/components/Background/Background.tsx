@@ -15,8 +15,13 @@ function Background() {
     let tgY = 0;
     let animationFrameId = 0;
     const particleTimers: number[] = [];
+    const spotlightQuery = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 768px)');
 
     const handlePointerMove = (event: PointerEvent) => {
+      if (!spotlightQuery.matches) {
+        return;
+      }
+
       tgX = event.clientX;
       tgY = event.clientY;
       background.style.setProperty('--pointer-x', `${event.clientX}px`);
@@ -49,6 +54,13 @@ function Background() {
     };
 
     const move = () => {
+      if (!spotlightQuery.matches) {
+        background.classList.remove('is-active');
+        interactiveBubble.style.transform = 'translate(-50%, -50%)';
+        animationFrameId = window.requestAnimationFrame(move);
+        return;
+      }
+
       // larger divisor = slower/floatier
       curX += (tgX - curX) / 10;
       curY += (tgY - curY) / 10;
@@ -72,8 +84,8 @@ function Background() {
   }, []);
 
   return (
-    <div className="gradient-bg" aria-hidden="true">
-      <div className="interactive"></div>
+    <div className='gradient-bg' aria-hidden='true'>
+      <div className='interactive'></div>
     </div>
   );
 }
