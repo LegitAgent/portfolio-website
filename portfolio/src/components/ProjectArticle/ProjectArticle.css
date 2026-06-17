@@ -19,3 +19,20 @@
   background-color: green;
   border-radius: 25px;
 }
+
+:root[data-theme='light'] .body {
+  color: rgba(18, 32, 52, 0.94);
+}
+
+:root[data-theme='light'] .projectArticleImage {
+  box-shadow: 0 18px 44px rgba(55, 80, 120, 0.14);
+}
+
+:root[data-theme='light'] .techStackButton {
+  color: rgba(12, 60, 35, 0.95);
+  background-color: rgba(201, 240, 214, 0.92);
+}
+
+:root[data-theme='light'] .body button {
+  color: rgba(42, 82, 134, 0.95);
+}

@@ -1,0 +1,73 @@
+.loadingScreen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  color: rgba(238, 244, 255, 0.92);
+}
+
+.loadingScreen__mark {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.5rem;
+}
+
+.loadingScreen__mark span {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 999px;
+  background: rgba(210, 224, 255, 0.86);
+  animation: loadingPulse 860ms ease-in-out infinite;
+}
+
+.loadingScreen__mark span:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.loadingScreen__mark span:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.loadingScreen__text {
+  margin: 0;
+  color: rgba(220, 230, 248, 0.72);
+  font-size: clamp(0.86rem, 2vw, 0.98rem);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+@keyframes loadingPulse {
+  0%,
+  100% {
+    opacity: 0.32;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-0.38rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loadingScreen__mark span {
+    animation: none;
+  }
+}
+
+:root[data-theme='light'] .loadingScreen {
+  color: rgba(18, 32, 52, 0.92);
+}
+
+:root[data-theme='light'] .loadingScreen__mark span {
+  background: rgba(42, 82, 134, 0.78);
+}
+
+:root[data-theme='light'] .loadingScreen__text {
+  color: rgba(34, 49, 72, 0.72);
+}

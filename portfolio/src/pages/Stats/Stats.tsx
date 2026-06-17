@@ -28,7 +28,7 @@ async function fetchGithubStats() {
 }
 
 function Stats() {
-  const [leetcode, setLeetcode] = useState<LeetCodeStats | null>(null);
+  const [, setLeetcode] = useState<LeetCodeStats | null>(null);
   const [isLoadingLeet, setIsLoadingLeet] = useState<boolean>(true);
   const [hasErrorLeet, setHasErrorLeet] = useState<boolean>(false);
 
@@ -46,7 +46,7 @@ function Stats() {
     setLeetcodeStats();
   }, []);
 
-  const [github, setGithub] = useState<GithubStats | null>(null);
+  const [, setGithub] = useState<GithubStats | null>(null);
   const [isLoadingGit, setIsLoadingGit] = useState<boolean>(true);
   const [hasErrorGit, setHasErrorGit] = useState<boolean>(false);
 
@@ -71,9 +71,6 @@ function Stats() {
   if (hasErrorLeet || hasErrorGit) {
     return <ErrorScreen />;
   }
-
-  console.log(leetcode);
-  console.log(github);
 
   return <></>;
 }

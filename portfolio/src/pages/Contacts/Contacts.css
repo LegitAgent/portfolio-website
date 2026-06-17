@@ -75,3 +75,28 @@
 .red {
   background-color: red;
 }
+
+:root[data-theme='light'] .contactContainer {
+  color: #102033;
+}
+
+:root[data-theme='light'] .cardFace {
+  color: rgba(18, 32, 52, 0.94);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(236, 243, 252, 0.9)),
+    rgba(247, 250, 255, 0.86);
+  border: 1px solid rgba(72, 98, 135, 0.14);
+  box-shadow: 0 18px 44px rgba(55, 80, 120, 0.12);
+}
+
+:root[data-theme='light'] .green {
+  background-color: rgba(201, 240, 214, 0.92);
+}
+
+:root[data-theme='light'] .yellow {
+  background-color: rgba(255, 236, 166, 0.92);
+}
+
+:root[data-theme='light'] .red {
+  background-color: rgba(255, 194, 194, 0.92);
+}

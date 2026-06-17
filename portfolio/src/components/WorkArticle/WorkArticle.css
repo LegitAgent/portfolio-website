@@ -3,3 +3,11 @@
   align-items: center;
   justify-content: center;
 }
+
+:root[data-theme='light'] .workArticleContainer {
+  color: rgba(18, 32, 52, 0.94);
+}
+
+:root[data-theme='light'] .workArticleContainer button {
+  color: rgba(42, 82, 134, 0.95);
+}

@@ -74,8 +74,6 @@ function SkillsExperience() {
   const cloud = findSkill('Cloud', tag);
   const developerTool = findSkill('Developer Tool', tag);
   const systems = findSkill('Systems', tag);
-  const gameDevelopment = findSkill('Game Development', tag);
-  const apiIntegration = findSkill('API / Integration', tag);
 
   return (
     <section className="seContainer">
@@ -152,28 +150,6 @@ function SkillsExperience() {
           <p className="skillType">Systems</p>
           <div className="skillContainer">
             {systems.map((tag) => {
-              return (
-                <div className="tag" key={tag.tag_name}>
-                  {tag.tag_name}
-                </div>
-              );
-            })}
-          </div>
-
-          <p className="skillType">Game Development</p>
-          <div className="skillContainer">
-            {gameDevelopment.map((tag) => {
-              return (
-                <div className="tag" key={tag.tag_name}>
-                  {tag.tag_name}
-                </div>
-              );
-            })}
-          </div>
-
-          <p className="skillType">API / Integration</p>
-          <div className="skillContainer">
-            {apiIntegration.map((tag) => {
               return (
                 <div className="tag" key={tag.tag_name}>
                   {tag.tag_name}

@@ -11,3 +11,18 @@
   flex-direction: row;
   gap: 10px;
 }
+
+:root[data-theme='light'] .seContainer {
+  color: rgba(18, 32, 52, 0.94);
+}
+
+:root[data-theme='light'] .skillsDescription,
+:root[data-theme='light'] .experienceDescription {
+  color: rgba(34, 49, 72, 0.72);
+}
+
+:root[data-theme='light'] .tag {
+  color: rgba(18, 32, 52, 0.9);
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(72, 98, 135, 0.16);
+}

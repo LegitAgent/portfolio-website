@@ -160,7 +160,7 @@ export default {
       return json({error: `Rate limit exceeded for ${url.pathname}`}, 429, allowedOrigin)
     }
 
-    const TTL_TIME = 1800;
+    const TTL_TIME = 0;
     // routes
     if (request.method === 'GET') {
       try {

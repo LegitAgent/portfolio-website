@@ -10,6 +10,10 @@
   color: white;
 }
 
+:root[data-theme='light'] {
+  color: #102033;
+}
+
 ::selection {
   color: #f4fbff;
   background: rgba(72, 170, 235, 0.32);
@@ -18,6 +22,16 @@
 ::-moz-selection {
   color: #f4fbff;
   background: rgba(72, 170, 235, 0.32);
+}
+
+:root[data-theme='light'] ::selection {
+  color: #0f1d33;
+  background: rgba(82, 125, 178, 0.22);
+}
+
+:root[data-theme='light'] ::-moz-selection {
+  color: #0f1d33;
+  background: rgba(82, 125, 178, 0.22);
 }
 
 html {
@@ -33,8 +47,18 @@ body,
 body {
   margin: 0;
   font-family: 'Roboto';
+  color: inherit;
 }
 
 button {
   cursor: pointer;
+}
+
+:root[data-theme='light'] body {
+  color: #102033;
+}
+
+:root[data-theme='light'] a,
+:root[data-theme='light'] button {
+  color: inherit;
 }

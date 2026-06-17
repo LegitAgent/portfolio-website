@@ -405,3 +405,87 @@ button.otherBox,
     transition: none;
   }
 }
+
+:root[data-theme='light'] .nameTitle {
+  color: #0f1d33;
+}
+
+:root[data-theme='light'] .pictureWrap::after {
+  background:
+    linear-gradient(90deg, transparent 0 36%, rgba(67, 103, 150, 0.78) 42% 52%, transparent 58% 100%),
+    linear-gradient(180deg, rgba(67, 103, 150, 0.38), rgba(67, 103, 150, 0.08), rgba(67, 103, 150, 0.28));
+  box-shadow:
+    0 0 12px rgba(70, 110, 160, 0.1),
+    0 0 20px rgba(70, 110, 160, 0.06);
+}
+
+:root[data-theme='light'] .pictureWrap::before {
+  border-color: rgba(67, 103, 150, 0.52);
+  box-shadow:
+    0 0 8px rgba(70, 110, 160, 0.1),
+    0 0 14px rgba(70, 110, 160, 0.08);
+}
+
+:root[data-theme='light'] #portfolioPicture {
+  background: rgba(246, 250, 255, 0.88);
+  box-shadow: 0 20px 55px rgba(55, 80, 120, 0.14);
+}
+
+:root[data-theme='light'] .currentRole {
+  color: rgba(26, 40, 62, 0.78);
+  background: rgba(255, 255, 255, 0.62);
+  border-color: rgba(72, 98, 135, 0.16);
+}
+
+:root[data-theme='light'] .introContent {
+  color: rgba(34, 49, 72, 0.76);
+}
+
+:root[data-theme='light'] .buttonContact {
+  color: rgba(18, 32, 52, 0.9);
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(72, 98, 135, 0.14);
+}
+
+:root[data-theme='light'] .buttonContact:hover,
+:root[data-theme='light'] .buttonContact:focus-visible {
+  background: rgba(234, 242, 252, 0.92);
+  border-color: rgba(55, 96, 150, 0.34);
+}
+
+:root[data-theme='light'] .contactLinks img {
+  filter: none;
+  opacity: 0.78;
+}
+
+:root[data-theme='light'] .otherBox,
+:root[data-theme='light'] .resumeViewer {
+  color: rgba(18, 32, 52, 0.94);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(236, 243, 252, 0.86)),
+    rgba(247, 250, 255, 0.78);
+  border-color: rgba(72, 98, 135, 0.14);
+  box-shadow: 0 18px 44px rgba(55, 80, 120, 0.12);
+}
+
+:root[data-theme='light'] .otherBox:hover,
+:root[data-theme='light'] .otherBox:focus-visible,
+:root[data-theme='light'] .resumeViewer:hover,
+:root[data-theme='light'] .resumeViewer:focus-visible {
+  border-color: rgba(55, 96, 150, 0.32);
+  box-shadow: 0 24px 56px rgba(55, 80, 120, 0.16);
+}
+
+:root[data-theme='light'] .homeCardIcon {
+  color: rgba(42, 82, 134, 0.9);
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(72, 98, 135, 0.14);
+}
+
+:root[data-theme='light'] .homeCardDescription {
+  color: rgba(34, 49, 72, 0.68);
+}
+
+:root[data-theme='light'] .homeCardAction {
+  color: rgba(42, 82, 134, 0.95);
+}
