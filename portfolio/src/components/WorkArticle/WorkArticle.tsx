@@ -77,7 +77,6 @@ function WorkArticle() {
           </svg>
           <span>Back to experience</span>
         </button>
-        <span className="workArticleRoute">work / {articleContent?.work_slug}</span>
       </nav>
 
       <header className="workArticleHeader">

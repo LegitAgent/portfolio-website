@@ -3,7 +3,8 @@ import { CLOUDFLARE_GATEWAY } from '../../config/constants.ts';
 import ProjectsDisplay from '../../components/ProjectsDisplay/ProjectsDisplay.tsx';
 import LoadingScreen from '../Misc/LoadingScreen.tsx';
 import ErrorScreen from '../Misc/ErrorScreen.tsx';
-import { useState, useEffect } from 'react';
+import Fuse from 'fuse.js';
+import { useState, useEffect, useMemo } from 'react';
 import type { ProjectResponse } from '../../types/project.ts';
 
 const projectGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/projects'; // path to project db
@@ -12,6 +13,7 @@ function Projects() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [projects, setProjects] = useState<ProjectResponse | null>(null);
   const [hasError, setHasError] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetch(projectGatewayURL)
@@ -31,6 +33,26 @@ function Projects() {
       });
   }, []);
 
+  const projectResults = useMemo(() => projects?.results ?? [], [projects?.results]);
+  const projectSearch = useMemo(
+    () =>
+      new Fuse(projectResults, {
+        keys: [
+          { name: 'project_name', weight: 0.9 },
+          { name: 'project_description', weight: 0.1 },
+        ],
+        threshold: 0.35,
+        ignoreLocation: true,
+        minMatchCharLength: 2,
+        shouldSort: true,
+      }),
+    [projectResults],
+  );
+  const filteredProjects = useMemo(() => {
+    const query = searchQuery.trim();
+    return query ? projectSearch.search(query).map((result) => result.item) : projectResults;
+  }, [projectResults, projectSearch, searchQuery]);
+
   if (hasError) {
     return <ErrorScreen />;
   }
@@ -40,9 +62,9 @@ function Projects() {
   }
 
   const featuredProjects =
-    projects?.results?.filter((project) => Number(project.featured) === 1) ?? [];
+    filteredProjects.filter((project) => Number(project.featured) === 1);
   const otherProjects =
-    projects?.results?.filter((project) => Number(project.featured) !== 1) ?? [];
+    filteredProjects.filter((project) => Number(project.featured) !== 1);
 
   return (
     <main className="projectsPage">
@@ -54,6 +76,39 @@ function Projects() {
           and working across the stack.
         </span>
       </header>
+
+      <div className="projectSearch">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-4-4" />
+        </svg>
+        <input
+          type="search"
+          value={searchQuery}
+          onChange={(event) => setSearchQuery(event.target.value)}
+          placeholder="Search projects..."
+          aria-label="Search projects"
+        />
+        {searchQuery && (
+          <button
+            type="button"
+            onClick={() => setSearchQuery('')}
+            aria-label="Clear project search"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m7 7 10 10" />
+              <path d="M17 7 7 17" />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {filteredProjects.length === 0 && (
+        <div className="projectSearchEmpty">
+          <p>No projects found.</p>
+          <span>Try a different name or keyword.</span>
+        </div>
+      )}
 
       {featuredProjects.length > 0 && (
         <section className="projectsSection projectsSection--featured">

@@ -57,16 +57,6 @@
   outline: none;
 }
 
-.workArticleRoute {
-  max-width: 50%;
-  overflow: hidden;
-  color: rgba(214, 229, 245, 0.42);
-  font-family: 'Courier New', ui-monospace, monospace;
-  font-size: 0.72rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .workArticleHeader {
   max-width: 850px;
 }
@@ -272,10 +262,6 @@
   color: rgba(12, 105, 57, 0.94);
 }
 
-:root[data-theme='light'] .workArticleRoute {
-  color: rgba(34, 49, 72, 0.46);
-}
-
 :root[data-theme='light'] .workArticleEyebrow,
 :root[data-theme='light'] .workArticleSectionNumber {
   color: rgba(12, 105, 57, 0.84);
@@ -337,10 +323,6 @@
 
   .workArticleNav {
     margin-bottom: 2.75rem;
-  }
-
-  .workArticleRoute {
-    display: none;
   }
 
   .workArticleMeta {

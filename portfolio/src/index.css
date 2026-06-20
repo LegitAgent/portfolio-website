@@ -37,6 +37,8 @@
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(91, 151, 204, 0.68) rgba(1, 8, 22, 0.82);
 }
 
 html,
@@ -50,6 +52,47 @@ body {
   font-family: 'Roboto';
   color: inherit;
   overflow-x: clip;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(1, 8, 22, 0.82);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid rgba(1, 8, 22, 0.82);
+  border-radius: 999px;
+  background: rgba(91, 151, 204, 0.68);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(125, 188, 235, 0.82);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(1, 8, 22, 0.82);
+}
+
+:root[data-theme='light'] {
+  scrollbar-color: rgba(55, 96, 150, 0.56) rgba(229, 237, 248, 0.88);
+}
+
+:root[data-theme='light'] ::-webkit-scrollbar-track,
+:root[data-theme='light'] ::-webkit-scrollbar-corner {
+  background: rgba(229, 237, 248, 0.88);
+}
+
+:root[data-theme='light'] ::-webkit-scrollbar-thumb {
+  border-color: rgba(229, 237, 248, 0.88);
+  background: rgba(55, 96, 150, 0.56);
+}
+
+:root[data-theme='light'] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(42, 82, 134, 0.76);
 }
 
 img,
