@@ -119,17 +119,17 @@
   position: relative;
   margin-top: 1.75rem;
   --tree-tail-extension: 6rem;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0 0;
 }
 
 .workTree::after {
   content: '';
   position: absolute;
   left: 50%;
-  bottom: calc(-1 * var(--tree-tail-extension));
+  bottom: calc(-1 * var(--tree-tail-extension) + 1px);
   z-index: 0;
   width: 2px;
-  height: var(--tree-tail-extension);
+  height: calc(var(--tree-tail-extension) + 1px);
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(125, 188, 235, 0.18), rgba(125, 188, 235, 0.08));
   pointer-events: none;
@@ -151,7 +151,7 @@
   width: 2px;
   border-radius: 999px;
   background:
-    linear-gradient(180deg, transparent, rgba(125, 188, 235, 0.22) 8%, rgba(125, 188, 235, 0.18) 92%, transparent),
+    linear-gradient(180deg, transparent, rgba(125, 188, 235, 0.22) 8%, rgba(125, 188, 235, 0.18) 92%),
     rgba(125, 188, 235, 0.08);
   transform: translateX(-50%);
 }
@@ -364,7 +364,7 @@
 
 :root[data-theme='light'] .workList::before {
   background:
-    linear-gradient(180deg, transparent, rgba(55, 96, 150, 0.2) 8%, rgba(55, 96, 150, 0.16) 92%, transparent),
+    linear-gradient(180deg, transparent, rgba(55, 96, 150, 0.2) 8%, rgba(55, 96, 150, 0.16) 92%),
     rgba(55, 96, 150, 0.08);
 }
 

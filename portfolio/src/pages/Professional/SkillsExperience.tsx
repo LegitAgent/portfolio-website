@@ -1,5 +1,31 @@
 import './SkillsExperience.css';
-import { CLOUDFLARE_GATEWAY } from '../../config/constants.ts';
+import {
+  AWS,
+  CLOUDFLARE,
+  CLOUDFLARE_GATEWAY,
+  CPP,
+  CSS,
+  DJANGO,
+  GIT,
+  GITHUB_ICON,
+  GRAPHQL,
+  HTML,
+  JAVA,
+  JAVASCRIPT,
+  LARAVEL,
+  NODEJS,
+  NPM,
+  PHP,
+  PIP,
+  POSTGRESQL,
+  PYTHON,
+  REACT,
+  REST,
+  SQL,
+  TAILWIND,
+  TYPESCRIPT,
+  VITE,
+} from '../../config/constants.ts';
 import { useEffect, useRef, useState } from 'react';
 import WorkDisplay from '../../components/WorkDisplay/WorkDisplay.tsx';
 import ErrorScreen from '../Misc/ErrorScreen';
@@ -12,6 +38,37 @@ const workGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/work'; // path to work db
 
 const skillIconSources: Record<string, string> = {
   default: '/temp.svg',
+  AWS,
+  'AWS Lambda': AWS,
+  Cloudflare: CLOUDFLARE,
+  'C++': CPP,
+  CPP,
+  CSS,
+  Django: DJANGO,
+  Git: GIT,
+  GitHub: GITHUB_ICON,
+  GraphQL: GRAPHQL,
+  HTML,
+  Java: JAVA,
+  JavaScript: JAVASCRIPT,
+  Laravel: LARAVEL,
+  'Node.js': NODEJS,
+  NodeJS: NODEJS,
+  npm: NPM,
+  NPM,
+  PHP,
+  pip: PIP,
+  PIP,
+  PostgreSQL: POSTGRESQL,
+  Python: PYTHON,
+  React: REACT,
+  REST,
+  'REST API': REST,
+  SQL,
+  Tailwind: TAILWIND,
+  'Tailwind CSS': TAILWIND,
+  TypeScript: TYPESCRIPT,
+  Vite: VITE,
 };
 
 function SkillTag({ skill }: { skill: Tag }) {
@@ -85,7 +142,15 @@ function SkillsExperience() {
     let animationFrameId = 0;
 
     const updateActiveWork = () => {
-      const focusY = window.innerHeight * 0.55;
+      const isAtPageBottom =
+        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+
+      if (isAtPageBottom) {
+        setActiveWorkIndex(work.results.length - 1);
+        return;
+      }
+
+      const focusY = window.innerHeight * 0.5;
       let closestIndex = 0;
       let closestDistance = Number.POSITIVE_INFINITY;
 

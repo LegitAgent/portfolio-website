@@ -1,0 +1,202 @@
+.errorScreen {
+  width: min(100% - 2rem, 620px);
+  min-height: min(72dvh, 620px);
+  margin: 0 auto;
+  padding: clamp(2rem, 7vw, 4rem) 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(238, 247, 255, 0.94);
+  text-align: center;
+  animation: errorScreenIn 420ms ease-out both;
+}
+
+.errorScreen__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.4rem;
+  color: rgba(248, 113, 113, 0.88);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.errorScreen__status span {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px rgba(248, 113, 113, 0.48);
+  animation: errorPulse 1.8s ease-in-out infinite;
+}
+
+.errorScreen__icon {
+  width: 4rem;
+  height: 4rem;
+  display: grid;
+  place-items: center;
+  margin-bottom: 1.35rem;
+  border: 1px solid rgba(248, 113, 113, 0.24);
+  border-radius: 50%;
+  color: rgba(248, 113, 113, 0.86);
+  background: rgba(127, 29, 29, 0.08);
+}
+
+.errorScreen__icon svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.errorScreen h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 6vw, 3rem);
+  font-weight: 780;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.errorScreen > p {
+  max-width: 430px;
+  margin: 0.9rem 0 0;
+  color: rgba(214, 229, 245, 0.68);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  line-height: 1.65;
+}
+
+.errorScreen__retry {
+  min-height: 2.8rem;
+  margin-top: 1.6rem;
+  padding: 0.7rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 1px solid rgba(125, 188, 235, 0.22);
+  border-radius: 6px;
+  color: rgba(238, 247, 255, 0.92);
+  background: rgba(5, 17, 39, 0.78);
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.errorScreen__retry svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 360ms ease;
+}
+
+.errorScreen__retry:hover,
+.errorScreen__retry:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(125, 188, 235, 0.48);
+  background: rgba(44, 119, 190, 0.16);
+  outline: none;
+}
+
+.errorScreen__retry:hover svg,
+.errorScreen__retry:focus-visible svg {
+  transform: rotate(180deg);
+}
+
+@keyframes errorScreenIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes errorPulse {
+  50% {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
+}
+
+:root[data-theme='light'] .errorScreen {
+  color: rgba(18, 32, 52, 0.94);
+}
+
+:root[data-theme='light'] .errorScreen__status,
+:root[data-theme='light'] .errorScreen__icon {
+  color: rgba(176, 38, 38, 0.9);
+}
+
+:root[data-theme='light'] .errorScreen__icon {
+  border-color: rgba(176, 38, 38, 0.2);
+  background: rgba(220, 38, 38, 0.05);
+}
+
+:root[data-theme='light'] .errorScreen > p {
+  color: rgba(34, 49, 72, 0.68);
+}
+
+:root[data-theme='light'] .errorScreen__retry {
+  color: rgba(18, 32, 52, 0.92);
+  border-color: rgba(72, 98, 135, 0.18);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+:root[data-theme='light'] .errorScreen__retry:hover,
+:root[data-theme='light'] .errorScreen__retry:focus-visible {
+  border-color: rgba(55, 96, 150, 0.36);
+  background: rgba(224, 235, 249, 0.88);
+}
+
+@media (max-width: 850px) {
+  .errorScreen {
+    min-height: calc(100dvh - 5.5rem);
+    padding-bottom: 7rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .errorScreen {
+    width: min(100% - 1.25rem, 620px);
+  }
+
+  .errorScreen__icon {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .errorScreen__retry {
+    width: min(100%, 15rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .errorScreen,
+  .errorScreen__status span {
+    animation: none;
+  }
+
+  .errorScreen__retry,
+  .errorScreen__retry svg {
+    transition: none;
+  }
+}

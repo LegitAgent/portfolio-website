@@ -168,12 +168,25 @@
 @keyframes spaceBitFloat {
   0%,
   100% {
-    opacity: 0.45;
+    opacity: 0.86;
     transform: translateY(0);
   }
 
   50% {
-    opacity: 0.9;
+    opacity: 1;
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes lightSpaceBitFloat {
+  0%,
+  100% {
+    opacity: 0.92;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
     transform: translateY(-14px);
   }
 }
@@ -259,6 +272,16 @@
 :root[data-theme='light'] .astronaut {
   color: rgba(38, 60, 92, 0.88);
   filter: drop-shadow(0 18px 24px rgba(55, 96, 150, 0.16));
+}
+
+:root[data-theme='light'] .spaceBit,
+:root[data-theme='light'] .wrong__eyebrow {
+  color: #000;
+  text-shadow: none;
+}
+
+:root[data-theme='light'] .spaceBit {
+  animation-name: lightSpaceBitFloat;
 }
 
 :root[data-theme='light'] .wrong__content > p:not(.wrong__eyebrow) {
