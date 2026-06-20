@@ -39,17 +39,58 @@ function Projects() {
     return <LoadingScreen />;
   }
 
+  const featuredProjects =
+    projects?.results?.filter((project) => Number(project.featured) === 1) ?? [];
+  const otherProjects =
+    projects?.results?.filter((project) => Number(project.featured) !== 1) ?? [];
+
   return (
-    <>
-      <div className="flex items-center justify-center text-7xl">Projects</div>
-      <div className="projectBox">
-        <div className="projectList">
-          {projects?.results?.map((projectStuff) => {
-            return <ProjectsDisplay key={projectStuff.project_name} project={projectStuff} />;
-          })}
-        </div>
-      </div>
-    </>
+    <main className="projectsPage">
+      <header className="projectsHeader">
+        <p>Selected work</p>
+        <h1>Projects</h1>
+        <span>
+          A collection of applications, experiments, and systems I have built while learning
+          and working across the stack.
+        </span>
+      </header>
+
+      {featuredProjects.length > 0 && (
+        <section className="projectsSection projectsSection--featured">
+          <div className="projectsSectionHeading">
+            <div>
+              <span>01</span>
+              <h2>Featured Projects</h2>
+            </div>
+            <p>{featuredProjects.length} selected</p>
+          </div>
+
+          <div className="projectList projectList--featured">
+            {featuredProjects.map((project) => (
+              <ProjectsDisplay key={project.project_name} project={project} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {otherProjects.length > 0 && (
+        <section className="projectsSection">
+          <div className="projectsSectionHeading">
+            <div>
+              <span>{featuredProjects.length > 0 ? '02' : '01'}</span>
+              <h2>Other Projects</h2>
+            </div>
+            <p>{otherProjects.length} projects</p>
+          </div>
+
+          <div className="projectList">
+            {otherProjects.map((project) => (
+              <ProjectsDisplay key={project.project_name} project={project} />
+            ))}
+          </div>
+        </section>
+      )}
+    </main>
   );
 }
 

@@ -28,8 +28,6 @@ import tailwind from '../assets/icons/tailwind.svg';
 import typescript from '../assets/icons/typescript.svg';
 import vite from '../assets/icons/vite.svg';
 
-
-
 // image locations
 export const GITHUB_ICON = gitHubIcon;
 export const LINKEDIN_ICON = linkedInIcon;

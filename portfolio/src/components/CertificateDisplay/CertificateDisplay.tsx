@@ -7,16 +7,16 @@ function CertificateDisplay({ certificate }: { certificate: Certificate }) {
   const imageUrl = new URL(certificate.image_url, CLOUDFLARE_R2_BUCKET).toString();
 
   return (
-    <div className='projectDisplay'>
-      <img className='projectImage' src={imageUrl} alt={certificate.image_alt} />
-      <p className='title'>{certificate.title}</p>
-      <div className='textContent'>
-        <p className='description'>{certificate.description}</p>
-        <button onClick={() => redirect(certificate.certificate_url)} className='openPDFButton'>
+    <article className="certificateDisplay">
+      <img className="certificateImage" src={imageUrl} alt={certificate.image_alt} />
+      <div className="certificateContent">
+        <h2>{certificate.title}</h2>
+        <p>{certificate.description}</p>
+        <button onClick={() => redirect(certificate.certificate_url)} className="certificateAction">
           Open PDF
         </button>
       </div>
-    </div>
+    </article>
   );
 }
 

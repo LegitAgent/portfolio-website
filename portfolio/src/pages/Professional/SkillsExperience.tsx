@@ -73,10 +73,12 @@ const skillIconSources: Record<string, string> = {
 
 function SkillTag({ skill }: { skill: Tag }) {
   const iconSrc = skillIconSources[skill.tag_name] ?? skillIconSources.default;
+  const needsThemeInversion = ['GitHub', 'AWS'].includes(skill.tag_name);
+  const iconClassName = needsThemeInversion ? 'tagIcon tagIcon--theme-invert' : 'tagIcon';
 
   return (
     <div className="tag" key={skill.tag_name}>
-      <img className="tagIcon" src={iconSrc} alt="" aria-hidden="true" />
+      <img className={iconClassName} src={iconSrc} alt="" aria-hidden="true" />
       <span>{skill.tag_name}</span>
     </div>
   );

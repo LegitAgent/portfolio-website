@@ -173,7 +173,7 @@ export default {
         if (url.pathname === '/api/db/projects') {
           const loadProjects = async () => {
             const { results } = await env.portfolio_db
-              .prepare('SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, pa.pArticle_slug FROM Projects AS p LEFT JOIN ProjectArticles AS pa ON pa.project_name = p.project_name')
+              .prepare('SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, p.featured, p.started_at, p.ended_at, p.live_url, pa.pArticle_slug FROM Projects AS p LEFT JOIN ProjectArticles AS pa ON pa.project_name = p.project_name')
               .run();
             return { 
               data: { results },

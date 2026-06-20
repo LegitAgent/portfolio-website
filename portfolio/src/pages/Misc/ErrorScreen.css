@@ -72,9 +72,16 @@
   line-height: 1.65;
 }
 
+.errorScreen__actions {
+  margin-top: 1.6rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
 .errorScreen__retry {
   min-height: 2.8rem;
-  margin-top: 1.6rem;
   padding: 0.7rem 1rem;
   display: inline-flex;
   align-items: center;
@@ -186,6 +193,12 @@
 
   .errorScreen__retry {
     width: min(100%, 15rem);
+  }
+
+  .errorScreen__actions {
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
   }
 }
 

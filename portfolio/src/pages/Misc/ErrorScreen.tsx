@@ -19,13 +19,21 @@ function ErrorScreen() {
       <h1>Something went wrong.</h1>
       <p>The requested data could not be loaded. Refresh the page to try again.</p>
 
-      <button className="errorScreen__retry" onClick={() => window.location.reload()}>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20 11a8.1 8.1 0 1 0 .1 3" />
-          <path d="M20 4v7h-7" />
-        </svg>
-        <span>Refresh page</span>
-      </button>
+      <div className="errorScreen__actions">
+        <button className="errorScreen__retry" onClick={() => window.location.reload()}>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 11a8.1 8.1 0 1 0 .1 3" />
+            <path d="M20 4v7h-7" />
+          </svg>
+          <span>Refresh page</span>
+        </button>
+        <button className="errorScreen__retry" onClick={() => window.history.back()}>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+          <span>Go back</span>
+        </button>
+      </div>
     </section>
   );
 }

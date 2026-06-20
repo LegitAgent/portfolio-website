@@ -115,6 +115,10 @@
   opacity: 0.82;
 }
 
+.tagIcon--theme-invert {
+  filter: invert(1);
+}
+
 .workTree {
   position: relative;
   margin-top: 1.75rem;
@@ -360,6 +364,10 @@
 
 :root[data-theme='light'] .tagIcon {
   opacity: 0.72;
+}
+
+:root[data-theme='light'] .tagIcon--theme-invert {
+  filter: none;
 }
 
 :root[data-theme='light'] .workList::before {

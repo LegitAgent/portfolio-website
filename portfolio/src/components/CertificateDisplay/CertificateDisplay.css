@@ -1,0 +1,59 @@
+.certificateDisplay {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(125, 188, 235, 0.16);
+  border-radius: 8px;
+  color: rgba(238, 247, 255, 0.92);
+  background: rgba(3, 12, 29, 0.66);
+}
+
+.certificateImage {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: block;
+  object-fit: cover;
+}
+
+.certificateContent {
+  padding: 1rem;
+}
+
+.certificateContent h2 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.certificateContent p {
+  margin: 0.65rem 0 0;
+  color: rgba(214, 229, 245, 0.68);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.certificateAction {
+  width: 100%;
+  min-height: 2.5rem;
+  margin-top: 1rem;
+  border: 1px solid rgba(125, 188, 235, 0.18);
+  border-radius: 6px;
+  color: inherit;
+  background: rgba(5, 17, 39, 0.72);
+}
+
+:root[data-theme='light'] .certificateDisplay {
+  color: rgba(18, 32, 52, 0.94);
+  border-color: rgba(72, 98, 135, 0.14);
+  background: rgba(247, 250, 255, 0.82);
+}
+
+:root[data-theme='light'] .certificateContent p {
+  color: rgba(34, 49, 72, 0.68);
+}
+
+:root[data-theme='light'] .certificateAction {
+  color: rgba(18, 32, 52, 0.94);
+  border-color: rgba(72, 98, 135, 0.16);
+  background: rgba(255, 255, 255, 0.72);
+}

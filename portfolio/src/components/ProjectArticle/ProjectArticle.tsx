@@ -53,23 +53,23 @@ function ProjectArticle() {
   const imageURL = CLOUDFLARE_R2_BUCKET + articleContent?.pArticle_image_url;
 
   return (
-    <div className="body">
+    <article className="projectArticlePage">
+      <button className="projectArticleBack" onClick={() => navigate(-1)}>
+        Back
+      </button>
       <img className="projectArticleImage" src={imageURL} alt={articleContent?.pArticle_title} />
-      <p className="articleHeader">{articleContent?.pArticle_title}</p>
-      <div className="techStacks">
+      <h1 className="projectArticleHeader">{articleContent?.pArticle_title}</h1>
+      <div className="projectArticleTechStacks">
         {articleSkills?.map((skill) => {
           return (
-            <div className="techStackButton" key={skill.tag_name}>
+            <span className="projectArticleTech" key={skill.tag_name}>
               {skill.tag_name}
-            </div>
+            </span>
           );
         })}
       </div>
-      <div className="content">{articleContent?.pArticle_content}</div>
-      <button className="text-2xl" onClick={() => navigate(-1)}>
-        Back
-      </button>
-    </div>
+      <div className="projectArticleContent">{articleContent?.pArticle_content}</div>
+    </article>
   );
 }
 

@@ -41,16 +41,16 @@ function Certificates() {
   }
 
   return (
-    <>
-      <div className='flex items-center justify-center text-7xl'>Certificates</div>
-      <div className='certificateBox'>
-        <div className='certificateList'>
+    <main className="certificatesPage">
+      <header className="certificatesHeader">
+        <h1>Certificates</h1>
+      </header>
+      <div className="certificateList">
           {certificates?.certificates?.map((certificateStuff) => {
             return <CertificateDisplay key={certificateStuff.id} certificate={certificateStuff} />;
           })}
-        </div>
       </div>
-    </>
+    </main>
   );
 }
 

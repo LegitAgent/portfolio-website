@@ -1,13 +1,373 @@
 .workArticleContainer {
+  width: min(100% - 2rem, 1080px);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 4.5rem) 0 7rem;
+  color: rgba(238, 247, 255, 0.94);
+  animation: workArticleIn 520ms ease-out both;
+}
+
+.workArticleNav {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(2.5rem, 7vw, 5rem);
+}
+
+.workArticleBack,
+.workArticleCompanyLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(214, 229, 245, 0.78);
+  font-size: 0.82rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.workArticleBack {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.workArticleBack svg,
+.workArticleCompanyLink svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.workArticleBack:hover,
+.workArticleBack:focus-visible,
+.workArticleCompanyLink:hover,
+.workArticleCompanyLink:focus-visible {
+  color: rgba(134, 239, 172, 0.94);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.workArticleRoute {
+  max-width: 50%;
+  overflow: hidden;
+  color: rgba(214, 229, 245, 0.42);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workArticleHeader {
+  max-width: 850px;
+}
+
+.workArticleEyebrow {
+  margin: 0 0 0.7rem;
+  color: rgba(134, 239, 172, 0.84);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.workArticleHeader h1 {
+  max-width: 900px;
+  margin: 0;
+  font-size: clamp(2.4rem, 7vw, 5.3rem);
+  font-weight: 780;
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.workArticleRole {
+  margin: 0.8rem 0 0;
+  color: rgba(175, 220, 255, 0.84);
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  font-weight: 680;
+}
+
+.workArticleSummary {
+  max-width: 720px;
+  margin: 1.4rem 0 0;
+  color: rgba(214, 229, 245, 0.72);
+  font-size: clamp(1rem, 2vw, 1.12rem);
+  line-height: 1.72;
+}
+
+.workArticleMeta {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.techStacks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.techStackButton {
+  width: fit-content;
+  padding: 0.38rem 0.62rem;
+  border: 1px solid rgba(125, 188, 235, 0.16);
+  border-radius: 999px;
+  color: rgba(214, 229, 245, 0.74);
+  background: rgba(5, 17, 39, 0.48);
+  font-size: 0.76rem;
+  font-weight: 720;
+}
+
+.workArticleImage {
+  position: relative;
+  aspect-ratio: 16 / 7;
+  margin: clamp(2rem, 6vw, 4rem) 0 0;
+  overflow: hidden;
+  border: 1px solid rgba(125, 188, 235, 0.14);
+  border-radius: 6px;
+  background: rgba(3, 12, 29, 0.58);
+}
+
+.workArticleImage img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.workArticleBody {
+  margin-top: clamp(2.5rem, 7vw, 5rem);
+}
+
+.workArticleContent {
+  max-width: 760px;
+  min-width: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.workArticleContent > p {
+  margin: 0;
+  color: rgba(214, 229, 245, 0.76);
+  line-height: 1.85;
+}
+
+.workArticleContent > p {
+  font-size: clamp(1rem, 2vw, 1.08rem);
+}
+
+.workArticleHighlights {
+  margin-top: clamp(3.5rem, 9vw, 7rem);
+  display: grid;
+  gap: clamp(3.5rem, 8vw, 6rem);
+}
+
+.workArticleHighlightSection {
+  min-width: 0;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(125, 188, 235, 0.18);
+}
+
+.workArticleHighlightSection header {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: start;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.workArticleSectionNumber {
+  padding-top: 0.22rem;
+  color: rgba(134, 239, 172, 0.64);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.workArticleHighlightSection header p {
+  margin: 0 0 0.3rem;
+  color: rgba(214, 229, 245, 0.5);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.workArticleHighlights h2 {
+  margin: 0;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  font-weight: 780;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.workArticleHighlights ul {
+  margin: 0;
+  padding: 0 0 0 4rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem clamp(2rem, 5vw, 4rem);
+  list-style: none;
+}
+
+.workArticleHighlights li {
+  position: relative;
+  padding-left: 1.2rem;
+  color: rgba(214, 229, 245, 0.76);
+  font-size: 0.96rem;
+  line-height: 1.72;
+}
+
+.workArticleHighlights li::before {
+  content: '';
+  position: absolute;
+  top: 0.68em;
+  left: 0;
+  width: 0.34rem;
+  height: 0.34rem;
+  border-radius: 50%;
+  background: rgba(134, 239, 172, 0.82);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.28);
+}
+
+@keyframes workArticleIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 :root[data-theme='light'] .workArticleContainer {
   color: rgba(18, 32, 52, 0.94);
 }
 
-:root[data-theme='light'] .workArticleContainer button {
-  color: rgba(42, 82, 134, 0.95);
+:root[data-theme='light'] .workArticleBack,
+:root[data-theme='light'] .workArticleCompanyLink {
+  color: rgba(42, 82, 134, 0.9);
+}
+
+:root[data-theme='light'] .workArticleBack:hover,
+:root[data-theme='light'] .workArticleBack:focus-visible,
+:root[data-theme='light'] .workArticleCompanyLink:hover,
+:root[data-theme='light'] .workArticleCompanyLink:focus-visible {
+  color: rgba(12, 105, 57, 0.94);
+}
+
+:root[data-theme='light'] .workArticleRoute {
+  color: rgba(34, 49, 72, 0.46);
+}
+
+:root[data-theme='light'] .workArticleEyebrow,
+:root[data-theme='light'] .workArticleSectionNumber {
+  color: rgba(12, 105, 57, 0.84);
+}
+
+:root[data-theme='light'] .workArticleRole {
+  color: rgba(42, 82, 134, 0.88);
+}
+
+:root[data-theme='light'] .workArticleSummary,
+:root[data-theme='light'] .workArticleContent > p,
+:root[data-theme='light'] .workArticleHighlights li {
+  color: rgba(34, 49, 72, 0.72);
+}
+
+:root[data-theme='light'] .workArticleHighlights li::before {
+  background: rgba(12, 105, 57, 0.86);
+  box-shadow: none;
+}
+
+:root[data-theme='light'] .techStackButton {
+  color: rgba(34, 49, 72, 0.72);
+  border-color: rgba(72, 98, 135, 0.16);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+:root[data-theme='light'] .workArticleImage {
+  border-color: rgba(72, 98, 135, 0.14);
+  background: rgba(247, 250, 255, 0.82);
+}
+
+:root[data-theme='light'] .workArticleHighlights {
+  border-color: rgba(72, 98, 135, 0.16);
+}
+
+:root[data-theme='light'] .workArticleHighlightSection {
+  border-color: rgba(72, 98, 135, 0.18);
+}
+
+:root[data-theme='light'] .workArticleHighlightSection header p {
+  color: rgba(34, 49, 72, 0.5);
+}
+
+@media (max-width: 850px) {
+  .workArticleContainer {
+    padding-bottom: 8rem;
+  }
+
+  .workArticleHighlights ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .workArticleContainer {
+    width: min(100% - 1.25rem, 1080px);
+    padding-top: 1.5rem;
+  }
+
+  .workArticleNav {
+    margin-bottom: 2.75rem;
+  }
+
+  .workArticleRoute {
+    display: none;
+  }
+
+  .workArticleMeta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .workArticleImage {
+    aspect-ratio: 4 / 3;
+  }
+
+  .workArticleHighlightSection header {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .workArticleHighlights ul {
+    padding-left: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workArticleContainer {
+    animation: none;
+  }
+
+  .workArticleBack,
+  .workArticleCompanyLink {
+    transition: none;
+  }
 }

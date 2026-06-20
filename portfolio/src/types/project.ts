@@ -6,6 +6,10 @@ interface Project {
   project_github: string;
   project_img_url: string;
   pArticle_slug: string;
+  featured: boolean;
+  started_at: string;
+  ended_at: string;
+  live_url?: string;
 }
 
 interface ProjectArticle {
