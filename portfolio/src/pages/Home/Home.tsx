@@ -89,7 +89,7 @@ function Home() {
             <p>Martin Darius Alba</p>
           </div>
 
-          <div className='currentRole'>Aspiring Student</div>
+          <div className='currentRole'>Student</div>
 
           <div className='introContent'>
             I’m a computer science student who likes building practical software and experimenting with different kinds of projects. From websites and extensions to backend tools and games, I enjoy learning by making things that people can actually use.

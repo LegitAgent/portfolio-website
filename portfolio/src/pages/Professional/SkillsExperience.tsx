@@ -169,7 +169,7 @@ function SkillsExperience() {
 
       <section className="experienceContainer">
         <h1>Work Experience</h1>
-        <p className="experienceDescription">I’m looking for opportunities that push my boundaries and expand my technical toolkit. I am still early in my journey, but I am incredibly excited to get more exposure, tackle fresh challenges, and build awesome software!</p>
+        <p className="experienceDescription">I’m looking for opportunities that push my boundaries and expand my technical toolkit. I am still early in my journey, but I am incredibly excited to get more exposure, tackle fresh challenges, and build cool software!</p>
         <section className="workTree">
           <div className="workList">
             {orderedWork.map((workStuff, index) => {
