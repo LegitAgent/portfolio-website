@@ -4,15 +4,16 @@ import CertificateDisplay from '../../components/CertificateDisplay/CertificateD
 import LoadingScreen from '../Misc/LoadingScreen.tsx';
 import ErrorScreen from '../Misc/ErrorScreen.tsx';
 import type { CertificateResponse } from '../../types/certificate.ts';
-
+import Fuse from 'fuse.js';
 import { useState, useEffect } from 'react';
 
-const certificateGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/certificates'; // path to certificates db
+const certificateGatewayURL = `${CLOUDFLARE_GATEWAY}api/db/certificates`;
 
 function Certificates() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [certificates, setCertificates] = useState<CertificateResponse | null>(null);
-  const [hasError, setHasError] = useState<boolean>(false);
+  const [hasError, setHasError] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetch(certificateGatewayURL)
@@ -40,16 +41,79 @@ function Certificates() {
     return <LoadingScreen />;
   }
 
+  const certificateResults = certificates?.certificates ?? [];
+  const certificateSearch = new Fuse(certificateResults, {
+    keys: [
+      { name: 'title', weight: 0.45 },
+      { name: 'issuer', weight: 0.25 },
+      { name: 'skills', weight: 0.2 },
+      { name: 'description', weight: 0.1 },
+    ],
+    threshold: 0.35,
+    ignoreLocation: true,
+    minMatchCharLength: 2,
+    shouldSort: true,
+  });
+  const query = searchQuery.trim();
+  const filteredCertificates = query
+    ? certificateSearch.search(query).map((result) => result.item)
+    : certificateResults;
+
   return (
     <main className="certificatesPage">
       <header className="certificatesHeader">
+        <p>Verified learning</p>
         <h1>Certificates</h1>
+        <span>
+          Courses and credentials I have completed while developing my technical knowledge
+          across software, cloud, and computer science.
+        </span>
       </header>
-      <div className="certificateList">
-          {certificates?.certificates?.map((certificateStuff) => {
-            return <CertificateDisplay key={certificateStuff.id} certificate={certificateStuff} />;
-          })}
+
+      <div className="certificateSearch">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-4-4" />
+        </svg>
+        <input
+          type="search"
+          value={searchQuery}
+          onChange={(event) => setSearchQuery(event.target.value)}
+          placeholder="Search certificates..."
+          aria-label="Search certificates"
+        />
+        {searchQuery && (
+          <button type="button" onClick={() => setSearchQuery('')} aria-label="Clear certificate search">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m7 7 10 10" />
+              <path d="M17 7 7 17" />
+            </svg>
+          </button>
+        )}
       </div>
+
+      {filteredCertificates.length === 0 ? (
+        <div className="certificateSearchEmpty">
+          <p>No certificates found.</p>
+          <span>Try a different title, issuer, or skill.</span>
+        </div>
+      ) : (
+        <section className="certificatesSection">
+          <div className="certificatesSectionHeading">
+            <div>
+              <span>01</span>
+              <h2>Credentials</h2>
+            </div>
+            <p>{filteredCertificates.length} certificates</p>
+          </div>
+
+          <div className="certificateList">
+            {filteredCertificates.map((certificate) => (
+              <CertificateDisplay key={certificate.id} certificate={certificate} />
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }

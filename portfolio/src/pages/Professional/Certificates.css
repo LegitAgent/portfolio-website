@@ -1,16 +1,176 @@
 .certificatesPage {
-  width: min(100% - 2rem, 1400px);
+  width: min(100% - 2rem, 1440px);
   min-height: 100dvh;
   margin: 0 auto;
-  padding: clamp(2.5rem, 7vw, 5rem) 0 7rem;
+  padding: clamp(2.5rem, 7vw, 5.5rem) 0 7rem;
   color: rgba(238, 247, 255, 0.94);
 }
 
+.certificatesHeader {
+  max-width: 760px;
+  animation: certificatesEnter 480ms ease-out both;
+}
+
+.certificatesHeader > p {
+  margin: 0 0 0.7rem;
+  color: rgba(134, 239, 172, 0.82);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .certificatesHeader h1 {
-  margin: 0 0 clamp(2rem, 5vw, 3.5rem);
-  font-size: clamp(2.75rem, 8vw, 5rem);
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 780;
   line-height: 0.95;
-  letter-spacing: 0;
+}
+
+.certificatesHeader > span {
+  display: block;
+  max-width: 660px;
+  margin-top: 1.15rem;
+  color: rgba(214, 229, 245, 0.68);
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  line-height: 1.7;
+}
+
+.certificateSearch {
+  width: min(100%, 34rem);
+  min-height: 3.25rem;
+  margin-top: 2rem;
+  padding: 0 0.85rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid rgba(125, 188, 235, 0.2);
+  border-radius: 7px;
+  color: rgba(175, 220, 255, 0.7);
+  background: rgba(3, 12, 29, 0.66);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.certificateSearch:focus-within {
+  border-color: rgba(125, 188, 235, 0.48);
+  background: rgba(5, 17, 39, 0.82);
+  box-shadow:
+    0 0 0 3px rgba(125, 188, 235, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.certificateSearch > svg,
+.certificateSearch button svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.certificateSearch input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: rgba(238, 247, 255, 0.94);
+  background: transparent;
+  font-size: 0.92rem;
+}
+
+.certificateSearch input::placeholder {
+  color: rgba(214, 229, 245, 0.42);
+}
+
+.certificateSearch input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.certificateSearch button {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 4px;
+  color: rgba(214, 229, 245, 0.58);
+  background: transparent;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+.certificateSearch button:hover,
+.certificateSearch button:focus-visible {
+  color: rgba(238, 247, 255, 0.96);
+  background: rgba(125, 188, 235, 0.1);
+  outline: none;
+}
+
+.certificateSearchEmpty {
+  margin-top: clamp(3.5rem, 9vw, 7rem);
+  padding: 2rem 0;
+  border-top: 1px solid rgba(125, 188, 235, 0.16);
+}
+
+.certificateSearchEmpty p {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 760;
+}
+
+.certificateSearchEmpty span {
+  display: block;
+  margin-top: 0.35rem;
+  color: rgba(214, 229, 245, 0.58);
+  font-size: 0.9rem;
+}
+
+.certificatesSection {
+  margin-top: clamp(3.5rem, 9vw, 7rem);
+}
+
+.certificatesSectionHeading {
+  min-height: 3.5rem;
+  padding-top: 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid rgba(125, 188, 235, 0.16);
+}
+
+.certificatesSectionHeading > div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.certificatesSectionHeading span,
+.certificatesSectionHeading > p {
+  color: rgba(214, 229, 245, 0.46);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.certificatesSectionHeading h2 {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  font-weight: 760;
+}
+
+.certificatesSectionHeading > p {
+  margin: 0.35rem 0 0;
 }
 
 .certificateList {
@@ -19,38 +179,104 @@
   gap: 1rem;
 }
 
+@keyframes certificatesEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 :root[data-theme='light'] .certificatesPage {
   color: rgba(18, 32, 52, 0.94);
 }
 
-@media (max-width: 1200px) {
+:root[data-theme='light'] .certificatesHeader > p {
+  color: rgba(12, 105, 57, 0.86);
+}
+
+:root[data-theme='light'] .certificatesHeader > span {
+  color: rgba(34, 49, 72, 0.68);
+}
+
+:root[data-theme='light'] .certificateSearch {
+  color: rgba(42, 82, 134, 0.68);
+  border-color: rgba(72, 98, 135, 0.18);
+  background: rgba(255, 255, 255, 0.68);
+}
+
+:root[data-theme='light'] .certificateSearch:focus-within {
+  border-color: rgba(55, 96, 150, 0.4);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(55, 96, 150, 0.07);
+}
+
+:root[data-theme='light'] .certificateSearch input {
+  color: rgba(18, 32, 52, 0.94);
+}
+
+:root[data-theme='light'] .certificateSearch input::placeholder {
+  color: rgba(34, 49, 72, 0.44);
+}
+
+:root[data-theme='light'] .certificateSearch button {
+  color: rgba(34, 49, 72, 0.58);
+}
+
+:root[data-theme='light'] .certificateSearch button:hover,
+:root[data-theme='light'] .certificateSearch button:focus-visible {
+  color: rgba(18, 32, 52, 0.94);
+  background: rgba(72, 98, 135, 0.08);
+}
+
+:root[data-theme='light'] .certificateSearchEmpty,
+:root[data-theme='light'] .certificatesSectionHeading {
+  border-color: rgba(72, 98, 135, 0.16);
+}
+
+:root[data-theme='light'] .certificateSearchEmpty span,
+:root[data-theme='light'] .certificatesSectionHeading span,
+:root[data-theme='light'] .certificatesSectionHeading > p {
+  color: rgba(34, 49, 72, 0.48);
+}
+
+@media (max-width: 1150px) {
+  .certificatesPage {
+    padding-bottom: var(--mobile-nav-clearance);
+  }
+
   .certificateList {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 1150px) {
-  .certificatesPage {
-    width: min(100% - 2rem, 1400px);
-    margin-right: auto;
-    margin-left: auto;
-    padding-bottom: var(--mobile-nav-clearance);
-  }
-}
-
-@media (max-width: 800px) {
+@media (max-width: 850px) {
   .certificateList {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 620px) {
   .certificatesPage {
-    width: min(100% - 1.25rem, 1400px);
+    width: min(100% - 1.25rem, 1440px);
     padding-top: 2rem;
+  }
+
+  .certificatesSectionHeading > p {
+    display: none;
   }
 
   .certificateList {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .certificatesHeader {
+    animation: none;
   }
 }

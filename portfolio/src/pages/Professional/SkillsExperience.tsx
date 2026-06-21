@@ -1,30 +1,8 @@
 import './SkillsExperience.css';
 import {
-  AWS,
-  CLOUDFLARE,
-  CLOUDFLARE_GATEWAY,
-  CPP,
-  CSS,
-  DJANGO,
-  GIT,
-  GITHUB_ICON,
-  GRAPHQL,
-  HTML,
-  JAVA,
-  JAVASCRIPT,
-  LARAVEL,
-  NODEJS,
-  NPM,
-  PHP,
-  PIP,
-  POSTGRESQL,
-  PYTHON,
-  REACT,
-  REST,
-  SQL,
-  TAILWIND,
-  TYPESCRIPT,
-  VITE,
+  AWS, CLOUDFLARE, CLOUDFLARE_GATEWAY, CPP, CSS, DJANGO, DOCKER, GIT, GITHUB_ICON, GRAPHQL,
+  HTML, JAVA, JAVASCRIPT, LARAVEL, NODEJS, NPM, PHP, PIP, POSTGRESQL, PYTHON, REACT, REST,
+  SQL, TAILWIND, TYPESCRIPT, VITE,
 } from '../../config/constants.ts';
 import { useEffect, useRef, useState } from 'react';
 import WorkDisplay from '../../components/WorkDisplay/WorkDisplay.tsx';
@@ -37,13 +15,13 @@ const tagsGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/tags'; // path to tags db
 const workGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/work'; // path to work db
 
 const skillIconSources: Record<string, string> = {
-  default: '/temp.svg',
   AWS,
   'AWS Lambda': AWS,
   Cloudflare: CLOUDFLARE,
   'C++': CPP,
   CPP,
   CSS,
+  Docker: DOCKER,
   Django: DJANGO,
   Git: GIT,
   GitHub: GITHUB_ICON,

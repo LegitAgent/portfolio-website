@@ -3,7 +3,7 @@ export interface Certificate {
   title: string;
   issuer: string;
   completion_date: string;
-  credential_url: string | null;
+  credential_url?: string | null;
   certificate_url: string;
   image_alt: string;
   skills: string;
