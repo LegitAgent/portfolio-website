@@ -28,6 +28,10 @@ import tailwind from '../assets/icons/tailwind.svg';
 import typescript from '../assets/icons/typescript.svg';
 import vite from '../assets/icons/vite.svg';
 
+import skills from '../assets/icons/skills.svg';
+import code from '../assets/icons/code.svg';
+import certificate from '../assets/icons/certificate.svg';
+
 // image locations
 export const GITHUB_ICON = gitHubIcon;
 export const LINKEDIN_ICON = linkedInIcon;
@@ -58,6 +62,10 @@ export const SQL = sql;
 export const TAILWIND = tailwind;
 export const TYPESCRIPT = typescript;
 export const VITE = vite;
+
+export const SKILLS = skills;
+export const CODE = code;
+export const CERTIFICATE = certificate;
 
 // URL's
 export const GITHUB_URL = 'https://github.com/LegitAgent';

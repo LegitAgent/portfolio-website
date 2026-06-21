@@ -49,7 +49,8 @@
   text-transform: uppercase;
 }
 
-.linkImage {
+.linkImage,
+.resumeImage {
   flex: 0 0 auto;
   width: 1.45rem;
   height: 1.45rem;
@@ -64,6 +65,10 @@
   transition:
     color 180ms ease,
     transform 180ms ease;
+}
+
+.resumeImage {
+  filter: invert(1);
 }
 
 .linkName {
@@ -162,6 +167,10 @@
 
 :root[data-theme='light'] .linkImage {
   color: rgba(55, 96, 150, 0.76);
+}
+
+:root[data-theme='light'] .resumeImage {
+  filter: none
 }
 
 :root[data-theme='light'] .linkName:hover,
