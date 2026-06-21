@@ -1,5 +1,7 @@
 import type { Tag } from './tag';
 
+export type ProjectStatus = 'Done' | 'WIP' | 'Draft' | 'Review' | 'Blocked';
+
 interface Project {
   project_name: string;
   project_description: string;
@@ -10,6 +12,7 @@ interface Project {
   started_at: string;
   ended_at: string;
   live_url?: string;
+  status: ProjectStatus;
 }
 
 interface ProjectArticle {

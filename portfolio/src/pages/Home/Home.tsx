@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { redirect } from '../../config/routing';
 import { GITHUB_URL, LINKEDIN_URL, GITHUB_ICON, LINKEDIN_ICON, EMAIL_ICON, PROFILE_PICTURE } from '../../config/constants';
 
-// import Tilty from 'react-tilty'
-
 type HomeIcon = 'skills' | 'projects' | 'focus' | 'resume';
 
 interface HomeCard {
