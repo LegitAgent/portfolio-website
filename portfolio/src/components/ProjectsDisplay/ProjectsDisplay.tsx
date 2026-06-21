@@ -59,7 +59,7 @@ function ProjectsDisplay({ project }: ProjectDisplayProps) {
             to={`/projects/${project.pArticle_slug}`}
             aria-label={`Read more about ${project.project_name}`}
           >
-            <span>Article</span>
+            <span>Read More</span>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="m9 18 6-6-6-6" />
             </svg>

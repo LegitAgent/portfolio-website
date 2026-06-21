@@ -233,7 +233,7 @@ export default {
             const slug = url.pathname.replace('/api/project_articles/', '');
 
             const { results } = await env.portfolio_db
-              .prepare('SELECT pa.pArticle_title, pArticle_image_url, pa.pArticle_slug, pa.pArticle_content, p.project_github FROM ProjectArticles AS pa JOIN Projects AS p ON pa.project_name = p.project_name WHERE pa.pArticle_slug = ?')
+              .prepare('SELECT pa.project_name, pa.pArticle_slug, pa.pArticle_image_url, pa.pArticle_image_alt, pa.pArticle_summary, pa.pArticle_overview, pa.pArticle_content, pa.pArticle_challenges, pa.pArticle_lessons, pa.pArticle_future_work, p.project_github, p.started_at, p.live_url, p.status, p.featured FROM ProjectArticles AS pa JOIN Projects AS p ON pa.project_name = p.project_name WHERE pa.pArticle_slug = ?')
               .bind(slug)
               .run();
 

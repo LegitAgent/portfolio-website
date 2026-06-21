@@ -30,7 +30,7 @@ import { useEffect, useRef, useState } from 'react';
 import WorkDisplay from '../../components/WorkDisplay/WorkDisplay.tsx';
 import ErrorScreen from '../Misc/ErrorScreen';
 import LoadingScreen from '../Misc/LoadingScreen';
-import type { Tag, TagsResponse } from '../../types/tag.ts';
+import type { SkillType, Tag, TagsResponse } from '../../types/tag.ts';
 import type { WorkExperienceResponse } from '../../types/work.ts';
 
 const tagsGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/tags'; // path to tags db
@@ -89,7 +89,7 @@ function SkillsExperience() {
   const [tag, setTag] = useState<TagsResponse | null>(null);
   const [hasErrorTag, setHasErrorTag] = useState<boolean>(false);
 
-  const findSkill = (skill_type: string, skills: TagsResponse): Tag[] => {
+  const findSkill = (skill_type: SkillType, skills: TagsResponse): Tag[] => {
     return skills.tags.filter((tag) => tag.skill_type === skill_type);
   };
 
