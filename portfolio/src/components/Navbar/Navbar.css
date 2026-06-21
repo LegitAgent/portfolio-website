@@ -231,22 +231,23 @@
 
 @media (max-width: 420px) {
   .navbar {
-    bottom: 0.65rem;
-    width: calc(100vw - 0.9rem);
-    max-width: 22rem;
-    padding: 0.42rem;
-    justify-content: space-between;
+    bottom: 0.45rem;
+    width: max-content;
+    max-width: calc(100vw - 0.7rem);
+    padding: 0.3rem;
+    gap: 0.25rem;
   }
 
   .navbar__iconLink {
-    width: 2.6rem;
-    height: 2.6rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
   }
 
   .navbar__links {
     width: auto;
-    flex: 1;
-    justify-content: space-evenly;
+    flex: 0 0 auto;
+    gap: 0.25rem;
   }
 }
 

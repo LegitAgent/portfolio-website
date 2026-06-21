@@ -23,10 +23,10 @@ function Navbar() {
   }, [themeMode]);
   
   const ProfessionalLinks: LinkItem[] = [
-    { path: '/skills_experience', name: 'Skills & Experience', img_path: '/temp.jpg' },
-    { path: '/projects', name: 'Projects', img_path: '/temp.jpg' },
-    { path: '/certificates', name: 'Certificates', img_path: '/temp.jpg' },
-    { path: '/resume', name: 'Resume', img_path: '/temp.jpg' },
+    { path: '/skills_experience', name: 'Skills & Experience' },
+    { path: '/projects', name: 'Projects' },
+    { path: '/certificates', name: 'Certificates' },
+    { path: '/resume', name: 'Resume' },
   ];
 
   const isPathActive = (path: string) => {

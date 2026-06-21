@@ -423,7 +423,7 @@
 
 @media (max-width: 1150px) {
   .seContainer {
-    padding-bottom: 7.5rem;
+    padding-bottom: var(--mobile-nav-clearance);
   }
 
   .workTree {

@@ -177,7 +177,7 @@
 @media (max-width: 850px) {
   .errorScreen {
     min-height: calc(100dvh - 5.5rem);
-    padding-bottom: 7rem;
+    padding-bottom: var(--mobile-nav-clearance);
   }
 }
 

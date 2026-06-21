@@ -2,6 +2,7 @@
   position: relative;
   min-height: 100dvh;
   isolation: isolate;
+  --mobile-nav-clearance: 5.3rem;
 }
 
 .page-shell {
@@ -11,7 +12,13 @@
 }
 
 @media (max-width: 1150px) {
+  .page-shell {
+    min-height: calc(100dvh - var(--mobile-nav-clearance));
+  }
+}
+
+@media (max-width: 420px) {
   .app-shell {
-    padding-bottom: 4.5rem;
+    --mobile-nav-clearance: 4.1rem;
   }
 }

@@ -205,7 +205,7 @@
 
 @media (max-width: 1150px) {
   .wrong {
-    padding-bottom: 7.5rem;
+    padding-bottom: var(--mobile-nav-clearance);
   }
 }
 

@@ -35,7 +35,7 @@
     width: min(100% - 2rem, 1400px);
     margin-right: auto;
     margin-left: auto;
-    padding-bottom: 8rem;
+    padding-bottom: var(--mobile-nav-clearance);
   }
 }
 

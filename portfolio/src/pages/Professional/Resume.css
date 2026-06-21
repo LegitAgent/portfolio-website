@@ -252,7 +252,7 @@
 
 @media (max-width: 850px) {
   .resumeView {
-    padding-bottom: 7.5rem;
+    padding-bottom: var(--mobile-nav-clearance);
   }
 }
 

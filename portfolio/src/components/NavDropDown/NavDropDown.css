@@ -50,11 +50,20 @@
 }
 
 .linkImage {
+  flex: 0 0 auto;
   width: 1.45rem;
-  aspect-ratio: 1/1;
-  border-radius: 0.45rem;
-  object-fit: cover;
-  opacity: 0.72;
+  height: 1.45rem;
+  padding: 0.12rem;
+  overflow: visible;
+  color: rgba(154, 198, 235, 0.84);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
 }
 
 .linkName {
@@ -84,6 +93,13 @@
   box-shadow: inset 3px 0 0 rgba(125, 188, 235, 0.72);
   transform: translateX(2px);
   outline: none;
+}
+
+.linkName:hover .linkImage,
+.linkName:focus-visible .linkImage,
+.linkName.is-active .linkImage {
+  color: rgba(198, 230, 255, 0.98);
+  transform: scale(1.06);
 }
 
 @media (max-width: 1150px) {
@@ -144,6 +160,10 @@
   border-color: rgba(72, 98, 135, 0.12);
 }
 
+:root[data-theme='light'] .linkImage {
+  color: rgba(55, 96, 150, 0.76);
+}
+
 :root[data-theme='light'] .linkName:hover,
 :root[data-theme='light'] .linkName:focus-visible,
 :root[data-theme='light'] .linkName.is-active {
@@ -151,6 +171,18 @@
   background: rgba(224, 235, 249, 0.82);
   border-color: rgba(55, 96, 150, 0.32);
   box-shadow: inset 3px 0 0 rgba(55, 96, 150, 0.58);
+}
+
+:root[data-theme='light'] .linkName:hover .linkImage,
+:root[data-theme='light'] .linkName:focus-visible .linkImage,
+:root[data-theme='light'] .linkName.is-active .linkImage {
+  color: rgba(28, 65, 112, 0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .linkImage {
+    transition: none;
+  }
 }
 
 @media (hover: none) {

@@ -276,7 +276,7 @@
 
 @media (max-width: 850px) {
   .projectsPage {
-    padding-bottom: 8rem;
+    padding-bottom: var(--mobile-nav-clearance);
   }
 
   .projectList {

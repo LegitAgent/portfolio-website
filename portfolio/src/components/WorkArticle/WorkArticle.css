@@ -307,7 +307,7 @@
 
 @media (max-width: 850px) {
   .workArticleContainer {
-    padding-bottom: 8rem;
+    padding-bottom: var(--mobile-nav-clearance);
   }
 
   .workArticleHighlights ul {

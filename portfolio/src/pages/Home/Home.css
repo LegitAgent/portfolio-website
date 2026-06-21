@@ -342,7 +342,7 @@ button.otherBox,
 @media (max-width: 1150px) {
   .hero {
     width: min(100% - 2rem, 980px);
-    padding-bottom: 7rem;
+    padding-bottom: var(--mobile-nav-clearance);
   }
 }
 
