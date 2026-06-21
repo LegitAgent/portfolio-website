@@ -1,8 +1,7 @@
 .projectsPage {
-  width: min(calc(100% - 6.5rem), 1440px);
+  width: min(100% - 2rem, 1440px);
   min-height: 100dvh;
-  margin-right: auto;
-  margin-left: max(5.5rem, calc((100vw - 1440px + 4.5rem) / 2));
+  margin: 0 auto;
   padding: clamp(2.5rem, 7vw, 5.5rem) 0 7rem;
   color: rgba(238, 247, 255, 0.94);
 }

@@ -2,18 +2,23 @@
   position: relative;
   min-height: 100dvh;
   isolation: isolate;
+  --desktop-nav-width: 4.5rem;
   --mobile-nav-clearance: 5.3rem;
 }
 
 .page-shell {
   position: relative;
   z-index: 1;
+  width: calc(100% - var(--desktop-nav-width));
   min-height: 100dvh;
+  margin-left: var(--desktop-nav-width);
 }
 
 @media (max-width: 1150px) {
   .page-shell {
+    width: 100%;
     min-height: calc(100dvh - var(--mobile-nav-clearance));
+    margin-left: 0;
   }
 }
 
