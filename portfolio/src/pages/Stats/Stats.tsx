@@ -214,7 +214,7 @@ function Stats() {
       label: 'Projects built',
       value: portfolio.totalProjects,
       detail: `${portfolio.completedProjects} completed projects`,
-      href: '/projects',
+      href: '#portfolio',
       external: false,
     },
     {
@@ -305,51 +305,53 @@ function Stats() {
       </section>
 
       <section className="statsSection githubSection" id="github-stats">
-        <header className="statsSectionHeader githubSectionHeader">
-          <div>
-            <span>01</span>
-            <i className="githubSectionIcon">
-              <img src={GITHUB_ICON} alt="" aria-hidden="true" />
-            </i>
+        <div className='githubOverview'>
+          <header className="statsSectionHeader githubSectionHeader">
             <div>
-              <p>Open-source activity</p>
-              <h2>GitHub</h2>
+              <span>01</span>
+              <i className="githubSectionIcon">
+                <img src={GITHUB_ICON} alt="" aria-hidden="true" />
+              </i>
+              <div>
+                <p>Open-source activity</p>
+                <h2>GitHub</h2>
+              </div>
+            </div>
+            <a className="githubProfileLink" href={`https://github.com/${github.login}`} target="_blank" rel="noreferrer">
+              <span>
+                <small>Visit my GitHub</small>
+                @{github.login}
+              </span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M14 5h5v5" />
+                <path d="m10 14 9-9" />
+                <path d="M19 13v6H5V5h6" />
+              </svg>
+            </a>
+          </header>
+
+          <div className="githubProfile">
+            <img src={github.avatarUrl} alt={`${github.login} GitHub avatar`} />
+            <div>
+              <span className="githubProfileLabel">Developer profile</span>
+              <h3>{github.name ?? github.login}</h3>
+              {github.bio && <p>{github.bio}</p>}
+              {github.status && <small>{github.status.emoji} {github.status.message}</small>}
             </div>
           </div>
-          <a className="githubProfileLink" href={`https://github.com/${github.login}`} target="_blank" rel="noreferrer">
-            <span>
-              <small>Visit my GitHub</small>
-              @{github.login}
-            </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M14 5h5v5" />
-              <path d="m10 14 9-9" />
-              <path d="M19 13v6H5V5h6" />
-            </svg>
-          </a>
-        </header>
 
-        <div className="githubProfile">
-          <img src={github.avatarUrl} alt={`${github.login} GitHub avatar`} />
-          <div>
-            <span className="githubProfileLabel">Developer profile</span>
-            <h3>{github.name ?? github.login}</h3>
-            {github.bio && <p>{github.bio}</p>}
-            {github.status && <small>{github.status.emoji} {github.status.message}</small>}
+          <div className="statsMetricGrid githubMetricGrid">
+            {githubMetrics.map((metric) => (
+              <article className={`githubMetricCard githubMetricCard--${metric.type}`} key={metric.type}>
+                <div>
+                  <i><GithubMetricIcon type={metric.type} /></i>
+                  <span>{metric.label}</span>
+                </div>
+                <strong>{formatNumber(metric.value)}</strong>
+                <small>{metric.detail}</small>
+              </article>
+            ))}
           </div>
-        </div>
-
-        <div className="statsMetricGrid githubMetricGrid">
-          {githubMetrics.map((metric) => (
-            <article className={`githubMetricCard githubMetricCard--${metric.type}`} key={metric.type}>
-              <div>
-                <i><GithubMetricIcon type={metric.type} /></i>
-                <span>{metric.label}</span>
-              </div>
-              <strong>{formatNumber(metric.value)}</strong>
-              <small>{metric.detail}</small>
-            </article>
-          ))}
         </div>
 
         <div className="statsSplit githubStatsSplit">
@@ -490,38 +492,40 @@ function Stats() {
         </div>
       </section>
 
-      <section className="statsSection portfolioSection">
-        <header className="statsSectionHeader portfolioSectionHeader">
-          <div>
-            <span>03</span>
-            <i className="portfolioSectionIcon">
-              <img src={FOLDER_ICON} alt="" aria-hidden="true" />
-            </i>
+      <section className="statsSection portfolioSection" id='portfolio'>
+        <div className='portfolioOverview'> 
+          <header className="statsSectionHeader portfolioSectionHeader">
             <div>
-              <p>Body of work</p>
-              <h2>Portfolio</h2>
+              <span>03</span>
+              <i className="portfolioSectionIcon">
+                <img src={FOLDER_ICON} alt="" aria-hidden="true" />
+              </i>
+              <div>
+                <p>Body of work</p>
+                <h2>Portfolio</h2>
+              </div>
             </div>
-          </div>
-          <Link className="portfolioProjectsLink" to="/projects">
-            <span>
-              <small>Explore my work</small>
-              View projects
-            </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m9 18 6-6-6-6" />
-            </svg>
-          </Link>
-        </header>
+            <Link className="portfolioProjectsLink" to="/projects">
+              <span>
+                <small>Explore my work</small>
+                View projects
+              </span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </Link>
+          </header>
 
-        <div className="portfolioMetricGrid">
-          {portfolioMetrics.map((metric) => (
-            <article className={`portfolioMetricCard portfolioMetricCard--${metric.type}`} key={metric.type}>
-              <i><PortfolioMetricIcon type={metric.type} /></i>
-              <span>{metric.label}</span>
-              <strong>{formatNumber(metric.value)}</strong>
-              <small>{metric.detail}</small>
-            </article>
-          ))}
+          <div className="portfolioMetricGrid">
+            {portfolioMetrics.map((metric) => (
+              <article className={`portfolioMetricCard portfolioMetricCard--${metric.type}`} key={metric.type}>
+                <i><PortfolioMetricIcon type={metric.type} /></i>
+                <span>{metric.label}</span>
+                <strong>{formatNumber(metric.value)}</strong>
+                <small>{metric.detail}</small>
+              </article>
+            ))}
+          </div>
         </div>
 
         <div className="statsSplit portfolioStatsSplit">

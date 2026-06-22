@@ -18,6 +18,16 @@
   animation-delay: 120ms;
 }
 
+.subtitleHeader {
+  margin: 0 0 0.7rem;
+  color: rgba(134, 239, 172, 0.82);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .skillsContainer h1,
 .experienceContainer h1 {
   font-size: clamp(2rem, 5vw, 3.4rem);

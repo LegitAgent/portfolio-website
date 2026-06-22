@@ -194,6 +194,7 @@ function SkillsExperience() {
   return (
     <section className="seContainer">
       <section className="skillsContainer">
+        <p className='subtitleHeader'>Technologies & Tools</p>
         <h1>Technical Skills</h1>
         <p className="skillsDescription">Here are some of the frameworks, languages, and infrastructure tools I use to design, build, and deploy reliable software, and I'm always learning more.</p>
         <section className="technicalSkills">
@@ -213,7 +214,8 @@ function SkillsExperience() {
       </section>
 
       <section className="experienceContainer">
-        <h1>Work Experience</h1>
+        <p className='subtitleHeader'>History</p>
+        <h1>Technical Experience</h1>
         <p className="experienceDescription">I’m looking for opportunities that push my boundaries and expand my technical toolkit. I am still early in my journey, but I am incredibly excited to get more exposure, tackle fresh challenges, and build cool software!</p>
         <section className="workTree">
           <div className="workList">

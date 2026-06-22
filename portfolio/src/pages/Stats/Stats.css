@@ -290,8 +290,16 @@
   pointer-events: none;
 }
 
+.githubOverview {
+  padding: 1rem;
+  border: 1px solid rgba(var(--github-violet), 0.34);
+  border-radius: 12px;
+  background: rgba(var(--github-violet), 0.025);
+}
+
 .githubSectionHeader {
-  border-color: rgba(var(--github-violet), 0.28);
+  padding-top: 0;
+  border-top: 0;
 }
 
 .githubSectionHeader > div {
@@ -1176,7 +1184,15 @@
 }
 
 .portfolioSectionHeader {
-  border-color: rgba(var(--portfolio-blue), 0.3);
+  padding-top: 0;
+  border-top: 0;
+}
+
+.portfolioOverview {
+  padding: 1rem;
+  border: 1px solid rgba(var(--portfolio-blue), 0.34);
+  border-radius: 12px;
+  background: rgba(var(--portfolio-blue), 0.025);
 }
 
 .portfolioSectionHeader > div {
@@ -1338,6 +1354,7 @@
 .statusBreakdownItem > span {
   display: inline-flex;
   align-items: center;
+  padding-left: 1rem;
   gap: 0.5rem;
   font-weight: 760;
 }
@@ -1357,6 +1374,7 @@
 
 .statusBreakdownItem > strong {
   min-width: 2rem;
+  margin-right: 1rem;
   padding: 0.25rem 0.45rem;
   border-radius: 999px;
   color: rgb(var(--status-color, var(--portfolio-blue)));

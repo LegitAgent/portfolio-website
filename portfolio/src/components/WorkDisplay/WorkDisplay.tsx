@@ -45,7 +45,7 @@ function WorkDisplay({ work }: WorkDisplayProps) {
         <div className="workLinks">
           {work.company_website && (
             <a href={work.company_website} target="_blank" rel="noreferrer">
-              work link
+              Work Link
             </a>
           )}
           <Link className="workLink" to={`/skills_experience/${work.work_slug}`} aria-label="Work Article">
