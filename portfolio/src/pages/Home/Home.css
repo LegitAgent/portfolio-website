@@ -164,26 +164,50 @@
 .otherBox,
 .resumeViewer {
   position: relative;
+  isolation: isolate;
   display: flex;
   min-height: 15rem;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.75rem;
   overflow: hidden;
-  border: 1px solid rgba(125, 188, 235, 0.14);
-  border-radius: 1.2rem;
+  border: 2px solid transparent;
+  border-radius: 5px;
   padding: 1rem;
   color: rgba(238, 247, 255, 0.92);
   text-align: left;
-  background:
-    linear-gradient(180deg, rgba(8, 25, 58, 0.56), rgba(1, 8, 22, 0.78)),
-    rgba(2, 8, 22, 0.7);
+  background: rgba(7, 24, 56, 0.88);
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
   transition:
     transform 180ms ease,
     border-color 180ms ease,
     background-color 180ms ease,
     box-shadow 180ms ease;
+}
+
+.otherBox::before,
+.resumeViewer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 2px;
+  border-radius: 5px;
+  background: conic-gradient(
+    from var(--home-card-outline-angle, 0deg),
+    transparent 0 66%,
+    rgba(125, 188, 235, 0.48) 74%,
+    rgba(190, 230, 255, 1) 82%,
+    rgba(125, 188, 235, 0.66) 90%,
+    transparent 98%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
 }
 
 button.otherBox,
@@ -196,9 +220,17 @@ button.otherBox,
 .resumeViewer:hover,
 .resumeViewer:focus-visible {
   transform: translateY(-4px);
-  border-color: rgba(125, 188, 235, 0.38);
+  border-color: transparent;
   box-shadow: 0 24px 56px rgba(0, 0, 0, 0.26);
   outline: none;
+}
+
+.otherBox:hover::before,
+.otherBox:focus-visible::before,
+.resumeViewer:hover::before,
+.resumeViewer:focus-visible::before {
+  opacity: 1;
+  animation: homeCardOutline 2.2s linear infinite;
 }
 
 .homeCardIcon {
@@ -208,7 +240,7 @@ button.otherBox,
   width: 2.6rem;
   height: 2.6rem;
   border: 1px solid rgba(125, 188, 235, 0.16);
-  border-radius: 0.85rem;
+  border-radius: 5px;
   color: rgba(183, 225, 255, 0.92);
   background: rgba(1, 8, 22, 0.44);
 }
@@ -259,6 +291,18 @@ button.otherBox,
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@property --home-card-outline-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes homeCardOutline {
+  to {
+    --home-card-outline-angle: 1turn;
   }
 }
 
@@ -461,10 +505,8 @@ button.otherBox,
 :root[data-theme='light'] .otherBox,
 :root[data-theme='light'] .resumeViewer {
   color: rgba(18, 32, 52, 0.94);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(236, 243, 252, 0.86)),
-    rgba(247, 250, 255, 0.78);
-  border-color: rgba(72, 98, 135, 0.14);
+  background: rgba(231, 241, 253, 0.94);
+  border-color: transparent;
   box-shadow: 0 18px 44px rgba(55, 80, 120, 0.12);
 }
 
@@ -474,6 +516,18 @@ button.otherBox,
 :root[data-theme='light'] .resumeViewer:focus-visible {
   border-color: rgba(55, 96, 150, 0.32);
   box-shadow: 0 24px 56px rgba(55, 80, 120, 0.16);
+}
+
+:root[data-theme='light'] .otherBox::before,
+:root[data-theme='light'] .resumeViewer::before {
+  background: conic-gradient(
+    from var(--home-card-outline-angle, 0deg),
+    transparent 0 66%,
+    rgba(55, 96, 150, 0.42) 74%,
+    rgba(42, 82, 134, 0.98) 82%,
+    rgba(55, 96, 150, 0.62) 90%,
+    transparent 98%
+  );
 }
 
 :root[data-theme='light'] .homeCardIcon {
