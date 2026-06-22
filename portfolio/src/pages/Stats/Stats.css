@@ -59,6 +59,7 @@
 .statsOverview {
   margin-top: clamp(2.5rem, 6vw, 4rem);
   gap: 1rem;
+  animation: statsEnter 560ms ease-out 80ms both;
 }
 
 .statsMetricGrid article,
@@ -233,7 +234,12 @@
 
 .statsSection {
   margin-top: clamp(4.5rem, 10vw, 8rem);
+  animation: statsEnter 620ms ease-out both;
 }
+
+.statsSection:nth-of-type(2) { animation-delay: 140ms; }
+.statsSection:nth-of-type(3) { animation-delay: 210ms; }
+.statsSection:nth-of-type(4) { animation-delay: 280ms; }
 
 .statsSectionHeader {
   padding-top: 1rem;
@@ -1668,6 +1674,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .statsHeader { animation: none; }
+  .statsHeader,
+  .statsOverview,
+  .statsSection {
+    animation: none;
+  }
   .statsBackToTop { transition: none; }
 }

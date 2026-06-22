@@ -38,7 +38,7 @@ function Background() {
 
       for (let index = 0; index < particleCount; index += 1) {
         const particle = document.createElement('span');
-        const angle = (Math.PI * 2 * index) / particleCount;
+        const angle = Math.random() * (Math.PI * 2 * index) / particleCount;
         const distance = 34 + Math.random() * 32;
 
         particle.className = 'click-particle';
