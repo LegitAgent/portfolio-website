@@ -3,6 +3,9 @@ import linkedInIcon from '../assets/icons/linkedin.svg';
 import emailIcon from '../assets/icons/email.svg';
 import resumeIcon from '../assets/icons/resume.svg';
 import profilePicture from '../assets/images/portfolio_pic.png';
+import folder from '../assets/icons/folder.svg';
+import leetcode from '../assets/icons/leetcode.svg';
+import stack from '../assets/icons/stack.svg';
 
 import aws from '../assets/icons/aws.svg';
 import cloudflare from '../assets/icons/cloudflare.svg';
@@ -39,6 +42,9 @@ export const LINKEDIN_ICON = linkedInIcon;
 export const EMAIL_ICON = emailIcon;
 export const RESUME_ICON = resumeIcon;
 export const PROFILE_PICTURE = profilePicture;
+export const FOLDER_ICON = folder;
+export const LEETCODE_ICON = leetcode;
+export const STACK_ICON = stack;
 
 export const AWS = aws;
 export const CLOUDFLARE = cloudflare;

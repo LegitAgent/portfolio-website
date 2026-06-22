@@ -1,6 +1,7 @@
 interface DifficultyCount {
   difficulty: string;
   count: number;
+  submissions?: number;
 }
 
 interface SkillCount {
@@ -11,16 +12,20 @@ interface SkillCount {
 
 interface LeetcodeResponse {
   data?: {
-    allQuestionsCount: Array<DifficultyCount>;
+    allQuestionsCount: DifficultyCount[];
     matchedUser: {
       username: string;
+      profile: {
+        ranking: number | null;
+      };
       submitStats: {
-        acSubmissionNum: Array<DifficultyCount>;
+        acSubmissionNum: DifficultyCount[];
+        totalSubmissionNum: DifficultyCount[];
       };
       tagProblemCounts: {
-        advanced: Array<SkillCount>;
-        intermediate: Array<SkillCount>;
-        fundamental: Array<SkillCount>;
+        advanced: SkillCount[];
+        intermediate: SkillCount[];
+        fundamental: SkillCount[];
       };
     } | null;
   };
@@ -28,8 +33,6 @@ interface LeetcodeResponse {
 }
 
 const LEETCODE_API = 'https://leetcode.com/graphql';
-
-// for more information: https://leetcode.com/discuss/post/1297705/is-there-public-api-endpoints-available-h0661/
 
 const query = `
   query userSessionProgress($username: String!) {
@@ -39,10 +42,19 @@ const query = `
     }
     matchedUser(username: $username) {
       username
+      profile {
+        ranking
+      }
       submitStats {
         acSubmissionNum {
           difficulty
           count
+          submissions
+        }
+        totalSubmissionNum {
+          difficulty
+          count
+          submissions
         }
       }
       tagProblemCounts {
@@ -66,7 +78,6 @@ const query = `
   }
 `;
 
-// appends the necessary JSON headers and custom variables to custom query
 export async function getLeetCodeStats(username: string) {
   const response = await fetch(LEETCODE_API, {
     method: 'POST',
@@ -81,13 +92,11 @@ export async function getLeetCodeStats(username: string) {
 
   if (!response.ok) {
     const details = await response.text();
-
     throw new Error(`Leetcode returned ${response.status}: ${details}`);
   }
 
-  // data area of the leetcode response
   const body = await response.json<LeetcodeResponse>();
-  
+
   if (body.errors?.length) {
     const message = body.errors[0].message;
 
@@ -98,35 +107,58 @@ export async function getLeetCodeStats(username: string) {
     throw new Error(message);
   }
 
-  if (!body?.data?.matchedUser) {
+  const user = body.data?.matchedUser;
+  if (!user) {
     return null;
   }
 
-  const submissions = body.data?.matchedUser.submitStats.acSubmissionNum;
-  const totalProblems = body.data?.allQuestionsCount;
-  const tagProblems = body.data?.matchedUser.tagProblemCounts;
+  const accepted = user.submitStats.acSubmissionNum;
+  const attempted = user.submitStats.totalSubmissionNum;
+  const totalProblems = body.data?.allQuestionsCount ?? [];
+  const totalSolved = findCount(accepted, 'All');
+  const availableProblems = findCount(totalProblems, 'All');
+  const totalAcceptedSubmissions = findSubmissions(accepted, 'All');
+  const totalSubmissionAttempts = findSubmissions(attempted, 'All');
+  const allTopics = [
+    ...user.tagProblemCounts.fundamental,
+    ...user.tagProblemCounts.intermediate,
+    ...user.tagProblemCounts.advanced,
+  ];
 
-  // Leetcode response object
   return {
-    username: body.data?.matchedUser.username,
-    totalSolved: findCount(submissions, 'All'),
-    totalProblems: findCount(totalProblems, 'All'),
-
-    easySolved: findCount(submissions, 'Easy'),
+    username: user.username,
+    ranking: user.profile.ranking,
+    totalSolved,
+    totalProblems: availableProblems,
+    solvedPercentage: percentage(totalSolved, availableProblems),
+    easySolved: findCount(accepted, 'Easy'),
     totalEasy: findCount(totalProblems, 'Easy'),
-
-    mediumSolved: findCount(submissions, 'Medium'),
+    mediumSolved: findCount(accepted, 'Medium'),
     totalMedium: findCount(totalProblems, 'Medium'),
-
-    hardSolved: findCount(submissions, 'Hard'),
+    hardSolved: findCount(accepted, 'Hard'),
     totalHard: findCount(totalProblems, 'Hard'),
-
-    fundamentalSkills: tagProblems.fundamental,
-    intermediateSkills: tagProblems.intermediate,
-    advancedSkills: tagProblems.advanced,
+    acceptanceRate: totalSubmissionAttempts > 0
+      ? percentage(totalAcceptedSubmissions, totalSubmissionAttempts)
+      : null,
+    totalAcceptedSubmissions,
+    totalSubmissionAttempts,
+    strongestTopics: [...allTopics]
+      .sort((first, second) => second.problemsSolved - first.problemsSolved)
+      .slice(0, 8),
+    fundamentalSkills: user.tagProblemCounts.fundamental,
+    intermediateSkills: user.tagProblemCounts.intermediate,
+    advancedSkills: user.tagProblemCounts.advanced,
   };
 }
 
-function findCount(submissions: Array<{ difficulty: string; count: number }>, difficulty: string) {
-  return submissions.find((item) => item.difficulty === difficulty)?.count ?? 0;
+function findCount(items: DifficultyCount[], difficulty: string) {
+  return items.find((item) => item.difficulty === difficulty)?.count ?? 0;
+}
+
+function findSubmissions(items: DifficultyCount[], difficulty: string) {
+  return items.find((item) => item.difficulty === difficulty)?.submissions ?? 0;
+}
+
+function percentage(value: number, total: number) {
+  return total > 0 ? Number(((value / total) * 100).toFixed(1)) : 0;
 }

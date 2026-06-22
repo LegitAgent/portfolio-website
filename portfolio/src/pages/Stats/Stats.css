@@ -1,0 +1,1655 @@
+.statsPage {
+  width: min(100% - 2rem, 1320px);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 7vw, 5.5rem) 0 7rem;
+  color: rgba(238, 247, 255, 0.94);
+}
+
+.statsHeader {
+  max-width: 820px;
+  animation: statsEnter 520ms ease-out both;
+}
+
+.statsHeader > p,
+.statsSectionHeader p,
+.statsSubheading > p {
+  margin: 0 0 0.7rem;
+  color: rgba(134, 239, 172, 0.82);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.statsSectionHeader p,
+.statsSubheading > p {
+  margin-bottom: 0;
+}
+
+.statsHeader h1 {
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 780;
+  line-height: 0.95;
+}
+
+.statsHeader h1 span {
+  color: rgba(134, 239, 172, 0.94);
+}
+
+.statsHeader > span {
+  display: block;
+  max-width: 700px;
+  margin-top: 1.15rem;
+  color: rgba(214, 229, 245, 0.68);
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  line-height: 1.7;
+}
+
+.statsOverview,
+.statsMetricGrid,
+.portfolioMetricGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.statsOverview {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+  gap: 1rem;
+}
+
+.statsMetricGrid article,
+.portfolioMetricGrid article,
+.leetcodeMetrics article {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid rgba(125, 188, 235, 0.14);
+  border-radius: 8px;
+  background: rgba(3, 12, 29, 0.58);
+}
+
+.statsMetricGrid article > span,
+.portfolioMetricGrid article > span,
+.leetcodeMetrics article > span {
+  color: rgba(214, 229, 245, 0.52);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.statsOverviewCard {
+  --overview-accent: 125, 188, 235;
+  position: relative;
+  min-width: 0;
+  min-height: 13.5rem;
+  padding: 1.1rem;
+  overflow: visible;
+  border: 1px solid rgba(var(--overview-accent), 0.34);
+  border-radius: 10px;
+  background: rgba(var(--overview-accent), 0.09);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 18px 44px rgba(0, 0, 0, 0.18);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.statsOverviewCard::before,
+.statsOverviewCard::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  width: 1.8rem;
+  height: 1.8rem;
+  pointer-events: none;
+  filter: drop-shadow(0 0 7px rgba(var(--overview-accent), 0.42));
+}
+
+.statsOverviewCard::before {
+  top: -0.4rem;
+  left: -0.4rem;
+  border-top: 3px solid rgb(var(--overview-accent));
+  border-left: 3px solid rgb(var(--overview-accent));
+  border-top-left-radius: 13px;
+}
+
+.statsOverviewCard::after {
+  right: -0.4rem;
+  bottom: -0.4rem;
+  border-right: 3px solid rgb(var(--overview-accent));
+  border-bottom: 3px solid rgb(var(--overview-accent));
+  border-bottom-right-radius: 13px;
+}
+
+.statsOverviewCard--projects { --overview-accent: 96, 165, 250; }
+.statsOverviewCard--leetcode { --overview-accent: 250, 204, 21; }
+.statsOverviewCard--github { --overview-accent: 192, 132, 252; }
+.statsOverviewCard--technologies { --overview-accent: 52, 211, 153; }
+
+.statsOverviewCard:hover {
+  border-color: rgba(var(--overview-accent), 0.62);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 26px rgba(var(--overview-accent), 0.13),
+    0 22px 48px rgba(0, 0, 0, 0.22);
+  transform: translateY(-4px);
+}
+
+.statsOverviewCard:focus-visible {
+  border-color: rgb(var(--overview-accent));
+  box-shadow:
+    0 0 0 3px rgba(var(--overview-accent), 0.16),
+    0 0 28px rgba(var(--overview-accent), 0.18);
+  outline: none;
+  transform: translateY(-4px);
+}
+
+#github-stats,
+#leetcode-stats {
+  scroll-margin-top: 2rem;
+}
+
+.statsOverviewCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.statsOverviewCardTop > span {
+  color: rgba(var(--overview-accent), 0.78);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.statsOverviewCardTop i {
+  width: 2.35rem;
+  height: 2.35rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(var(--overview-accent), 0.28);
+  border-radius: 7px;
+  color: rgb(var(--overview-accent));
+  background: rgba(var(--overview-accent), 0.09);
+  box-shadow: 0 0 18px rgba(var(--overview-accent), 0.1);
+}
+
+.statsOverviewCardTop svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.statsOverviewIconImage {
+  width: 1.1rem;
+  height: 1.1rem;
+  display: block;
+  object-fit: contain;
+}
+
+.statsOverviewIconImage--github {
+  filter: invert(1);
+}
+
+.statsOverviewValue {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 0.42rem;
+}
+
+.statsOverviewValue strong {
+  font-size: clamp(2.6rem, 5vw, 4.25rem);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+}
+
+.statsOverviewValue span {
+  color: rgba(238, 247, 255, 0.88);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.statsOverviewCard > p {
+  margin: 0.75rem 0 0;
+  color: rgba(214, 229, 245, 0.56);
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.statsSection {
+  margin-top: clamp(4.5rem, 10vw, 8rem);
+}
+
+.statsSectionHeader {
+  padding-top: 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid rgba(125, 188, 235, 0.16);
+}
+
+.statsSectionHeader > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+}
+
+.statsSectionHeader > div > span {
+  padding-top: 0.35rem;
+  color: rgba(134, 239, 172, 0.58);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.statsSectionHeader h2 {
+  margin: 0.35rem 0 0;
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  line-height: 1;
+}
+
+.statsSectionHeader > a {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(125, 188, 235, 0.16);
+  border-radius: 999px;
+  color: rgba(175, 220, 255, 0.88);
+  background: rgba(5, 17, 39, 0.54);
+  font-size: 0.76rem;
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.githubSection {
+  --github-violet: 192, 132, 252;
+  position: relative;
+}
+
+.githubSection::before {
+  content: '';
+  position: absolute;
+  inset: -1.5rem -1rem -1.5rem;
+  z-index: -1;
+  border-radius: 18px;
+  background: rgba(var(--github-violet), 0.035);
+  pointer-events: none;
+}
+
+.githubSectionHeader {
+  border-color: rgba(var(--github-violet), 0.28);
+}
+
+.githubSectionHeader > div {
+  align-items: center;
+}
+
+.githubSectionHeader > div > span,
+.githubSectionHeader p {
+  color: rgba(var(--github-violet), 0.8);
+}
+
+.githubSectionHeader > a {
+  border-color: rgba(var(--github-violet), 0.34);
+  color: rgba(239, 222, 255, 0.96);
+  background: rgba(var(--github-violet), 0.1);
+}
+
+.githubSectionHeader > a:hover,
+.githubSectionHeader > a:focus-visible {
+  border-color: rgba(var(--github-violet), 0.58);
+  background: rgba(var(--github-violet), 0.14);
+  outline: none;
+}
+
+.githubProfileLink {
+  min-width: 10.5rem;
+  padding: 0.65rem 0.75rem !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  border-radius: 8px !important;
+}
+
+.githubProfileLink > span {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.githubProfileLink small {
+  color: rgba(var(--github-violet), 0.68);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.githubProfileLink svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.githubSectionIcon {
+  width: 2.65rem;
+  height: 2.65rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(var(--github-violet), 0.34);
+  border-radius: 9px;
+  background: rgba(var(--github-violet), 0.1);
+  box-shadow: 0 0 22px rgba(var(--github-violet), 0.12);
+}
+
+.githubSectionIcon img {
+  width: 1.3rem;
+  height: 1.3rem;
+  filter: invert(1);
+}
+
+.githubProfile {
+  margin-top: 1.8rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid rgba(var(--github-violet), 0.2);
+  border-radius: 10px;
+  background: rgba(var(--github-violet), 0.055);
+}
+
+.githubProfile img {
+  width: 4.5rem;
+  height: 4.5rem;
+  border: 2px solid rgba(var(--github-violet), 0.5);
+  border-radius: 14px;
+  box-shadow: 0 0 24px rgba(var(--github-violet), 0.18);
+}
+
+.githubProfile h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.githubProfile p {
+  margin: 0.3rem 0 0;
+  color: rgba(214, 229, 245, 0.68);
+}
+
+.githubProfileLabel {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: rgba(var(--github-violet), 0.8);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.githubProfile small {
+  display: block;
+  margin-top: 0.4rem;
+  color: rgba(226, 201, 255, 0.76);
+  font-size: 0.76rem;
+}
+
+.statsMetricGrid,
+.portfolioMetricGrid {
+  margin-top: 1.5rem;
+}
+
+.statsMetricGrid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.githubMetricGrid {
+  gap: 0.9rem;
+}
+
+.githubMetricCard {
+  position: relative;
+  min-height: 9.5rem;
+  padding: 1rem;
+  overflow: hidden;
+  border-color: rgba(var(--github-violet), 0.24) !important;
+  background: rgba(var(--github-violet), 0.055) !important;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.githubMetricCard:hover {
+  border-color: rgba(var(--github-violet), 0.5) !important;
+  background: rgba(var(--github-violet), 0.09) !important;
+  transform: translateY(-3px);
+}
+
+.githubMetricCard > div {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.githubMetricCard > div > i {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(var(--github-violet), 0.28);
+  border-radius: 7px;
+  color: rgb(var(--github-violet));
+  background: rgba(var(--github-violet), 0.1);
+}
+
+.githubMetricCard svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.githubMetricCard > strong {
+  margin-top: 1rem;
+  color: rgba(247, 239, 255, 0.98);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 0.9;
+}
+
+.githubMetricCard > small {
+  display: block;
+  margin-top: 0.5rem;
+  color: rgba(226, 201, 255, 0.5);
+  font-size: 0.67rem;
+}
+
+.portfolioMetricGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.statsMetricGrid strong,
+.portfolioMetricGrid strong,
+.leetcodeMetrics strong {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: clamp(1.25rem, 2.6vw, 1.8rem);
+}
+
+.languagePanel,
+.repositoryPanel,
+.difficultyPanel,
+.statsTopicGroup,
+.portfolioPanel {
+  border: 1px solid rgba(125, 188, 235, 0.14);
+  border-radius: 8px;
+  background: rgba(3, 12, 29, 0.52);
+}
+
+.githubSection .languagePanel,
+.githubSection .repositoryPanel {
+  border-color: rgba(var(--github-violet), 0.2);
+  background: rgba(var(--github-violet), 0.045);
+}
+
+.githubSection .statsSubheading > p {
+  color: rgba(var(--github-violet), 0.76);
+}
+
+.statsSplit {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.languagePanel,
+.repositoryPanel,
+.portfolioPanel {
+  padding: 1rem;
+}
+
+.githubStatsSplit {
+  align-items: stretch;
+}
+
+.githubStatsSplit > .languagePanel,
+.githubStatsSplit > .repositoryPanel {
+  height: clamp(25rem, 42vw, 31rem);
+  min-height: 0;
+}
+
+.githubStatsSplit > .languagePanel,
+.githubStatsSplit > .repositoryPanel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.githubStatsSplit .languageList,
+.githubStatsSplit .repositoryList {
+  min-height: 0;
+  padding-right: 0.35rem;
+  overflow-y: auto;
+  scrollbar-color: rgba(var(--github-violet), 0.42) rgba(var(--github-violet), 0.08);
+  scrollbar-width: thin;
+}
+
+.githubStatsSplit .languageList::-webkit-scrollbar,
+.githubStatsSplit .repositoryList::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+.githubStatsSplit .languageList::-webkit-scrollbar-track,
+.githubStatsSplit .repositoryList::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: rgba(var(--github-violet), 0.08);
+}
+
+.githubStatsSplit .languageList::-webkit-scrollbar-thumb,
+.githubStatsSplit .repositoryList::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(var(--github-violet), 0.42);
+}
+
+.statsSubheading h3 {
+  margin: 0.35rem 0 0;
+  font-size: 1.3rem;
+}
+
+.languageList,
+.repositoryList,
+.statusBreakdown,
+.technologyRanking {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.languageRank {
+  padding: 0.65rem;
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid rgba(var(--github-violet), 0.1);
+  border-radius: 7px;
+  background: rgba(var(--github-violet), 0.035);
+}
+
+.languageRankNumber {
+  color: rgba(var(--github-violet), 0.48);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.languageRankContent {
+  min-width: 0;
+}
+
+.languageRankLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.78rem;
+}
+
+.languageRankLabel > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.languageRankLabel i {
+  width: 0.55rem;
+  height: 0.55rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.languageTrack {
+  position: relative;
+  height: 0.55rem;
+  margin-top: 0.55rem;
+  padding: 2px;
+  overflow: hidden;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--github-violet), 0.14);
+  background: rgba(8, 3, 18, 0.48);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.42);
+}
+
+.languageTrack span {
+  height: 100%;
+  min-width: 0.22rem;
+  display: block;
+  border-radius: inherit;
+  box-shadow:
+    0 0 6px currentColor,
+    0 0 10px rgba(var(--github-violet), 0.16);
+  transition: width 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  filter: saturate(0.9) brightness(1.05);
+}
+
+.repositorySummary {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.repositorySummary span {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid rgba(125, 188, 235, 0.12);
+  border-radius: 999px;
+  color: rgba(214, 229, 245, 0.66);
+  font-size: 0.72rem;
+}
+
+.githubSection .repositorySummary span {
+  border-color: rgba(var(--github-violet), 0.16);
+  color: rgba(226, 201, 255, 0.68);
+  background: rgba(var(--github-violet), 0.055);
+}
+
+.repositoryList a {
+  padding: 0.75rem;
+  border: 1px solid rgba(125, 188, 235, 0.1);
+  border-radius: 6px;
+  color: inherit;
+  background: rgba(5, 17, 39, 0.4);
+  text-decoration: none;
+}
+
+.githubSection .repositoryList a {
+  border-color: rgba(var(--github-violet), 0.12);
+  background: rgba(var(--github-violet), 0.04);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.githubSection .repositoryList a:hover,
+.githubSection .repositoryList a:focus-visible {
+  border-color: rgba(var(--github-violet), 0.34);
+  background: rgba(var(--github-violet), 0.08);
+  outline: none;
+  transform: translateX(3px);
+}
+
+.repositoryList a > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.repositoryList a > div span {
+  color: rgba(var(--github-violet), 0.76);
+  font-size: 0.7rem;
+}
+
+.repositoryList p {
+  margin: 0.4rem 0 0;
+  color: rgba(214, 229, 245, 0.62);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.repositoryList small {
+  display: block;
+  margin-top: 0.45rem;
+  color: rgba(214, 229, 245, 0.46);
+}
+
+.leetcodeHero {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.28fr);
+  gap: 1rem;
+}
+
+.leetcodeSection {
+  --leetcode-gold: 255, 184, 77;
+  position: relative;
+}
+
+.leetcodeSection::before {
+  content: '';
+  position: absolute;
+  inset: -1.5rem -1rem -1.5rem;
+  z-index: -1;
+  border-radius: 18px;
+  background: rgba(var(--leetcode-gold), 0.035);
+  pointer-events: none;
+}
+
+.leetcodeSectionHeader {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.leetcodeOverview {
+  padding: 1rem;
+  border: 1px solid rgba(var(--leetcode-gold), 0.34);
+  border-radius: 12px;
+  background: rgba(var(--leetcode-gold), 0.025);
+}
+
+.leetcodeSectionHeader > div {
+  align-items: center;
+}
+
+.leetcodeSectionHeader > div > span,
+.leetcodeSectionHeader p {
+  color: rgba(var(--leetcode-gold), 0.84);
+}
+
+.leetcodeSectionIcon {
+  width: 2.65rem;
+  height: 2.65rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(var(--leetcode-gold), 0.38);
+  border-radius: 9px;
+  background: rgba(var(--leetcode-gold), 0.1);
+  box-shadow: 0 0 22px rgba(var(--leetcode-gold), 0.12);
+}
+
+.leetcodeSectionIcon img {
+  width: 1.35rem;
+  height: 1.35rem;
+  object-fit: contain;
+}
+
+.leetcodeSectionHeader > a {
+  border-color: rgba(var(--leetcode-gold), 0.34);
+  color: rgba(255, 225, 174, 0.96);
+  background: rgba(var(--leetcode-gold), 0.09);
+}
+
+.leetcodeSectionHeader > a:hover,
+.leetcodeSectionHeader > a:focus-visible {
+  border-color: rgba(var(--leetcode-gold), 0.62);
+  background: rgba(var(--leetcode-gold), 0.15);
+  outline: none;
+}
+
+.leetcodeProfileLink {
+  min-width: 11.5rem;
+  padding: 0.65rem 0.75rem !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  border-radius: 8px !important;
+}
+
+.leetcodeProfileLink > span {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.leetcodeProfileLink small {
+  color: rgba(var(--leetcode-gold), 0.7);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.leetcodeProfileLink svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.leetcodeScore {
+  position: relative;
+  width: 100%;
+  min-height: 15rem;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-content: center;
+  justify-items: center;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 10px;
+  text-align: center;
+  background: rgba(var(--leetcode-gold), 0.075);
+  box-shadow:
+    inset 0 0 0 2px rgba(var(--leetcode-gold), 0.72),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 18px 40px rgba(0, 0, 0, 0.15);
+}
+
+.leetcodeScoreEyebrow {
+  display: block;
+  color: rgba(var(--leetcode-gold), 0.78);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.leetcodeScore > div {
+  margin-top: 0.8rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.leetcodeScore > div strong {
+  font-size: clamp(3rem, 7vw, 5rem);
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+}
+
+.leetcodeScore > div span {
+  padding-bottom: 0.2rem;
+  color: rgba(255, 225, 174, 0.52);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.leetcodeScore p {
+  max-width: 15rem;
+  margin: 0.9rem 0 0;
+  color: rgba(255, 225, 174, 0.68);
+  font-size: 0.78rem;
+}
+
+.statsBackToTop {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 900;
+  min-height: 2.75rem;
+  padding: 0.68rem 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid rgba(125, 188, 235, 0.3);
+  border-radius: 8px;
+  color: rgba(238, 247, 255, 0.9);
+  background: rgba(3, 12, 29, 0.88);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.statsBackToTop svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.statsBackToTop:hover,
+.statsBackToTop:focus-visible {
+  border-color: rgba(134, 239, 172, 0.58);
+  background: rgba(10, 29, 55, 0.96);
+  outline: none;
+  transform: translateY(-3px);
+}
+
+.leetcodeMetrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.leetcodeMetrics article {
+  position: relative;
+  min-height: 15rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-color: rgba(var(--leetcode-gold), 0.22);
+  background: rgba(var(--leetcode-gold), 0.045);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.leetcodeMetrics article:hover {
+  border-color: rgba(var(--leetcode-gold), 0.48);
+  background: rgba(var(--leetcode-gold), 0.08);
+  transform: translateY(-3px);
+}
+
+.leetcodeMetrics article > i {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-bottom: auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(var(--leetcode-gold), 0.3);
+  border-radius: 7px;
+  color: rgb(var(--leetcode-gold));
+  background: rgba(var(--leetcode-gold), 0.1);
+}
+
+.leetcodeMetrics svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.leetcodeMetrics article > strong {
+  color: rgba(255, 248, 235, 0.98);
+  font-size: clamp(1.5rem, 2.7vw, 2rem);
+}
+
+.leetcodeMetrics article > small {
+  display: block;
+  margin-top: 0.45rem;
+  color: rgba(255, 225, 174, 0.46);
+  font-size: 0.66rem;
+}
+
+.difficultyPanel {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-color: rgba(var(--leetcode-gold), 0.22);
+  background: rgba(var(--leetcode-gold), 0.04);
+}
+
+.leetcodePanelHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.leetcodePanelHeading p {
+  margin: 0;
+  color: rgba(var(--leetcode-gold), 0.74);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.leetcodePanelHeading h3 {
+  margin: 0.3rem 0 0;
+  font-size: 1.3rem;
+}
+
+.leetcodePanelHeading > span {
+  color: rgba(255, 225, 174, 0.54);
+  font-size: 0.72rem;
+}
+
+.difficultyGrid {
+  margin-top: 1.1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.statsProgress {
+  --difficulty-color: 255, 184, 77;
+  padding: 0.85rem;
+  border: 1px solid rgba(var(--difficulty-color), 0.18);
+  border-radius: 7px;
+  background: rgba(var(--difficulty-color), 0.045);
+}
+
+.statsProgress:has(.statsProgressFill--easy) { --difficulty-color: 34, 197, 94; }
+.statsProgress:has(.statsProgressFill--medium) { --difficulty-color: 234, 179, 8; }
+.statsProgress:has(.statsProgressFill--hard) { --difficulty-color: 239, 68, 68; }
+
+.statsProgressLabel > span {
+  color: rgb(var(--difficulty-color));
+  font-weight: 800;
+}
+
+.statsProgressLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.78rem;
+}
+
+.statsProgressTrack {
+  height: 0.55rem;
+  margin-top: 0.7rem;
+  padding: 2px;
+  overflow: hidden;
+  border: 1px solid rgba(var(--difficulty-color), 0.14);
+  border-radius: 999px;
+  background: rgba(2, 7, 18, 0.45);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.38);
+}
+
+.statsProgressFill {
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  box-shadow: 0 0 8px rgba(var(--difficulty-color), 0.32);
+}
+
+.statsProgressFill--easy { background: #22c55e; }
+.statsProgressFill--medium { background: #eab308; }
+.statsProgressFill--hard { background: #ef4444; }
+
+.statsTopics {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.statsTopicGroup {
+  position: relative;
+  padding: 1rem;
+  border-color: rgba(var(--leetcode-gold), 0.18);
+  background: rgba(var(--leetcode-gold), 0.035);
+}
+
+.statsTopicGroup h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.leetcodeTopicsHeading {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(var(--leetcode-gold), 0.2);
+}
+
+.statsTopicGroup > div {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.statsTopicGroup > div > span {
+  padding: 0.38rem 0.55rem;
+  display: inline-flex;
+  gap: 0.5rem;
+  border: 1px solid rgba(var(--leetcode-gold), 0.14);
+  border-radius: 999px;
+  color: rgba(214, 229, 245, 0.72);
+  background: rgba(var(--leetcode-gold), 0.045);
+  font-size: 0.72rem;
+}
+
+.statsTopicGroup strong {
+  color: rgba(var(--leetcode-gold), 0.86);
+}
+
+.statusBreakdown > div,
+.technologyRanking > div {
+  padding: 0.7rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-bottom: 1px solid rgba(125, 188, 235, 0.08);
+}
+
+.statusBreakdown > div {
+  justify-content: space-between;
+}
+
+.technologyRanking > div > span {
+  color: rgba(134, 239, 172, 0.58);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.68rem;
+}
+
+.technologyRanking small {
+  margin-left: auto;
+  color: rgba(214, 229, 245, 0.5);
+}
+
+.portfolioSection {
+  --portfolio-blue: 125, 188, 235;
+  position: relative;
+}
+
+.portfolioSection::before {
+  content: '';
+  position: absolute;
+  inset: -1.5rem -1rem -1.5rem;
+  z-index: -1;
+  border-radius: 18px;
+  background: rgba(var(--portfolio-blue), 0.04);
+  pointer-events: none;
+}
+
+.portfolioSectionHeader {
+  border-color: rgba(var(--portfolio-blue), 0.3);
+}
+
+.portfolioSectionHeader > div {
+  align-items: center;
+}
+
+.portfolioSectionHeader > div > span,
+.portfolioSectionHeader p {
+  color: rgba(var(--portfolio-blue), 0.84);
+}
+
+.portfolioSectionIcon {
+  width: 2.65rem;
+  height: 2.65rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(var(--portfolio-blue), 0.38);
+  border-radius: 9px;
+  background: rgba(var(--portfolio-blue), 0.1);
+  box-shadow: 0 0 22px rgba(var(--portfolio-blue), 0.12);
+}
+
+.portfolioSectionIcon img {
+  width: 1.35rem;
+  height: 1.35rem;
+  object-fit: contain;
+}
+
+.portfolioProjectsLink {
+  min-width: 10.5rem;
+  padding: 0.65rem 0.75rem !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  border-color: rgba(var(--portfolio-blue), 0.34) !important;
+  border-radius: 8px !important;
+  color: rgba(220, 242, 255, 0.96) !important;
+  background: rgba(var(--portfolio-blue), 0.09) !important;
+}
+
+.portfolioProjectsLink > span {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.portfolioProjectsLink small {
+  color: rgba(var(--portfolio-blue), 0.72);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.portfolioProjectsLink svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.portfolioProjectsLink:hover,
+.portfolioProjectsLink:focus-visible {
+  border-color: rgba(var(--portfolio-blue), 0.64) !important;
+  background: rgba(var(--portfolio-blue), 0.16) !important;
+  outline: none;
+}
+
+.portfolioMetricGrid {
+  gap: 0.9rem;
+}
+
+.portfolioMetricCard {
+  position: relative;
+  min-height: 12rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-color: rgba(var(--portfolio-blue), 0.24) !important;
+  background: rgba(var(--portfolio-blue), 0.05) !important;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.portfolioMetricCard:hover {
+  border-color: rgba(var(--portfolio-blue), 0.52) !important;
+  background: rgba(var(--portfolio-blue), 0.1) !important;
+  transform: translateY(-3px);
+}
+
+.portfolioMetricCard > i {
+  width: 2.35rem;
+  height: 2.35rem;
+  margin-bottom: auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(var(--portfolio-blue), 0.3);
+  border-radius: 7px;
+  color: rgb(var(--portfolio-blue));
+  background: rgba(var(--portfolio-blue), 0.1);
+}
+
+.portfolioMetricCard svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.portfolioMetricCard > strong {
+  color: rgba(238, 248, 255, 0.98);
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  line-height: 0.9;
+}
+
+.portfolioMetricCard > small {
+  display: block;
+  margin-top: 0.5rem;
+  color: rgba(190, 225, 248, 0.5);
+  font-size: 0.68rem;
+}
+
+.portfolioSection .portfolioPanel {
+  border-color: rgba(var(--portfolio-blue), 0.22);
+  background: rgba(var(--portfolio-blue), 0.045);
+}
+
+.portfolioSection .statsSubheading > p {
+  color: rgba(var(--portfolio-blue), 0.76);
+}
+
+.portfolioStatsSplit {
+  align-items: stretch;
+}
+
+.portfolioStatsSplit > .portfolioPanel {
+  min-height: 24rem;
+}
+
+.statusBreakdownItem,
+.technologyRanking > div {
+  padding: 0.75rem;
+  border: 1px solid rgba(var(--portfolio-blue), 0.11);
+  border-radius: 7px;
+  background: rgba(var(--portfolio-blue), 0.035);
+}
+
+.statusBreakdownItem > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 760;
+}
+
+.statusBreakdownItem i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: rgb(var(--status-color, var(--portfolio-blue)));
+}
+
+.statusBreakdownItem--done { --status-color: 34, 197, 94; }
+.statusBreakdownItem--wip { --status-color: 96, 165, 250; }
+.statusBreakdownItem--draft { --status-color: 148, 163, 184; }
+.statusBreakdownItem--review { --status-color: 250, 204, 21; }
+.statusBreakdownItem--blocked { --status-color: 248, 113, 113; }
+
+.statusBreakdownItem > strong {
+  min-width: 2rem;
+  padding: 0.25rem 0.45rem;
+  border-radius: 999px;
+  color: rgb(var(--status-color, var(--portfolio-blue)));
+  background: rgba(var(--status-color, var(--portfolio-blue)), 0.1);
+  text-align: center;
+}
+
+.technologyRanking > div > span {
+  color: rgba(var(--portfolio-blue), 0.62);
+}
+
+.technologyRanking > div > strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.technologyRanking small {
+  color: rgba(190, 225, 248, 0.52);
+}
+
+@keyframes statsEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+:root[data-theme='light'] .statsPage { color: rgba(18, 32, 52, 0.94); }
+:root[data-theme='light'] .statsHeader > p,
+:root[data-theme='light'] .statsSectionHeader p,
+:root[data-theme='light'] .statsSubheading > p { color: rgba(12, 105, 57, 0.82); }
+:root[data-theme='light'] .statsHeader > span,
+:root[data-theme='light'] .githubProfile p,
+:root[data-theme='light'] .repositoryList p { color: rgba(34, 49, 72, 0.68); }
+:root[data-theme='light'] .statsMetricGrid article,
+:root[data-theme='light'] .portfolioMetricGrid article,
+:root[data-theme='light'] .leetcodeMetrics article,
+:root[data-theme='light'] .languagePanel,
+:root[data-theme='light'] .repositoryPanel,
+:root[data-theme='light'] .difficultyPanel,
+:root[data-theme='light'] .statsTopicGroup,
+:root[data-theme='light'] .portfolioPanel {
+  border-color: rgba(72, 98, 135, 0.14);
+  background: rgba(247, 250, 255, 0.76);
+}
+:root[data-theme='light'] .statsMetricGrid article > span,
+:root[data-theme='light'] .portfolioMetricGrid article > span,
+:root[data-theme='light'] .leetcodeMetrics article > span,
+:root[data-theme='light'] .repositoryList small,
+:root[data-theme='light'] .technologyRanking small { color: rgba(34, 49, 72, 0.54); }
+:root[data-theme='light'] .statsOverviewCard {
+  background: rgba(var(--overview-accent), 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 16px 36px rgba(55, 80, 120, 0.12);
+}
+:root[data-theme='light'] .statsOverviewValue span { color: rgba(18, 32, 52, 0.88); }
+:root[data-theme='light'] .statsOverviewCard > p { color: rgba(34, 49, 72, 0.58); }
+:root[data-theme='light'] .statsOverviewIconImage--github { filter: none; }
+:root[data-theme='light'] .githubSection::before {
+  background: rgba(var(--github-violet), 0.09);
+}
+:root[data-theme='light'] .githubSectionIcon img { filter: none; }
+:root[data-theme='light'] .githubSectionHeader {
+  border-color: rgba(var(--github-violet), 0.42);
+}
+:root[data-theme='light'] .githubSectionHeader > div > span,
+:root[data-theme='light'] .githubSectionHeader p {
+  color: rgba(101, 48, 151, 0.88);
+}
+:root[data-theme='light'] .githubSectionIcon {
+  border-color: rgba(var(--github-violet), 0.46);
+  background: rgba(var(--github-violet), 0.18);
+  box-shadow: 0 0 22px rgba(var(--github-violet), 0.2);
+}
+:root[data-theme='light'] .githubSectionHeader > a {
+  color: rgba(83, 42, 126, 0.9);
+  border-color: rgba(var(--github-violet), 0.42);
+  background: rgba(var(--github-violet), 0.17);
+}
+:root[data-theme='light'] .githubProfile,
+:root[data-theme='light'] .githubSection .languagePanel,
+:root[data-theme='light'] .githubSection .repositoryPanel {
+  border-color: rgba(var(--github-violet), 0.38);
+  background: rgba(var(--github-violet), 0.12);
+}
+:root[data-theme='light'] .githubProfile small,
+:root[data-theme='light'] .githubSection .repositorySummary span {
+  color: rgba(83, 42, 126, 0.68);
+}
+:root[data-theme='light'] .githubMetricCard {
+  border-color: rgba(var(--github-violet), 0.4) !important;
+  background: rgba(var(--github-violet), 0.13) !important;
+}
+:root[data-theme='light'] .githubMetricCard > strong {
+  color: rgba(45, 24, 68, 0.96);
+}
+:root[data-theme='light'] .githubMetricCard > small {
+  color: rgba(83, 42, 126, 0.58);
+}
+:root[data-theme='light'] .githubSection .repositoryList a {
+  border-color: rgba(var(--github-violet), 0.28);
+  background: rgba(var(--github-violet), 0.08);
+}
+:root[data-theme='light'] .languageRank {
+  border-color: rgba(var(--github-violet), 0.26);
+  background: rgba(var(--github-violet), 0.085);
+}
+:root[data-theme='light'] .languageTrack {
+  border-color: rgba(var(--github-violet), 0.18);
+  background: rgba(83, 42, 126, 0.08);
+  box-shadow: inset 0 1px 3px rgba(83, 42, 126, 0.12);
+}
+:root[data-theme='light'] .repositoryList a,
+:root[data-theme='light'] .statsTopicGroup > div > span {
+  border-color: rgba(72, 98, 135, 0.12);
+  color: rgba(18, 32, 52, 0.82);
+  background: rgba(255, 255, 255, 0.62);
+}
+:root[data-theme='light'] .leetcodeSection::before {
+  background: rgba(var(--leetcode-gold), 0.09);
+}
+:root[data-theme='light'] .leetcodeSectionHeader {
+  border-color: transparent;
+}
+:root[data-theme='light'] .leetcodeOverview {
+  border-color: rgba(var(--leetcode-gold), 0.5);
+  background: rgba(var(--leetcode-gold), 0.08);
+}
+:root[data-theme='light'] .leetcodeSectionHeader > div > span,
+:root[data-theme='light'] .leetcodeSectionHeader p {
+  color: rgba(145, 83, 0, 0.9);
+}
+:root[data-theme='light'] .leetcodeSectionIcon {
+  border-color: rgba(var(--leetcode-gold), 0.5);
+  background: rgba(var(--leetcode-gold), 0.2);
+  box-shadow: 0 0 22px rgba(var(--leetcode-gold), 0.18);
+}
+:root[data-theme='light'] .leetcodeSectionHeader > a {
+  border-color: rgba(var(--leetcode-gold), 0.46);
+  color: rgba(105, 60, 0, 0.94);
+  background: rgba(var(--leetcode-gold), 0.18);
+}
+:root[data-theme='light'] .leetcodeProfileLink small,
+:root[data-theme='light'] .leetcodeScoreEyebrow,
+:root[data-theme='light'] .leetcodePanelHeading p {
+  color: rgba(145, 83, 0, 0.82);
+}
+:root[data-theme='light'] .leetcodeScore {
+  background: rgba(var(--leetcode-gold), 0.14);
+  box-shadow:
+    inset 0 0 0 2px rgba(190, 112, 0, 0.72),
+    inset 0 1px 0 rgba(255, 255, 255, 0.74),
+    0 16px 36px rgba(145, 83, 0, 0.1);
+}
+:root[data-theme='light'] .leetcodeScore > div strong,
+:root[data-theme='light'] .leetcodeMetrics article > strong {
+  color: rgba(52, 31, 5, 0.96);
+}
+:root[data-theme='light'] .leetcodeScore > div span,
+:root[data-theme='light'] .leetcodeScore p,
+:root[data-theme='light'] .leetcodePanelHeading > span,
+:root[data-theme='light'] .leetcodeMetrics article > small {
+  color: rgba(105, 60, 0, 0.62);
+}
+:root[data-theme='light'] .leetcodeMetrics article,
+:root[data-theme='light'] .difficultyPanel,
+:root[data-theme='light'] .statsTopicGroup {
+  border-color: rgba(var(--leetcode-gold), 0.34);
+  background: rgba(var(--leetcode-gold), 0.1);
+}
+:root[data-theme='light'] .statsProgress {
+  background: rgba(var(--difficulty-color), 0.075);
+}
+:root[data-theme='light'] .statsProgressTrack {
+  background: rgba(var(--difficulty-color), 0.08);
+  box-shadow: inset 0 1px 3px rgba(105, 60, 0, 0.12);
+}
+:root[data-theme='light'] .statsTopicGroup > div > span {
+  border-color: rgba(var(--leetcode-gold), 0.28);
+  color: rgba(52, 31, 5, 0.82);
+  background: rgba(var(--leetcode-gold), 0.1);
+}
+:root[data-theme='light'] .portfolioSection::before {
+  background: rgba(var(--portfolio-blue), 0.09);
+}
+:root[data-theme='light'] .portfolioSectionHeader {
+  border-color: rgba(var(--portfolio-blue), 0.48);
+}
+:root[data-theme='light'] .portfolioSectionHeader > div > span,
+:root[data-theme='light'] .portfolioSectionHeader p {
+  color: rgba(42, 82, 134, 0.9);
+}
+:root[data-theme='light'] .portfolioSectionIcon {
+  border-color: rgba(var(--portfolio-blue), 0.5);
+  background: rgba(var(--portfolio-blue), 0.2);
+  box-shadow: 0 0 22px rgba(var(--portfolio-blue), 0.18);
+}
+:root[data-theme='light'] .portfolioProjectsLink {
+  border-color: rgba(var(--portfolio-blue), 0.46) !important;
+  color: rgba(30, 65, 105, 0.94) !important;
+  background: rgba(var(--portfolio-blue), 0.18) !important;
+}
+:root[data-theme='light'] .portfolioProjectsLink small {
+  color: rgba(42, 82, 134, 0.76);
+}
+:root[data-theme='light'] .portfolioMetricCard {
+  border-color: rgba(var(--portfolio-blue), 0.38) !important;
+  background: rgba(var(--portfolio-blue), 0.12) !important;
+}
+:root[data-theme='light'] .portfolioMetricCard > strong {
+  color: rgba(18, 42, 72, 0.96);
+}
+:root[data-theme='light'] .portfolioMetricCard > small,
+:root[data-theme='light'] .technologyRanking small {
+  color: rgba(42, 82, 134, 0.6);
+}
+:root[data-theme='light'] .portfolioSection .portfolioPanel {
+  border-color: rgba(var(--portfolio-blue), 0.36);
+  background: rgba(var(--portfolio-blue), 0.1);
+}
+:root[data-theme='light'] .statusBreakdownItem,
+:root[data-theme='light'] .technologyRanking > div {
+  border-color: rgba(var(--portfolio-blue), 0.24);
+  background: rgba(255, 255, 255, 0.4);
+}
+:root[data-theme='light'] .statsBackToTop {
+  border-color: rgba(55, 96, 150, 0.28);
+  color: rgba(18, 32, 52, 0.9);
+  background: rgba(249, 252, 255, 0.9);
+  box-shadow: 0 12px 30px rgba(55, 80, 120, 0.16);
+}
+:root[data-theme='light'] .statsBackToTop:hover,
+:root[data-theme='light'] .statsBackToTop:focus-visible {
+  border-color: rgba(12, 105, 57, 0.4);
+  background: rgba(235, 247, 240, 0.96);
+}
+
+@media (max-width: 1000px) {
+  .statsMetricGrid,
+  .portfolioMetricGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 850px) {
+  .statsPage { padding-bottom: var(--mobile-nav-clearance); }
+  .statsBackToTop { bottom: calc(var(--mobile-nav-clearance) + 0.75rem); }
+  .statsOverview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .statsSplit,
+  .leetcodeHero { grid-template-columns: 1fr; }
+
+  .githubStatsSplit > .languagePanel,
+  .githubStatsSplit > .repositoryPanel {
+    height: auto;
+  }
+
+  .githubStatsSplit > .languagePanel,
+  .githubStatsSplit > .repositoryPanel {
+    max-height: 31rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .statsPage {
+    width: min(100% - 1.25rem, 1320px);
+    padding-top: 2rem;
+  }
+
+  .statsSectionHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .statsMetricGrid,
+  .portfolioMetricGrid,
+  .leetcodeMetrics,
+  .difficultyGrid,
+  .statsTopics {
+    grid-template-columns: 1fr;
+  }
+
+  .statsBackToTop {
+    right: 0.75rem;
+    padding: 0.72rem;
+  }
+
+  .statsBackToTop span {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statsHeader { animation: none; }
+  .statsBackToTop { transition: none; }
+}

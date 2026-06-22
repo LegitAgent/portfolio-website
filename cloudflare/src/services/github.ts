@@ -1,9 +1,17 @@
+interface GithubLanguageEdge {
+  size: number;
+  node: {
+    name: string;
+    color: string | null;
+  };
+}
+
 interface GithubResponse {
   data?: {
     user: {
       name: string | null;
       login: string;
-      bio: string;
+      bio: string | null;
       avatarUrl: string;
       status: {
         message: string;
@@ -11,20 +19,29 @@ interface GithubResponse {
       } | null;
       contributionsCollection: {
         totalCommitContributions: number;
-        restrictedContributionsCount: number;
+      };
+      followers: {
+        totalCount: number;
       };
       repositories: {
+        totalCount: number;
         nodes: Array<{
           name: string;
           description: string | null;
           url: string;
-          isPrivate: boolean;
           stargazerCount: number;
+          forkCount: number;
+          isArchived: boolean;
+          createdAt: string;
+          pushedAt: string | null;
+          primaryLanguage: {
+            name: string;
+            color: string | null;
+          } | null;
+          languages: {
+            edges: GithubLanguageEdge[];
+          } | null;
         } | null>;
-        pageInfo: { // for pagination
-          endCursor: string | null;
-          hasNextPage: boolean;
-        };
       };
     } | null;
   };
@@ -34,7 +51,7 @@ interface GithubResponse {
 const GITHUB_API = 'https://api.github.com/graphql';
 
 const query = `
-  query UserRepositories($login: String!, $fromYear: DateTime, $toYear: DateTime) {
+  query UserDeveloperStats($login: String!, $fromYear: DateTime, $toYear: DateTime) {
     user(login: $login) {
       name
       login
@@ -46,22 +63,39 @@ const query = `
       }
       contributionsCollection(from: $fromYear, to: $toYear) {
         totalCommitContributions
-        restrictedContributionsCount
+      }
+      followers {
+        totalCount
       }
       repositories(
-        first: 10
+        first: 100
+        ownerAffiliations: OWNER
+        privacy: PUBLIC
         orderBy: { field: UPDATED_AT, direction: DESC }
       ) {
+        totalCount
         nodes {
           name
           description
           url
-          isPrivate
           stargazerCount
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
+          forkCount
+          isArchived
+          createdAt
+          pushedAt
+          primaryLanguage {
+              
+            color
+          }
+          languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
+            edges {
+              size
+              node {
+                name
+                color
+              }
+            }
+          }
         }
       }
     }
@@ -74,7 +108,7 @@ export async function getGithubStats(username: string, env: Env, fromDate: strin
     headers: {
       Authorization: `Bearer ${env.GITHUB_TOKEN}`,
       'Content-Type': 'application/json',
-      'User-Agent': 'portfolio-website'
+      'User-Agent': 'portfolio-website',
     },
     body: JSON.stringify({
       query,
@@ -88,7 +122,6 @@ export async function getGithubStats(username: string, env: Env, fromDate: strin
 
   if (!response.ok) {
     const details = await response.text();
-
     throw new Error(`GitHub returned ${response.status}: ${details}`);
   }
 
@@ -105,35 +138,64 @@ export async function getGithubStats(username: string, env: Env, fromDate: strin
   }
 
   const user = body.data?.user;
-
   if (!user) {
     return null;
   }
 
-  const { name, login, bio, avatarUrl, status, contributionsCollection, repositories } = user;
+  const repositories = user.repositories.nodes.filter((repository) => repository !== null);
+  const languageTotals = new Map<string, { color: string | null; size: number }>();
+
+  repositories.forEach((repository) => {
+    repository.languages?.edges.forEach((edge) => {
+      const existing = languageTotals.get(edge.node.name);
+      languageTotals.set(edge.node.name, {
+        color: edge.node.color,
+        size: (existing?.size ?? 0) + edge.size,
+      });
+    });
+  });
+
+  const totalLanguageSize = [...languageTotals.values()]
+    .reduce((total, language) => total + language.size, 0);
+  const languages = [...languageTotals.entries()]
+    .map(([name, language]) => ({
+      name,
+      color: language.color,
+      size: language.size,
+      percentage: totalLanguageSize > 0
+        ? Number(((language.size / totalLanguageSize) * 100).toFixed(1))
+        : 0,
+    }))
+    .sort((first, second) => second.size - first.size);
+
+  const contributions = user.contributionsCollection;
 
   return {
-    name,
-    login,
-    bio,
-    avatarUrl,
-    status: status ? {
-      message: status.message,
-      emoji: status.emoji,
-    } : null,
+    name: user.name,
+    login: user.login,
+    bio: user.bio,
+    avatarUrl: user.avatarUrl,
+    status: user.status,
+    followers: user.followers.totalCount,
     contributions: {
-      commits: contributionsCollection.totalCommitContributions,
-      restricted: contributionsCollection.restrictedContributionsCount,
+      commits: contributions.totalCommitContributions,
     },
-    // map repos
-    repositories: repositories.nodes
-      .filter((repository) => repository !== null)
-      .map((repository) => ({
-        name: repository.name,
-        description: repository.description,
-        url: repository.url,
-        isPrivate: repository.isPrivate,
-        stars: repository.stargazerCount,
-      })),
+    repositorySummary: {
+      totalRepositories: user.repositories.totalCount,
+      totalStars: repositories.reduce((total, repository) => total + repository.stargazerCount, 0),
+      totalForks: repositories.reduce((total, repository) => total + repository.forkCount, 0),
+    },
+    languages,
+    repositories: repositories.slice(0, 10).map((repository) => ({
+      name: repository.name,
+      description: repository.description,
+      url: repository.url,
+      stars: repository.stargazerCount,
+      forks: repository.forkCount,
+      isArchived: repository.isArchived,
+      createdAt: repository.createdAt,
+      pushedAt: repository.pushedAt,
+      primaryLanguage: repository.primaryLanguage,
+    })),
   };
 }

@@ -302,6 +302,52 @@ export default {
           return cachedJson(request, ctx, TTL_TIME, allowedOrigin, loadWorkArticles);
         }
 
+        if (url.pathname === '/api/stats/portfolio') {
+          const loadPortfolioStats = async () => {
+            const [
+              totalProjects,
+              completedProjects,
+              totalTechnologies,
+              totalCertificates,
+              totalWorkExperiences,
+              currentRoles,
+              mostUsedTechnologies,
+              projectsByStatus,
+            ] = await Promise.all([
+              countQuery(env.portfolio_db, 'SELECT COUNT(*) AS count FROM Projects'),
+              countQuery(env.portfolio_db, "SELECT COUNT(*) AS count FROM Projects WHERE status = 'Done'"),
+              countQuery(env.portfolio_db, 'SELECT COUNT(*) AS count FROM Tag'),
+              countQuery(env.portfolio_db, 'SELECT COUNT(*) AS count FROM Certificates'),
+              countQuery(env.portfolio_db, 'SELECT COUNT(*) AS count FROM WorkExperience'),
+              countQuery(env.portfolio_db, 'SELECT COUNT(*) AS count FROM WorkExperience WHERE is_current = 1'),
+              env.portfolio_db
+                .prepare('SELECT tag_name AS name, COUNT(*) AS projectCount FROM ProjectTag GROUP BY tag_name ORDER BY projectCount DESC, tag_name ASC LIMIT 8')
+                .all(),
+              env.portfolio_db
+                .prepare('SELECT status, COUNT(*) AS count FROM Projects GROUP BY status ORDER BY count DESC')
+                .all(),
+            ]);
+
+            return {
+              data: {
+                portfolioStats: {
+                  totalProjects,
+                  completedProjects,
+                  totalTechnologies,
+                  totalCertificates,
+                  totalWorkExperiences,
+                  currentRoles,
+                  mostUsedTechnologies: mostUsedTechnologies.results,
+                  projectsByStatus: projectsByStatus.results,
+                },
+              },
+              status: 200,
+            };
+          };
+
+          return cachedJson(request, ctx, TTL_TIME, allowedOrigin, loadPortfolioStats);
+        }
+
         if (url.pathname.startsWith('/api/leetcode/')) {
           const loadLeetcode = async () => {
             const username = url.pathname.replace('/api/leetcode/', '');
@@ -370,3 +416,8 @@ export default {
     }
 	},
 } satisfies ExportedHandler<Env>;
+
+async function countQuery(database: D1Database, query: string) {
+  const result = await database.prepare(query).first<{ count: number }>();
+  return result?.count ?? 0;
+}

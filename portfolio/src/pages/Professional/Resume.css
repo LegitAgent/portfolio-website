@@ -24,7 +24,6 @@
   width: 4.25rem;
   height: 4.25rem;
   object-fit: contain;
-  opacity: 1;
   filter: invert(1);
 }
 
@@ -123,7 +122,10 @@
   content: '';
   position: absolute;
   z-index: -2;
-  inset: -120%;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  aspect-ratio: 1;
   background: conic-gradient(
     from 0deg,
     transparent 0 38%,
@@ -131,6 +133,7 @@
     rgba(125, 188, 235, 0.82) 53%,
     transparent 62% 100%
   );
+  transform: translate(-50%, -50%);
   animation: resumeBorderOrbit 3.8s linear infinite;
 }
 
@@ -189,8 +192,12 @@
 }
 
 @keyframes resumeBorderOrbit {
+  from {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+
   to {
-    transform: rotate(1turn);
+    transform: translate(-50%, -50%) rotate(1turn);
   }
 }
 

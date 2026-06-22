@@ -18,14 +18,24 @@ async function seedDatabase() {
 			project_name TEXT PRIMARY KEY,
 			project_description TEXT NOT NULL,
 			project_github TEXT NOT NULL,
-			project_img_url TEXT NOT NULL
+			project_img_url TEXT NOT NULL,
+			featured INTEGER NOT NULL DEFAULT 0,
+			started_at TEXT NOT NULL,
+			ended_at TEXT,
+			live_url TEXT,
+			status TEXT NOT NULL
 		)`,
 		`CREATE TABLE ProjectArticles (
-			pArticle_title TEXT NOT NULL,
-			pArticle_image_url TEXT NOT NULL,
+			project_name TEXT NOT NULL,
 			pArticle_slug TEXT PRIMARY KEY,
-			pArticle_content TEXT NOT NULL,
-			project_name TEXT NOT NULL
+			pArticle_image_url TEXT,
+			pArticle_image_alt TEXT,
+			pArticle_summary TEXT,
+			pArticle_overview TEXT,
+			pArticle_content TEXT,
+			pArticle_challenges TEXT,
+			pArticle_lessons TEXT,
+			pArticle_future_work TEXT
 		)`,
 		`CREATE TABLE Certificates (
 			id INTEGER PRIMARY KEY,
@@ -36,7 +46,8 @@ async function seedDatabase() {
 			certificate_url TEXT NOT NULL,
 			image_alt TEXT NOT NULL,
 			skills TEXT NOT NULL,
-			image_url TEXT NOT NULL
+			image_url TEXT NOT NULL,
+			description TEXT NOT NULL
 		)`,
 		`CREATE TABLE Tag (
 			tag_name TEXT PRIMARY KEY,
@@ -74,12 +85,12 @@ async function seedDatabase() {
 			work_id INTEGER NOT NULL,
 			tag_name TEXT NOT NULL
 		)`,
-		`INSERT INTO Projects (project_name, project_description, project_github, project_img_url)
-		VALUES ('Portfolio', 'Personal portfolio site', 'https://github.com/LegitAgent/portfolio-website', 'projects/portfolio.jpg')`,
-		`INSERT INTO ProjectArticles (pArticle_title, pArticle_image_url, pArticle_slug, pArticle_content, project_name)
-		VALUES ('Building the Portfolio', 'articles/portfolio.jpg', 'portfolio', 'Article body', 'Portfolio')`,
-		`INSERT INTO Certificates (id, title, issuer, completion_date, credential_url, certificate_url, image_alt, skills, image_url)
-		VALUES (1, 'AWS Essentials', 'AWS', '2026-03-01', 'https://example.com/credential', 'certificates/AWS_Essentials_Cert.pdf', 'AWS certificate', 'Cloud', 'certificates/aws.jpg')`,
+		`INSERT INTO Projects (project_name, project_description, project_github, project_img_url, featured, started_at, ended_at, live_url, status)
+		VALUES ('Portfolio', 'Personal portfolio site', 'https://github.com/LegitAgent/portfolio-website', 'projects/portfolio.jpg', 1, '2026-01-01', NULL, 'https://example.com/portfolio', 'WIP')`,
+		`INSERT INTO ProjectArticles (project_name, pArticle_slug, pArticle_image_url, pArticle_image_alt, pArticle_summary, pArticle_overview, pArticle_content, pArticle_challenges, pArticle_lessons, pArticle_future_work)
+		VALUES ('Portfolio', 'portfolio', 'articles/portfolio.jpg', 'Portfolio preview', 'Portfolio summary', 'Portfolio overview', 'Article body', 'Challenges', 'Lessons', 'Future work')`,
+		`INSERT INTO Certificates (id, title, issuer, completion_date, credential_url, certificate_url, image_alt, skills, image_url, description)
+		VALUES (1, 'AWS Essentials', 'AWS', '2026-03-01', 'https://example.com/credential', 'certificates/AWS_Essentials_Cert.pdf', 'AWS certificate', 'Cloud', 'certificates/aws.jpg', 'AWS course')`,
 		`INSERT INTO Tag (tag_name, skill_type)
 		VALUES ('React', 'frontend'), ('Cloudflare', 'backend'), ('TypeScript', 'language')`,
 		`INSERT INTO ProjectTag (project_name, tag_name)
@@ -128,6 +139,11 @@ describe('portfolio worker', () => {
 				project_description: 'Personal portfolio site',
 				project_github: 'https://github.com/LegitAgent/portfolio-website',
 				project_img_url: 'projects/portfolio.jpg',
+				featured: 1,
+				started_at: '2026-01-01',
+				ended_at: null,
+				live_url: 'https://example.com/portfolio',
+				status: 'WIP',
 				pArticle_slug: 'portfolio',
 			},
 		]);
@@ -149,6 +165,7 @@ describe('portfolio worker', () => {
 				image_alt: 'AWS certificate',
 				skills: 'Cloud',
 				image_url: 'certificates/aws.jpg',
+				description: 'AWS course',
 			},
 		]);
 	});
@@ -196,11 +213,21 @@ describe('portfolio worker', () => {
 		expect(response.status).toBe(200);
 		expect(body.results).toEqual([
 			{
-				pArticle_title: 'Building the Portfolio',
-				pArticle_image_url: 'articles/portfolio.jpg',
+				project_name: 'Portfolio',
 				pArticle_slug: 'portfolio',
+				pArticle_image_url: 'articles/portfolio.jpg',
+				pArticle_image_alt: 'Portfolio preview',
+				pArticle_summary: 'Portfolio summary',
+				pArticle_overview: 'Portfolio overview',
 				pArticle_content: 'Article body',
+				pArticle_challenges: 'Challenges',
+				pArticle_lessons: 'Lessons',
+				pArticle_future_work: 'Future work',
 				project_github: 'https://github.com/LegitAgent/portfolio-website',
+				started_at: '2026-01-01',
+				live_url: 'https://example.com/portfolio',
+				status: 'WIP',
+				featured: 1,
 			},
 		]);
 		expect(body.tags).toEqual([{ tag_name: 'React' }, { tag_name: 'Cloudflare' }]);
@@ -227,12 +254,12 @@ describe('portfolio worker', () => {
 		expect(body.tags).toEqual([{ tag_name: 'TypeScript' }, { tag_name: 'Cloudflare' }]);
 	});
 
-	it('returns empty arrays for unknown article slugs', async () => {
+	it('returns 404 for unknown article slugs', async () => {
 		const response = await fetchWorker('/api/project_articles/missing');
-		const body = await jsonBody<{ results: unknown[]; tags: unknown[] }>(response);
+		const body = await jsonBody(response);
 
-		expect(response.status).toBe(200);
-		expect(body).toEqual({ results: [], tags: [] });
+		expect(response.status).toBe(404);
+		expect(body).toEqual({ error: 'Article not found' });
 	});
 
 	it('serves robots.txt before rate limiting and database access', async () => {
@@ -243,15 +270,36 @@ describe('portfolio worker', () => {
 		expect(await response.text()).toBe('User-agent: *\nDisallow: /\n');
 	});
 
-	it('handles CORS preflight requests', async () => {
+	it('rejects CORS preflight requests when no allowed origin is configured', async () => {
 		const response = await fetchWorker('/api/db/projects', {
 			method: 'OPTIONS',
 			headers: { Origin: 'https://example.com' },
 		});
 
-		expect(response.status).toBe(204);
+		expect(response.status).toBe(403);
 		expect(response.headers.get('Access-Control-Allow-Origin')).toBe('*');
-		expect(response.headers.get('Access-Control-Allow-Methods')).toBe('GET, OPTIONS');
+	});
+
+	it('returns portfolio statistics', async () => {
+		const response = await fetchWorker('/api/stats/portfolio');
+		const body = await jsonBody<{
+			portfolioStats: {
+				totalProjects: number;
+				totalTechnologies: number;
+				totalCertificates: number;
+				totalWorkExperiences: number;
+				currentRoles: number;
+			};
+		}>(response);
+
+		expect(response.status).toBe(200);
+		expect(body.portfolioStats).toMatchObject({
+			totalProjects: 1,
+			totalTechnologies: 3,
+			totalCertificates: 1,
+			totalWorkExperiences: 1,
+			currentRoles: 1,
+		});
 	});
 
 	it('returns 404 JSON for unknown routes', async () => {
