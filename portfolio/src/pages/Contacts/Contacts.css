@@ -1,11 +1,11 @@
 .contactContainer {
-  width: min(100% - 2rem, 1080px);
+  width: min(100% - 2rem, 1320px);
   min-height: 100dvh;
   margin: 0 auto;
-  padding: clamp(2.5rem, 7vw, 5rem) 0 7rem;
+  padding: clamp(2.5rem, 7vw, 5.5rem) 0 7rem;
   display: flex;
   flex-direction: column;
-  gap: clamp(2rem, 5vw, 3.5rem);
+  gap: clamp(4rem, 9vw, 7rem);
   color: rgba(238, 247, 255, 0.94);
 }
 
@@ -13,114 +13,296 @@
 .contactSection {
   width: 100%;
   min-width: 0;
+  animation: contactEnter 560ms ease-out both;
+}
+
+.contactSection:nth-of-type(2) { animation-delay: 80ms; }
+.contactSection:nth-of-type(3) { animation-delay: 140ms; }
+.contactSection:nth-of-type(4) { animation-delay: 200ms; }
+.contactSection:nth-of-type(5) { animation-delay: 260ms; }
+.contactSection:nth-of-type(6) { animation-delay: 320ms; }
+
+.contactStatusBadge {
+  width: fit-content;
+  margin-bottom: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: rgba(134, 239, 172, 0.88);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contactStatusBadge > span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: rgba(74, 222, 128, 0.96);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.62);
+  animation: contactStatusPulse 1.8s ease-in-out infinite;
 }
 
 .contactHeader h1 {
   margin: 0;
-  font-size: clamp(2.75rem, 8vw, 5rem);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 780;
   line-height: 0.95;
   letter-spacing: 0;
 }
 
+.contactHeader h1 > span {
+  color: rgba(134, 239, 172, 0.94);
+}
+
 .contactName {
-  margin: 0.8rem 0 0;
-  font-weight: 760;
+  margin: 1rem 0 0;
+  font-size: 0.94rem;
+  font-weight: 800;
 }
 
 .contactIntro,
 .bestwayDescription,
 .availabilityDescription,
 .locationDescription {
-  max-width: 680px;
+  max-width: 700px;
   margin: 0.65rem 0 0;
   color: rgba(214, 229, 245, 0.7);
-  line-height: 1.65;
+  font-size: clamp(0.98rem, 2vw, 1.08rem);
+  line-height: 1.7;
 }
 
-.contactSection {
+.contactSectionHeader {
   padding-top: 1rem;
-  border-top: 1px solid rgba(125, 188, 235, 0.16);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  border-top: 1px solid rgba(125, 188, 235, 0.18);
 }
 
-.contactSection h2 {
-  margin: 0 0 1rem;
-  font-size: clamp(1.25rem, 3vw, 1.6rem);
+.contactSectionHeader > span {
+  color: rgba(134, 239, 172, 0.7);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.contactSectionHeader p {
+  margin: 0;
+  color: rgba(134, 239, 172, 0.8);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contactSectionHeader h2 {
+  margin: 0.25rem 0 0;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  line-height: 1.05;
   letter-spacing: 0;
 }
 
 .emailCopy {
-  display: flex;
+  margin-top: 1rem;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 1rem;
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: 10px;
+  background: rgba(96, 165, 250, 0.06);
 }
 
-.emailCopy p {
+.emailIdentity {
   min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.emailIdentity > i {
+  flex: 0 0 auto;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(96, 165, 250, 0.32);
+  border-radius: 8px;
+  background: rgba(96, 165, 250, 0.11);
+}
+
+.emailIdentity img {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.emailIdentity p {
+  min-width: 0;
+  margin: 0;
+  color: rgba(238, 247, 255, 0.94);
+  font-weight: 780;
   overflow-wrap: anywhere;
 }
 
-.copyButton {
-  min-height: 2.6rem;
-  padding: 0.6rem 0.8rem;
-  border: 1px solid rgba(125, 188, 235, 0.2);
-  border-radius: 6px;
-  color: inherit;
-  background: rgba(5, 17, 39, 0.72);
+.emailIdentity p > span {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: rgba(147, 197, 253, 0.72);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.linkBoxGroup,
-.interestsGroup {
+.copyButton {
+  min-height: 2.75rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid rgba(96, 165, 250, 0.32);
+  border-radius: 7px;
+  color: rgba(224, 240, 255, 0.94);
+  background: rgba(96, 165, 250, 0.1);
+  font-weight: 760;
+  white-space: nowrap;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.copyButton:hover,
+.copyButton:focus-visible {
+  border-color: rgba(96, 165, 250, 0.58);
+  background: rgba(96, 165, 250, 0.17);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.linkBoxGroup {
+  margin-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
 }
 
 .linkBox {
   min-width: 0;
+  min-height: 13rem;
   padding: 1rem;
-  border: 1px solid rgba(125, 188, 235, 0.14);
-  border-radius: 8px;
-  background: rgba(3, 12, 29, 0.58);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(192, 132, 252, 0.24);
+  border-radius: 9px;
+  color: inherit;
+  background: rgba(192, 132, 252, 0.055);
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
 }
 
-.linkBox img {
-  width: 2.5rem;
-  height: 2.5rem;
-  object-fit: cover;
-  border-radius: 6px;
+.linkBox:hover,
+.linkBox:focus-visible {
+  border-color: rgba(192, 132, 252, 0.5);
+  background: rgba(192, 132, 252, 0.1);
+  box-shadow: 0 18px 38px rgba(52, 25, 80, 0.18);
+  outline: none;
+  transform: translateY(-4px);
+}
+
+.linkBoxTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.linkBoxTop > i {
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(192, 132, 252, 0.3);
+  border-radius: 7px;
+  background: rgba(192, 132, 252, 0.1);
+}
+
+.linkBoxTop img {
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: contain;
+  transition:
+    filter 180ms ease,
+    transform 180ms ease;
+}
+
+.linkBox:hover .linkBoxTop img,
+.linkBox:focus-visible .linkBoxTop img {
+  filter: brightness(1.25);
+  transform: scale(1.08);
+}
+
+.linkIcon--invert {
+  filter: invert(1);
+}
+
+.linkBoxTop > svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: rgba(216, 180, 252, 0.74);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .linkName {
-  margin-top: 0.7rem;
-  font-weight: 760;
+  margin: auto 0 0;
+  padding-top: 1.5rem;
+  font-size: 1.18rem;
+  font-weight: 780;
   text-transform: capitalize;
 }
 
 .linkDesc {
-  margin-top: 0.35rem;
-  color: rgba(214, 229, 245, 0.68);
-  line-height: 1.5;
+  margin: 0.45rem 0 0;
+  color: rgba(214, 229, 245, 0.62);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.interestsGroup {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.9rem;
 }
 
 .card {
+  --interest-accent: 125, 188, 235;
   width: 100%;
   min-width: 0;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  min-height: 170px;
+  min-height: 13rem;
   padding: 0;
   border: 0;
-  background: transparent;
   color: inherit;
+  background: transparent;
   perspective: 1000px;
+  text-align: left;
 }
 
 .cardInner {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 500ms ease;
+  min-height: inherit;
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
   transform-style: preserve-3d;
 }
 
@@ -132,148 +314,268 @@
   position: absolute;
   inset: 0;
   padding: 1rem;
-  border: 1px solid rgba(125, 188, 235, 0.14);
-  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(var(--interest-accent), 0.28);
+  border-radius: 9px;
   color: rgba(238, 247, 255, 0.94);
-  background: rgba(3, 12, 29, 0.78);
+  background:
+    linear-gradient(145deg, rgba(var(--interest-accent), 0.11), rgba(3, 12, 29, 0.88)),
+    rgba(3, 12, 29, 0.82);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 16px 34px rgba(0, 0, 0, 0.16);
   backface-visibility: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 0.5rem;
-  overflow-wrap: anywhere;
+}
+
+.cardFace::after {
+  content: '';
+  position: absolute;
+  right: -1.5rem;
+  bottom: -1.5rem;
+  width: 5rem;
+  height: 5rem;
+  border: 1px solid rgba(var(--interest-accent), 0.17);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 .cardBack {
+  justify-content: space-between;
   transform: rotateY(180deg);
 }
 
+.cardFace small {
+  color: rgba(var(--interest-accent), 0.8);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.cardFace h3 {
+  margin: auto 0 0;
+  padding-top: 1.5rem;
+  font-size: 1.25rem;
+  text-transform: capitalize;
+}
+
+.cardFace p {
+  margin: 0.45rem 0 0;
+  color: rgba(214, 229, 245, 0.66);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.cardFace > span {
+  margin-top: 0.8rem;
+  color: rgba(var(--interest-accent), 0.74);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.card:hover .cardFace,
+.card:focus-visible .cardFace {
+  border-color: rgba(var(--interest-accent), 0.58);
+}
+
+.card:focus-visible {
+  outline: none;
+}
+
+/* Independent hooks for each interest card. Edit these selectors per interest. */
+.card--trains { --interest-accent: 96, 165, 250; }
+.card--trains1 { --interest-accent: 52, 211, 153; }
+.card--trains2 { --interest-accent: 250, 204, 21; }
+.card--trains3 { --interest-accent: 192, 132, 252; }
+.card--trains4 { --interest-accent: 248, 113, 113; }
+
 .status {
   margin-top: 1rem;
-  font-weight: 760;
+  color: rgba(214, 229, 245, 0.56);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .statusTable ul {
   margin: 0.75rem 0 0;
   padding: 0;
   display: grid;
-  gap: 0.65rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
   list-style: none;
 }
 
 .statusTable li {
-  padding: 0.75rem 0.85rem;
-  border: 1px solid transparent;
-  border-radius: 6px;
+  --status-color: 96, 165, 250;
+  min-width: 0;
+  min-height: 10rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(var(--status-color), 0.26);
+  border-radius: 9px;
+  color: rgba(238, 247, 255, 0.94);
+  background: rgba(var(--status-color), 0.055);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.statusTable li:hover {
+  border-color: rgba(var(--status-color), 0.52);
+  background: rgba(var(--status-color), 0.1);
+  transform: translateY(-3px);
+}
+
+.statusTable li > span {
+  color: rgba(var(--status-color), 0.86);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.statusTable li > strong {
+  margin-top: auto;
+  padding-top: 1.3rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
   overflow-wrap: anywhere;
 }
 
-.green {
-  color: rgba(205, 255, 220, 0.96);
-  border-color: rgba(134, 239, 172, 0.24) !important;
-  background: rgba(34, 197, 94, 0.12);
-}
-
-.yellow {
-  color: rgba(255, 236, 166, 0.96);
-  border-color: rgba(250, 204, 21, 0.24) !important;
-  background: rgba(250, 204, 21, 0.1);
-}
-
-.red {
-  color: rgba(255, 194, 194, 0.96);
-  border-color: rgba(248, 113, 113, 0.24) !important;
-  background: rgba(239, 68, 68, 0.1);
-}
+.green { --status-color: 74, 222, 128 !important; }
+.yellow { --status-color: 250, 204, 21 !important; }
+.red { --status-color: 248, 113, 113 !important; }
 
 .clockBox {
-  width: fit-content;
-  max-width: 100%;
-  margin-top: 0.75rem;
-  padding: 0.8rem;
-  border: 1px solid rgba(125, 188, 235, 0.14);
-  border-radius: 6px;
+  width: min(100%, 30rem);
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(52, 211, 153, 0.28);
+  border-radius: 9px;
+  color: rgba(205, 255, 230, 0.9);
+  background: rgba(52, 211, 153, 0.055);
   font-family: 'Courier New', ui-monospace, monospace;
-  line-height: 1.5;
+  line-height: 1.6;
+}
+
+@keyframes contactEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes contactStatusPulse {
+  50% {
+    opacity: 0.45;
+    transform: scale(0.78);
+  }
 }
 
 :root[data-theme='light'] .contactContainer {
-  color: #102033;
+  color: rgba(18, 32, 52, 0.94);
 }
 
 :root[data-theme='light'] .contactIntro,
 :root[data-theme='light'] .bestwayDescription,
 :root[data-theme='light'] .availabilityDescription,
 :root[data-theme='light'] .locationDescription,
-:root[data-theme='light'] .linkDesc {
-  color: rgba(34, 49, 72, 0.68);
+:root[data-theme='light'] .linkDesc,
+:root[data-theme='light'] .cardFace p {
+  color: rgba(34, 49, 72, 0.66);
 }
 
-:root[data-theme='light'] .contactSection,
+:root[data-theme='light'] .contactSectionHeader {
+  border-color: rgba(72, 98, 135, 0.16);
+}
+
+:root[data-theme='light'] .emailCopy,
 :root[data-theme='light'] .linkBox,
 :root[data-theme='light'] .cardFace,
+:root[data-theme='light'] .statusTable li,
 :root[data-theme='light'] .clockBox {
-  border-color: rgba(72, 98, 135, 0.14);
+  background: rgba(247, 250, 255, 0.78);
 }
 
-:root[data-theme='light'] .linkBox,
-:root[data-theme='light'] .cardFace {
+:root[data-theme='light'] .emailIdentity p,
+:root[data-theme='light'] .cardFace,
+:root[data-theme='light'] .statusTable li {
   color: rgba(18, 32, 52, 0.94);
-  background: rgba(247, 250, 255, 0.82);
 }
 
 :root[data-theme='light'] .copyButton {
-  color: rgba(18, 32, 52, 0.94);
-  border-color: rgba(72, 98, 135, 0.16);
-  background: rgba(255, 255, 255, 0.72);
+  color: rgba(42, 82, 134, 0.94);
+  background: rgba(96, 165, 250, 0.08);
 }
 
-:root[data-theme='light'] .green {
-  color: rgba(12, 85, 45, 0.96);
-  background: rgba(201, 240, 214, 0.82);
+:root[data-theme='light'] .linkIcon--invert {
+  filter: none;
 }
 
-:root[data-theme='light'] .yellow {
-  color: rgba(105, 72, 5, 0.96);
-  background: rgba(255, 236, 166, 0.82);
+:root[data-theme='light'] .clockBox {
+  color: rgba(12, 85, 45, 0.94);
 }
 
-:root[data-theme='light'] .red {
-  color: rgba(125, 30, 30, 0.96);
-  background: rgba(255, 194, 194, 0.82);
+@media (max-width: 900px) {
+  .linkBoxGroup,
+  .statusTable ul {
+    grid-template-columns: 1fr;
+  }
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 850px) {
   .contactContainer {
-    width: min(100% - 2rem, 1080px);
-    margin-right: auto;
-    margin-left: auto;
     padding-bottom: var(--mobile-nav-clearance);
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 620px) {
   .contactContainer {
-    width: min(100% - 1.25rem, 1080px);
+    width: min(100% - 1.25rem, 1320px);
     padding-top: 2rem;
   }
 
   .emailCopy {
-    align-items: stretch;
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .copyButton {
     width: 100%;
   }
 
-  .card {
-    aspect-ratio: 5 / 4;
+  .contactSectionHeader {
+    align-items: flex-start;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cardInner {
+  .contactHeader,
+  .contactSection,
+  .contactStatusBadge > span {
+    animation: none;
+  }
+
+  .copyButton,
+  .linkBox,
+  .linkBoxTop img,
+  .cardInner,
+  .statusTable li {
     transition: none;
   }
 }

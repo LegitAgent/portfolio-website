@@ -5,41 +5,69 @@ import {
   POSITION_AVAILABILITY,
   FREELANCE_AVAILABILITY,
   COLLAB_DESC,
+  EMAIL_ICON,
   POSITION_DESC,
   FREELANCE_DESC,
+  GITHUB_ICON,
+  GITHUB_URL,
+  LINKEDIN_ICON,
+  LINKEDIN_URL,
+  RESUME_ICON,
+  RESUME_NAME,
 } from '../../config/constants';
 
 interface ProfessionalLink {
   img_url: string;
   name: string;
   description: string;
+  href: string;
+  iconClass?: string;
 }
 
 interface ContactInterest {
   name: string;
   description: string;
   backstory: string;
+  type: 'trains' | 'trains1' | 'trains2' | 'trains3' | 'trains4';
 }
 
 function Contacts() {
   const proLinks: Array<ProfessionalLink> = [
-    { img_url: 'temp.jpg', name: 'github', description: 'github is great since i can share stuff.' },
-    { img_url: 'temp.jpg', name: 'linkedin', description: 'linkedin is great since i can share stuff.' },
-    { img_url: 'temp.jpg', name: 'resume', description: 'my resume is great since its cool.' },
+    {
+      img_url: GITHUB_ICON,
+      name: 'github',
+      description: 'Repositories, experiments, and open-source activity.',
+      href: GITHUB_URL,
+      iconClass: 'linkIcon--invert',
+    },
+    {
+      img_url: LINKEDIN_ICON,
+      name: 'linkedin',
+      description: 'Professional experience, background, and updates.',
+      href: LINKEDIN_URL,
+    },
+    {
+      img_url: RESUME_ICON,
+      name: 'resume',
+      description: 'A concise overview of my technical work and education.',
+      href: RESUME_NAME,
+      iconClass: 'linkIcon--invert',
+    },
   ];
 
   const interest: Array<ContactInterest> = [
-    { name: 'trains', description: 'I like trains', backstory: 'since kid, liked trains' },
-    { name: 'trains1', description: 'some other', backstory: 'yeah' },
-    { name: 'trains2', description: 'stuff', backstory: 'yeah' },
-    { name: 'trains3', description: 'things', backstory: 'yeah' },
-    { name: 'trains4', description: 'yeah', backstory: 'yeah' },
+    { name: 'trains', description: 'I like trains', backstory: 'since kid, liked trains', type: 'trains' },
+    { name: 'trains1', description: 'some other', backstory: 'yeah', type: 'trains1' },
+    { name: 'trains2', description: 'stuff', backstory: 'yeah', type: 'trains2' },
+    { name: 'trains3', description: 'things', backstory: 'yeah', type: 'trains3' },
+    { name: 'trains4', description: 'yeah', backstory: 'yeah', type: 'trains4' },
   ];
 
   const availabilityStatus: Array<string> = ['red', 'yellow', 'green'];
 
   const [flippedCards, setFlippedCards] = useState<Array<boolean>>(new Array(interest.length).fill(false)); // init false array
   const [time, setTime] = useState<Date>(new Date());
+  const [hasCopied, setHasCopied] = useState(false);
 
   const handleFlip = (index: number) => {
     setFlippedCards((array) => {
@@ -57,6 +85,12 @@ function Contacts() {
     return () => clearInterval(timer);
   }, []);
 
+  const copyEmail = async () => {
+    await navigator.clipboard.writeText('albamartindarius@gmail.com');
+    setHasCopied(true);
+    window.setTimeout(() => setHasCopied(false), 1600);
+  };
+
   return (
     <section className="contactContainer">
       {/* Page header
@@ -65,7 +99,13 @@ function Contacts() {
             - Use a subtle glow or pulse effect for cooler animation.
        */}
       <header className="contactHeader">
-        <h1>Contact</h1>
+        <div className="contactStatusBadge">
+          <span />
+          Open to collaboration
+        </div>
+        <h1>
+          Contact <span>Me</span>
+        </h1>
         <p className="contactName">Martin Darius Alba</p>
         <p className="contactIntro">Reach out for opportunities, collaborations, or questions about my projects.</p>
       </header>
@@ -74,10 +114,26 @@ function Contacts() {
             - Add copy functionality and indicators for copying like changing the text briefly to copied.
       */}
       <section className="contactSection">
-        <h2>Best Way To Reach Me</h2>
+        <header className="contactSectionHeader">
+          <span>01</span>
+          <div>
+            <p>Direct communication</p>
+            <h2>Best Way To Reach Me</h2>
+          </div>
+        </header>
         <div className="emailCopy">
-          <p> Email: albamartindarius@gmail.com </p>
-          <button className="copyButton"> Copy my Email</button>
+          <div className="emailIdentity">
+            <i>
+              <img src={EMAIL_ICON} alt="" aria-hidden="true" />
+            </i>
+            <p>
+              <span>Email</span>
+              albamartindarius@gmail.com
+            </p>
+          </div>
+          <button className="copyButton" type="button" onClick={copyEmail}>
+            {hasCopied ? 'Copied' : 'Copy my Email'}
+          </button>
         </div>
         <p className="bestwayDescription">
           {' '}
@@ -91,15 +147,35 @@ function Contacts() {
             - Should be simple and minimalistic.
       */}
       <section className="contactSection">
-        <h2>Professional Links</h2>
+        <header className="contactSectionHeader">
+          <span>02</span>
+          <div>
+            <p>Professional profiles</p>
+            <h2>Professional Links</h2>
+          </div>
+        </header>
         <div className="linkBoxGroup">
           {proLinks.map((linkItem) => {
             return (
-              <div key={linkItem.name} className="linkBox">
-                <img src={linkItem.img_url} alt="temp image" />
+              <a key={linkItem.name} className="linkBox" href={linkItem.href} target="_blank" rel="noreferrer">
+                <div className="linkBoxTop">
+                  <i>
+                    <img
+                      className={linkItem.iconClass ?? ''}
+                      src={linkItem.img_url}
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  </i>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14 5h5v5" />
+                    <path d="m10 14 9-9" />
+                    <path d="M19 13v6H5V5h6" />
+                  </svg>
+                </div>
                 <p className="linkName">{linkItem.name}</p>
                 <p className="linkDesc">{linkItem.description}</p>
-              </div>
+              </a>
             );
           })}
         </div>
@@ -109,14 +185,27 @@ function Contacts() {
             - Make it look more appealing, all the CSS is temporary for now.
               It is only there to see if logic works. */}
       <section className="contactSection">
-        <h2>Interests</h2>
+        <header className="contactSectionHeader">
+          <span>03</span>
+          <div>
+            <p>Beyond development</p>
+            <h2>Interests</h2>
+          </div>
+        </header>
         <div className="interestsGroup">
           {interest.map((interestItem, index) => {
             const isFlipped = flippedCards[index];
             return (
-              <button key={interestItem.name} className={`card ${isFlipped ? 'flipped' : ''}`} onClick={() => handleFlip(index)}>
+              <button
+                key={interestItem.name}
+                className={`card card--${interestItem.type} ${isFlipped ? 'flipped' : ''}`}
+                type="button"
+                aria-pressed={isFlipped}
+                onClick={() => handleFlip(index)}
+              >
                 <div className="cardInner">
                   <div className="cardFace cardFront">
+                    <small>{String(index + 1).padStart(2, '0')}</small>
                     <h3>{interestItem.name}</h3>
                     <p>{interestItem.description}</p>
                     <span>View more</span>
@@ -138,20 +227,41 @@ function Contacts() {
             - Make the availability status become more interactive.
       */}
       <section className="contactSection">
-        <h2>Availability </h2>
+        <header className="contactSectionHeader">
+          <span>04</span>
+          <div>
+            <p>Current status</p>
+            <h2>Availability</h2>
+          </div>
+        </header>
         <p className="availabilityDescription">I'm always open to learn new tech, feel free to reach out regardless of status!</p>
         <p className="status">Status:</p>
         <div className="statusTable">
           <ul>
-            <li className={availabilityStatus[POSITION_AVAILABILITY]}>Internship availability: {POSITION_DESC}</li>
-            <li className={availabilityStatus[COLLAB_AVAILABILITY]}>Collaboration availability: {COLLAB_DESC}</li>
-            <li className={availabilityStatus[FREELANCE_AVAILABILITY]}>Free-lancing availability: {FREELANCE_DESC}</li>
+            <li className={availabilityStatus[POSITION_AVAILABILITY]}>
+              <span>Internship availability</span>
+              <strong>{POSITION_DESC}</strong>
+            </li>
+            <li className={availabilityStatus[COLLAB_AVAILABILITY]}>
+              <span>Collaboration availability</span>
+              <strong>{COLLAB_DESC}</strong>
+            </li>
+            <li className={availabilityStatus[FREELANCE_AVAILABILITY]}>
+              <span>Freelance availability</span>
+              <strong>{FREELANCE_DESC}</strong>
+            </li>
           </ul>
         </div>
       </section>
       {/* location */}
       <section className="contactSection">
-        <h2>Location</h2>
+        <header className="contactSectionHeader">
+          <span>05</span>
+          <div>
+            <p>Local context</p>
+            <h2>Location</h2>
+          </div>
+        </header>
         <p className="locationDescription"> currently residing in the philippines</p>
         <div className="clockBox">
           Current time in where I live (UTC + 8): <br />
