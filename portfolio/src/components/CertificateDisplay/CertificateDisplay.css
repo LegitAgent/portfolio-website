@@ -249,7 +249,7 @@
 }
 
 :root[data-theme='light'] .certificateSkills span {
-  color: rgba(12, 85, 45, 0.92);
+  color: rgba(18, 32, 52, 0.9);
   border-color: rgba(22, 120, 68, 0.18);
   background: rgba(201, 240, 214, 0.62);
 }
@@ -274,7 +274,7 @@
 }
 
 :root[data-theme='light'] .certificateLinks .certificateLink {
-  color: rgba(12, 105, 57, 0.9);
+  color: rgba(18, 32, 52, 0.9);
   background: rgba(22, 120, 68, 0.07);
 }
 

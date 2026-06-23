@@ -120,8 +120,8 @@
 }
 
 :root[data-theme='light'] .click-particle {
-  color: rgba(22, 120, 68, 0.82);
-  text-shadow: 0 0 10px rgba(22, 120, 68, 0.28);
+  color: rgba(18, 32, 52, 0.88);
+  text-shadow: none;
 }
 
 .gradient-bg::before {

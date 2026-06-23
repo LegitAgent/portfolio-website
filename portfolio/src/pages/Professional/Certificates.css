@@ -196,7 +196,7 @@
 }
 
 :root[data-theme='light'] .certificatesHeader > p {
-  color: rgba(12, 105, 57, 0.86);
+  color: rgba(18, 32, 52, 0.92);
 }
 
 :root[data-theme='light'] .certificatesHeader > span {

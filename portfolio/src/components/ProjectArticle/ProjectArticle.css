@@ -588,7 +588,7 @@
 }
 
 :root[data-theme='light'] .projectArticlePage {
-  --article-green: 12, 105, 57;
+  --article-green: 18, 32, 52;
   --article-blue: 55, 96, 150;
   color: rgba(18, 32, 52, 0.94);
 }
@@ -612,7 +612,7 @@
 
 :root[data-theme='light'] .projectArticleBack:hover,
 :root[data-theme='light'] .projectArticleBack:focus-visible {
-  color: rgba(12, 85, 45, 0.94);
+  color: rgba(18, 32, 52, 0.94);
   border-color: rgba(12, 105, 57, 0.32);
   background: rgba(201, 240, 214, 0.62);
 }
@@ -623,7 +623,7 @@
 }
 
 :root[data-theme='light'] .projectArticleMeta span {
-  color: rgba(12, 105, 57, 0.78);
+  color: rgba(18, 32, 52, 0.82);
 }
 
 :root[data-theme='light'] .projectArticleMeta {
@@ -663,7 +663,7 @@
 }
 
 :root[data-theme='light'] .projectArticleTech {
-  color: rgba(12, 85, 45, 0.92);
+  color: rgba(18, 32, 52, 0.92);
   border-color: rgba(12, 105, 57, 0.18);
   background: rgba(201, 240, 214, 0.62);
 }

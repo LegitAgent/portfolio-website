@@ -259,12 +259,12 @@
 :root[data-theme='light'] .workArticleBack:focus-visible,
 :root[data-theme='light'] .workArticleCompanyLink:hover,
 :root[data-theme='light'] .workArticleCompanyLink:focus-visible {
-  color: rgba(12, 105, 57, 0.94);
+  color: rgba(18, 32, 52, 0.94);
 }
 
 :root[data-theme='light'] .workArticleEyebrow,
 :root[data-theme='light'] .workArticleSectionNumber {
-  color: rgba(12, 105, 57, 0.84);
+  color: rgba(18, 32, 52, 0.88);
 }
 
 :root[data-theme='light'] .workArticleRole {

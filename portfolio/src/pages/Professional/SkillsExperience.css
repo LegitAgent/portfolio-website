@@ -462,6 +462,10 @@
   color: rgba(18, 32, 52, 0.94);
 }
 
+:root[data-theme='light'] .subtitleHeader {
+  color: rgba(18, 32, 52, 0.92);
+}
+
 :root[data-theme='light'] .skillsDescription,
 :root[data-theme='light'] .experienceDescription {
   color: rgba(34, 49, 72, 0.72);

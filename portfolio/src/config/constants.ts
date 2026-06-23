@@ -2,7 +2,7 @@ import gitHubIcon from '../assets/icons/github.svg';
 import linkedInIcon from '../assets/icons/linkedin.svg';
 import emailIcon from '../assets/icons/email.svg';
 import resumeIcon from '../assets/icons/resume.svg';
-import profilePicture from '../assets/images/portfolio_pic.png';
+import profilePicture from '../assets/images/website_pic.jpg';
 import folder from '../assets/icons/folder.svg';
 import leetcode from '../assets/icons/leetcode.svg';
 import stack from '../assets/icons/stack.svg';

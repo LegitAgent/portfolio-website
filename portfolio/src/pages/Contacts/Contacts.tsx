@@ -173,7 +173,7 @@ function Contacts() {
                     <path d="M19 13v6H5V5h6" />
                   </svg>
                 </div>
-                <p className="linkName">{linkItem.name}</p>
+                <p className="contactlinkName">{linkItem.name}</p>
                 <p className="linkDesc">{linkItem.description}</p>
               </a>
             );
@@ -188,7 +188,7 @@ function Contacts() {
         <header className="contactSectionHeader">
           <span>03</span>
           <div>
-            <p>Beyond development</p>
+            <p>Technical Interests</p>
             <h2>Interests</h2>
           </div>
         </header>
@@ -266,6 +266,20 @@ function Contacts() {
         <div className="clockBox">
           Current time in where I live (UTC + 8): <br />
           {time.toLocaleString()}
+        </div>
+        <div className="locationMap">
+          <div className="locationMapHud" aria-hidden="true">
+            <span>14.7102° N</span>
+            <strong>Caloocan · Metro Manila</strong>
+            <span>120.9479° E</span>
+          </div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d123489.34661088791!2d120.94785957731173!3d14.710212346670867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b1b519841b5f%3A0x5e770e225042d1a!2sCaloocan%2C%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1782221355237!5m2!1sen!2sph"
+            title="Map showing Caloocan, Metro Manila"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
         </div>
       </section>
     </section>

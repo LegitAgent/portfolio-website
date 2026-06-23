@@ -1411,7 +1411,12 @@
 :root[data-theme='light'] .statsPage { color: rgba(18, 32, 52, 0.94); }
 :root[data-theme='light'] .statsHeader > p,
 :root[data-theme='light'] .statsSectionHeader p,
-:root[data-theme='light'] .statsSubheading > p { color: rgba(12, 105, 57, 0.82); }
+:root[data-theme='light'] .statsSubheading > p { color: rgba(18, 32, 52, 0.92); }
+:root[data-theme='light'] .statsHeader h1 span,
+:root[data-theme='light'] .statsSectionHeader > div > span,
+:root[data-theme='light'] .technologyRanking > div > span {
+  color: rgba(18, 32, 52, 0.88);
+}
 :root[data-theme='light'] .statsHeader > span,
 :root[data-theme='light'] .githubProfile p,
 :root[data-theme='light'] .repositoryList p { color: rgba(34, 49, 72, 0.68); }
