@@ -243,6 +243,18 @@ function SkillsExperience() {
           </div>
         </section>
       </section>
+
+      <button
+        className="seBackToTop"
+        type="button"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="Back to top"
+      >
+        <span>Back to top</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m6 15 6-6 6 6" />
+        </svg>
+      </button>
     </section>
   );
 }

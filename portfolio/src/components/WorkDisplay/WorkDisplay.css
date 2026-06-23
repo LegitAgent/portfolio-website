@@ -2,9 +2,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.9rem;
   min-width: 0;
-  padding: 1rem;
+  padding: 1.2rem;
   border: 1px solid rgba(125, 188, 235, 0.14);
   border-radius: 5px;
   color: rgba(238, 247, 255, 0.92);
@@ -34,9 +34,10 @@
 
 .workHeader {
   display: flex;
-  align-items: center;
-  gap: 0.8rem;
+  align-items: flex-start;
+  gap: 0.9rem;
   min-width: 0;
+  padding-right: 5.5rem;
 }
 
 .workImage {
@@ -49,20 +50,70 @@
 }
 
 .workHeading {
+  flex: 1;
   min-width: 0;
 }
 
 .workTitle {
   margin: 0;
-  font-size: 1.05rem;
+  min-width: 0;
+  font-size: 1.12rem;
   font-weight: 820;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.workType {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  width: fit-content;
+  max-width: calc(100% - 2rem);
+  padding: 0.25rem 0.5rem;
+  border: 1px solid rgba(125, 188, 235, 0.2);
+  border-radius: 4px;
+  color: rgba(175, 220, 255, 0.88);
+  background: rgba(44, 119, 190, 0.1);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.workType--leadership,
+.workType--mentorship {
+  color: rgba(255, 222, 143, 0.92);
+  border-color: rgba(235, 198, 104, 0.24);
+  background: rgba(224, 181, 73, 0.09);
+}
+
+.workType--academics,
+.workType--competition {
+  color: rgba(205, 190, 255, 0.92);
+  border-color: rgba(167, 139, 250, 0.24);
+  background: rgba(139, 92, 246, 0.09);
+}
+
+.workType--volunteer,
+.workType--organization {
+  color: rgba(205, 255, 220, 0.92);
+  border-color: rgba(134, 239, 172, 0.24);
+  background: rgba(34, 197, 94, 0.09);
+}
+
+.workType--project {
+  color: rgba(255, 188, 188, 0.92);
+  border-color: rgba(248, 113, 113, 0.24);
+  background: rgba(239, 68, 68, 0.08);
 }
 
 .workRole {
-  margin: 0.18rem 0 0;
-  color: rgba(214, 229, 245, 0.72);
-  font-size: 0.92rem;
-  line-height: 1.35;
+  margin: 0.28rem 0 0;
+  color: rgba(222, 235, 248, 0.82);
+  font-size: 0.96rem;
+  line-height: 1.45;
 }
 
 .workMeta {
@@ -76,7 +127,7 @@
   border: 1px solid rgba(125, 188, 235, 0.14);
   border-radius: 999px;
   padding: 0.3rem 0.55rem;
-  color: rgba(214, 229, 245, 0.72);
+  color: rgba(222, 235, 248, 0.8);
   background: rgba(1, 8, 22, 0.28);
   font-size: 0.78rem;
   font-weight: 720;
@@ -97,8 +148,9 @@
 
 .workDescription {
   margin: 0;
-  color: rgba(214, 229, 245, 0.72);
-  line-height: 1.58;
+  color: rgba(222, 235, 248, 0.8);
+  font-size: 0.96rem;
+  line-height: 1.7;
 }
 
 .workLinks {
@@ -162,11 +214,44 @@
 
 :root[data-theme='light'] .workRole,
 :root[data-theme='light'] .workDescription {
-  color: rgba(34, 49, 72, 0.68);
+  color: rgba(28, 43, 65, 0.78);
+}
+
+:root[data-theme='light'] .workType {
+  color: rgba(42, 82, 134, 0.92);
+  border-color: rgba(55, 96, 150, 0.2);
+  background: rgba(55, 96, 150, 0.07);
+}
+
+:root[data-theme='light'] .workType--leadership,
+:root[data-theme='light'] .workType--mentorship {
+  color: rgba(112, 72, 4, 0.94);
+  border-color: rgba(151, 105, 18, 0.24);
+  background: rgba(224, 181, 73, 0.12);
+}
+
+:root[data-theme='light'] .workType--academics,
+:root[data-theme='light'] .workType--competition {
+  color: rgba(91, 54, 151, 0.94);
+  border-color: rgba(109, 76, 168, 0.22);
+  background: rgba(139, 92, 246, 0.08);
+}
+
+:root[data-theme='light'] .workType--volunteer,
+:root[data-theme='light'] .workType--organization {
+  color: rgba(12, 105, 57, 0.94);
+  border-color: rgba(22, 120, 68, 0.22);
+  background: rgba(22, 120, 68, 0.08);
+}
+
+:root[data-theme='light'] .workType--project {
+  color: rgba(148, 40, 40, 0.94);
+  border-color: rgba(176, 38, 38, 0.2);
+  background: rgba(220, 38, 38, 0.06);
 }
 
 :root[data-theme='light'] .workMeta span {
-  color: rgba(34, 49, 72, 0.68);
+  color: rgba(28, 43, 65, 0.76);
   background: rgba(255, 255, 255, 0.58);
   border-color: rgba(72, 98, 135, 0.14);
 }
@@ -197,11 +282,13 @@
 
 @media (max-width: 520px) {
   .workDisplay {
-    padding: 0.9rem;
+    padding: 1rem;
   }
 
   .workHeader {
     align-items: flex-start;
+    padding-right: 0;
+    padding-top: 1.8rem;
   }
 
   .workImage {
@@ -211,5 +298,11 @@
 
   .workMeta span {
     font-size: 0.74rem;
+  }
+
+  .workType {
+    top: 0.75rem;
+    right: 0.75rem;
+    font-size: 0.58rem;
   }
 }

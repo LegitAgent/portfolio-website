@@ -27,6 +27,7 @@ function WorkDisplay({ work }: WorkDisplayProps) {
 
   return (
     <div className={isCurrent ? 'workDisplay is-current' : 'workDisplay'}>
+      <span className={`workType workType--${work.type}`}>{work.type}</span>
       <div className="workHeader">
         <img className="workImage" src={imageUrl} alt={work.company_name} />
         <div className="workHeading">

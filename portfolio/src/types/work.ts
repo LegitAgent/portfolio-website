@@ -1,5 +1,15 @@
 import type { Tag } from './tag';
 
+type ExperienceType =
+  | 'work'
+  | 'leadership'
+  | 'academics'
+  | 'volunteer'
+  | 'organization'
+  | 'competition'
+  | 'project'
+  | 'mentorship';
+
 export interface WorkDisplayProps {
   work: WorkExperience;
 }
@@ -36,6 +46,7 @@ interface WorkExperience {
   company_website: string | null;
   display_order: number;
   work_slug: string;
+  type: ExperienceType;
 }
 
 export interface WorkExperienceResponse {
