@@ -54,7 +54,8 @@ function Home() {
   const homeCards: HomeCard[] = [
     {
       title: 'Experience & Skills',
-      description: 'See the technologies I work with, the experience I’ve gained, and the areas I’m currently growing in as a developer.',
+      description: 
+        'Check out some of the technologies I have used, as well as some of my experience in the field. Still starting out, and still looking for new things to learn!',
       action: 'View Experience & Skills',
       path: '/skills_experience',
       icon: 'skills',
@@ -62,7 +63,7 @@ function Home() {
     {
       title: 'Projects',
       description:
-        'I build projects to explore ideas, solve problems, and learn new technologies hands-on. See what I’ve made and how each one helped me grow.',
+        'Check out some of the projects I have worked on and are currently working on!',
       action: 'View Projects',
       path: '/projects',
       icon: 'projects',
@@ -70,7 +71,7 @@ function Home() {
     {
       title: 'Current Focus',
       description:
-        'Right now, I’m improving my full-stack skills through React, TypeScript, Cloudflare Workers, databases, cleaner design, algorithms, and systems concepts.',
+        'Right now, I am improving my full-stack skills through my projects. I am also learning system design and operating systems, and still finding my grounds as to which branch of Computer Science I want to take.',
       icon: 'focus',
     },
   ];
@@ -89,8 +90,8 @@ function Home() {
           <div className='currentRole'>Student</div>
 
           <div className='introContent'>
-            I’m a computer science student who likes building practical software and experimenting with different kinds of projects. From websites and
-            extensions to backend tools and games, I enjoy learning by making things that people can actually use.
+            I am a computer science student who likes building more practical software and experimenting with different kinds of projects. From websites and
+            extensions to games, I am still open to learn new branches of computer science and I enjoy learning by making things that people can actually use.
           </div>
 
           <div className='contactLinks'>

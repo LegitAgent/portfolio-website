@@ -379,11 +379,17 @@
   gap: 0.9rem;
 }
 
+@media (min-width: 901px) {
+  .interestsGroup {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .card {
   --interest-accent: 125, 188, 235;
   width: 100%;
   min-width: 0;
-  min-height: 13rem;
+  min-height: clamp(15rem, 18vw, 17rem);
   padding: 0;
   border: 0;
   color: inherit;
@@ -435,6 +441,7 @@
 }
 
 .cardBack {
+  gap: 0.65rem;
   justify-content: space-between;
   transform: rotateY(180deg);
 }
@@ -450,23 +457,42 @@
 .cardFace h3 {
   margin: auto 0 0;
   padding-top: 1.5rem;
-  font-size: 1.25rem;
+  font-size: clamp(1.25rem, 1.45vw, 1.4rem);
   text-transform: capitalize;
 }
 
 .cardFace p {
   margin: 0.45rem 0 0;
   color: rgba(214, 229, 245, 0.66);
-  font-size: 0.84rem;
+  font-size: clamp(0.9rem, 1vw, 0.98rem);
   line-height: 1.55;
   overflow-wrap: anywhere;
 }
 
+.cardBack p {
+  flex: 1 1 auto;
+  margin: 0;
+  color: rgba(224, 238, 250, 0.78);
+  font-size: clamp(0.88rem, 0.95vw, 0.96rem);
+  line-height: 1.52;
+}
+
+.cardFace p.cardText--compact {
+  font-size: clamp(0.84rem, 0.9vw, 0.92rem);
+  line-height: 1.48;
+}
+
+.cardFace p.cardText--dense {
+  font-size: clamp(0.8rem, 0.84vw, 0.86rem);
+  line-height: 1.42;
+}
+
 .cardFace > span {
-  margin-top: 0.8rem;
+  flex: 0 0 auto;
+  margin-top: 0.65rem;
   color: rgba(var(--interest-accent), 0.74);
   font-family: 'Courier New', ui-monospace, monospace;
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
 }
