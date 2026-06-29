@@ -1,8 +1,31 @@
 import './SkillsExperience.css';
 import {
-  AWS, CLOUDFLARE, CLOUDFLARE_GATEWAY, CPP, CSS, DJANGO, DOCKER, GIT, GITHUB_ICON, GRAPHQL,
-  HTML, JAVA, JAVASCRIPT, LARAVEL, NODEJS, NPM, PHP, PIP, POSTGRESQL, PYTHON, REACT, REST,
-  SQL, TAILWIND, TYPESCRIPT, VITE,
+  AWS,
+  CLOUDFLARE,
+  CLOUDFLARE_GATEWAY,
+  CPP,
+  CSS,
+  DJANGO,
+  DOCKER,
+  GIT,
+  GITHUB_ICON,
+  GRAPHQL,
+  HTML,
+  JAVA,
+  JAVASCRIPT,
+  LARAVEL,
+  NODEJS,
+  NPM,
+  PHP,
+  PIP,
+  POSTGRESQL,
+  PYTHON,
+  REACT,
+  REST,
+  SQL,
+  TAILWIND,
+  TYPESCRIPT,
+  VITE,
 } from '../../config/constants.ts';
 import { useEffect, useRef, useState } from 'react';
 import WorkDisplay from '../../components/WorkDisplay/WorkDisplay.tsx';
@@ -55,8 +78,8 @@ function SkillTag({ skill }: { skill: Tag }) {
   const iconClassName = needsThemeInversion ? 'tagIcon tagIcon--theme-invert' : 'tagIcon';
 
   return (
-    <div className="tag" key={skill.tag_name}>
-      <img className={iconClassName} src={iconSrc} alt="" aria-hidden="true" />
+    <div className='tag' key={skill.tag_name}>
+      <img className={iconClassName} src={iconSrc} alt='' aria-hidden='true' />
       <span>{skill.tag_name}</span>
     </div>
   );
@@ -122,8 +145,7 @@ function SkillsExperience() {
     let animationFrameId = 0;
 
     const updateActiveWork = () => {
-      const isAtPageBottom =
-        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+      const isAtPageBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
 
       if (isAtPageBottom) {
         setActiveWorkIndex(work.results.length - 1);
@@ -192,17 +214,20 @@ function SkillsExperience() {
   const orderedWork = [...(work?.results ?? [])].sort((first, second) => first.display_order - second.display_order);
 
   return (
-    <section className="seContainer">
-      <section className="skillsContainer">
+    <section className='seContainer'>
+      <section className='skillsContainer'>
         <p className='subtitleHeader'>Technologies & Tools</p>
         <h1>Technical Skills</h1>
-        <p className="skillsDescription">Here are some of the frameworks, languages, and infrastructure tools I use to design, build, and deploy reliable software, and I'm always learning more.</p>
-        <section className="technicalSkills">
+        <p className='skillsDescription'>
+          Here are some of the frameworks, languages, and infrastructure tools I use to design, build, and deploy reliable software, and I'm always
+          learning more.
+        </p>
+        <section className='technicalSkills'>
           {skillGroups.map((group) => {
             return (
-              <div className="skillGroup" key={group.title}>
-                <p className="skillType">{group.title}</p>
-                <div className="skillContainer">
+              <div className='skillGroup' key={group.title}>
+                <p className='skillType'>{group.title}</p>
+                <div className='skillContainer'>
                   {group.skills.map((skill) => {
                     return <SkillTag skill={skill} key={skill.tag_name} />;
                   })}
@@ -213,12 +238,15 @@ function SkillsExperience() {
         </section>
       </section>
 
-      <section className="experienceContainer">
+      <section className='experienceContainer'>
         <p className='subtitleHeader'>History</p>
         <h1>Technical Experience</h1>
-        <p className="experienceDescription">I’m looking for opportunities that push my boundaries and expand my technical toolkit. I am still early in my journey, but I am incredibly excited to get more exposure, tackle fresh challenges, and build cool software!</p>
-        <section className="workTree">
-          <div className="workList">
+        <p className='experienceDescription'>
+          I’m looking for opportunities that push my boundaries and expand my technical toolkit. I am still early in my journey, but I am incredibly
+          excited to get more exposure, tackle fresh challenges, and build cool software!
+        </p>
+        <section className='workTree'>
+          <div className='workList'>
             {orderedWork.map((workStuff, index) => {
               const isActive = index === activeWorkIndex;
               const itemClassName = `workMapItem ${index % 2 === 0 ? 'workMapItem--left' : 'workMapItem--right'} ${isActive ? 'is-active' : ''}`;
@@ -232,8 +260,8 @@ function SkillsExperience() {
                     workItemRefs.current[index] = element;
                   }}
                 >
-                  <span className="workMapCurve" aria-hidden="true"></span>
-                  <span className="workMapNode" aria-hidden="true">
+                  <span className='workMapCurve' aria-hidden='true'></span>
+                  <span className='workMapNode' aria-hidden='true'>
                     <span></span>
                   </span>
                   <WorkDisplay work={workStuff} />
@@ -244,15 +272,10 @@ function SkillsExperience() {
         </section>
       </section>
 
-      <button
-        className="seBackToTop"
-        type="button"
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        aria-label="Back to top"
-      >
+      <button className='seBackToTop' type='button' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label='Back to top'>
         <span>Back to top</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="m6 15 6-6 6 6" />
+        <svg viewBox='0 0 24 24' aria-hidden='true'>
+          <path d='m6 15 6-6 6 6' />
         </svg>
       </button>
     </section>

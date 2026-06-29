@@ -131,10 +131,18 @@
   border-bottom-right-radius: 13px;
 }
 
-.statsOverviewCard--projects { --overview-accent: 96, 165, 250; }
-.statsOverviewCard--leetcode { --overview-accent: 250, 204, 21; }
-.statsOverviewCard--github { --overview-accent: 192, 132, 252; }
-.statsOverviewCard--technologies { --overview-accent: 52, 211, 153; }
+.statsOverviewCard--projects {
+  --overview-accent: 96, 165, 250;
+}
+.statsOverviewCard--leetcode {
+  --overview-accent: 250, 204, 21;
+}
+.statsOverviewCard--github {
+  --overview-accent: 192, 132, 252;
+}
+.statsOverviewCard--technologies {
+  --overview-accent: 52, 211, 153;
+}
 
 .statsOverviewCard:hover {
   border-color: rgba(var(--overview-accent), 0.62);
@@ -237,9 +245,15 @@
   animation: statsEnter 620ms ease-out both;
 }
 
-.statsSection:nth-of-type(2) { animation-delay: 140ms; }
-.statsSection:nth-of-type(3) { animation-delay: 210ms; }
-.statsSection:nth-of-type(4) { animation-delay: 280ms; }
+.statsSection:nth-of-type(2) {
+  animation-delay: 140ms;
+}
+.statsSection:nth-of-type(3) {
+  animation-delay: 210ms;
+}
+.statsSection:nth-of-type(4) {
+  animation-delay: 280ms;
+}
 
 .statsSectionHeader {
   padding-top: 1rem;
@@ -1065,9 +1079,15 @@
   background: rgba(var(--difficulty-color), 0.045);
 }
 
-.statsProgress:has(.statsProgressFill--easy) { --difficulty-color: 34, 197, 94; }
-.statsProgress:has(.statsProgressFill--medium) { --difficulty-color: 234, 179, 8; }
-.statsProgress:has(.statsProgressFill--hard) { --difficulty-color: 239, 68, 68; }
+.statsProgress:has(.statsProgressFill--easy) {
+  --difficulty-color: 34, 197, 94;
+}
+.statsProgress:has(.statsProgressFill--medium) {
+  --difficulty-color: 234, 179, 8;
+}
+.statsProgress:has(.statsProgressFill--hard) {
+  --difficulty-color: 239, 68, 68;
+}
 
 .statsProgressLabel > span {
   color: rgb(var(--difficulty-color));
@@ -1099,9 +1119,15 @@
   box-shadow: 0 0 8px rgba(var(--difficulty-color), 0.32);
 }
 
-.statsProgressFill--easy { background: #22c55e; }
-.statsProgressFill--medium { background: #eab308; }
-.statsProgressFill--hard { background: #ef4444; }
+.statsProgressFill--easy {
+  background: #22c55e;
+}
+.statsProgressFill--medium {
+  background: #eab308;
+}
+.statsProgressFill--hard {
+  background: #ef4444;
+}
 
 .statsTopics {
   margin-top: 0.8rem;
@@ -1372,11 +1398,21 @@
   background: rgb(var(--status-color, var(--portfolio-blue)));
 }
 
-.statusBreakdownItem--done { --status-color: 34, 197, 94; }
-.statusBreakdownItem--wip { --status-color: 96, 165, 250; }
-.statusBreakdownItem--draft { --status-color: 148, 163, 184; }
-.statusBreakdownItem--review { --status-color: 250, 204, 21; }
-.statusBreakdownItem--blocked { --status-color: 248, 113, 113; }
+.statusBreakdownItem--done {
+  --status-color: 34, 197, 94;
+}
+.statusBreakdownItem--wip {
+  --status-color: 96, 165, 250;
+}
+.statusBreakdownItem--draft {
+  --status-color: 148, 163, 184;
+}
+.statusBreakdownItem--review {
+  --status-color: 250, 204, 21;
+}
+.statusBreakdownItem--blocked {
+  --status-color: 248, 113, 113;
+}
 
 .statusBreakdownItem > strong {
   min-width: 2rem;
@@ -1404,14 +1440,24 @@
 }
 
 @keyframes statsEnter {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-:root[data-theme='light'] .statsPage { color: rgba(18, 32, 52, 0.94); }
+:root[data-theme='light'] .statsPage {
+  color: rgba(18, 32, 52, 0.94);
+}
 :root[data-theme='light'] .statsHeader > p,
 :root[data-theme='light'] .statsSectionHeader p,
-:root[data-theme='light'] .statsSubheading > p { color: rgba(18, 32, 52, 0.92); }
+:root[data-theme='light'] .statsSubheading > p {
+  color: rgba(18, 32, 52, 0.92);
+}
 :root[data-theme='light'] .statsHeader h1 span,
 :root[data-theme='light'] .statsSectionHeader > div > span,
 :root[data-theme='light'] .technologyRanking > div > span {
@@ -1419,7 +1465,9 @@
 }
 :root[data-theme='light'] .statsHeader > span,
 :root[data-theme='light'] .githubProfile p,
-:root[data-theme='light'] .repositoryList p { color: rgba(34, 49, 72, 0.68); }
+:root[data-theme='light'] .repositoryList p {
+  color: rgba(34, 49, 72, 0.68);
+}
 :root[data-theme='light'] .statsMetricGrid article,
 :root[data-theme='light'] .portfolioMetricGrid article,
 :root[data-theme='light'] .leetcodeMetrics article,
@@ -1435,20 +1483,30 @@
 :root[data-theme='light'] .portfolioMetricGrid article > span,
 :root[data-theme='light'] .leetcodeMetrics article > span,
 :root[data-theme='light'] .repositoryList small,
-:root[data-theme='light'] .technologyRanking small { color: rgba(34, 49, 72, 0.54); }
+:root[data-theme='light'] .technologyRanking small {
+  color: rgba(34, 49, 72, 0.54);
+}
 :root[data-theme='light'] .statsOverviewCard {
   background: rgba(var(--overview-accent), 0.08);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
     0 16px 36px rgba(55, 80, 120, 0.12);
 }
-:root[data-theme='light'] .statsOverviewValue span { color: rgba(18, 32, 52, 0.88); }
-:root[data-theme='light'] .statsOverviewCard > p { color: rgba(34, 49, 72, 0.58); }
-:root[data-theme='light'] .statsOverviewIconImage--github { filter: none; }
+:root[data-theme='light'] .statsOverviewValue span {
+  color: rgba(18, 32, 52, 0.88);
+}
+:root[data-theme='light'] .statsOverviewCard > p {
+  color: rgba(34, 49, 72, 0.58);
+}
+:root[data-theme='light'] .statsOverviewIconImage--github {
+  filter: none;
+}
 :root[data-theme='light'] .githubSection::before {
   background: rgba(var(--github-violet), 0.09);
 }
-:root[data-theme='light'] .githubSectionIcon img { filter: none; }
+:root[data-theme='light'] .githubSectionIcon img {
+  filter: none;
+}
 :root[data-theme='light'] .githubSectionHeader {
   border-color: rgba(var(--github-violet), 0.42);
 }
@@ -1632,11 +1690,19 @@
 }
 
 @media (max-width: 850px) {
-  .statsPage { padding-bottom: var(--mobile-nav-clearance); }
-  .statsBackToTop { bottom: calc(var(--mobile-nav-clearance) + 0.75rem); }
-  .statsOverview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .statsPage {
+    padding-bottom: var(--mobile-nav-clearance);
+  }
+  .statsBackToTop {
+    bottom: calc(var(--mobile-nav-clearance) + 0.75rem);
+  }
+  .statsOverview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .statsSplit,
-  .leetcodeHero { grid-template-columns: 1fr; }
+  .leetcodeHero {
+    grid-template-columns: 1fr;
+  }
 
   .githubStatsSplit > .languagePanel,
   .githubStatsSplit > .repositoryPanel {
@@ -1684,5 +1750,7 @@
   .statsSection {
     animation: none;
   }
-  .statsBackToTop { transition: none; }
+  .statsBackToTop {
+    transition: none;
+  }
 }

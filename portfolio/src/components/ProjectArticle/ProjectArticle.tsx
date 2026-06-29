@@ -159,28 +159,26 @@ function ProjectArticle() {
     return <LoadingScreen />;
   }
 
-  const imageUrl = articleContent.pArticle_image_url
-    ? new URL(articleContent.pArticle_image_url, CLOUDFLARE_R2_BUCKET).toString()
-    : null;
+  const imageUrl = articleContent.pArticle_image_url ? new URL(articleContent.pArticle_image_url, CLOUDFLARE_R2_BUCKET).toString() : null;
   const statusClassName = `projectArticleStatus projectArticleStatus--${articleContent.status.toLowerCase()}`;
   const isFeatured = Number(articleContent.featured) === 1;
 
   return (
-    <article className="projectArticlePage">
-      <div className="projectArticleProgress" aria-hidden="true">
+    <article className='projectArticlePage'>
+      <div className='projectArticleProgress' aria-hidden='true'>
         <span style={{ transform: `scaleX(${scrollProgress})` }} />
       </div>
 
-      <nav className="projectArticleTopbar" aria-label="Article navigation">
-        <button className="projectArticleBack" onClick={() => navigate('/projects')}>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="m15 18-6-6 6-6" />
+      <nav className='projectArticleTopbar' aria-label='Article navigation'>
+        <button className='projectArticleBack' onClick={() => navigate('/projects')}>
+          <svg viewBox='0 0 24 24' aria-hidden='true'>
+            <path d='m15 18-6-6 6-6' />
           </svg>
           <span>Back to projects</span>
         </button>
 
-        <div className="projectArticleRoute" aria-label={`Current route: projects/${articleContent.pArticle_slug}`}>
-          <span className="projectArticleRoutePulse" aria-hidden="true" />
+        <div className='projectArticleRoute' aria-label={`Current route: projects/${articleContent.pArticle_slug}`}>
+          <span className='projectArticleRoutePulse' aria-hidden='true' />
           <span>/projects/</span>
           <strong>{articleContent.pArticle_slug}</strong>
         </div>
@@ -190,29 +188,29 @@ function ProjectArticle() {
         {imageUrl ? (
           <img src={imageUrl} alt={articleContent.pArticle_image_alt ?? articleContent.project_name} />
         ) : (
-          <div className="projectArticleFallback" aria-hidden="true">
+          <div className='projectArticleFallback' aria-hidden='true'>
             <span>&lt;/&gt;</span>
             <p>PROJECT_PREVIEW</p>
           </div>
         )}
-        {isFeatured && <span className="projectArticleImageFeatured">Featured project</span>}
+        {isFeatured && <span className='projectArticleImageFeatured'>Featured project</span>}
       </div>
 
-      <header className="projectArticleHero">
-        <div className="projectArticleHeroCopy">
-          <div className="projectArticleLabels">
+      <header className='projectArticleHero'>
+        <div className='projectArticleHeroCopy'>
+          <div className='projectArticleLabels'>
             <span className={statusClassName}>
-              <i aria-hidden="true" />
+              <i aria-hidden='true' />
               {articleContent.status}
             </span>
-            {isFeatured && <span className="projectArticleFeatured">Featured project</span>}
+            {isFeatured && <span className='projectArticleFeatured'>Featured project</span>}
           </div>
 
-          <p className="projectArticleKicker">About the Project</p>
+          <p className='projectArticleKicker'>About the Project</p>
           <h1>{articleContent.project_name}</h1>
-          {articleContent.pArticle_summary && <p className="projectArticleSummary">{articleContent.pArticle_summary}</p>}
+          {articleContent.pArticle_summary && <p className='projectArticleSummary'>{articleContent.pArticle_summary}</p>}
 
-          <div className="projectArticleMeta">
+          <div className='projectArticleMeta'>
             <div>
               <span>Started</span>
               <strong>{articleContent.started_at}</strong>
@@ -227,18 +225,18 @@ function ProjectArticle() {
             </div>
           </div>
 
-          <div className="projectArticleActions">
-            <a className="resumeAction" href={articleContent.project_github} target="_blank" rel="noreferrer">
-              <img className="projectArticleGithubIcon" src={GITHUB_ICON} alt="" aria-hidden="true" />
+          <div className='projectArticleActions'>
+            <a className='resumeAction' href={articleContent.project_github} target='_blank' rel='noreferrer'>
+              <img className='projectArticleGithubIcon' src={GITHUB_ICON} alt='' aria-hidden='true' />
               <span>View source</span>
             </a>
             {articleContent.live_url && (
-              <a className="resumeAction resumeAction--primary" href={articleContent.live_url} target="_blank" rel="noreferrer">
+              <a className='resumeAction resumeAction--primary' href={articleContent.live_url} target='_blank' rel='noreferrer'>
                 <span>Open live project</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M14 5h5v5" />
-                  <path d="m10 14 9-9" />
-                  <path d="M19 13v6H5V5h6" />
+                <svg viewBox='0 0 24 24' aria-hidden='true'>
+                  <path d='M14 5h5v5' />
+                  <path d='m10 14 9-9' />
+                  <path d='M19 13v6H5V5h6' />
                 </svg>
               </a>
             )}
@@ -246,21 +244,21 @@ function ProjectArticle() {
         </div>
       </header>
 
-      <section className="projectArticleStack projectArticleReveal" data-article-reveal aria-labelledby="project-article-stack-title">
-        <h2 id="project-article-stack-title">Built with</h2>
+      <section className='projectArticleStack projectArticleReveal' data-article-reveal aria-labelledby='project-article-stack-title'>
+        <h2 id='project-article-stack-title'>Built with</h2>
         <div>
           {article.tags.map((skill) => (
-            <span className="projectArticleTech" key={skill.tag_name}>
+            <span className='projectArticleTech' key={skill.tag_name}>
               {skill.tag_name}
             </span>
           ))}
         </div>
       </section>
 
-      <div className="projectArticleLayout">
-        <aside className="projectArticleAside">
+      <div className='projectArticleLayout'>
+        <aside className='projectArticleAside'>
           <p>On this page</p>
-          <nav aria-label="Article sections">
+          <nav aria-label='Article sections'>
             {sections.map((section) => (
               <a href={`#${section.id}`} key={section.id}>
                 <span>{section.number}</span>
@@ -270,9 +268,9 @@ function ProjectArticle() {
           </nav>
         </aside>
 
-        <div className="projectArticleSections">
+        <div className='projectArticleSections'>
           {sections.map((section) => (
-            <section className="projectArticleSection projectArticleReveal" data-article-reveal id={section.id} key={section.id}>
+            <section className='projectArticleSection projectArticleReveal' data-article-reveal id={section.id} key={section.id}>
               <header>
                 <span>{section.number}</span>
                 <div>
@@ -280,7 +278,7 @@ function ProjectArticle() {
                   <h2>{section.title}</h2>
                 </div>
               </header>
-              <div className="projectArticleSectionContent">
+              <div className='projectArticleSectionContent'>
                 {getParagraphs(section.content).map((paragraph, index) => (
                   <p key={`${section.id}-${index}`}>{paragraph}</p>
                 ))}
@@ -290,15 +288,15 @@ function ProjectArticle() {
         </div>
       </div>
 
-      <footer className="projectArticleFooter projectArticleReveal" data-article-reveal>
+      <footer className='projectArticleFooter projectArticleReveal' data-article-reveal>
         <div>
           <p>End of Project</p>
           <h2>That's all for {articleContent.project_name}! Thanks.</h2>
         </div>
         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           Back to top
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="m6 15 6-6 6 6" />
+          <svg viewBox='0 0 24 24' aria-hidden='true'>
+            <path d='m6 15 6-6 6 6' />
           </svg>
         </button>
       </footer>

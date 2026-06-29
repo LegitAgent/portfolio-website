@@ -21,52 +21,52 @@ function CertificateDisplay({ certificate }: { certificate: Certificate }) {
   const skills = certificate.skills.split(/\s+/).filter(Boolean);
 
   return (
-    <article className="certificateDisplay">
+    <article className='certificateDisplay'>
       <a
-        className="certificateImageLink"
+        className='certificateImageLink'
         href={certificate.certificate_url}
-        target="_blank"
-        rel="noreferrer"
+        target='_blank'
+        rel='noreferrer'
         aria-label={`Open ${certificate.title} certificate`}
       >
-        <img className="certificateImage" src={imageUrl} alt={certificate.image_alt} />
-        <span className="certificateImageShade" aria-hidden="true" />
+        <img className='certificateImage' src={imageUrl} alt={certificate.image_alt} />
+        <span className='certificateImageShade' aria-hidden='true' />
       </a>
 
-      <div className="certificateContent">
-        <div className="certificateTitleRow">
+      <div className='certificateContent'>
+        <div className='certificateTitleRow'>
           <h3>{certificate.title}</h3>
           <span>{formatCertificateDate(certificate.completion_date)}</span>
         </div>
 
-        <p className="certificateIssuer">Issued by {certificate.issuer}</p>
-        <p className="certificateDescription">{certificate.description}</p>
+        <p className='certificateIssuer'>Issued by {certificate.issuer}</p>
+        <p className='certificateDescription'>{certificate.description}</p>
 
         {skills.length > 0 && (
-          <div className="certificateSkills" aria-label="Certificate skills">
+          <div className='certificateSkills' aria-label='Certificate skills'>
             {skills.map((skill) => (
               <span key={skill}>{skill}</span>
             ))}
           </div>
         )}
 
-        <div className="certificateLinks">
+        <div className='certificateLinks'>
           {certificate.credential_url && (
-            <a href={certificate.credential_url} target="_blank" rel="noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M9 12.75 11.25 15 15 9.75" />
-                <circle cx="12" cy="12" r="8" />
+            <a href={certificate.credential_url} target='_blank' rel='noreferrer'>
+              <svg viewBox='0 0 24 24' aria-hidden='true'>
+                <path d='M9 12.75 11.25 15 15 9.75' />
+                <circle cx='12' cy='12' r='8' />
               </svg>
               <span>Credential</span>
             </a>
           )}
 
-          <a className="certificateLink" href={certificate.certificate_url} target="_blank" rel="noreferrer">
+          <a className='certificateLink' href={certificate.certificate_url} target='_blank' rel='noreferrer'>
             <span>Open PDF</span>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M14 5h5v5" />
-              <path d="m10 14 9-9" />
-              <path d="M19 13v6H5V5h6" />
+            <svg viewBox='0 0 24 24' aria-hidden='true'>
+              <path d='M14 5h5v5' />
+              <path d='m10 14 9-9' />
+              <path d='M19 13v6H5V5h6' />
             </svg>
           </a>
         </div>

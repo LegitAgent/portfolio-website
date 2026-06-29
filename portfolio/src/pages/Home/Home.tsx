@@ -54,8 +54,7 @@ function Home() {
   const homeCards: HomeCard[] = [
     {
       title: 'Experience & Skills',
-      description: 
-        'See the technologies I work with, the experience I’ve gained, and the areas I’m currently growing in as a developer.',
+      description: 'See the technologies I work with, the experience I’ve gained, and the areas I’m currently growing in as a developer.',
       action: 'View Experience & Skills',
       path: '/skills_experience',
       icon: 'skills',
@@ -90,7 +89,8 @@ function Home() {
           <div className='currentRole'>Student</div>
 
           <div className='introContent'>
-            I’m a computer science student who likes building practical software and experimenting with different kinds of projects. From websites and extensions to backend tools and games, I enjoy learning by making things that people can actually use.
+            I’m a computer science student who likes building practical software and experimenting with different kinds of projects. From websites and
+            extensions to backend tools and games, I enjoy learning by making things that people can actually use.
           </div>
 
           <div className='contactLinks'>

@@ -28,28 +28,28 @@ function WorkDisplay({ work }: WorkDisplayProps) {
   return (
     <div className={isCurrent ? 'workDisplay is-current' : 'workDisplay'}>
       <span className={`workType workType--${work.type}`}>{work.type}</span>
-      <div className="workHeader">
-        <img className="workImage" src={imageUrl} alt={work.company_name} />
-        <div className="workHeading">
-          <p className="workTitle">{work.company_name}</p>
-          <p className="workRole">{work.role_title}</p>
+      <div className='workHeader'>
+        <img className='workImage' src={imageUrl} alt={work.company_name} />
+        <div className='workHeading'>
+          <p className='workTitle'>{work.company_name}</p>
+          <p className='workRole'>{work.role_title}</p>
         </div>
       </div>
-      <div className="workMeta">
+      <div className='workMeta'>
         <span>{dateRange}</span>
         {work.employment_type && <span>{work.employment_type}</span>}
         {work.location && <span>{work.location}</span>}
-        {isCurrent && <span className="workCurrentBadge">Current</span>}
+        {isCurrent && <span className='workCurrentBadge'>Current</span>}
       </div>
-      <div className="workTextContent">
-        <p className="workDescription">{work.short_description}</p>
-        <div className="workLinks">
+      <div className='workTextContent'>
+        <p className='workDescription'>{work.short_description}</p>
+        <div className='workLinks'>
           {work.company_website && (
-            <a href={work.company_website} target="_blank" rel="noreferrer">
+            <a href={work.company_website} target='_blank' rel='noreferrer'>
               Work Link
             </a>
           )}
-          <Link className="workLink" to={`/skills_experience/${work.work_slug}`} aria-label="Work Article">
+          <Link className='workLink' to={`/skills_experience/${work.work_slug}`} aria-label='Work Article'>
             Read More
           </Link>
         </div>

@@ -11,57 +11,49 @@ function ProjectsDisplay({ project }: ProjectDisplayProps) {
 
   return (
     <article className={isFeatured ? 'projectDisplay is-featured' : 'projectDisplay'}>
-      <Link
-        className="projectImageLink"
-        to={`/projects/${project.pArticle_slug}`}
-        aria-label={`Read about ${project.project_name}`}
-      >
-        <img className="projectImage" src={imageUrl} alt={project.project_name} />
-        <span className="projectImageShade" aria-hidden="true" />
-        {isFeatured && <span className="projectFeaturedLabel">Featured</span>}
+      <Link className='projectImageLink' to={`/projects/${project.pArticle_slug}`} aria-label={`Read about ${project.project_name}`}>
+        <img className='projectImage' src={imageUrl} alt={project.project_name} />
+        <span className='projectImageShade' aria-hidden='true' />
+        {isFeatured && <span className='projectFeaturedLabel'>Featured</span>}
       </Link>
 
-      <div className="projectContent">
-        <div className="projectTitleRow">
+      <div className='projectContent'>
+        <div className='projectTitleRow'>
           <h3>{project.project_name}</h3>
           {dateLabel && <span>{dateLabel}</span>}
         </div>
 
         <div className={statusClassName} aria-label={`Project status: ${project.status}`}>
-          <span aria-hidden="true" />
+          <span aria-hidden='true' />
           {project.status}
         </div>
 
-        <p className="projectDescription">{project.project_description}</p>
+        <p className='projectDescription'>{project.project_description}</p>
 
-        <div className="projectLinks">
-          <a href={project.project_github} target="_blank" rel="noreferrer">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.4 4 5 5 0 0 0 19.3.5S18.2.1 15 1.8a13.4 13.4 0 0 0-6 0C5.8.1 4.7.5 4.7.5A5 5 0 0 0 4.6 4a5.4 5.4 0 0 0-1.4 3.7c0 5.4 3.5 6.6 6.8 7A4.8 4.8 0 0 0 9 18v4" />
-              <path d="M9 18c-3 .9-3-1.5-4.2-2" />
+        <div className='projectLinks'>
+          <a href={project.project_github} target='_blank' rel='noreferrer'>
+            <svg viewBox='0 0 24 24' aria-hidden='true'>
+              <path d='M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.4 4 5 5 0 0 0 19.3.5S18.2.1 15 1.8a13.4 13.4 0 0 0-6 0C5.8.1 4.7.5 4.7.5A5 5 0 0 0 4.6 4a5.4 5.4 0 0 0-1.4 3.7c0 5.4 3.5 6.6 6.8 7A4.8 4.8 0 0 0 9 18v4' />
+              <path d='M9 18c-3 .9-3-1.5-4.2-2' />
             </svg>
             <span>GitHub</span>
           </a>
 
           {project.live_url && (
-            <a href={project.live_url} target="_blank" rel="noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M14 5h5v5" />
-                <path d="m10 14 9-9" />
-                <path d="M19 13v6H5V5h6" />
+            <a href={project.live_url} target='_blank' rel='noreferrer'>
+              <svg viewBox='0 0 24 24' aria-hidden='true'>
+                <path d='M14 5h5v5' />
+                <path d='m10 14 9-9' />
+                <path d='M19 13v6H5V5h6' />
               </svg>
               <span>Live</span>
             </a>
           )}
 
-          <Link
-            className="projectLink"
-            to={`/projects/${project.pArticle_slug}`}
-            aria-label={`Read more about ${project.project_name}`}
-          >
+          <Link className='projectLink' to={`/projects/${project.pArticle_slug}`} aria-label={`Read more about ${project.project_name}`}>
             <span>Read More</span>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m9 18 6-6-6-6" />
+            <svg viewBox='0 0 24 24' aria-hidden='true'>
+              <path d='m9 18 6-6-6-6' />
             </svg>
           </Link>
         </div>

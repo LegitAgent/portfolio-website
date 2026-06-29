@@ -61,58 +61,49 @@ function Projects() {
     return <LoadingScreen />;
   }
 
-  const featuredProjects =
-    filteredProjects.filter((project) => Number(project.featured) === 1);
-  const otherProjects =
-    filteredProjects.filter((project) => Number(project.featured) !== 1);
+  const featuredProjects = filteredProjects.filter((project) => Number(project.featured) === 1);
+  const otherProjects = filteredProjects.filter((project) => Number(project.featured) !== 1);
 
   return (
-    <main className="projectsPage">
-      <header className="projectsHeader">
+    <main className='projectsPage'>
+      <header className='projectsHeader'>
         <p>Selected work</p>
         <h1>Projects</h1>
-        <span>
-          A collection of applications, experiments, and systems I have built while learning
-          and working across the stack.
-        </span>
+        <span>A collection of applications, experiments, and systems I have built while learning and working across the stack.</span>
       </header>
 
-      <div className="projectSearch">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-4-4" />
+      <div className='projectSearch'>
+        <svg viewBox='0 0 24 24' aria-hidden='true'>
+          <circle cx='11' cy='11' r='7' />
+          <path d='m20 20-4-4' />
         </svg>
         <input
-          type="search"
+          type='search'
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
-          placeholder="Search projects..."
-          aria-label="Search projects"
+          placeholder='Search projects...'
+          aria-label='Search projects'
         />
         {searchQuery && (
-          <button
-            type="button"
-            onClick={() => setSearchQuery('')}
-            aria-label="Clear project search"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m7 7 10 10" />
-              <path d="M17 7 7 17" />
+          <button type='button' onClick={() => setSearchQuery('')} aria-label='Clear project search'>
+            <svg viewBox='0 0 24 24' aria-hidden='true'>
+              <path d='m7 7 10 10' />
+              <path d='M17 7 7 17' />
             </svg>
           </button>
         )}
       </div>
 
       {filteredProjects.length === 0 && (
-        <div className="projectSearchEmpty">
+        <div className='projectSearchEmpty'>
           <p>No projects found.</p>
           <span>Try a different name or keyword.</span>
         </div>
       )}
 
       {featuredProjects.length > 0 && (
-        <section className="projectsSection projectsSection--featured">
-          <div className="projectsSectionHeading">
+        <section className='projectsSection projectsSection--featured'>
+          <div className='projectsSectionHeading'>
             <div>
               <span>01</span>
               <h2>Featured Projects</h2>
@@ -120,7 +111,7 @@ function Projects() {
             <p>{featuredProjects.length} selected</p>
           </div>
 
-          <div className="projectList projectList--featured">
+          <div className='projectList projectList--featured'>
             {featuredProjects.map((project) => (
               <ProjectsDisplay key={project.project_name} project={project} />
             ))}
@@ -129,8 +120,8 @@ function Projects() {
       )}
 
       {otherProjects.length > 0 && (
-        <section className="projectsSection">
-          <div className="projectsSectionHeading">
+        <section className='projectsSection'>
+          <div className='projectsSectionHeading'>
             <div>
               <span>{featuredProjects.length > 0 ? '02' : '01'}</span>
               <h2>Other Projects</h2>
@@ -138,7 +129,7 @@ function Projects() {
             <p>{otherProjects.length} projects</p>
           </div>
 
-          <div className="projectList">
+          <div className='projectList'>
             {otherProjects.map((project) => (
               <ProjectsDisplay key={project.project_name} project={project} />
             ))}

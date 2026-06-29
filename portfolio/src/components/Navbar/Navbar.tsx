@@ -21,7 +21,7 @@ function Navbar() {
     document.documentElement.dataset.theme = themeMode;
     window.localStorage.setItem('portfolio-theme', themeMode);
   }, [themeMode]);
-  
+
   const ProfessionalLinks: LinkItem[] = [
     { path: '/skills_experience', name: 'Skills & Experience' },
     { path: '/projects', name: 'Projects' },

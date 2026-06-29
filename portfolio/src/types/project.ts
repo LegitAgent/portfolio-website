@@ -35,7 +35,7 @@ interface ProjectArticle {
   live_url: string | null;
   status: ProjectStatus;
   featured: 0 | 1;
-  }
+}
 
 export interface ProjectResponse {
   results: Project[];

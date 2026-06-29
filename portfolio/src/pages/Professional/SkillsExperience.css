@@ -5,9 +5,7 @@
   width: calc(100% - 4.5rem);
   max-width: none;
   margin: 0 0 0 4.5rem;
-  padding:
-    5vh max(1rem, calc((100vw - 4.5rem - 1400px) / 2))
-    6rem;
+  padding: 5vh max(1rem, calc((100vw - 4.5rem - 1400px) / 2)) 6rem;
   gap: 2rem;
 }
 
@@ -58,9 +56,7 @@
   padding: 1rem;
   border: 1px solid rgba(125, 188, 235, 0.14);
   border-radius: 5px;
-  background:
-    linear-gradient(180deg, rgba(8, 25, 58, 0.48), rgba(1, 8, 22, 0.68)),
-    rgba(2, 8, 22, 0.62);
+  background: linear-gradient(180deg, rgba(8, 25, 58, 0.48), rgba(1, 8, 22, 0.68)), rgba(2, 8, 22, 0.62);
   box-shadow: 0 16px 38px rgba(0, 0, 0, 0.16);
   animation: seFadeUp 520ms ease-out both;
 }
@@ -167,9 +163,7 @@
   left: 50%;
   width: 2px;
   border-radius: 999px;
-  background:
-    linear-gradient(180deg, transparent, rgba(125, 188, 235, 0.22) 8%, rgba(125, 188, 235, 0.18) 92%),
-    rgba(125, 188, 235, 0.08);
+  background: linear-gradient(180deg, transparent, rgba(125, 188, 235, 0.22) 8%, rgba(125, 188, 235, 0.18) 92%), rgba(125, 188, 235, 0.08);
   transform: translateX(-50%);
 }
 
@@ -478,9 +472,7 @@
 }
 
 :root[data-theme='light'] .skillGroup {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(236, 243, 252, 0.86)),
-    rgba(247, 250, 255, 0.78);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(236, 243, 252, 0.86)), rgba(247, 250, 255, 0.78);
   border-color: rgba(72, 98, 135, 0.14);
   box-shadow: 0 16px 38px rgba(55, 80, 120, 0.1);
 }
@@ -498,9 +490,7 @@
 }
 
 :root[data-theme='light'] .workList::before {
-  background:
-    linear-gradient(180deg, transparent, rgba(55, 96, 150, 0.2) 8%, rgba(55, 96, 150, 0.16) 92%),
-    rgba(55, 96, 150, 0.08);
+  background: linear-gradient(180deg, transparent, rgba(55, 96, 150, 0.2) 8%, rgba(55, 96, 150, 0.16) 92%), rgba(55, 96, 150, 0.08);
 }
 
 :root[data-theme='light'] .workTree::after {

@@ -55,51 +55,46 @@ function Certificates() {
     shouldSort: true,
   });
   const query = searchQuery.trim();
-  const filteredCertificates = query
-    ? certificateSearch.search(query).map((result) => result.item)
-    : certificateResults;
+  const filteredCertificates = query ? certificateSearch.search(query).map((result) => result.item) : certificateResults;
 
   return (
-    <main className="certificatesPage">
-      <header className="certificatesHeader">
+    <main className='certificatesPage'>
+      <header className='certificatesHeader'>
         <p>Verified learning</p>
         <h1>Certificates</h1>
-        <span>
-          Courses and credentials I have completed while developing my technical knowledge
-          across software, cloud, and computer science.
-        </span>
+        <span>Courses and credentials I have completed while developing my technical knowledge across software, cloud, and computer science.</span>
       </header>
 
-      <div className="certificateSearch">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-4-4" />
+      <div className='certificateSearch'>
+        <svg viewBox='0 0 24 24' aria-hidden='true'>
+          <circle cx='11' cy='11' r='7' />
+          <path d='m20 20-4-4' />
         </svg>
         <input
-          type="search"
+          type='search'
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
-          placeholder="Search certificates..."
-          aria-label="Search certificates"
+          placeholder='Search certificates...'
+          aria-label='Search certificates'
         />
         {searchQuery && (
-          <button type="button" onClick={() => setSearchQuery('')} aria-label="Clear certificate search">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m7 7 10 10" />
-              <path d="M17 7 7 17" />
+          <button type='button' onClick={() => setSearchQuery('')} aria-label='Clear certificate search'>
+            <svg viewBox='0 0 24 24' aria-hidden='true'>
+              <path d='m7 7 10 10' />
+              <path d='M17 7 7 17' />
             </svg>
           </button>
         )}
       </div>
 
       {filteredCertificates.length === 0 ? (
-        <div className="certificateSearchEmpty">
+        <div className='certificateSearchEmpty'>
           <p>No certificates found.</p>
           <span>Try a different title, issuer, or skill.</span>
         </div>
       ) : (
-        <section className="certificatesSection">
-          <div className="certificatesSectionHeading">
+        <section className='certificatesSection'>
+          <div className='certificatesSectionHeading'>
             <div>
               <span>01</span>
               <h2>Credentials</h2>
@@ -107,7 +102,7 @@ function Certificates() {
             <p>{filteredCertificates.length} certificates</p>
           </div>
 
-          <div className="certificateList">
+          <div className='certificateList'>
             {filteredCertificates.map((certificate) => (
               <CertificateDisplay key={certificate.id} certificate={certificate} />
             ))}

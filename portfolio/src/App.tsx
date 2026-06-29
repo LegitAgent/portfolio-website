@@ -54,9 +54,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <main className="app-shell">
+      <main className='app-shell'>
         <Background />
-        <div className="page-shell">
+        <div className='page-shell'>
           <Navbar />
           <Routes>
             {routes.map((route) => {

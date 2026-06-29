@@ -15,26 +15,18 @@ interface NavDropDownProps {
 
 function ProfessionalIcon({ path }: { path: string }) {
   if (path === '/skills_experience') {
-    return (
-      <img className="linkImage" src={SKILLS} alt="skills" aria-hidden="true" />
-    );
+    return <img className='linkImage' src={SKILLS} alt='skills' aria-hidden='true' />;
   }
 
   if (path === '/projects') {
-    return (
-      <img className="linkImage" src={CODE} alt="code" aria-hidden="true" />
-    );
+    return <img className='linkImage' src={CODE} alt='code' aria-hidden='true' />;
   }
 
   if (path === '/certificates') {
-    return (
-      <img className="linkImage" src={CERTIFICATE} alt="certificate" aria-hidden="true" />
-    );
+    return <img className='linkImage' src={CERTIFICATE} alt='certificate' aria-hidden='true' />;
   }
 
-  return (
-    <img className="resumeImage" src={RESUME_ICON} alt="resume" aria-hidden="true" />
-  );
+  return <img className='resumeImage' src={RESUME_ICON} alt='resume' aria-hidden='true' />;
 }
 
 export function NavDropDown({ itemsArray, dropdownType, isOpen }: NavDropDownProps) {

@@ -1,14 +1,6 @@
 import type { Tag } from './tag';
 
-type ExperienceType =
-  | 'work'
-  | 'leadership'
-  | 'academics'
-  | 'volunteer'
-  | 'organization'
-  | 'competition'
-  | 'project'
-  | 'mentorship';
+type ExperienceType = 'work' | 'leadership' | 'academics' | 'volunteer' | 'organization' | 'competition' | 'project' | 'mentorship';
 
 export interface WorkDisplayProps {
   work: WorkExperience;

@@ -1,4 +1,5 @@
-export type SkillType = 'Language' | 'Frontend' | 'Backend' | 'Database' | 'Cloud' | 'Developer Tool' | 'Systems' | 'Game Development' | 'API / Integration';
+export type SkillType =
+  'Language' | 'Frontend' | 'Backend' | 'Database' | 'Cloud' | 'Developer Tool' | 'Systems' | 'Game Development' | 'API / Integration';
 
 export interface TagsResponse {
   tags: Tag[];
