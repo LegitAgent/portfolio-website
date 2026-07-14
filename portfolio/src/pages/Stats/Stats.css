@@ -284,6 +284,11 @@
   line-height: 1;
 }
 
+.statsSectionHeader h3 {
+  margin: 0.35rem 0 0;
+  line-height: 1;
+}
+
 .statsSectionHeader > a {
   padding: 0.45rem 0.65rem;
   border: 1px solid rgba(125, 188, 235, 0.16);

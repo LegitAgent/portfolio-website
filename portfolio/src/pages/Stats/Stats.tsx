@@ -190,7 +190,7 @@ function Stats() {
 
   useEffect(() => {
     Promise.all([
-      fetchJson<LeetCodeStatsResponse>('api/leetcode/albamartindarius'),
+      fetchJson<LeetCodeStatsResponse>('api/leetcode/LegitAgent'),
       fetchJson<GithubStatsResponse>('api/github/LegitAgent'),
       fetchJson<PortfolioStatsResponse>('api/stats/portfolio'),
     ])
@@ -380,7 +380,7 @@ function Stats() {
             <div className='statsSubheading'>
               <p>Code distribution</p>
               <h3>Top languages</h3>
-              <small>Not to be taken literally as how experienced I am in a certain language.</small>
+              <small>Not to be taken literally as how experienced I am in a certain language. Simply language percentage within my GitHub profile.</small>
             </div>
             <div className='languageList'>
               {sortedGithubLanguages.map((language, index) => (
@@ -448,6 +448,7 @@ function Stats() {
               <div>
                 <p>Problem solving</p>
                 <h2>LeetCode</h2>
+                <h3>I just lost my old account</h3>
               </div>
             </div>
             <a className='leetcodeProfileLink' href={`https://leetcode.com/u/${leetcode.username}/`} target='_blank' rel='noreferrer'>
