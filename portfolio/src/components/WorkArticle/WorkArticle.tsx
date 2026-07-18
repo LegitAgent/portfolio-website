@@ -53,7 +53,7 @@ function WorkArticle() {
     return <ErrorScreen />;
   }
 
-  if (article?.results.length === 0) {
+  if (!isLoading && !article?.article) {
     return <WrongPage />;
   }
 
@@ -61,7 +61,7 @@ function WorkArticle() {
     return <LoadingScreen />;
   }
 
-  const articleContent = article?.results[0];
+  const articleContent = article?.article;
   const articleSkills = article?.tags;
 
   const imageURL = articleContent?.article_image_url ? CLOUDFLARE_R2_BUCKET + articleContent.article_image_url : null;

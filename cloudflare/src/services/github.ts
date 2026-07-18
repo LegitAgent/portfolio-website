@@ -49,6 +49,7 @@ interface GithubResponse {
 }
 
 const GITHUB_API = 'https://api.github.com/graphql';
+const UPSTREAM_TIMEOUT_MS = 5_000;
 
 const query = `
   query UserDeveloperStats($login: String!, $fromYear: DateTime, $toYear: DateTime) {
@@ -103,22 +104,37 @@ const query = `
 `;
 
 export async function getGithubStats(username: string, env: Env, fromDate: string, toDate: string) {
-  const response = await fetch(GITHUB_API, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${env.GITHUB_TOKEN}`,
-      'Content-Type': 'application/json',
-      'User-Agent': 'portfolio-website',
-    },
-    body: JSON.stringify({
-      query,
-      variables: {
-        login: username,
-        fromYear: fromDate,
-        toYear: toDate,
+  let response: Response;
+
+  try {
+    response = await fetch(GITHUB_API, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+        'Content-Type': 'application/json',
+        'User-Agent': 'portfolio-website',
       },
-    }),
-  });
+      body: JSON.stringify({
+        query,
+        variables: {
+          login: username,
+          fromYear: fromDate,
+          toYear: toDate,
+        },
+      }),
+      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+    });
+  } catch (error) {
+    if (error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')) {
+      throw new Error(`GitHub request timed out after ${UPSTREAM_TIMEOUT_MS}ms`, { cause: error });
+    }
+
+    throw error;
+  }
+
+  if (response.status === 404) {
+    return null;
+  }
 
   if (!response.ok) {
     const details = await response.text();

@@ -104,7 +104,7 @@ function ProjectArticle() {
     return () => observer.disconnect();
   }, [article, isLoading]);
 
-  const articleContent = article?.results[0];
+  const articleContent = article?.article;
 
   // for rendering the side sections
   const sections: ArticleSection[] = articleContent

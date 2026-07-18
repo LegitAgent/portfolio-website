@@ -70,7 +70,8 @@ async function seedDatabase() {
 			company_logo_url TEXT NOT NULL,
 			company_website TEXT,
 			display_order INTEGER NOT NULL,
-			work_slug TEXT NOT NULL
+			work_slug TEXT NOT NULL,
+			type TEXT NOT NULL
 		)`,
 		`CREATE TABLE WorkArticle (
 			work_id INTEGER PRIMARY KEY,
@@ -95,8 +96,8 @@ async function seedDatabase() {
 		VALUES ('React', 'frontend'), ('Cloudflare', 'backend'), ('TypeScript', 'language')`,
 		`INSERT INTO ProjectTag (project_name, tag_name)
 		VALUES ('Portfolio', 'React'), ('Portfolio', 'Cloudflare')`,
-		`INSERT INTO WorkExperience (work_id, company_name, role_title, employment_type, location, start_date, end_date, is_current, short_description, company_logo_url, company_website, display_order, work_slug)
-		VALUES (1, 'Hackazouk', 'Software Intern', 'Internship', 'Philippines', '2026-01-01', NULL, 1, 'Built internal tools', 'companies/hackazouk.png', 'https://example.com', 1, 'hackazouk')`,
+		`INSERT INTO WorkExperience (work_id, company_name, role_title, employment_type, location, start_date, end_date, is_current, short_description, company_logo_url, company_website, display_order, work_slug, type)
+		VALUES (1, 'Hackazouk', 'Software Intern', 'Internship', 'Philippines', '2026-01-01', NULL, 1, 'Built internal tools', 'companies/hackazouk.png', 'https://example.com', 1, 'hackazouk', 'backend_development')`,
 		`INSERT INTO WorkArticle (work_id, article_title, article_summary, article_content, article_image_url, responsibilities, achievements)
 		VALUES (1, 'Hackazouk Internship', 'Internship summary', 'Work article body', 'work/hackazouk.jpg', 'Built features', 'Shipped improvements')`,
 		`INSERT INTO WorkTag (work_id, tag_name)
@@ -132,7 +133,7 @@ describe('portfolio worker', () => {
 		const body = await jsonBody<{ results: Record<string, unknown>[] }>(response);
 
 		expect(response.status).toBe(200);
-		expect(response.headers.get('Content-Type')).toBe('application/json');
+		expect(response.headers.get('Content-Type')).toBe('application/json; charset=utf-8');
 		expect(body.results).toEqual([
 			{
 				project_name: 'Portfolio',
@@ -176,8 +177,8 @@ describe('portfolio worker', () => {
 
 		expect(response.status).toBe(200);
 		expect(body.tags).toEqual([
-			{ tag_name: 'React', skill_type: 'frontend' },
 			{ tag_name: 'Cloudflare', skill_type: 'backend' },
+			{ tag_name: 'React', skill_type: 'frontend' },
 			{ tag_name: 'TypeScript', skill_type: 'language' },
 		]);
 	});
@@ -202,56 +203,53 @@ describe('portfolio worker', () => {
 				company_website: 'https://example.com',
 				display_order: 1,
 				work_slug: 'hackazouk',
+				type: 'backend_development',
 			},
 		]);
 	});
 
 	it('returns a project article and its tags by slug', async () => {
 		const response = await fetchWorker('/api/project_articles/portfolio');
-		const body = await jsonBody<{ results: Record<string, unknown>[]; tags: Record<string, unknown>[] }>(response);
+		const body = await jsonBody<{ article: Record<string, unknown>; tags: Record<string, unknown>[] }>(response);
 
 		expect(response.status).toBe(200);
-		expect(body.results).toEqual([
-			{
-				project_name: 'Portfolio',
-				pArticle_slug: 'portfolio',
-				pArticle_image_url: 'articles/portfolio.jpg',
-				pArticle_image_alt: 'Portfolio preview',
-				pArticle_summary: 'Portfolio summary',
-				pArticle_overview: 'Portfolio overview',
-				pArticle_content: 'Article body',
-				pArticle_challenges: 'Challenges',
-				pArticle_lessons: 'Lessons',
-				pArticle_future_work: 'Future work',
-				project_github: 'https://github.com/LegitAgent/portfolio-website',
-				started_at: '2026-01-01',
-				live_url: 'https://example.com/portfolio',
-				status: 'WIP',
-				featured: 1,
-			},
-		]);
-		expect(body.tags).toEqual([{ tag_name: 'React' }, { tag_name: 'Cloudflare' }]);
+		expect(body.article).toEqual({
+			project_name: 'Portfolio',
+			pArticle_slug: 'portfolio',
+			pArticle_image_url: 'articles/portfolio.jpg',
+			pArticle_image_alt: 'Portfolio preview',
+			pArticle_summary: 'Portfolio summary',
+			pArticle_overview: 'Portfolio overview',
+			pArticle_content: 'Article body',
+			pArticle_challenges: 'Challenges',
+			pArticle_lessons: 'Lessons',
+			pArticle_future_work: 'Future work',
+			project_github: 'https://github.com/LegitAgent/portfolio-website',
+			started_at: '2026-01-01',
+			live_url: 'https://example.com/portfolio',
+			status: 'WIP',
+			featured: 1,
+		});
+		expect(body.tags).toEqual([{ tag_name: 'Cloudflare' }, { tag_name: 'React' }]);
 	});
 
 	it('returns a work article and its tags by work slug', async () => {
 		const response = await fetchWorker('/api/work_articles/hackazouk');
-		const body = await jsonBody<{ results: Record<string, unknown>[]; tags: Record<string, unknown>[] }>(response);
+		const body = await jsonBody<{ article: Record<string, unknown>; tags: Record<string, unknown>[] }>(response);
 
 		expect(response.status).toBe(200);
-		expect(body.results).toEqual([
-			{
-				article_title: 'Hackazouk Internship',
-				article_summary: 'Internship summary',
-				article_content: 'Work article body',
-				article_image_url: 'work/hackazouk.jpg',
-				responsibilities: 'Built features',
-				achievements: 'Shipped improvements',
-				company_name: 'Hackazouk',
-				role_title: 'Software Intern',
-				company_website: 'https://example.com',
-			},
-		]);
-		expect(body.tags).toEqual([{ tag_name: 'TypeScript' }, { tag_name: 'Cloudflare' }]);
+		expect(body.article).toEqual({
+			article_title: 'Hackazouk Internship',
+			article_summary: 'Internship summary',
+			article_content: 'Work article body',
+			article_image_url: 'work/hackazouk.jpg',
+			responsibilities: 'Built features',
+			achievements: 'Shipped improvements',
+			company_name: 'Hackazouk',
+			role_title: 'Software Intern',
+			company_website: 'https://example.com',
+		});
+		expect(body.tags).toEqual([{ tag_name: 'Cloudflare' }, { tag_name: 'TypeScript' }]);
 	});
 
 	it('returns 404 for unknown article slugs', async () => {
@@ -260,6 +258,7 @@ describe('portfolio worker', () => {
 
 		expect(response.status).toBe(404);
 		expect(body).toEqual({ error: 'Article not found' });
+		expect(response.headers.get('Cache-Control')).toBe('public, max-age=0, s-maxage=60');
 	});
 
 	it('serves robots.txt before rate limiting and database access', async () => {
@@ -307,7 +306,8 @@ describe('portfolio worker', () => {
 		const body = await jsonBody(response);
 
 		expect(response.status).toBe(404);
-		expect(body).toEqual({ error: 'End point does not exist' });
+		expect(body).toEqual({ error: 'Endpoint does not exist' });
+		expect(response.headers.get('Cache-Control')).toBe('no-store');
 	});
 
 	it('is reachable through the integration service binding', async () => {

@@ -42,7 +42,7 @@ export interface ProjectResponse {
 }
 
 export interface ArticleResponse {
-  results: ProjectArticle[];
+  article: ProjectArticle;
   tags: Tag[];
 }
 

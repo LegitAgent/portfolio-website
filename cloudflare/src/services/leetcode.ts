@@ -33,6 +33,7 @@ interface LeetcodeResponse {
 }
 
 const LEETCODE_API = 'https://leetcode.com/graphql';
+const UPSTREAM_TIMEOUT_MS = 5_000;
 
 const query = `
   query userSessionProgress($username: String!) {
@@ -79,16 +80,31 @@ const query = `
 `;
 
 export async function getLeetCodeStats(username: string) {
-  const response = await fetch(LEETCODE_API, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      query,
-      variables: { username },
-    }),
-  });
+  let response: Response;
+
+  try {
+    response = await fetch(LEETCODE_API, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { username },
+      }),
+      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+    });
+  } catch (error) {
+    if (error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')) {
+      throw new Error(`LeetCode request timed out after ${UPSTREAM_TIMEOUT_MS}ms`, { cause: error });
+    }
+
+    throw error;
+  }
+
+  if (response.status === 404) {
+    return null;
+  }
 
   if (!response.ok) {
     const details = await response.text();

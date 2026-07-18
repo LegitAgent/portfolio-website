@@ -20,7 +20,7 @@ interface WorkArticle {
 }
 
 export interface WorkResponse {
-  results: WorkArticle[];
+  article: WorkArticle;
   tags: Tag[];
 }
 

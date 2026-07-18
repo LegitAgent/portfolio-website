@@ -26,7 +26,7 @@ interface LoadResult {
  * @param origin origin of the resource
  * @returns a response JSON
  */
-function json(data: unknown, status = 200, origin = '*', extraHeaders: HeadersInit = {}) {
+function json(data: unknown, status = 200, origin = '*', extraHeaders: HeadersInit = {}): Response {
   return new Response(JSON.stringify(data), { // actual data
     status,
     headers: {
@@ -47,7 +47,7 @@ function json(data: unknown, status = 200, origin = '*', extraHeaders: HeadersIn
  * @param status The HTTP status code (defaults to 200)
  * @returns A plain text Response object
  */
-function text(data: any, status = 200) {
+function text(data: string, status = 200): Response {
   return new Response(data, {
     status,
     headers: {
@@ -58,11 +58,10 @@ function text(data: any, status = 200) {
 
 /**
  * Handles and returns valid methods for OPTIONS requests.
- * @param request request body
  * @param env enviornment file for allowed origins
  * @returns a response JSON
  */
-function handleOptions(request: Request, env: Env) {
+function handleOptions(env: Env): Response {
   const allowedOrigin = getCorsOrigin(env);
 
   return new Response(null, {
@@ -81,9 +80,13 @@ function handleOptions(request: Request, env: Env) {
  * @param env enviornment file for allowed origins
  * @returns boolean: if request origin is in the env origin file
  */
-function isAllowedOrigin(request: Request, env: Env) {
+function isAllowedOrigin(request: Request, env: Env): boolean {
   const reqOrigin = request.headers.get('Origin');
   const allowedOrigin = env.ORIGIN;
+
+  if (!reqOrigin) {
+    return true;
+  }
 
   if (!allowedOrigin) {
     return false;
@@ -93,7 +96,7 @@ function isAllowedOrigin(request: Request, env: Env) {
     return true;
   }
 
-  return reqOrigin?.trim() === allowedOrigin.trim();
+  return reqOrigin.trim() === allowedOrigin.trim();
 }
 
 /**
@@ -101,23 +104,19 @@ function isAllowedOrigin(request: Request, env: Env) {
  * @param env enviornment file for allowed origins
  * @returns the valid origins from the env file
  */
-function getCorsOrigin(env: Env) {
-  if (!env.ORIGIN) {
-    throw new Error('ORIGIN is not configured');
-  }
-
-  return env.ORIGIN;
+function getCorsOrigin(env: Env): string {
+  return env.ORIGIN ?? '*';
 }
 
 // for dynamic routes, limit those
-function getRatelimitBucket(pathname: string) {
+function getRateLimitBucket(pathname: string): string {
   if (pathname.startsWith('/api/project_articles/')) return '/api/project_articles';
   if (pathname.startsWith('/api/work_articles/')) return '/api/work_articles';
   
   return pathname;
 }
 
-function checkParamSlug(pathname: string, prefix: string) {
+function checkParamSlug(pathname: string, prefix: string): string | null {
   let slug;
 
   try {
@@ -142,7 +141,14 @@ function checkParamSlug(pathname: string, prefix: string) {
  * @param loadFunc function to execute for caching
  * @returns json response
  */
-async function cachedJson(request: Request, ctx: ExecutionContext, ttl: number, allowedOrigin: string, loadFunc: () => Promise<LoadResult>) {
+async function cachedJson(
+  request: Request,
+  ctx: ExecutionContext,
+  ttl: number,
+  allowedOrigin: string,
+  loadFunc: () => Promise<LoadResult>,
+  notFoundTtl = 0,
+): Promise<Response> {
   const cacheUrl = new URL(request.url);
   cacheUrl.search = '';
   const cacheKey = new Request(cacheUrl.toString(), {method: 'GET'}); // only get methods can be cached
@@ -158,15 +164,18 @@ async function cachedJson(request: Request, ctx: ExecutionContext, ttl: number, 
 
   const { data, status } = await loadFunc();
   const response = json(data, status, allowedOrigin, {
-    'Cache-Control':
-      status === 200
-        ? `public, max-age=60, s-maxage=${ttl}`
+    'Cache-Control': status === 200
+      ? `public, max-age=60, s-maxage=${ttl}`
+      : status === 404 && notFoundTtl > 0
+        ? `public, max-age=0, s-maxage=${notFoundTtl}`
         : 'no-store',
     'X-Cache-Status': 'MISS',
   });
   // pull from browser cache first 60s, shared caches may cache for the route specific TTL
 
-  if (response.ok && ttl > 0) {
+  if (status === 200 && ttl > 0) {
+    ctx.waitUntil(cache.put(cacheKey, response.clone()));
+  } else if (status === 404 && notFoundTtl > 0) {
     ctx.waitUntil(cache.put(cacheKey, response.clone()));
   }
   
@@ -184,7 +193,24 @@ const TTL_TIME = {
   PORTFOLIO_STATS: ONE_HOUR,
   LEETCODE: ONE_HOUR,
   GITHUB: ONE_HOUR,
-};
+  ARTICLE_NOT_FOUND: 60,
+} as const;
+
+const VALID_PATHS = new Set([
+  '/api/db/projects',
+  '/api/db/certificates',
+  '/api/db/tags',
+  '/api/db/work',
+  '/api/stats/portfolio',
+  '/api/leetcode',
+  '/api/github',
+]);
+
+function isKnownRoute(pathname: string): boolean {
+  return VALID_PATHS.has(pathname)
+    || pathname.startsWith('/api/project_articles/')
+    || pathname.startsWith('/api/work_articles/');
+}
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
@@ -200,24 +226,41 @@ export default {
     // preflight request
     if (request.method === 'OPTIONS') {
       if (!isAllowed) {
-        return json({error: 'Forbidden'}, 403, allowedOrigin);
+        return json({error: 'Forbidden'}, 403, allowedOrigin, {'Cache-Control': 'no-store'});
       }
 
-      return handleOptions(request, env);
+      return handleOptions(env);
     }
 
     if (!isAllowed) {
-      return json({ error: 'Forbidden' }, 403, allowedOrigin);
+      return json({ error: 'Forbidden' }, 403, allowedOrigin, {'Cache-Control': 'no-store'});
     }
     // routes
     if (request.method === 'GET') {
       try {
+        if (!isKnownRoute(url.pathname)) {
+          return json(
+            {error: 'Endpoint does not exist'},
+            404,
+            allowedOrigin,
+            {'Cache-Control': 'no-store'},
+          );
+        }
+
         const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
-        const urlBucket = getRatelimitBucket(url.pathname);
+        const urlBucket = getRateLimitBucket(url.pathname);
         const { success } = await env.PORTFOLIO_LIMITER.limit({key: `${ip}:${urlBucket}`});
 
         if (!success) {
-          return json({error: `Too many requests for ${url.pathname}`}, 429, allowedOrigin, {'Retry-After': '60'})
+          return json(
+            {error: `Too many requests for ${url.pathname}`},
+            429,
+            allowedOrigin,
+            {
+              'Retry-After': '60',
+              'Cache-Control': 'no-store',
+            },
+          );
         }
         /**
          * structure for returning JSON responses:
@@ -271,7 +314,7 @@ export default {
         if (url.pathname === '/api/db/work') {
           const loadWork = async () => {
             const { results } = await env.portfolio_db
-              .prepare('SELECT work_id, company_name, role_title, employment_type, location, start_date, end_date, is_current, short_description, company_logo_url, company_website, display_order, work_slug, type FROM WorkExperience')
+              .prepare('SELECT work_id, company_name, role_title, employment_type, location, start_date, end_date, is_current, short_description, company_logo_url, company_website, display_order, work_slug, type FROM WorkExperience ORDER BY display_order ASC, is_current DESC, start_date DESC')
               .run();
 
             return { 
@@ -299,12 +342,13 @@ export default {
               .bind(slug)
 
             const articleTagQuery = env.portfolio_db
-              .prepare('SELECT t.tag_name FROM ProjectArticles pa JOIN ProjectTag pt ON pa.project_name = pt.project_name JOIN Tag t ON pt.tag_name = t.tag_name WHERE pa.pArticle_slug = ?')
+              .prepare('SELECT t.tag_name FROM ProjectArticles AS pa JOIN ProjectTag AS pt ON pa.project_name = pt.project_name JOIN Tag AS t ON pt.tag_name = t.tag_name WHERE pa.pArticle_slug = ? ORDER BY t.tag_name ASC')
               .bind(slug)
 
             const [articleContent, articleTagContent] = await env.portfolio_db.batch([articleQuery, articleTagQuery]);
+            const article = articleContent.results[0];
 
-            if (articleContent.results.length === 0) {
+            if (!article) {
               return {
                 data: { error: 'Article not found' },
                 status: 404
@@ -312,12 +356,19 @@ export default {
             }
 
             return { 
-              data: { article: articleContent.results, tags: articleTagContent.results },
+              data: { article, tags: articleTagContent.results },
               status: 200
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME.ARTICLE, allowedOrigin, loadProjectArticles);
+          return cachedJson(
+            request,
+            ctx,
+            TTL_TIME.ARTICLE,
+            allowedOrigin,
+            loadProjectArticles,
+            TTL_TIME.ARTICLE_NOT_FOUND,
+          );
         }
 
         if (url.pathname.startsWith('/api/work_articles/')) {
@@ -336,12 +387,13 @@ export default {
               .bind(slug);
 
             const articleTagQuery = env.portfolio_db
-              .prepare('SELECT t.tag_name FROM WorkArticle AS wa JOIN WorkTag wt ON wa.work_id = wt.work_id JOIN Tag t ON wt.tag_name = t.tag_name JOIN WorkExperience AS we ON wa.work_id = we.work_id WHERE we.work_slug = ?')
+              .prepare('SELECT t.tag_name FROM WorkArticle AS wa JOIN WorkTag AS wt ON wa.work_id = wt.work_id JOIN Tag AS t ON wt.tag_name = t.tag_name JOIN WorkExperience AS we ON wa.work_id = we.work_id WHERE we.work_slug = ? ORDER BY t.tag_name ASC')
               .bind(slug)
 
             const [articleContent, articleTagContent] = await env.portfolio_db.batch([articleQuery, articleTagQuery]);
+            const article = articleContent.results[0];
 
-            if (articleContent.results.length === 0) {
+            if (!article) {
               return {
                 data: { error: 'Article not found' },
                 status: 404
@@ -349,51 +401,56 @@ export default {
             }
 
             return { 
-              data: { article: articleContent.results, tags: articleTagContent.results },
+              data: { article, tags: articleTagContent.results },
               status: 200
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME.ARTICLE, allowedOrigin, loadWorkArticles);
+          return cachedJson(
+            request,
+            ctx,
+            TTL_TIME.ARTICLE,
+            allowedOrigin,
+            loadWorkArticles,
+            TTL_TIME.ARTICLE_NOT_FOUND,
+          );
         }
 
         if (url.pathname === '/api/stats/portfolio') {
           const loadPortfolioStats = async () => {
+            const statements = [
+              env.portfolio_db.prepare('SELECT COUNT(*) AS count FROM Projects'),
+              env.portfolio_db.prepare("SELECT COUNT(*) AS count FROM Projects WHERE status = 'Done'"),
+              env.portfolio_db.prepare('SELECT COUNT(*) AS count FROM Tag'),
+              env.portfolio_db.prepare('SELECT COUNT(*) AS count FROM Certificates'),
+              env.portfolio_db.prepare('SELECT COUNT(*) AS count FROM WorkExperience'),
+              env.portfolio_db.prepare('SELECT COUNT(*) AS count FROM WorkExperience WHERE is_current = 1'),
+              env.portfolio_db.prepare('SELECT tag_name AS name, COUNT(*) AS projectCount FROM ProjectTag GROUP BY tag_name ORDER BY projectCount DESC, tag_name ASC LIMIT 8'),
+              env.portfolio_db.prepare('SELECT status, COUNT(*) AS count FROM Projects GROUP BY status ORDER BY count DESC, status ASC'),
+            ];
+
             const [
-              totalProjects,
-              completedProjects,
-              totalTechnologies,
-              totalCertificates,
-              totalWorkExperiences,
-              currentRoles,
-              mostUsedTechnologies,
-              projectsByStatus,
-            ] = await Promise.all([
-              countQuery(env.portfolio_db, 'SELECT COUNT(*) AS count FROM Projects'),
-              countQuery(env.portfolio_db, "SELECT COUNT(*) AS count FROM Projects WHERE status = 'Done'"),
-              countQuery(env.portfolio_db, 'SELECT COUNT(*) AS count FROM Tag'),
-              countQuery(env.portfolio_db, 'SELECT COUNT(*) AS count FROM Certificates'),
-              countQuery(env.portfolio_db, 'SELECT COUNT(*) AS count FROM WorkExperience'),
-              countQuery(env.portfolio_db, 'SELECT COUNT(*) AS count FROM WorkExperience WHERE is_current = 1'),
-              env.portfolio_db
-                .prepare('SELECT tag_name AS name, COUNT(*) AS projectCount FROM ProjectTag GROUP BY tag_name ORDER BY projectCount DESC, tag_name ASC LIMIT 8')
-                .all(),
-              env.portfolio_db
-                .prepare('SELECT status, COUNT(*) AS count FROM Projects GROUP BY status ORDER BY count DESC')
-                .all(),
-            ]);
+              totalProjectsResult,
+              completedProjectsResult,
+              totalTechnologiesResult,
+              totalCertificatesResult,
+              totalWorkExperiencesResult,
+              currentRolesResult,
+              mostUsedTechnologiesResult,
+              projectsByStatusResult,
+            ] = await env.portfolio_db.batch<PortfolioStatsRow>(statements);
 
             return {
               data: {
                 portfolioStats: {
-                  totalProjects,
-                  completedProjects,
-                  totalTechnologies,
-                  totalCertificates,
-                  totalWorkExperiences,
-                  currentRoles,
-                  mostUsedTechnologies: mostUsedTechnologies.results,
-                  projectsByStatus: projectsByStatus.results,
+                  totalProjects: getBatchCount(totalProjectsResult),
+                  completedProjects: getBatchCount(completedProjectsResult),
+                  totalTechnologies: getBatchCount(totalTechnologiesResult),
+                  totalCertificates: getBatchCount(totalCertificatesResult),
+                  totalWorkExperiences: getBatchCount(totalWorkExperiencesResult),
+                  currentRoles: getBatchCount(currentRolesResult),
+                  mostUsedTechnologies: mostUsedTechnologiesResult.results,
+                  projectsByStatus: projectsByStatusResult.results,
                 },
               },
               status: 200,
@@ -443,18 +500,37 @@ export default {
           return cachedJson(request, ctx, TTL_TIME.GITHUB, allowedOrigin, loadGithub);
         }
 
-        return json({error: 'End point does not exist'}, 404, allowedOrigin)
-      } catch(error) {
+        return json(
+          {error: 'Endpoint does not exist'},
+          404,
+          allowedOrigin,
+          {'Cache-Control': 'no-store'},
+        );
+      } catch {
 
-        return json({error: 'Internal server error'}, 500, allowedOrigin, {'Cache-Control': 'no-store'});
+		return json({error: 'Internal server error'}, 500, allowedOrigin, {'Cache-Control': 'no-store'});
       }
     } else {
-      return json({error: 'Method not allowed'}, 405, allowedOrigin, {'Allow': 'GET, OPTIONS'});
+      return json(
+        {error: 'Method not allowed'},
+        405,
+        allowedOrigin,
+        {
+          'Allow': 'GET, OPTIONS',
+          'Cache-Control': 'no-store',
+        },
+      );
     }
 	},
 } satisfies ExportedHandler<Env>;
 
-async function countQuery(database: D1Database, query: string) {
-  const result = await database.prepare(query).first<{ count: number }>();
-  return result?.count ?? 0;
+interface PortfolioStatsRow {
+  count?: number;
+  name?: string;
+  projectCount?: number;
+  status?: string;
+}
+
+function getBatchCount(result: D1Result<PortfolioStatsRow>): number {
+  return result.results[0]?.count ?? 0;
 }
