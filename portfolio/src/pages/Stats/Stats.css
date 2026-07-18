@@ -687,9 +687,6 @@
   min-width: 0.22rem;
   display: block;
   border-radius: inherit;
-  box-shadow:
-    0 0 6px currentColor,
-    0 0 10px rgba(var(--github-violet), 0.16);
   transition: width 500ms cubic-bezier(0.22, 1, 0.36, 1);
   filter: saturate(0.9) brightness(1.05);
 }

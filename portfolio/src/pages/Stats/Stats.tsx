@@ -190,8 +190,8 @@ function Stats() {
 
   useEffect(() => {
     Promise.all([
-      fetchJson<LeetCodeStatsResponse>('api/leetcode/LegitAgent'),
-      fetchJson<GithubStatsResponse>('api/github/LegitAgent'),
+      fetchJson<LeetCodeStatsResponse>('api/leetcode'),
+      fetchJson<GithubStatsResponse>('api/github'),
       fetchJson<PortfolioStatsResponse>('api/stats/portfolio'),
     ])
       .then(([leetcodeResponse, githubResponse, portfolioResponse]) => {

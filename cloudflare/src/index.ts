@@ -26,14 +26,17 @@ interface LoadResult {
  * @param origin origin of the resource
  * @returns a response JSON
  */
-function json(data: unknown, status = 200, origin = '*') {
+function json(data: unknown, status = 200, origin = '*', extraHeaders: HeadersInit = {}) {
   return new Response(JSON.stringify(data), { // actual data
     status,
     headers: {
-      'Content-Type': 'application/json', 
+      'Content-Type': 'application/json; charset=utf-8', 
+      'X-Content-Type-Options': 'nosniff',
       'Access-Control-Allow-Origin': origin, 
+      'Referrer-Policy': 'no-referrer',
       'Access-Control-Allow-Methods': 'GET, OPTIONS', 
-      'Access-Control-Allow-Headers': 'Content-Type'
+      'Access-Control-Allow-Headers': 'Content-Type',
+      ...extraHeaders
     }
   });
 }
@@ -99,7 +102,36 @@ function isAllowedOrigin(request: Request, env: Env) {
  * @returns the valid origins from the env file
  */
 function getCorsOrigin(env: Env) {
-  return env.ORIGIN ?? '*';
+  if (!env.ORIGIN) {
+    throw new Error('ORIGIN is not configured');
+  }
+
+  return env.ORIGIN;
+}
+
+// for dynamic routes, limit those
+function getRatelimitBucket(pathname: string) {
+  if (pathname.startsWith('/api/project_articles/')) return '/api/project_articles';
+  if (pathname.startsWith('/api/work_articles/')) return '/api/work_articles';
+  
+  return pathname;
+}
+
+function checkParamSlug(pathname: string, prefix: string) {
+  let slug;
+
+  try {
+    slug = decodeURIComponent(pathname.slice(prefix.length));
+  } catch {
+    return null;
+  }
+
+  // no % or / or .
+  if (slug.length > 100 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+    return null;
+  }
+
+  return slug;
 }
 
 /**
@@ -112,19 +144,27 @@ function getCorsOrigin(env: Env) {
  */
 async function cachedJson(request: Request, ctx: ExecutionContext, ttl: number, allowedOrigin: string, loadFunc: () => Promise<LoadResult>) {
   const cacheUrl = new URL(request.url);
+  cacheUrl.search = '';
   const cacheKey = new Request(cacheUrl.toString(), {method: 'GET'}); // only get methods can be cached
 
   const cache = caches.default; // default cache API
   const cached = await cache.match(cacheKey);
 
   if (cached) {
-    console.log(`Cache hit for: ${request.url}.`);
-    return cached;
+    const response = new Response(cached.body, cached);
+    response.headers.set('X-Cache-Status', 'HIT');
+    return response;
   }
 
   const { data, status } = await loadFunc();
-  const response = json(data, status, allowedOrigin);
-  response.headers.set('Cache-Control', `public, s-maxage=${ttl}`);
+  const response = json(data, status, allowedOrigin, {
+    'Cache-Control':
+      status === 200
+        ? `public, max-age=60, s-maxage=${ttl}`
+        : 'no-store',
+    'X-Cache-Status': 'MISS',
+  });
+  // pull from browser cache first 60s, shared caches may cache for the route specific TTL
 
   if (response.ok && ttl > 0) {
     ctx.waitUntil(cache.put(cacheKey, response.clone()));
@@ -132,6 +172,19 @@ async function cachedJson(request: Request, ctx: ExecutionContext, ttl: number, 
   
   return response;
 }
+
+const ONE_HOUR = 60*60;
+const ONE_DAY = ONE_HOUR*24;
+const TTL_TIME = {
+  PROJECTS: ONE_HOUR * 2,
+  CERTIFICATES: ONE_DAY / 4,
+  TAGS: ONE_DAY / 4,
+  WORK: ONE_DAY / 2,
+  ARTICLE: ONE_DAY / 4,
+  PORTFOLIO_STATS: ONE_HOUR,
+  LEETCODE: ONE_HOUR,
+  GITHUB: ONE_HOUR,
+};
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
@@ -153,17 +206,19 @@ export default {
       return handleOptions(request, env);
     }
 
-    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
-    const { success } = await env.PORTFOLIO_LIMITER.limit({key: `${ip}:${url.pathname}`});
-
-    if (!success) {
-      return json({error: `Rate limit exceeded for ${url.pathname}`}, 429, allowedOrigin)
+    if (!isAllowed) {
+      return json({ error: 'Forbidden' }, 403, allowedOrigin);
     }
-
-    const TTL_TIME = 0;
     // routes
     if (request.method === 'GET') {
       try {
+        const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+        const urlBucket = getRatelimitBucket(url.pathname);
+        const { success } = await env.PORTFOLIO_LIMITER.limit({key: `${ip}:${urlBucket}`});
+
+        if (!success) {
+          return json({error: `Too many requests for ${url.pathname}`}, 429, allowedOrigin, {'Retry-After': '60'})
+        }
         /**
          * structure for returning JSON responses:
          *  - make a custom const async function for fetching data
@@ -173,7 +228,7 @@ export default {
         if (url.pathname === '/api/db/projects') {
           const loadProjects = async () => {
             const { results } = await env.portfolio_db
-              .prepare('SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, p.featured, p.started_at, p.ended_at, p.live_url, p.status, pa.pArticle_slug FROM Projects AS p LEFT JOIN ProjectArticles AS pa ON pa.project_name = p.project_name')
+              .prepare("SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, p.featured, p.started_at, p.ended_at, p.live_url, p.status, pa.pArticle_slug FROM Projects AS p LEFT JOIN ProjectArticles AS pa ON pa.project_name = p.project_name ORDER BY p.featured DESC, CASE p.status WHEN 'Done' THEN 1 WHEN 'WIP' THEN 2 WHEN 'Draft' THEN 3 WHEN 'Review' THEN 4 ELSE 5 END, p.started_at DESC")
               .run();
             return { 
               data: { results },
@@ -181,13 +236,13 @@ export default {
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME, allowedOrigin, loadProjects);
+          return cachedJson(request, ctx, TTL_TIME.PROJECTS, allowedOrigin, loadProjects);
         }
 
         if (url.pathname === '/api/db/certificates') {
           const loadCertificates = async () => {
             const { results: certificates } = await env.portfolio_db // relabel as certificates for results
-            .prepare('SELECT * FROM Certificates')
+            .prepare('SELECT id, title, issuer, completion_date, credential_url, certificate_url, image_alt, skills, image_url, description FROM Certificates ORDER BY completion_date DESC')
             .run();
 
             return { 
@@ -196,13 +251,13 @@ export default {
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME, allowedOrigin, loadCertificates);
+          return cachedJson(request, ctx, TTL_TIME.CERTIFICATES, allowedOrigin, loadCertificates);
         }
 
         if (url.pathname === '/api/db/tags') {
           const loadTags = async () => {
             const { results: tags } = await env.portfolio_db
-            .prepare('SELECT * FROM Tag')
+            .prepare('SELECT tag_name, skill_type FROM Tag ORDER BY tag_name ASC')
             .run();
 
             return { 
@@ -210,13 +265,13 @@ export default {
               status: 200
             };
           }
-          return cachedJson(request, ctx, TTL_TIME, allowedOrigin, loadTags)
+          return cachedJson(request, ctx, TTL_TIME.TAGS, allowedOrigin, loadTags)
         }
 
         if (url.pathname === '/api/db/work') {
           const loadWork = async () => {
             const { results } = await env.portfolio_db
-              .prepare('SELECT * FROM WorkExperience')
+              .prepare('SELECT work_id, company_name, role_title, employment_type, location, start_date, end_date, is_current, short_description, company_logo_url, company_website, display_order, work_slug, type FROM WorkExperience')
               .run();
 
             return { 
@@ -225,81 +280,81 @@ export default {
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME, allowedOrigin, loadWork);
+          return cachedJson(request, ctx, TTL_TIME.WORK, allowedOrigin, loadWork);
         }
 
         if (url.pathname.startsWith('/api/project_articles/')) {
           const loadProjectArticles = async () => {
-            const slug = url.pathname.replace('/api/project_articles/', '');
+            const slug = checkParamSlug(url.pathname, '/api/project_articles/');
 
-            const { results } = await env.portfolio_db
+            if (!slug) {
+              return {
+                data: { error: 'Slug not valid' },
+                status: 400
+              }
+            }
+
+            const articleQuery = env.portfolio_db
               .prepare('SELECT pa.project_name, pa.pArticle_slug, pa.pArticle_image_url, pa.pArticle_image_alt, pa.pArticle_summary, pa.pArticle_overview, pa.pArticle_content, pa.pArticle_challenges, pa.pArticle_lessons, pa.pArticle_future_work, p.project_github, p.started_at, p.live_url, p.status, p.featured FROM ProjectArticles AS pa JOIN Projects AS p ON pa.project_name = p.project_name WHERE pa.pArticle_slug = ?')
               .bind(slug)
-              .run();
 
-            const { results: tags }= await env.portfolio_db
+            const articleTagQuery = env.portfolio_db
               .prepare('SELECT t.tag_name FROM ProjectArticles pa JOIN ProjectTag pt ON pa.project_name = pt.project_name JOIN Tag t ON pt.tag_name = t.tag_name WHERE pa.pArticle_slug = ?')
               .bind(slug)
-              .run();
 
-            if (results.length === 0) {
+            const [articleContent, articleTagContent] = await env.portfolio_db.batch([articleQuery, articleTagQuery]);
+
+            if (articleContent.results.length === 0) {
               return {
                 data: { error: 'Article not found' },
                 status: 404
               }
             }
 
-            if (tags.length === 0) {
-              return {
-                data: { error: 'Tags not found' },
-                status: 404
-              };
-            }
-
             return { 
-              data: { results, tags },
+              data: { article: articleContent.results, tags: articleTagContent.results },
               status: 200
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME, allowedOrigin, loadProjectArticles);
+          return cachedJson(request, ctx, TTL_TIME.ARTICLE, allowedOrigin, loadProjectArticles);
         }
 
         if (url.pathname.startsWith('/api/work_articles/')) {
           const loadWorkArticles = async () => {
-            const slug = url.pathname.replace('/api/work_articles/', '');
+            const slug = checkParamSlug(url.pathname, '/api/work_articles/');
 
-            const { results } = await env.portfolio_db
+            if (!slug) {
+              return {
+                data: { error: 'Slug not valid' },
+                status: 400
+              }
+            }
+
+            const articleQuery = env.portfolio_db
               .prepare('SELECT wa.article_title, wa.article_summary, wa.article_content, wa.article_image_url, wa.responsibilities, wa.achievements, we.company_name, we.role_title, we.company_website FROM WorkArticle AS wa JOIN WorkExperience AS we ON wa.work_id = we.work_id WHERE we.work_slug = ?')
-              .bind(slug)
-              .run();
+              .bind(slug);
 
-            const { results: tags }= await env.portfolio_db
+            const articleTagQuery = env.portfolio_db
               .prepare('SELECT t.tag_name FROM WorkArticle AS wa JOIN WorkTag wt ON wa.work_id = wt.work_id JOIN Tag t ON wt.tag_name = t.tag_name JOIN WorkExperience AS we ON wa.work_id = we.work_id WHERE we.work_slug = ?')
               .bind(slug)
-              .run();
 
-            if (results.length === 0) {
+            const [articleContent, articleTagContent] = await env.portfolio_db.batch([articleQuery, articleTagQuery]);
+
+            if (articleContent.results.length === 0) {
               return {
                 data: { error: 'Article not found' },
                 status: 404
               }
             }
 
-            if (tags.length === 0) {
-              return {
-                data: { error: 'Tags not found' },
-                status: 404
-              };
-            }
-
             return { 
-              data: { results, tags },
+              data: { article: articleContent.results, tags: articleTagContent.results },
               status: 200
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME, allowedOrigin, loadWorkArticles);
+          return cachedJson(request, ctx, TTL_TIME.ARTICLE, allowedOrigin, loadWorkArticles);
         }
 
         if (url.pathname === '/api/stats/portfolio') {
@@ -345,20 +400,12 @@ export default {
             };
           };
 
-          return cachedJson(request, ctx, TTL_TIME, allowedOrigin, loadPortfolioStats);
+          return cachedJson(request, ctx, TTL_TIME.PORTFOLIO_STATS, allowedOrigin, loadPortfolioStats);
         }
 
-        if (url.pathname.startsWith('/api/leetcode/')) {
+        if (url.pathname === '/api/leetcode') {
           const loadLeetcode = async () => {
-            const username = url.pathname.replace('/api/leetcode/', '');
-            if (!username) {
-              return {
-                data: { error: 'Username is required' },
-                status: 400
-              };
-            }
-
-            const leetcodeStats = await getLeetCodeStats(username);
+            const leetcodeStats = await getLeetCodeStats(env.LEETCODE_NAME);
             if (!leetcodeStats) {
               return {
                 data: { error: 'LeetCode user not found' },
@@ -372,22 +419,14 @@ export default {
             }
           }
 
-          return cachedJson(request, ctx, TTL_TIME, allowedOrigin, loadLeetcode);
+          return cachedJson(request, ctx, TTL_TIME.LEETCODE, allowedOrigin, loadLeetcode);
         }
 
-        if (url.pathname.startsWith('/api/github/')) {
+        if (url.pathname === '/api/github') {
           const loadGithub = async () => {
-            const username = url.pathname.replace('/api/github/', '');
-            if (!username) {
-              return {
-                data: { error: 'Username is required' },
-                status: 400
-              };
-            }
-
             const fromDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString(); // new date - 1 year
             const toDate = new Date().toISOString();
-            const githubStats = await getGithubStats(username, env, fromDate, toDate);
+            const githubStats = await getGithubStats(env.GITHUB_NAME, env, fromDate, toDate);
             if (!githubStats) {
               return {
                 data: { error: 'Github user not found' },
@@ -401,18 +440,16 @@ export default {
             }
           }
 
-          return cachedJson(request, ctx, TTL_TIME, allowedOrigin, loadGithub);
+          return cachedJson(request, ctx, TTL_TIME.GITHUB, allowedOrigin, loadGithub);
         }
 
         return json({error: 'End point does not exist'}, 404, allowedOrigin)
       } catch(error) {
 
-        return json({
-          error: error instanceof Error ? error.message : 'Unknown error',
-        }, 500, allowedOrigin);
+        return json({error: 'Internal server error'}, 500, allowedOrigin, {'Cache-Control': 'no-store'});
       }
     } else {
-      return json({error: 'Forbidden Request'}, 405, allowedOrigin);
+      return json({error: 'Method not allowed'}, 405, allowedOrigin, {'Allow': 'GET, OPTIONS'});
     }
 	},
 } satisfies ExportedHandler<Env>;

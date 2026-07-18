@@ -7,6 +7,8 @@ interface __BaseEnv_Env {
 	PORTFOLIO_LIMITER: RateLimit;
 	ORIGIN: string;
 	GITHUB_TOKEN: string;
+    LEETCODE_NAME: string;
+    GITHUB_NAME: string;
 }
 declare namespace Cloudflare {
 	interface GlobalProps {
