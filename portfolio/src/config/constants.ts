@@ -87,10 +87,15 @@ export const RESUME_NAME = '/resume-03-01-2026.pdf';
 const NO = 0;
 const MAYBE = 1;
 const YES = 2;
+export const AVAILABILITY_LABELS = {
+  [NO]: 'No',
+  [MAYBE]: 'Maybe',
+  [YES]: 'Yes',
+} as const;
 export const POSITION_AVAILABILITY = NO;
-export const COLLAB_AVAILABILITY = MAYBE;
+export const COLLAB_AVAILABILITY = YES;
 export const FREELANCE_AVAILABILITY = YES;
 
-export const POSITION_DESC = 'im at hackazouk rn';
-export const COLLAB_DESC = 'HELL YEAH!';
-export const FREELANCE_DESC = 'maybe, we shall see depending on circumstances';
+export const POSITION_DESC = 'I am currently working as a backend developer intern in Hackazouk.';
+export const COLLAB_DESC = 'I am open to any project collabs or even hackathons if you\'re looking for someone who is passionate about building reliable software!';
+export const FREELANCE_DESC = 'I am also open right now to do any work that includes making websites or software of any kind, depending on your needs.';

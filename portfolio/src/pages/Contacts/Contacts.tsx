@@ -1,6 +1,7 @@
 import './Contacts.css';
 import { useEffect, useState } from 'react';
 import {
+  AVAILABILITY_LABELS,
   COLLAB_AVAILABILITY,
   POSITION_AVAILABILITY,
   FREELANCE_AVAILABILITY,
@@ -119,9 +120,7 @@ function InterestArtifact({ type }: Pick<ContactInterest, 'type'>) {
         <div className='stackPane stackPane--code'>
           <small>API + data</small>
           <code><i>const</i> project = <b>await</b><br /> db.projects.find(id);<br /><em>return</em> project;</code>
-          <div className='databaseRows'><span /><span /><span /></div>
         </div>
-        <p>independent build: interface -&gt; service -&gt; data</p>
       </div>
     );
   }
@@ -138,7 +137,6 @@ function InterestArtifact({ type }: Pick<ContactInterest, 'type'>) {
         <div className='networkNode networkNode--data'><b>data</b><span>query / analyze</span></div>
         <span className='packet packet--one'>01</span><span className='packet packet--two'>02</span>
       </div>
-      <p>device -&gt; network -&gt; security -&gt; service -&gt; data</p>
     </div>
   );
 }
@@ -177,7 +175,7 @@ function Contacts() {
     { 
       name: 'Cyber Security', 
       description: 'Also still learning this one, but is actually one of the career paths I am considering.', 
-      backstory: 'In an era of AI vibe coding, security of your software or IoT\'s is of utmost priority. That\'s what really got me into it, as well as needing it for my other interests like understanding Operating Systems.', 
+      backstory: 'In an era of AI vibe coding, security of your software or servers is of utmost priority. That\'s what really got me into it, as well as needing it for my other interests like understanding Operating Systems. It\'s also intersting to see how math padlocks our important stuff.',
       type: 'cyber_security' 
     },
     { 
@@ -206,7 +204,7 @@ function Contacts() {
     }
   ];
 
-  const availabilityStatus: Array<string> = ['red', 'yellow', 'green'];
+  const availabilityStatus = ['red', 'yellow', 'green'] as const;
 
   const [selectedInterest, setSelectedInterest] = useState<number | null>(null);
   const [time, setTime] = useState<Date>(new Date());
@@ -265,16 +263,7 @@ function Contacts() {
         <p className='bestwayDescription'>
           Email or google chat is the best way to contact me for professional opportunities, collaboration, or questions about my work.
         </p>
-      </section>
-
-      <section className='contactSection'>
-        <header className='contactSectionHeader'>
-          <span>02</span>
-          <div>
-            <p>Professional profiles</p>
-            <h2>Professional Links</h2>
-          </div>
-        </header>
+        <h3 className='professionalLinksHeading'>Professional links:</h3>
         <div className='linkBoxGroup'>
           {proLinks.map((linkItem) => {
             return (
@@ -299,7 +288,7 @@ function Contacts() {
 
       <section className='contactSection'>
         <header className='contactSectionHeader'>
-          <span>03</span>
+          <span>02</span>
           <div>
             <p>Technical interests · an active learning map</p>
             <h2>Areas of Interest</h2>
@@ -369,7 +358,7 @@ function Contacts() {
 
       <section className='contactSection'>
         <header className='contactSectionHeader'>
-          <span>04</span>
+          <span>03</span>
           <div>
             <p>Current status</p>
             <h2>Availability</h2>
@@ -380,15 +369,33 @@ function Contacts() {
         <div className='statusTable'>
           <ul>
             <li className={availabilityStatus[POSITION_AVAILABILITY]}>
-              <span>Internship availability</span>
+              <div className='availabilityHeading'>
+                <span>Internship availability</span>
+                <span className='availabilityStatusBadge'>
+                  <i aria-hidden='true' />
+                  {AVAILABILITY_LABELS[POSITION_AVAILABILITY]}
+                </span>
+              </div>
               <strong>{POSITION_DESC}</strong>
             </li>
             <li className={availabilityStatus[COLLAB_AVAILABILITY]}>
-              <span>Collaboration availability</span>
+              <div className='availabilityHeading'>
+                <span>Collaboration availability</span>
+                <span className='availabilityStatusBadge'>
+                  <i aria-hidden='true' />
+                  {AVAILABILITY_LABELS[COLLAB_AVAILABILITY]}
+                </span>
+              </div>
               <strong>{COLLAB_DESC}</strong>
             </li>
             <li className={availabilityStatus[FREELANCE_AVAILABILITY]}>
-              <span>Freelance availability</span>
+              <div className='availabilityHeading'>
+                <span>Freelance availability</span>
+                <span className='availabilityStatusBadge'>
+                  <i aria-hidden='true' />
+                  {AVAILABILITY_LABELS[FREELANCE_AVAILABILITY]}
+                </span>
+              </div>
               <strong>{FREELANCE_DESC}</strong>
             </li>
           </ul>
@@ -398,23 +405,18 @@ function Contacts() {
       {/* location */}
       <section className='contactSection'>
         <header className='contactSectionHeader'>
-          <span>05</span>
+          <span>04</span>
           <div>
             <p>Local context</p>
             <h2>Location</h2>
           </div>
         </header>
-        <p className='locationDescription'> currently residing in the philippines</p>
+        <p className='locationDescription'> I am currently residing and studying in the Philippines.</p>
         <div className='clockBox'>
           Current time in where I live (UTC + 8): <br />
           {time.toLocaleString()}
         </div>
         <div className='locationMap'>
-          <div className='locationMapHud' aria-hidden='true'>
-            <span>14.7102° N</span>
-            <strong>Caloocan · Metro Manila</strong>
-            <span>120.9479° E</span>
-          </div>
           <iframe
             src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d123489.34661088791!2d120.94785957731173!3d14.710212346670867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b1b519841b5f%3A0x5e770e225042d1a!2sCaloocan%2C%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1782221355237!5m2!1sen!2sph'
             title='Map showing Caloocan, Metro Manila'
@@ -424,6 +426,13 @@ function Contacts() {
           />
         </div>
       </section>
+
+      <button className='contactBackToTop' type='button' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label='Back to top'>
+        <span>Back to top</span>
+        <svg viewBox='0 0 24 24' aria-hidden='true'>
+          <path d='m6 15 6-6 6 6' />
+        </svg>
+      </button>
     </section>
   );
 }

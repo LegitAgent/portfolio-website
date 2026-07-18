@@ -172,8 +172,8 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
   align-items: center;
-  min-height: 18rem;
-  padding: 2.4rem 0;
+  min-height: 22rem;
+  padding: 3.25rem 0;
   animation: workPathIn 620ms ease-out both;
 }
 
@@ -634,7 +634,7 @@
   .workMapItem {
     grid-template-columns: 2.3rem minmax(0, 1fr);
     min-height: 0;
-    padding: 1.55rem 0;
+    padding: 2.15rem 0;
   }
 
   .workMapItem > .workDisplay,
