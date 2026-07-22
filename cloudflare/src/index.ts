@@ -193,7 +193,7 @@ const TTL_TIME = {
   PORTFOLIO_STATS: ONE_HOUR,
   LEETCODE: ONE_HOUR,
   GITHUB: ONE_HOUR,
-  ARTICLE_NOT_FOUND: 60,
+  ARTICLE_NOT_FOUND: 30,
 } as const;
 
 const VALID_PATHS = new Set([
@@ -219,7 +219,7 @@ export default {
     const isAllowed = isAllowedOrigin(request, env);
 
     // for ai dudes
-    if (url.pathname === '/robots.txt') {
+    if (request.method === 'GET' && url.pathname === '/robots.txt') {
       return text('User-agent: *\nDisallow: /\n')
     }
 
