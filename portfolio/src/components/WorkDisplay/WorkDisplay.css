@@ -1,304 +1,367 @@
 .workDisplay {
+  --card-accent: #69cbd7;
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
   min-width: 0;
-  padding: 1.2rem;
-  border: 1px solid rgba(125, 188, 235, 0.14);
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border: 1px solid color-mix(in srgb, var(--card-accent) 20%, transparent);
   border-radius: 5px;
   color: rgba(238, 247, 255, 0.92);
-  background: linear-gradient(180deg, rgba(8, 25, 58, 0.5), rgba(1, 8, 22, 0.72)), rgba(2, 8, 22, 0.66);
-  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.18);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 5%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(8, 24, 48, 0.94), rgba(2, 9, 22, 0.97));
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.workDisplay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.8rem;
+  height: 1px;
+  background: var(--card-accent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--card-accent) 42%, transparent);
+}
+
+.workDisplay:hover,
+.workDisplay:focus-within {
+  border-color: color-mix(in srgb, var(--card-accent) 48%, transparent);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.27);
+  transform: translateY(-3px);
+}
+
+.workDisplay--internship,
+.workDisplay--academics {
+  --card-accent: #8fa9ff;
+}
+
+.workDisplay--hackathon,
+.workDisplay--project {
+  --card-accent: #efa75e;
+}
+
+.workDisplay--competition {
+  --card-accent: #f1c65f;
+}
+
+.workDisplay--leadership,
+.workDisplay--volunteer,
+.workDisplay--organization,
+.workDisplay--community,
+.workDisplay--mentorship {
+  --card-accent: #c196f7;
+}
+
+.workDisplay--open_source {
+  --card-accent: #76d9a3;
 }
 
 .workDisplay.is-current {
-  border-color: rgba(134, 239, 172, 0.42);
-  box-shadow:
-    0 0 0 1px rgba(134, 239, 172, 0.08),
-    0 0 24px rgba(34, 197, 94, 0.18),
-    0 16px 38px rgba(0, 0, 0, 0.18);
+  border-color: rgba(111, 221, 170, 0.48);
+  box-shadow: 0 0 28px rgba(53, 184, 121, 0.16), 0 18px 42px rgba(0, 0, 0, 0.22);
 }
 
-.workDisplay.is-current::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border: 1px solid rgba(134, 239, 172, 0.42);
-  border-radius: inherit;
-  pointer-events: none;
-  filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.32));
+.workArchiveLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.workType,
+.workCurrentBadge {
+  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: 0.61rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.workType {
+  color: color-mix(in srgb, var(--card-accent) 86%, white);
+}
+
+.workType::before {
+  content: '//';
+  margin-right: 0.4rem;
+  color: color-mix(in srgb, var(--card-accent) 55%, transparent);
+}
+
+.workCurrentBadge {
+  padding: 0.3rem 0.48rem;
+  border: 1px solid rgba(111, 221, 170, 0.34);
+  color: #9aebbf;
+  background: rgba(46, 181, 112, 0.09);
+  box-shadow: 0 0 12px rgba(46, 181, 112, 0.1);
 }
 
 .workHeader {
   display: flex;
-  align-items: flex-start;
-  gap: 0.9rem;
+  align-items: center;
+  gap: 0.85rem;
   min-width: 0;
-  padding-right: 5.5rem;
 }
 
-.workImage {
+.workImage,
+.workMonogram {
   flex: 0 0 auto;
   width: 3.25rem;
   height: 3.25rem;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 24%, transparent);
+  border-radius: 4px;
+  background: rgba(1, 8, 22, 0.5);
+}
+
+.workImage {
+  padding: 0.3rem;
   object-fit: contain;
-  border-radius: 0.8rem;
-  background: rgba(1, 8, 22, 0.38);
+}
+
+.workMonogram {
+  display: grid;
+  place-items: center;
+  color: color-mix(in srgb, var(--card-accent) 82%, white);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
 }
 
 .workHeading {
-  flex: 1;
   min-width: 0;
 }
 
 .workTitle {
   margin: 0;
-  min-width: 0;
-  font-size: 1.12rem;
-  font-weight: 820;
-  line-height: 1.3;
+  color: rgba(244, 249, 253, 0.98);
+  font-size: clamp(1.12rem, 2vw, 1.38rem);
+  font-weight: 780;
+  line-height: 1.25;
   overflow-wrap: anywhere;
 }
 
-.workType {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 2;
-  width: fit-content;
-  max-width: calc(100% - 2rem);
-  padding: 0.25rem 0.5rem;
-  border: 1px solid rgba(125, 188, 235, 0.2);
-  border-radius: 4px;
-  color: rgba(175, 220, 255, 0.88);
-  background: rgba(44, 119, 190, 0.1);
-  font-family: 'Courier New', ui-monospace, monospace;
-  font-size: 0.62rem;
-  font-weight: 800;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.workType--leadership,
-.workType--mentorship {
-  color: rgba(255, 222, 143, 0.92);
-  border-color: rgba(235, 198, 104, 0.24);
-  background: rgba(224, 181, 73, 0.09);
-}
-
-.workType--academics,
-.workType--competition {
-  color: rgba(205, 190, 255, 0.92);
-  border-color: rgba(167, 139, 250, 0.24);
-  background: rgba(139, 92, 246, 0.09);
-}
-
-.workType--volunteer,
-.workType--organization {
-  color: rgba(205, 255, 220, 0.92);
-  border-color: rgba(134, 239, 172, 0.24);
-  background: rgba(34, 197, 94, 0.09);
-}
-
-.workType--project {
-  color: rgba(255, 188, 188, 0.92);
-  border-color: rgba(248, 113, 113, 0.24);
-  background: rgba(239, 68, 68, 0.08);
-}
-
 .workRole {
-  margin: 0.28rem 0 0;
-  color: rgba(222, 235, 248, 0.82);
-  font-size: 0.96rem;
+  margin: 0.25rem 0 0;
+  color: color-mix(in srgb, var(--card-accent) 66%, #dbe9f5);
+  font-size: 0.91rem;
   line-height: 1.45;
 }
 
 .workMeta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 0.35rem 0.7rem;
+  padding-block: 0.7rem;
+  border-top: 1px solid rgba(125, 188, 235, 0.09);
+  border-bottom: 1px solid rgba(125, 188, 235, 0.09);
 }
 
 .workMeta span {
-  width: fit-content;
-  border: 1px solid rgba(125, 188, 235, 0.14);
-  border-radius: 999px;
-  padding: 0.3rem 0.55rem;
-  color: rgba(222, 235, 248, 0.8);
-  background: rgba(1, 8, 22, 0.28);
-  font-size: 0.78rem;
-  font-weight: 720;
+  position: relative;
+  color: rgba(170, 192, 214, 0.74);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
 }
 
-.workMeta .workCurrentBadge {
-  color: rgba(205, 255, 220, 0.96);
-  background: rgba(34, 197, 94, 0.14);
-  border-color: rgba(134, 239, 172, 0.32);
-  box-shadow: 0 0 12px rgba(34, 197, 94, 0.12);
+.workMeta span + span::before {
+  content: '·';
+  margin-right: 0.7rem;
+  color: color-mix(in srgb, var(--card-accent) 50%, transparent);
+}
+
+.workDate {
+  color: rgba(209, 225, 239, 0.85) !important;
 }
 
 .workTextContent {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.9rem;
 }
 
 .workDescription {
   margin: 0;
-  color: rgba(222, 235, 248, 0.8);
-  font-size: 0.96rem;
-  line-height: 1.7;
+  color: rgba(205, 220, 234, 0.76);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.workContributions {
+  padding-left: 0.85rem;
+  border-left: 1px solid color-mix(in srgb, var(--card-accent) 36%, transparent);
+}
+
+.workContributions > p {
+  margin: 0 0 0.5rem;
+  color: rgba(147, 172, 196, 0.68);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 780;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.workContributions ul {
+  display: grid;
+  gap: 0.36rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workContributions li {
+  position: relative;
+  padding-left: 0.85rem;
+  color: rgba(211, 225, 237, 0.8);
+  font-size: 0.84rem;
+  line-height: 1.48;
+}
+
+.workContributions li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--card-accent);
+}
+
+.workTech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.workTech span {
+  padding: 0.28rem 0.46rem;
+  border: 1px solid rgba(125, 188, 235, 0.12);
+  color: rgba(189, 211, 229, 0.78);
+  background: rgba(2, 9, 22, 0.45);
+  font-family: var(--font-mono);
+  font-size: 0.61rem;
 }
 
 .workLinks {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 0.65rem;
+  gap: 0.75rem;
+  padding-top: 0.2rem;
 }
 
-.workLinks a,
-.workLink {
+.workLink,
+.workExternalLink {
+  display: inline-flex;
+  align-items: center;
   width: fit-content;
-  border: 1px solid rgba(125, 188, 235, 0.16);
-  border-radius: 999px;
-  padding: 0.48rem 0.72rem;
-  color: rgba(175, 220, 255, 0.94);
-  font-size: 0.86rem;
+  color: color-mix(in srgb, var(--card-accent) 80%, white);
+  font-size: 0.8rem;
   font-weight: 760;
   text-decoration: none;
-  transition:
-    background-color 180ms ease,
-    border-color 180ms ease,
-    transform 180ms ease;
 }
 
-.workLinks a:hover,
-.workLinks a:focus-visible,
+.workLink {
+  gap: 0.5rem;
+  padding-block: 0.32rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--card-accent) 36%, transparent);
+}
+
+.workLinkArrow {
+  transition: transform 150ms ease;
+}
+
+.workLink:hover .workLinkArrow,
+.workLink:focus-visible .workLinkArrow {
+  transform: translateX(4px);
+}
+
+.workExternalLink {
+  color: rgba(166, 190, 211, 0.68);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+}
+
 .workLink:hover,
-.workLink:focus-visible {
-  transform: translateY(-2px);
-  background: rgba(44, 119, 190, 0.18);
-  border-color: rgba(125, 188, 235, 0.42);
+.workLink:focus-visible,
+.workExternalLink:hover,
+.workExternalLink:focus-visible {
+  color: rgba(239, 249, 255, 0.98);
   outline: none;
 }
 
 :root[data-theme='light'] .workDisplay {
   color: rgba(18, 32, 52, 0.94);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(236, 243, 252, 0.9)), rgba(247, 250, 255, 0.86);
-  border: 1px solid rgba(72, 98, 135, 0.14);
-  border-radius: 5px;
-  box-shadow: 0 18px 44px rgba(55, 80, 120, 0.12);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 7%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(237, 244, 251, 0.98));
+  box-shadow: 0 18px 42px rgba(55, 80, 120, 0.11);
 }
 
-:root[data-theme='light'] .workDisplay.is-current {
-  border-color: rgba(22, 120, 68, 0.34);
-  box-shadow:
-    0 0 0 1px rgba(22, 120, 68, 0.06),
-    0 0 24px rgba(22, 120, 68, 0.14),
-    0 18px 44px rgba(55, 80, 120, 0.12);
+:root[data-theme='light'] .workDisplay:hover,
+:root[data-theme='light'] .workDisplay:focus-within {
+  box-shadow: 0 20px 48px rgba(55, 80, 120, 0.17);
 }
 
-:root[data-theme='light'] .workDisplay.is-current::before {
-  border-color: rgba(22, 120, 68, 0.34);
-  filter: drop-shadow(0 0 10px rgba(22, 120, 68, 0.2));
+:root[data-theme='light'] .workImage,
+:root[data-theme='light'] .workMonogram {
+  background: rgba(255, 255, 255, 0.74);
 }
 
-:root[data-theme='light'] .workImage {
-  background: rgba(255, 255, 255, 0.62);
+:root[data-theme='light'] .workTitle {
+  color: rgba(18, 32, 52, 0.96);
 }
 
-:root[data-theme='light'] .workRole,
-:root[data-theme='light'] .workDescription {
-  color: rgba(28, 43, 65, 0.78);
+:root[data-theme='light'] .workRole {
+  color: color-mix(in srgb, var(--card-accent) 65%, #293e55);
 }
 
-:root[data-theme='light'] .workType {
-  color: rgba(42, 82, 134, 0.92);
-  border-color: rgba(55, 96, 150, 0.2);
-  background: rgba(55, 96, 150, 0.07);
+:root[data-theme='light'] .workMeta span,
+:root[data-theme='light'] .workDescription,
+:root[data-theme='light'] .workContributions li {
+  color: rgba(34, 49, 72, 0.74);
 }
 
-:root[data-theme='light'] .workType--leadership,
-:root[data-theme='light'] .workType--mentorship {
-  color: rgba(112, 72, 4, 0.94);
-  border-color: rgba(151, 105, 18, 0.24);
-  background: rgba(224, 181, 73, 0.12);
+:root[data-theme='light'] .workDate {
+  color: rgba(25, 40, 60, 0.88) !important;
 }
 
-:root[data-theme='light'] .workType--academics,
-:root[data-theme='light'] .workType--competition {
-  color: rgba(91, 54, 151, 0.94);
-  border-color: rgba(109, 76, 168, 0.22);
-  background: rgba(139, 92, 246, 0.08);
-}
-
-:root[data-theme='light'] .workType--volunteer,
-:root[data-theme='light'] .workType--organization {
-  color: rgba(12, 105, 57, 0.94);
-  border-color: rgba(22, 120, 68, 0.22);
-  background: rgba(22, 120, 68, 0.08);
-}
-
-:root[data-theme='light'] .workType--project {
-  color: rgba(148, 40, 40, 0.94);
-  border-color: rgba(176, 38, 38, 0.2);
-  background: rgba(220, 38, 38, 0.06);
-}
-
-:root[data-theme='light'] .workMeta span {
-  color: rgba(28, 43, 65, 0.76);
+:root[data-theme='light'] .workTech span {
+  color: rgba(42, 65, 91, 0.76);
   background: rgba(255, 255, 255, 0.58);
-  border-color: rgba(72, 98, 135, 0.14);
 }
 
-:root[data-theme='light'] .workMeta .workCurrentBadge {
-  color: rgba(12, 85, 45, 0.96);
-  background: rgba(201, 240, 214, 0.72);
-  border-color: rgba(22, 120, 68, 0.24);
-}
-
-:root[data-theme='light'] .workDisplay a,
-:root[data-theme='light'] .workDisplay button {
-  color: rgba(42, 82, 134, 0.95);
-}
-
-:root[data-theme='light'] .workLinks a,
 :root[data-theme='light'] .workLink {
-  border-color: rgba(72, 98, 135, 0.16);
-}
-
-:root[data-theme='light'] .workLinks a:hover,
-:root[data-theme='light'] .workLinks a:focus-visible,
-:root[data-theme='light'] .workLink:hover,
-:root[data-theme='light'] .workLink:focus-visible {
-  background: rgba(224, 235, 249, 0.88);
-  border-color: rgba(55, 96, 150, 0.32);
+  color: color-mix(in srgb, var(--card-accent) 78%, #183954);
 }
 
 @media (max-width: 520px) {
   .workDisplay {
-    padding: 1rem;
+    padding: 0.95rem;
   }
 
-  .workHeader {
-    align-items: flex-start;
-    padding-right: 0;
-    padding-top: 1.8rem;
-  }
-
-  .workImage {
+  .workImage,
+  .workMonogram {
     width: 2.8rem;
     height: 2.8rem;
   }
 
-  .workMeta span {
-    font-size: 0.74rem;
+  .workLinks {
+    align-items: flex-start;
+    flex-direction: column;
   }
+}
 
-  .workType {
-    top: 0.75rem;
-    right: 0.75rem;
-    font-size: 0.58rem;
+@media (prefers-reduced-motion: reduce) {
+  .workDisplay,
+  .workLinkArrow {
+    transition: none;
   }
 }

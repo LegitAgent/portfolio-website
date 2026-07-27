@@ -448,7 +448,7 @@ function Stats() {
               <div>
                 <p>Problem solving</p>
                 <h2>LeetCode</h2>
-                <h3>I just lost my old account with 200+ problems solved😭</h3>
+                <h3>Building consistency through regular algorithm and data-structure practice.</h3>
               </div>
             </div>
             <a className='leetcodeProfileLink' href={`https://leetcode.com/u/${leetcode.username}/`} target='_blank' rel='noreferrer'>

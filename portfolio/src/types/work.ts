@@ -1,6 +1,19 @@
 import type { Tag } from './tag';
 
-type ExperienceType = 'work' | 'leadership' | 'academics' | 'volunteer' | 'organization' | 'competition' | 'project' | 'mentorship';
+export type ExperienceType =
+  | 'work'
+  | 'internship'
+  | 'hackathon'
+  | 'competition'
+  | 'open_source'
+  | 'freelance'
+  | 'community'
+  | 'leadership'
+  | 'academics'
+  | 'volunteer'
+  | 'organization'
+  | 'project'
+  | 'mentorship';
 
 export interface WorkDisplayProps {
   work: WorkExperience;
@@ -24,7 +37,7 @@ export interface WorkResponse {
   tags: Tag[];
 }
 
-interface WorkExperience {
+export interface WorkExperience {
   work_id: number;
   company_name: string;
   role_title: string;

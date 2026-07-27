@@ -60,7 +60,6 @@ function Certificates() {
   return (
     <main className='certificatesPage'>
       <header className='certificatesHeader'>
-        <p>Verified learning</p>
         <h1>Certificates</h1>
         <span>Courses and credentials I have completed while developing my technical knowledge across software, cloud, and computer science.</span>
       </header>

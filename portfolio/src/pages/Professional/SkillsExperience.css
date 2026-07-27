@@ -1,125 +1,115 @@
 .seContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: calc(100% - 4.5rem);
   max-width: none;
-  margin: 0 0 0 4.5rem;
-  padding: 5vh max(1rem, calc((100vw - 4.5rem - 1400px) / 2)) 6rem;
-  gap: 2rem;
+  margin-left: 4.5rem;
+  padding: 5vh max(1rem, calc((100vw - 4.5rem - 1400px) / 2)) 7rem;
+  gap: clamp(4rem, 8vw, 7rem);
+  overflow: hidden;
+}
+
+.seContainer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 72% 38%, rgba(55, 150, 205, 0.08), transparent 26rem),
+    linear-gradient(rgba(123, 174, 213, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123, 174, 213, 0.025) 1px, transparent 1px);
+  background-size: auto, 44px 44px, 44px 44px;
+  mask-image: linear-gradient(to bottom, transparent, black 12%, black 92%, transparent);
+  pointer-events: none;
 }
 
 .skillsContainer,
 .experienceContainer {
   width: 100%;
-  animation: seFadeUp 520ms ease-out both;
+  animation: seFadeUp 500ms ease-out both;
 }
 
-.experienceContainer {
-  animation-delay: 120ms;
+.skillsContainer h2,
+.experienceContainer h1 {
+  margin: 0;
+  font-size: clamp(2.15rem, 5vw, 4.4rem);
+  font-weight: 760;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+.skillsContainer h2 {
+  font-size: clamp(2.15rem, 5vw, 3.4rem);
 }
 
 .subtitleHeader {
-  margin: 0 0 0.7rem;
-  color: rgba(134, 239, 172, 0.82);
-  font-family: 'Courier New', ui-monospace, monospace;
-  font-size: 0.76rem;
+  margin: 0 0 0.8rem;
+  color: #82ddb1;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-}
-
-.skillsContainer h1,
-.experienceContainer h1 {
-  font-size: clamp(2rem, 5vw, 3.4rem);
-  line-height: 1;
-  font-weight: 760;
-  letter-spacing: 0;
 }
 
 .skillsDescription,
 .experienceDescription {
-  margin-top: 0.55rem;
-  color: rgba(214, 229, 245, 0.72);
-  line-height: 1.6;
+  max-width: 760px;
+  margin-top: 0.9rem;
+  color: rgba(209, 224, 239, 0.72);
+  font-size: clamp(0.98rem, 1.4vw, 1.08rem);
+  line-height: 1.7;
 }
 
 .technicalSkills {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 1.35rem;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
 }
 
 .skillGroup {
   min-width: 0;
   padding: 1rem;
-  border: 1px solid rgba(125, 188, 235, 0.14);
+  border: 1px solid rgba(125, 188, 235, 0.13);
   border-radius: 5px;
-  background: linear-gradient(180deg, rgba(8, 25, 58, 0.48), rgba(1, 8, 22, 0.68)), rgba(2, 8, 22, 0.62);
-  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.16);
-  animation: seFadeUp 520ms ease-out both;
-}
-
-.skillGroup:nth-child(1) {
-  animation-delay: 80ms;
-}
-
-.skillGroup:nth-child(2) {
-  animation-delay: 140ms;
-}
-
-.skillGroup:nth-child(3) {
-  animation-delay: 200ms;
-}
-
-.skillGroup:nth-child(4) {
-  animation-delay: 260ms;
+  background: linear-gradient(145deg, rgba(8, 25, 51, 0.7), rgba(2, 9, 22, 0.86));
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.14);
 }
 
 .skillType {
   margin: 0 0 0.75rem;
-  color: rgba(175, 220, 255, 0.94);
-  font-size: 0.84rem;
+  color: rgba(175, 220, 255, 0.9);
+  font-size: 0.77rem;
   font-weight: 820;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .skillContainer {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  gap: 0.55rem;
+  gap: 0.5rem;
 }
 
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  min-height: 2.15rem;
-  padding: 0.38rem 0.68rem 0.38rem 0.45rem;
-  border: 1px solid rgba(125, 188, 235, 0.16);
+  gap: 0.42rem;
+  min-height: 2.05rem;
+  padding: 0.34rem 0.64rem 0.34rem 0.43rem;
+  border: 1px solid rgba(125, 188, 235, 0.15);
   border-radius: 999px;
-  color: rgba(238, 247, 255, 0.92);
-  background: rgba(6, 18, 42, 0.54);
-  font-size: 0.92rem;
-  font-weight: 700;
-  animation: tagPop 420ms ease-out both;
-}
-
-.tag:nth-child(2n) {
-  animation-delay: 45ms;
-}
-
-.tag:nth-child(3n) {
-  animation-delay: 90ms;
+  color: rgba(238, 247, 255, 0.9);
+  background: rgba(5, 17, 38, 0.62);
+  font-size: 0.86rem;
+  font-weight: 680;
 }
 
 .tagIcon {
-  width: 1.15rem;
-  height: 1.15rem;
-  flex: 0 0 auto;
+  width: 1.1rem;
+  height: 1.1rem;
   object-fit: contain;
   opacity: 0.82;
 }
@@ -128,85 +118,264 @@
   filter: invert(1);
 }
 
-.workTree {
+.experienceContainer {
   position: relative;
-  margin-top: 1.75rem;
-  --tree-tail-extension: 6rem;
-  padding: 0.5rem 0 0;
+  isolation: isolate;
 }
 
-.workTree::after {
+.journeyHeader {
+  position: relative;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 1px solid rgba(125, 188, 235, 0.2);
+  border-bottom: 1px solid rgba(125, 188, 235, 0.13);
+  background: linear-gradient(90deg, rgba(10, 29, 58, 0.62), rgba(3, 11, 25, 0.2) 70%);
+}
+
+.journeyHeader::before,
+.journeyHeader::after {
   content: '';
   position: absolute;
-  left: 50%;
-  bottom: calc(-1 * var(--tree-tail-extension) + 1px);
-  z-index: 0;
-  width: 2px;
-  height: calc(var(--tree-tail-extension) + 1px);
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(125, 188, 235, 0.18), rgba(125, 188, 235, 0.08));
-  pointer-events: none;
-  transform: translateX(-50%);
+  width: 0.45rem;
+  height: 0.45rem;
+  border: 1px solid rgba(125, 188, 235, 0.42);
+}
+
+.journeyHeader::before {
+  top: -0.25rem;
+  left: 0;
+}
+
+.journeyHeader::after {
+  right: 0;
+  bottom: -0.25rem;
+}
+
+.journeyIndex {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1.65rem;
+  border-top: 1px solid rgba(125, 188, 235, 0.1);
+}
+
+.journeyIndex span {
+  padding: 0.7rem 1.2rem 0 0;
+  color: rgba(169, 194, 218, 0.72);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 720;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.journeyIndex span::before {
+  content: '+';
+  margin-right: 0.4rem;
+  color: rgba(109, 206, 222, 0.8);
+}
+
+.journeyControls {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.72rem clamp(0.75rem, 2vw, 1.2rem);
+  border-bottom: 1px solid rgba(125, 188, 235, 0.15);
+  background: rgba(2, 9, 22, 0.9);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(14px);
+}
+
+.journeyControlsLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  color: rgba(155, 181, 205, 0.6);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.journeyFilters {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.journeyFilters::-webkit-scrollbar {
+  display: none;
+}
+
+.journeyFilter {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  color: rgba(178, 199, 220, 0.68);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.69rem;
+  font-weight: 720;
+  text-transform: uppercase;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.journeyFilter::after {
+  content: '·';
+  position: absolute;
+  right: -0.17rem;
+  color: rgba(125, 188, 235, 0.25);
+}
+
+.journeyFilter:last-child::after {
+  content: none;
+}
+
+.journeyFilter:hover,
+.journeyFilter:focus-visible,
+.journeyFilter.is-active {
+  color: #dff8ff;
+  background: rgba(83, 190, 211, 0.06);
+}
+
+.journeyFilter.is-active {
+  border-bottom-color: #63d0d5;
+  box-shadow: inset 0 -3px 8px rgba(76, 201, 210, 0.1);
+}
+
+.workTree {
+  position: relative;
+  padding-top: 1.5rem;
 }
 
 .workList {
+  --journey-progress: 0;
   position: relative;
-  display: flex;
-  flex-direction: column;
+  min-height: 8rem;
+  padding-bottom: 2rem;
+}
+
+.workList::before,
+.workList::after {
+  content: '';
+  position: absolute;
+  top: 1.2rem;
+  left: 50%;
+  width: 1px;
+  height: calc(100% - 1.2rem);
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .workList::before {
-  content: '';
-  position: absolute;
-  top: 2.25rem;
-  bottom: 0;
-  left: 50%;
-  width: 2px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, transparent, rgba(125, 188, 235, 0.22) 8%, rgba(125, 188, 235, 0.18) 92%), rgba(125, 188, 235, 0.08);
-  transform: translateX(-50%);
+  background: rgba(125, 188, 235, 0.16);
+}
+
+.workList::after {
+  height: calc((100% - 1.2rem) * var(--journey-progress));
+  background: linear-gradient(#66d3da, #6b9fe1 72%, #a78bfa);
+  box-shadow: 0 0 12px rgba(74, 185, 216, 0.28);
+}
+
+.journeyPhase {
+  position: relative;
+}
+
+.journeyPhase + .journeyPhase {
+  margin-top: 1rem;
+}
+
+.journeyPhaseHeader {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
+  align-items: center;
+  min-height: 6.5rem;
+}
+
+.journeyPhaseTick {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  width: 0.62rem;
+  height: 0.62rem;
+  border: 2px solid #79c9e4;
+  background: #071326;
+  transform: rotate(45deg);
+}
+
+.journeyYear {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: end;
+  margin-right: 1.2rem;
+  color: rgba(229, 242, 252, 0.94);
+  font-family: var(--font-mono);
+  font-size: clamp(1.3rem, 3vw, 2.3rem);
+  font-weight: 760;
+  letter-spacing: -0.04em;
+}
+
+.journeyPhaseHeader > div {
+  grid-column: 3;
+  grid-row: 1;
+  margin-left: 1.2rem;
+  max-width: 28rem;
+}
+
+.journeyPhaseHeader h2 {
+  margin: 0;
+  color: rgba(224, 239, 250, 0.94);
+  font-size: 0.98rem;
+  font-weight: 760;
+}
+
+.journeyPhaseHeader > div p {
+  margin-top: 0.28rem;
+  color: rgba(162, 186, 209, 0.66);
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
 .workMapItem {
+  --node-accent: #6acbd7;
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
   align-items: center;
-  min-height: 22rem;
-  padding: 3.25rem 0;
-  animation: workPathIn 620ms ease-out both;
+  padding: 1.5rem 0;
+  animation: workPathIn 380ms ease-out both;
 }
 
-.workMapItem:nth-child(1) {
-  animation-delay: 120ms;
+.workMapItem--internships {
+  --node-accent: #8fa9ff;
 }
 
-.workMapItem:nth-child(2) {
-  animation-delay: 220ms;
+.workMapItem--hackathons {
+  --node-accent: #efa75e;
 }
 
-.workMapItem:nth-child(3) {
-  animation-delay: 320ms;
+.workMapItem--competitions {
+  --node-accent: #f2c766;
 }
 
-.workMapItem:nth-child(4) {
-  animation-delay: 420ms;
-}
-
-.workMapItem:nth-child(n + 5) {
-  animation-delay: 520ms;
+.workMapItem--community {
+  --node-accent: #c196f7;
 }
 
 .workMapItem > .workDisplay {
   position: relative;
   z-index: 3;
   grid-row: 1;
-  width: min(100%, 36rem);
-  transition:
-    transform 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease,
-    opacity 220ms ease;
+  width: min(100%, 38rem);
 }
 
 .workMapItem--left > .workDisplay {
@@ -229,137 +398,86 @@
   justify-self: center;
   display: grid;
   place-items: center;
-  width: 2.3rem;
-  height: 2.3rem;
-  border: 1px solid rgba(125, 188, 235, 0.22);
-  border-radius: 999px;
-  background: rgba(2, 8, 22, 0.86);
-  box-shadow:
-    0 0 0 0 rgba(125, 188, 235, 0),
-    inset 0 0 0 4px rgba(2, 8, 22, 0.92);
-  transition:
-    border-color 220ms ease,
-    background-color 220ms ease,
-    box-shadow 220ms ease,
-    transform 220ms ease;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid color-mix(in srgb, var(--node-accent) 45%, transparent);
+  border-radius: 50%;
+  color: var(--node-accent);
+  background: #071326;
+  box-shadow: inset 0 0 0 4px #030b19;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.workMapItem--hackathons .workMapNode {
+  border-radius: 3px;
+  transform: rotate(45deg);
+}
+
+.workMapItem--hackathons .workMapNode span {
+  transform: rotate(-45deg);
+}
+
+.workMapItem--community .workMapNode {
+  border-radius: 3px;
 }
 
 .workMapNode span {
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: inherit;
-  background: rgba(125, 188, 235, 0.42);
-  transition:
-    background-color 220ms ease,
-    box-shadow 220ms ease,
-    transform 220ms ease;
+  font-size: 0.62rem;
+  line-height: 1;
 }
 
 .workMapCurve {
   position: absolute;
   top: 50%;
   z-index: 0;
-  width: clamp(2.5rem, 7vw, 5.75rem);
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(125, 188, 235, 0.02), rgba(125, 188, 235, 0.22), rgba(125, 188, 235, 0.02));
+  width: clamp(2.5rem, 7vw, 6rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--node-accent) 40%, transparent), transparent);
   pointer-events: none;
-  transform: translateY(-50%);
-  transition:
-    background-color 220ms ease,
-    filter 220ms ease,
-    opacity 220ms ease;
 }
 
 .workMapItem--left .workMapCurve {
-  right: calc(50% + 1.15rem);
+  right: calc(50% + 1rem);
 }
 
 .workMapItem--right .workMapCurve {
-  left: calc(50% + 1.15rem);
+  left: calc(50% + 1rem);
 }
 
 .workMapItem.is-active .workMapNode {
-  border-color: rgba(134, 239, 172, 0.78);
-  background: rgba(8, 26, 32, 0.96);
-  box-shadow:
-    0 0 0 7px rgba(134, 239, 172, 0.08),
-    0 0 24px rgba(34, 197, 94, 0.28),
-    inset 0 0 0 4px rgba(2, 8, 22, 0.92);
-  transform: scale(1.05);
+  border-color: var(--node-accent);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--node-accent) 9%, transparent), 0 0 19px color-mix(in srgb, var(--node-accent) 36%, transparent), inset 0 0 0 4px #030b19;
 }
 
-.workMapItem.is-active .workMapNode span {
-  background: rgba(134, 239, 172, 0.96);
-  box-shadow: 0 0 16px rgba(34, 197, 94, 0.62);
-  transform: scale(1.15);
-}
-
-.workMapItem.is-active .workMapCurve {
-  background: linear-gradient(90deg, rgba(134, 239, 172, 0.02), rgba(134, 239, 172, 0.58), rgba(134, 239, 172, 0.02));
-  filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.24));
-}
-
-.workMapItem.is-active > .workDisplay {
-  transform: translateY(-3px);
-  border-color: transparent;
-  background:
-    linear-gradient(180deg, rgba(8, 25, 58, 0.96), rgba(1, 8, 22, 0.98)) padding-box,
-    conic-gradient(
-        from var(--work-border-angle),
-        rgba(34, 197, 94, 0.08),
-        rgba(134, 239, 172, 0.95),
-        rgba(72, 170, 235, 0.82),
-        rgba(34, 197, 94, 0.08) 72%
-      )
-      border-box;
-  box-shadow:
-    0 0 0 1px rgba(134, 239, 172, 0.12),
-    0 0 30px rgba(34, 197, 94, 0.3),
-    0 22px 54px rgba(0, 0, 0, 0.24);
-  animation: workActiveBorder 3.8s linear infinite;
-}
-
-/* A present job stays highlighted even when another timeline item is active. */
-.workMapItem:has(.workDisplay.is-current) > .workMapNode {
-  border-color: rgba(134, 239, 172, 0.92);
-  background: rgba(8, 26, 32, 0.98);
-  box-shadow:
-    0 0 0 8px rgba(134, 239, 172, 0.1),
-    0 0 30px rgba(34, 197, 94, 0.42),
-    inset 0 0 0 4px rgba(2, 8, 22, 0.92);
+.workMapItem.is-active:not(.workMapItem--hackathons) .workMapNode {
   transform: scale(1.08);
 }
 
-.workMapItem:has(.workDisplay.is-current) > .workMapNode span {
-  background: rgba(134, 239, 172, 1);
-  box-shadow: 0 0 18px rgba(34, 197, 94, 0.78);
-  transform: scale(1.2);
+.workMapItem.is-active.workMapItem--hackathons .workMapNode {
+  transform: rotate(45deg) scale(1.08);
 }
 
-.workMapItem:has(.workDisplay.is-current) > .workMapCurve {
-  background: linear-gradient(90deg, rgba(134, 239, 172, 0.03), rgba(134, 239, 172, 0.72), rgba(134, 239, 172, 0.03));
-  filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.34));
+.journeyEmpty {
+  position: relative;
+  z-index: 2;
+  margin: 3rem auto;
+  max-width: 34rem;
+  padding: 2rem;
+  border: 1px dashed rgba(125, 188, 235, 0.2);
+  color: rgba(183, 205, 224, 0.7);
+  background: rgba(4, 14, 30, 0.72);
+  text-align: center;
 }
 
-.workMapItem:has(.workDisplay.is-current) > .workDisplay.is-current {
-  transform: translateY(-3px);
-  border-color: transparent;
-  background:
-    linear-gradient(180deg, rgba(8, 25, 58, 0.98), rgba(1, 8, 22, 1)) padding-box,
-    conic-gradient(
-        from var(--work-border-angle),
-        rgba(34, 197, 94, 0.14),
-        rgba(134, 239, 172, 1),
-        rgba(74, 222, 128, 0.95),
-        rgba(34, 197, 94, 0.14) 72%
-      )
-      border-box;
-  box-shadow:
-    0 0 0 1px rgba(134, 239, 172, 0.16),
-    0 0 36px rgba(34, 197, 94, 0.38),
-    0 22px 54px rgba(0, 0, 0, 0.24);
-  animation: workActiveBorder 3.2s linear infinite;
+.journeyEmpty span {
+  color: rgba(108, 207, 214, 0.88);
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  letter-spacing: 0.12em;
+}
+
+.journeyEmpty p {
+  margin-top: 0.5rem;
 }
 
 .seBackToTop {
@@ -367,23 +485,20 @@
   right: 1.25rem;
   bottom: 1.25rem;
   z-index: 900;
-  min-height: 2.75rem;
-  padding: 0.68rem 0.8rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  border: 1px solid rgba(125, 188, 235, 0.3);
-  border-radius: 8px;
-  color: rgba(238, 247, 255, 0.9);
-  background: rgba(3, 12, 29, 0.88);
+  gap: 0.5rem;
+  min-height: 2.7rem;
+  padding: 0.65rem 0.78rem;
+  border: 1px solid rgba(125, 188, 235, 0.28);
+  border-radius: 5px;
+  color: rgba(238, 247, 255, 0.88);
+  background: rgba(3, 12, 29, 0.9);
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 760;
   backdrop-filter: blur(12px);
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background-color 180ms ease;
+  transition: transform 160ms ease, border-color 160ms ease;
 }
 
 .seBackToTop svg {
@@ -398,219 +513,111 @@
 
 .seBackToTop:hover,
 .seBackToTop:focus-visible {
-  border-color: rgba(134, 239, 172, 0.58);
-  background: rgba(10, 29, 55, 0.96);
-  outline: none;
-  transform: translateY(-3px);
+  border-color: rgba(99, 208, 213, 0.58);
+  transform: translateY(-2px);
 }
 
-@property --work-border-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes workActiveBorder {
-  to {
-    --work-border-angle: 360deg;
-  }
-}
-
-@keyframes seFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes tagPop {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes workPathIn {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-:root[data-theme='light'] .seContainer {
-  color: rgba(18, 32, 52, 0.94);
+:root[data-theme='light'] .seContainer::before {
+  background:
+    radial-gradient(circle at 72% 38%, rgba(55, 96, 150, 0.08), transparent 26rem),
+    linear-gradient(rgba(55, 96, 150, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(55, 96, 150, 0.035) 1px, transparent 1px);
+  background-size: auto, 44px 44px, 44px 44px;
 }
 
 :root[data-theme='light'] .subtitleHeader {
-  color: rgba(18, 32, 52, 0.92);
+  color: #246b59;
 }
 
 :root[data-theme='light'] .skillsDescription,
-:root[data-theme='light'] .experienceDescription {
-  color: rgba(34, 49, 72, 0.72);
+:root[data-theme='light'] .experienceDescription,
+:root[data-theme='light'] .journeyPhaseHeader > div p {
+  color: rgba(34, 49, 72, 0.7);
+}
+
+:root[data-theme='light'] .skillGroup,
+:root[data-theme='light'] .journeyHeader {
+  border-color: rgba(55, 96, 150, 0.14);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(235, 242, 250, 0.82));
 }
 
 :root[data-theme='light'] .tag {
   color: rgba(18, 32, 52, 0.9);
-  background: rgba(255, 255, 255, 0.72);
-  border-color: rgba(72, 98, 135, 0.16);
-}
-
-:root[data-theme='light'] .skillGroup {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(236, 243, 252, 0.86)), rgba(247, 250, 255, 0.78);
-  border-color: rgba(72, 98, 135, 0.14);
-  box-shadow: 0 16px 38px rgba(55, 80, 120, 0.1);
-}
-
-:root[data-theme='light'] .skillType {
-  color: rgba(42, 82, 134, 0.9);
-}
-
-:root[data-theme='light'] .tagIcon {
-  opacity: 0.72;
+  border-color: rgba(55, 96, 150, 0.15);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 :root[data-theme='light'] .tagIcon--theme-invert {
   filter: none;
 }
 
-:root[data-theme='light'] .workList::before {
-  background: linear-gradient(180deg, transparent, rgba(55, 96, 150, 0.2) 8%, rgba(55, 96, 150, 0.16) 92%), rgba(55, 96, 150, 0.08);
+:root[data-theme='light'] .journeyIndex span,
+:root[data-theme='light'] .journeyControlsLabel {
+  color: rgba(42, 65, 91, 0.68);
 }
 
-:root[data-theme='light'] .workTree::after {
-  background: linear-gradient(180deg, rgba(55, 96, 150, 0.16), rgba(55, 96, 150, 0.07));
+:root[data-theme='light'] .journeyControls {
+  border-color: rgba(55, 96, 150, 0.14);
+  background: rgba(245, 249, 253, 0.91);
 }
 
+:root[data-theme='light'] .journeyFilter {
+  color: rgba(42, 65, 91, 0.7);
+}
+
+:root[data-theme='light'] .journeyFilter:hover,
+:root[data-theme='light'] .journeyFilter:focus-visible,
+:root[data-theme='light'] .journeyFilter.is-active {
+  color: #194f69;
+  background: rgba(42, 120, 145, 0.06);
+}
+
+:root[data-theme='light'] .journeyYear,
+:root[data-theme='light'] .journeyPhaseHeader h2 {
+  color: rgba(18, 32, 52, 0.92);
+}
+
+:root[data-theme='light'] .journeyPhaseTick,
 :root[data-theme='light'] .workMapNode {
-  background: rgba(248, 251, 255, 0.94);
-  border-color: rgba(55, 96, 150, 0.22);
-  box-shadow:
-    0 0 0 0 rgba(55, 96, 150, 0),
-    inset 0 0 0 4px rgba(255, 255, 255, 0.92);
-}
-
-:root[data-theme='light'] .workMapNode span {
-  background: rgba(55, 96, 150, 0.42);
-}
-
-:root[data-theme='light'] .workMapItem--left .workMapCurve,
-:root[data-theme='light'] .workMapItem--right .workMapCurve {
-  background: linear-gradient(90deg, rgba(55, 96, 150, 0.02), rgba(55, 96, 150, 0.2), rgba(55, 96, 150, 0.02));
+  background: #f7fbff;
+  box-shadow: inset 0 0 0 4px #edf4fa;
 }
 
 :root[data-theme='light'] .workMapItem.is-active .workMapNode {
-  border-color: rgba(22, 120, 68, 0.62);
-  background: rgba(248, 255, 250, 0.98);
-  box-shadow:
-    0 0 0 7px rgba(22, 120, 68, 0.08),
-    0 0 24px rgba(22, 120, 68, 0.2),
-    inset 0 0 0 4px rgba(255, 255, 255, 0.94);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--node-accent) 10%, transparent), 0 0 16px color-mix(in srgb, var(--node-accent) 24%, transparent), inset 0 0 0 4px #edf4fa;
 }
 
-:root[data-theme='light'] .workMapItem.is-active .workMapNode span {
-  background: rgba(22, 120, 68, 0.9);
-  box-shadow: 0 0 14px rgba(22, 120, 68, 0.36);
-}
-
-:root[data-theme='light'] .workMapItem.is-active .workMapCurve {
-  background: linear-gradient(90deg, rgba(22, 120, 68, 0.02), rgba(22, 120, 68, 0.46), rgba(22, 120, 68, 0.02));
-  filter: drop-shadow(0 0 7px rgba(22, 120, 68, 0.16));
-}
-
-:root[data-theme='light'] .workMapItem.is-active > .workDisplay {
-  border-color: transparent;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(236, 243, 252, 0.98)) padding-box,
-    conic-gradient(
-        from var(--work-border-angle),
-        rgba(22, 120, 68, 0.08),
-        rgba(22, 120, 68, 0.86),
-        rgba(55, 96, 150, 0.72),
-        rgba(22, 120, 68, 0.08) 72%
-      )
-      border-box;
-  box-shadow:
-    0 0 0 1px rgba(22, 120, 68, 0.08),
-    0 0 28px rgba(22, 120, 68, 0.2),
-    0 22px 54px rgba(55, 80, 120, 0.16);
-}
-
-:root[data-theme='light'] .workMapItem:has(.workDisplay.is-current) > .workMapNode {
-  border-color: rgba(22, 120, 68, 0.72);
-  background: rgba(248, 255, 250, 0.98);
-  box-shadow:
-    0 0 0 8px rgba(22, 120, 68, 0.1),
-    0 0 28px rgba(22, 120, 68, 0.28),
-    inset 0 0 0 4px rgba(255, 255, 255, 0.94);
-}
-
-:root[data-theme='light'] .workMapItem:has(.workDisplay.is-current) > .workMapNode span {
-  background: rgba(22, 120, 68, 0.96);
-  box-shadow: 0 0 16px rgba(22, 120, 68, 0.48);
-}
-
-:root[data-theme='light'] .workMapItem:has(.workDisplay.is-current) > .workMapCurve {
-  background: linear-gradient(90deg, rgba(22, 120, 68, 0.03), rgba(22, 120, 68, 0.62), rgba(22, 120, 68, 0.03));
-  filter: drop-shadow(0 0 9px rgba(22, 120, 68, 0.24));
-}
-
-:root[data-theme='light'] .workMapItem:has(.workDisplay.is-current) > .workDisplay.is-current {
-  border-color: transparent;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(236, 248, 240, 0.99)) padding-box,
-    conic-gradient(
-        from var(--work-border-angle),
-        rgba(22, 120, 68, 0.12),
-        rgba(22, 120, 68, 0.98),
-        rgba(34, 197, 94, 0.82),
-        rgba(22, 120, 68, 0.12) 72%
-      )
-      border-box;
-  box-shadow:
-    0 0 0 1px rgba(22, 120, 68, 0.1),
-    0 0 34px rgba(22, 120, 68, 0.25),
-    0 22px 54px rgba(55, 80, 120, 0.16);
-}
-
+:root[data-theme='light'] .journeyEmpty,
 :root[data-theme='light'] .seBackToTop {
-  border-color: rgba(55, 96, 150, 0.28);
-  color: rgba(18, 32, 52, 0.9);
-  background: rgba(249, 252, 255, 0.9);
-  box-shadow: 0 12px 30px rgba(55, 80, 120, 0.16);
+  color: rgba(18, 32, 52, 0.84);
+  background: rgba(249, 252, 255, 0.92);
 }
 
-:root[data-theme='light'] .seBackToTop:hover,
-:root[data-theme='light'] .seBackToTop:focus-visible {
-  border-color: rgba(12, 105, 57, 0.4);
-  background: rgba(235, 247, 240, 0.96);
+@keyframes seFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes workPathIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 1150px) {
   .seContainer {
     width: min(100% - 2rem, 1080px);
-    margin-right: auto;
-    margin-left: auto;
-    padding-bottom: var(--mobile-nav-clearance);
+    margin-inline: auto;
+    padding-bottom: calc(var(--mobile-nav-clearance) + 3rem);
   }
 
-  .workTree {
-    --tree-tail-extension: 7.5rem;
+  .workList::before,
+  .workList::after {
+    left: 38%;
+  }
+
+  .journeyPhaseHeader,
+  .workMapItem {
+    grid-template-columns: minmax(0, 0.62fr) 4rem minmax(0, 1fr);
   }
 
   .seBackToTop {
@@ -623,18 +630,49 @@
     grid-template-columns: 1fr;
   }
 
-  .workList::before {
-    left: 1.15rem;
+  .journeyControls {
+    align-items: flex-end;
+    padding-inline: 0.5rem;
   }
 
-  .workTree::after {
-    left: 1.15rem;
+  .journeyControlsLabel {
+    display: none;
+  }
+
+  .journeyFilters {
+    width: 100%;
+  }
+
+  .workList::before,
+  .workList::after {
+    left: 1rem;
+  }
+
+  .journeyPhaseHeader {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    padding: 1.15rem 0;
+  }
+
+  .journeyPhaseTick {
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  .journeyYear {
+    grid-column: 2;
+    justify-self: start;
+    margin: 0 0 2.5rem 0.8rem;
+    font-size: 1.45rem;
+  }
+
+  .journeyPhaseHeader > div {
+    grid-column: 2;
+    margin: 2.5rem 0 0 0.8rem;
   }
 
   .workMapItem {
-    grid-template-columns: 2.3rem minmax(0, 1fr);
-    min-height: 0;
-    padding: 2.15rem 0;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    padding: 1rem 0;
   }
 
   .workMapItem > .workDisplay,
@@ -643,15 +681,13 @@
     grid-column: 2;
     justify-self: stretch;
     width: auto;
-    max-width: 100%;
-    margin: 0 0 0 0.75rem;
+    margin: 0 0 0 0.8rem;
   }
 
   .workMapNode {
     grid-column: 1;
-    justify-self: start;
-    width: 2.3rem;
-    height: 2.3rem;
+    width: 1.75rem;
+    height: 1.75rem;
   }
 
   .workMapCurve {
@@ -661,21 +697,29 @@
 
 @media (max-width: 520px) {
   .seContainer {
-    width: min(100% - 1.25rem, 1080px);
+    width: min(100% - 1.1rem, 1080px);
     padding-top: 2rem;
   }
 
-  .skillGroup {
-    padding: 0.85rem;
+  .journeyHeader {
+    padding: 1.25rem 0.85rem;
   }
 
-  .tag {
-    font-size: 0.86rem;
+  .journeyIndex {
+    gap: 0 0.7rem;
+  }
+
+  .journeyIndex span {
+    padding-right: 0;
+  }
+
+  .journeyFilter {
+    padding-inline: 0.58rem;
   }
 
   .seBackToTop {
-    right: 0.75rem;
-    padding: 0.72rem;
+    right: 0.65rem;
+    padding: 0.7rem;
   }
 
   .seBackToTop span {
@@ -686,18 +730,7 @@
 @media (prefers-reduced-motion: reduce) {
   .skillsContainer,
   .experienceContainer,
-  .skillGroup,
-  .tag,
   .workMapItem {
     animation: none;
-  }
-
-  .workMapItem.is-active > .workDisplay,
-  .workMapItem:has(.workDisplay.is-current) > .workDisplay.is-current {
-    animation: none;
-  }
-
-  .seBackToTop {
-    transition: none;
   }
 }

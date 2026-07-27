@@ -97,5 +97,5 @@ export const COLLAB_AVAILABILITY = YES;
 export const FREELANCE_AVAILABILITY = YES;
 
 export const POSITION_DESC = 'I am currently working as a backend developer intern in Hackazouk.';
-export const COLLAB_DESC = 'I am open to any project collabs or even hackathons if you\'re looking for someone who is passionate about building reliable software!';
-export const FREELANCE_DESC = 'I am also open right now to do any work that includes making websites or software of any kind, depending on your needs.';
+export const COLLAB_DESC = 'I am open to thoughtful project collaborations and hackathons focused on building useful, reliable software.';
+export const FREELANCE_DESC = 'I am available for scoped website and software projects where the requirements, timeline, and expected outcomes are clear.';
