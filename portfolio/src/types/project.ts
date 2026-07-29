@@ -7,7 +7,7 @@ interface Project {
   project_description: string;
   project_github: string;
   project_img_url: string;
-  pArticle_slug: string;
+  pArticle_slug: string | null;
   featured: boolean;
   started_at: string;
   ended_at: string;
@@ -21,7 +21,7 @@ interface Project {
 
 interface ProjectArticle {
   project_name: string;
-  pArticle_slug: string;
+  pArticle_slug: string | null;
   pArticle_image_url: string | null;
   pArticle_image_alt: string | null;
   pArticle_summary: string | null;

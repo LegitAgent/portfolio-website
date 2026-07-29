@@ -50,12 +50,14 @@ function ProjectsDisplay({ project }: ProjectDisplayProps) {
             </a>
           )}
 
-          <Link className='projectLink' to={`/projects/${project.pArticle_slug}`} aria-label={`Read more about ${project.project_name}`}>
-            <span>Read More</span>
-            <svg viewBox='0 0 24 24' aria-hidden='true'>
-              <path d='m9 18 6-6-6-6' />
-            </svg>
-          </Link>
+          {project.pArticle_slug && (
+            <Link className='projectLink' to={`/projects/${project.pArticle_slug}`} aria-label={`Read more about ${project.project_name}`}>
+              <span>Read More</span>
+              <svg viewBox='0 0 24 24' aria-hidden='true'>
+                <path d='m9 18 6-6-6-6' />
+              </svg>
+            </Link>
+          )}
         </div>
       </div>
     </article>

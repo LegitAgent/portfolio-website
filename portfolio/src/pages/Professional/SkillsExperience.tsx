@@ -26,6 +26,7 @@ import {
   TAILWIND,
   TYPESCRIPT,
   VITE,
+  NO_IMAGE
 } from '../../config/constants.ts';
 import { useEffect, useRef, useState } from 'react';
 import WorkDisplay from '../../components/WorkDisplay/WorkDisplay.tsx';
@@ -150,6 +151,7 @@ const skillIconSources: Record<string, string> = {
   'Tailwind CSS': TAILWIND,
   TypeScript: TYPESCRIPT,
   Vite: VITE,
+  default: NO_IMAGE
 };
 
 function SkillTag({ skill }: { skill: Tag }) {

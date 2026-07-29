@@ -33,11 +33,17 @@ function ProjectArticle() {
   const [article, setArticle] = useState<ArticleResponse | null>(null);
   const [hasError, setHasError] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [notFound, setNotFound] = useState<boolean>(false);
 
   // fetching from API
   useEffect(() => {
     fetch(articleGateway)
       .then((response) => {
+        if (response.status === 404) {
+          setNotFound(true);
+          return null;
+        }
+
         if (!response.ok) {
           throw new Error(`Request failed ${response.status}`);
         }
@@ -151,7 +157,7 @@ function ProjectArticle() {
     return <ErrorScreen />;
   }
 
-  if (!isLoading && !articleContent) {
+  if (notFound) {
     return <WrongPage />;
   }
 

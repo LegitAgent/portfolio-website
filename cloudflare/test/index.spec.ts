@@ -1,8 +1,20 @@
 import { env, createExecutionContext, waitOnExecutionContext, SELF } from 'cloudflare:test';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { getGithubStats } from '../src/services/github';
+import { getLeetCodeStats } from '../src/services/leetcode';
 import worker from '../src/index';
 
+vi.mock('../src/services/github', () => ({
+	getGithubStats: vi.fn(),
+}));
+
+vi.mock('../src/services/leetcode', () => ({
+	getLeetCodeStats: vi.fn(),
+}));
+
 const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
+const mockedGetGithubStats = vi.mocked(getGithubStats);
+const mockedGetLeetCodeStats = vi.mocked(getLeetCodeStats);
 
 async function seedDatabase() {
 	const queries = [
@@ -123,7 +135,29 @@ async function jsonBody<T = Record<string, unknown>>(response: Response): Promis
 	return response.json();
 }
 
+async function clearCachedRoutes() {
+	const paths = [
+		'/api/db/projects',
+		'/api/db/certificates',
+		'/api/db/tags',
+		'/api/db/work',
+		'/api/stats/portfolio',
+		'/api/project_articles/portfolio',
+		'/api/project_articles/missing',
+		'/api/work_articles/hackazouk',
+		'/api/work_articles/missing',
+		'/api/github',
+		'/api/leetcode',
+	];
+
+	await Promise.all(
+		paths.map((path) => caches.default.delete(new Request(`https://example.com${path}`))),
+	);
+}
+
 beforeEach(async () => {
+	vi.resetAllMocks();
+	await clearCachedRoutes();
 	await seedDatabase();
 });
 
@@ -252,13 +286,40 @@ describe('portfolio worker', () => {
 		expect(body.tags).toEqual([{ tag_name: 'Cloudflare' }, { tag_name: 'TypeScript' }]);
 	});
 
-	it('returns 404 for unknown article slugs', async () => {
+	it('returns and caches a 404 for an unknown project article slug', async () => {
 		const response = await fetchWorker('/api/project_articles/missing');
 		const body = await jsonBody(response);
 
 		expect(response.status).toBe(404);
 		expect(body).toEqual({ error: 'Article not found' });
-		expect(response.headers.get('Cache-Control')).toBe('public, max-age=0, s-maxage=60');
+		expect(response.headers.get('Cache-Control')).toBe('public, max-age=0, s-maxage=30');
+		expect(response.headers.get('X-Cache-Status')).toBe('MISS');
+
+		const cachedResponse = await fetchWorker('/api/project_articles/missing');
+
+		expect(cachedResponse.status).toBe(404);
+		expect(await jsonBody(cachedResponse)).toEqual({ error: 'Article not found' });
+		expect(cachedResponse.headers.get('X-Cache-Status')).toBe('HIT');
+	});
+
+	it('returns 404 for an unknown work article slug', async () => {
+		const response = await fetchWorker('/api/work_articles/missing');
+
+		expect(response.status).toBe(404);
+		expect(await jsonBody(response)).toEqual({ error: 'Article not found' });
+		expect(response.headers.get('Cache-Control')).toBe('public, max-age=0, s-maxage=30');
+		expect(response.headers.get('X-Cache-Status')).toBe('MISS');
+	});
+
+	it.each([
+		'/api/project_articles/not%2Fa-valid-slug',
+		'/api/work_articles/not%2Fa-valid-slug',
+	])('rejects an invalid article slug at %s', async (path) => {
+		const response = await fetchWorker(path);
+
+		expect(response.status).toBe(400);
+		expect(await jsonBody(response)).toEqual({ error: 'Slug not valid' });
+		expect(response.headers.get('Cache-Control')).toBe('no-store');
 	});
 
 	it('serves robots.txt before rate limiting and database access', async () => {
@@ -299,6 +360,91 @@ describe('portfolio worker', () => {
 			totalWorkExperiences: 1,
 			currentRoles: 1,
 		});
+	});
+
+	it('returns mocked GitHub statistics', async () => {
+		const githubStats = {
+			name: 'Alba Martin',
+			login: 'LegitAgent',
+			bio: 'Software developer',
+			avatarUrl: 'https://example.com/avatar.png',
+			status: null,
+			followers: 7,
+			contributions: { commits: 120 },
+			repositorySummary: {
+				totalRepositories: 10,
+				totalStars: 11,
+				totalForks: 1,
+			},
+			languages: [],
+			repositories: [],
+		};
+		mockedGetGithubStats.mockResolvedValue(githubStats);
+
+		const response = await fetchWorker('/api/github');
+
+		expect(response.status).toBe(200);
+		expect(await jsonBody(response)).toEqual({ githubStats });
+		expect(response.headers.get('Cache-Control')).toBe('public, max-age=60, s-maxage=3600');
+		expect(mockedGetGithubStats).toHaveBeenCalledOnce();
+		expect(mockedGetGithubStats).toHaveBeenCalledWith(
+			env.GITHUB_NAME,
+			env,
+			expect.any(String),
+			expect.any(String),
+		);
+	});
+
+	it('returns 404 when the mocked GitHub user does not exist', async () => {
+		mockedGetGithubStats.mockResolvedValue(null);
+
+		const response = await fetchWorker('/api/github');
+
+		expect(response.status).toBe(404);
+		expect(await jsonBody(response)).toEqual({ error: 'Github user not found' });
+		expect(response.headers.get('Cache-Control')).toBe('no-store');
+	});
+
+	it('returns mocked LeetCode statistics', async () => {
+		const leetcodeStats = {
+			username: 'LegitAgent',
+			ranking: 100000,
+			totalSolved: 42,
+			totalProblems: 3000,
+			solvedPercentage: 1.4,
+			easySolved: 25,
+			totalEasy: 800,
+			mediumSolved: 15,
+			totalMedium: 1600,
+			hardSolved: 2,
+			totalHard: 600,
+			acceptanceRate: 50,
+			totalAcceptedSubmissions: 50,
+			totalSubmissionAttempts: 100,
+			strongestTopics: [],
+			fundamentalSkills: [],
+			intermediateSkills: [],
+			advancedSkills: [],
+		};
+		mockedGetLeetCodeStats.mockResolvedValue(leetcodeStats);
+
+		const response = await fetchWorker('/api/leetcode');
+
+		expect(response.status).toBe(200);
+		expect(await jsonBody(response)).toEqual({ leetcodeStats });
+		expect(response.headers.get('Cache-Control')).toBe('public, max-age=60, s-maxage=3600');
+		expect(mockedGetLeetCodeStats).toHaveBeenCalledOnce();
+		expect(mockedGetLeetCodeStats).toHaveBeenCalledWith(env.LEETCODE_NAME);
+	});
+
+	it('returns 404 when the mocked LeetCode user does not exist', async () => {
+		mockedGetLeetCodeStats.mockResolvedValue(null);
+
+		const response = await fetchWorker('/api/leetcode');
+
+		expect(response.status).toBe(404);
+		expect(await jsonBody(response)).toEqual({ error: 'LeetCode user not found' });
+		expect(response.headers.get('Cache-Control')).toBe('no-store');
 	});
 
 	it('returns 404 JSON for unknown routes', async () => {

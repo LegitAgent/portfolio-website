@@ -207,12 +207,17 @@ function Contacts() {
   const availabilityStatus = ['red', 'yellow', 'green'] as const;
 
   const [selectedInterest, setSelectedInterest] = useState<number | null>(null);
-  const [time, setTime] = useState<Date>(new Date());
+  const [time, setTime] = useState<string>('');
   const [hasCopied, setHasCopied] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTime(new Date());
+      const date = new Date();
+      const formatDate = new Intl.DateTimeFormat('en-PH', {
+        timeZone: 'Asia/Manila',
+        timeStyle: 'medium'
+      }).format(date);
+      setTime(formatDate);
     }, 1000);
 
     return () => clearInterval(timer);

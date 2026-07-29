@@ -85,7 +85,7 @@ const query = `
           createdAt
           pushedAt
           primaryLanguage {
-              
+            name
             color
           }
           languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {

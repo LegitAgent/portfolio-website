@@ -30,10 +30,16 @@ function WorkArticle() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [article, setArticle] = useState<WorkResponse | null>(null);
   const [hasError, setHasError] = useState<boolean>(false);
+  const [notFound, setNotFound] = useState<boolean>(false);
 
   useEffect(() => {
     fetch(workArticleGateway)
       .then((response) => {
+        if (response.status === 404) {
+          setNotFound(true);
+          return null;
+        }
+
         if (!response.ok) {
           throw new Error(`Request failed ${response.status}`);
         }
@@ -53,7 +59,7 @@ function WorkArticle() {
     return <ErrorScreen />;
   }
 
-  if (!isLoading && !article?.article) {
+  if (notFound) {
     return <WrongPage />;
   }
 

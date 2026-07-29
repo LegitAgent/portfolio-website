@@ -126,7 +126,7 @@ function checkParamSlug(pathname: string, prefix: string): string | null {
   }
 
   // no % or / or .
-  if (slug.length > 100 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+  if (slug.length > 100 || !/^[a-z0-9]+(?:[-_][a-z0-9]+)*$/.test(slug)) {
     return null;
   }
 
@@ -361,14 +361,7 @@ export default {
             };
           }
 
-          return cachedJson(
-            request,
-            ctx,
-            TTL_TIME.ARTICLE,
-            allowedOrigin,
-            loadProjectArticles,
-            TTL_TIME.ARTICLE_NOT_FOUND,
-          );
+          return cachedJson(request, ctx, TTL_TIME.ARTICLE, allowedOrigin, loadProjectArticles, TTL_TIME.ARTICLE_NOT_FOUND);
         }
 
         if (url.pathname.startsWith('/api/work_articles/')) {
@@ -383,7 +376,7 @@ export default {
             }
 
             const articleQuery = env.portfolio_db
-              .prepare('SELECT wa.article_title, wa.article_summary, wa.article_content, wa.article_image_url, wa.responsibilities, wa.achievements, we.company_name, we.role_title, we.company_website FROM WorkArticle AS wa JOIN WorkExperience AS we ON wa.work_id = we.work_id WHERE we.work_slug = ?')
+              .prepare('SELECT wa.article_title, wa.article_summary, wa.article_content, wa.article_image_url, wa.responsibilities, wa.achievements, we.company_name, we.role_title, we.company_website FROM WorkArticle AS wa LEFT JOIN WorkExperience AS we ON wa.work_id = we.work_id WHERE we.work_slug = ?')
               .bind(slug);
 
             const articleTagQuery = env.portfolio_db
@@ -406,14 +399,7 @@ export default {
             };
           }
 
-          return cachedJson(
-            request,
-            ctx,
-            TTL_TIME.ARTICLE,
-            allowedOrigin,
-            loadWorkArticles,
-            TTL_TIME.ARTICLE_NOT_FOUND,
-          );
+          return cachedJson(request, ctx, TTL_TIME.ARTICLE, allowedOrigin, loadWorkArticles, TTL_TIME.ARTICLE_NOT_FOUND);
         }
 
         if (url.pathname === '/api/stats/portfolio') {

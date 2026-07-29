@@ -15,11 +15,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    radial-gradient(circle at 72% 38%, rgba(55, 150, 205, 0.08), transparent 26rem),
-    linear-gradient(rgba(123, 174, 213, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(123, 174, 213, 0.025) 1px, transparent 1px);
-  background-size: auto, 44px 44px, 44px 44px;
+  background: radial-gradient(circle at 72% 38%, rgba(55, 150, 205, 0.08), transparent 26rem);
   mask-image: linear-gradient(to bottom, transparent, black 12%, black 92%, transparent);
   pointer-events: none;
 }
@@ -518,11 +514,7 @@
 }
 
 :root[data-theme='light'] .seContainer::before {
-  background:
-    radial-gradient(circle at 72% 38%, rgba(55, 96, 150, 0.08), transparent 26rem),
-    linear-gradient(rgba(55, 96, 150, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(55, 96, 150, 0.035) 1px, transparent 1px);
-  background-size: auto, 44px 44px, 44px 44px;
+  background: radial-gradient(circle at 72% 38%, rgba(55, 96, 150, 0.08), transparent 26rem);
 }
 
 :root[data-theme='light'] .subtitleHeader {

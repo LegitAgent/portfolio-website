@@ -255,6 +255,140 @@
   animation-delay: 280ms;
 }
 
+.githubSection .statsSectionFailure {
+  --failure-accent: var(--github-violet);
+}
+
+.leetcodeSection .statsSectionFailure {
+  --failure-accent: var(--leetcode-gold);
+}
+
+.portfolioSection .statsSectionFailure {
+  --failure-accent: var(--portfolio-blue);
+}
+
+.statsSectionFailure {
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid rgba(var(--failure-accent), 0.42);
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(var(--failure-accent), 0.08), transparent 52%),
+    rgba(4, 14, 32, 0.72);
+}
+
+.statsFailureHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.statsFailureHeader > span {
+  color: rgba(var(--failure-accent), 0.7);
+  font-family: 'Courier New', ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.statsFailureHeader > i {
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(var(--failure-accent), 0.4);
+  border-radius: 10px;
+  background: rgba(var(--failure-accent), 0.12);
+}
+
+.statsFailureHeader img {
+  width: 1.45rem;
+  height: 1.45rem;
+  object-fit: contain;
+}
+
+.statsFailureHeader p,
+.statsFailureHeader h2,
+.statsFailureMessage p {
+  margin: 0;
+}
+
+.statsFailureHeader p {
+  color: rgba(var(--failure-accent), 0.82);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.statsFailureHeader h2 {
+  margin-top: 0.15rem;
+  font-size: clamp(1.65rem, 4vw, 2.5rem);
+}
+
+.statsFailureMessage {
+  margin-top: 1.25rem;
+  padding: clamp(1rem, 3vw, 1.35rem);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px dashed rgba(var(--failure-accent), 0.38);
+  border-radius: 10px;
+  background: rgba(var(--failure-accent), 0.055);
+}
+
+.statsFailureMessage > svg {
+  width: 1.7rem;
+  height: 1.7rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: rgb(var(--failure-accent));
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.statsFailureMessage > div {
+  min-width: 0;
+  flex: 1;
+}
+
+.statsFailureMessage strong {
+  display: block;
+  color: rgba(238, 247, 255, 0.94);
+  font-size: 0.92rem;
+}
+
+.statsFailureMessage p {
+  margin-top: 0.3rem;
+  color: rgba(210, 225, 242, 0.64);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.statsFailureMessage button {
+  padding: 0.62rem 0.85rem;
+  flex: 0 0 auto;
+  border: 1px solid rgba(var(--failure-accent), 0.42);
+  border-radius: 999px;
+  color: rgb(var(--failure-accent));
+  background: rgba(var(--failure-accent), 0.1);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.statsFailureMessage button:hover,
+.statsFailureMessage button:focus-visible {
+  border-color: rgba(var(--failure-accent), 0.72);
+  background: rgba(var(--failure-accent), 0.18);
+  transform: translateY(-1px);
+}
+
 .statsSectionHeader {
   padding-top: 1rem;
   display: flex;
@@ -1810,6 +1944,24 @@
   background: #eff7fd !important;
 }
 
+:root[data-theme='light'] .statsSectionFailure {
+  background:
+    linear-gradient(135deg, rgba(var(--failure-accent), 0.12), transparent 52%),
+    rgba(255, 255, 255, 0.9);
+}
+
+:root[data-theme='light'] .statsFailureMessage {
+  background: rgba(var(--failure-accent), 0.08);
+}
+
+:root[data-theme='light'] .statsFailureMessage strong {
+  color: rgba(22, 38, 61, 0.94);
+}
+
+:root[data-theme='light'] .statsFailureMessage p {
+  color: rgba(34, 49, 72, 0.68);
+}
+
 @media (max-width: 1000px) {
   .statsMetricGrid,
   .portfolioMetricGrid {
@@ -1852,6 +2004,15 @@
   .statsSectionHeader {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .statsFailureMessage {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .statsFailureMessage button {
+    margin-left: 2.7rem;
   }
 
   .statsMetricGrid,

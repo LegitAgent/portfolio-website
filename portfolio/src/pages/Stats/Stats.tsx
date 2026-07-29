@@ -12,7 +12,6 @@ import { CLOUDFLARE_GATEWAY, FOLDER_ICON, GITHUB_ICON, LEETCODE_ICON, STACK_ICON
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoadingScreen from '../Misc/LoadingScreen';
-import ErrorScreen from '../Misc/ErrorScreen';
 
 async function fetchJson<T>(path: string): Promise<T> {
   const response = await fetch(`${CLOUDFLARE_GATEWAY}${path}`);
@@ -181,25 +180,97 @@ function PortfolioMetricIcon({ type }: { type: 'completed' | 'certificates' | 'e
   );
 }
 
+function StatsSectionError({
+  className,
+  id,
+  index,
+  eyebrow,
+  title,
+  icon,
+  message,
+}: {
+  className: string;
+  id: string;
+  index: string;
+  eyebrow: string;
+  title: string;
+  icon: string;
+  message: string;
+}) {
+  return (
+    <section className={`statsSection ${className}`} id={id}>
+      <div className='statsSectionFailure' role='alert'>
+        <header className='statsFailureHeader'>
+          <span>{index}</span>
+          <i>
+            <img src={icon} alt='' aria-hidden='true' />
+          </i>
+          <div>
+            <p>{eyebrow}</p>
+            <h2>{title}</h2>
+          </div>
+        </header>
+        <div className='statsFailureMessage'>
+          <svg viewBox='0 0 24 24' aria-hidden='true'>
+            <path d='M12 8v5' />
+            <path d='M12 17.25v.1' />
+            <path d='M10.3 4.4 3.1 17a2 2 0 0 0 1.74 3h14.32a2 2 0 0 0 1.74-3L13.7 4.4a2 2 0 0 0-3.4 0Z' />
+          </svg>
+          <div>
+            <strong>{title} data is temporarily unavailable</strong>
+            <p>{message}</p>
+          </div>
+          <button type='button' onClick={() => window.location.reload()}>
+            Try again
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Stats() {
   const [leetcode, setLeetcode] = useState<LeetCodeStats | null>(null);
   const [github, setGithub] = useState<GithubStats | null>(null);
   const [portfolio, setPortfolio] = useState<PortfolioStats | null>(null);
+
+  const [leetcodeError, setLeetcodeError] = useState<string | null>(null);
+  const [githubError, setGithubError] = useState<string | null>(null);
+  const [portfolioError, setPortfolioError] = useState<string | null>(null);
+
   const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    Promise.all([
+    Promise.allSettled([
       fetchJson<LeetCodeStatsResponse>('api/leetcode'),
       fetchJson<GithubStatsResponse>('api/github'),
       fetchJson<PortfolioStatsResponse>('api/stats/portfolio'),
     ])
       .then(([leetcodeResponse, githubResponse, portfolioResponse]) => {
-        setLeetcode(leetcodeResponse.leetcodeStats);
-        setGithub(githubResponse.githubStats);
-        setPortfolio(portfolioResponse.portfolioStats);
+        if (leetcodeResponse.status === 'fulfilled') {
+          setLeetcode(leetcodeResponse.value.leetcodeStats);
+          setLeetcodeError(null);
+        } else {
+          setLeetcodeError('Could not load the LeetCode API. Please try again later.');
+          setLeetcode(null);
+        }
+
+        if (githubResponse.status === 'fulfilled') {
+          setGithub(githubResponse.value.githubStats);
+          setGithubError(null);
+        } else {
+          setGithubError('Could not load the GitHub API. Please try again later.');
+          setGithub(null);
+        }
+
+        if (portfolioResponse.status === 'fulfilled') {
+          setPortfolio(portfolioResponse.value.portfolioStats);
+          setPortfolioError(null);
+        } else {
+          setPortfolioError('Could not load the Portfolio API. Please try again later.');
+          setPortfolio(null);
+        }
       })
-      .catch(() => setHasError(true))
       .finally(() => setIsLoading(false));
   }, []);
 
@@ -207,73 +278,89 @@ function Stats() {
     return <LoadingScreen />;
   }
 
-  if (hasError || !leetcode || !github || !portfolio) {
-    return <ErrorScreen />;
-  }
-
   const overviewStats = [
-    {
-      type: 'projects' as const,
-      code: 'PORTFOLIO',
-      label: 'Projects built',
-      value: portfolio.totalProjects,
-      detail: `${portfolio.completedProjects} completed projects`,
-      href: '#portfolio',
-      external: false,
-    },
-    {
-      type: 'leetcode' as const,
-      code: 'LEETCODE',
-      label: 'Problems solved',
-      value: leetcode.totalSolved,
-      detail: `${leetcode.solvedPercentage}% of the problem catalog`,
-      href: '#leetcode-stats',
-      external: false,
-    },
-    {
-      type: 'github' as const,
-      code: 'GITHUB',
-      label: 'Commits authored',
-      value: github.contributions.commits,
-      detail: 'Rolling previous 12 months',
-      href: '#github-stats',
-      external: false,
-    },
-    {
-      type: 'technologies' as const,
-      code: 'STACK',
-      label: 'Technologies used',
-      value: portfolio.totalTechnologies,
-      detail: `Backed by ${portfolio.totalCertificates} certificates`,
-      href: '/skills_experience',
-      external: false,
-    },
+    ...(portfolio
+      ? [
+          {
+            type: 'projects' as const,
+            code: 'PORTFOLIO',
+            label: 'Projects built',
+            value: portfolio.totalProjects,
+            detail: `${portfolio.completedProjects} completed projects`,
+            href: '#portfolio',
+            external: false,
+          },
+        ]
+      : []),
+    ...(leetcode
+      ? [
+          {
+            type: 'leetcode' as const,
+            code: 'LEETCODE',
+            label: 'Problems solved',
+            value: leetcode.totalSolved,
+            detail: `${leetcode.solvedPercentage}% of the problem catalog`,
+            href: '#leetcode-stats',
+            external: false,
+          },
+        ]
+      : []),
+    ...(github
+      ? [
+          {
+            type: 'github' as const,
+            code: 'GITHUB',
+            label: 'Commits authored',
+            value: github.contributions.commits,
+            detail: 'Rolling previous 12 months',
+            href: '#github-stats',
+            external: false,
+          },
+        ]
+      : []),
+    ...(portfolio
+      ? [
+          {
+            type: 'technologies' as const,
+            code: 'STACK',
+            label: 'Technologies used',
+            value: portfolio.totalTechnologies,
+            detail: `Backed by ${portfolio.totalCertificates} certificates`,
+            href: '/skills_experience',
+            external: false,
+          },
+        ]
+      : []),
   ];
-  const sortedGithubLanguages = [...github.languages].sort(
-    (first, second) => second.percentage - first.percentage || first.name.localeCompare(second.name),
-  );
-  const githubMetrics = [
-    { type: 'commits' as const, label: 'Commits', value: github.contributions.commits, detail: 'Last 12 months' },
-    { type: 'repositories' as const, label: 'Repositories', value: github.repositorySummary.totalRepositories, detail: 'Public and owned' },
-    { type: 'stars' as const, label: 'Stars', value: github.repositorySummary.totalStars, detail: 'Across public repos' },
-    { type: 'forks' as const, label: 'Forks', value: github.repositorySummary.totalForks, detail: 'Across public repos' },
-    { type: 'followers' as const, label: 'Followers', value: github.followers, detail: 'GitHub community' },
-  ];
-  const portfolioMetrics = [
-    {
-      type: 'completed' as const,
-      label: 'Completed projects',
-      value: portfolio.completedProjects,
-      detail: `${portfolio.totalProjects} projects total`,
-    },
-    { type: 'certificates' as const, label: 'Certificates', value: portfolio.totalCertificates, detail: 'Verified learning milestones' },
-    {
-      type: 'experience' as const,
-      label: 'Work experiences',
-      value: portfolio.totalWorkExperiences,
-      detail: `${portfolio.currentRoles} current role${portfolio.currentRoles === 1 ? '' : 's'}`,
-    },
-  ];
+  const sortedGithubLanguages = github
+    ? [...github.languages].sort((first, second) => second.percentage - first.percentage || first.name.localeCompare(second.name))
+    : [];
+  const githubMetrics = github
+    ? [
+        { type: 'commits' as const, label: 'Commits', value: github.contributions.commits, detail: 'Last 12 months' },
+        { type: 'repositories' as const, label: 'Repositories', value: github.repositorySummary.totalRepositories, detail: 'Public and owned' },
+        { type: 'stars' as const, label: 'Stars', value: github.repositorySummary.totalStars, detail: 'Across public repos' },
+        { type: 'forks' as const, label: 'Forks', value: github.repositorySummary.totalForks, detail: 'Across public repos' },
+        { type: 'followers' as const, label: 'Followers', value: github.followers, detail: 'GitHub community' },
+      ]
+    : [];
+  const portfolioMetrics = portfolio
+    ? [
+        {
+          type: 'completed' as const,
+          label: 'Completed projects',
+          value: portfolio.completedProjects,
+          detail: `${portfolio.totalProjects} projects total`,
+        },
+        { type: 'certificates' as const, label: 'Certificates', value: portfolio.totalCertificates, detail: 'Verified learning milestones' },
+        {
+          type: 'experience' as const,
+          label: 'Work experiences',
+          value: portfolio.totalWorkExperiences,
+          detail: `${portfolio.currentRoles} current role${portfolio.currentRoles === 1 ? '' : 's'}`,
+        },
+      ]
+    : [];
 
   return (
     <main className='statsPage'>
@@ -320,7 +407,8 @@ function Stats() {
         })}
       </section>
 
-      <section className='statsSection githubSection' id='github-stats'>
+      {github ? (
+        <section className='statsSection githubSection' id='github-stats'>
         <div className='githubOverview'>
           <header className='statsSectionHeader githubSectionHeader'>
             <div>
@@ -435,9 +523,21 @@ function Stats() {
             </div>
           </section>
         </div>
-      </section>
+        </section>
+      ) : (
+        <StatsSectionError
+          className='githubSection'
+          id='github-stats'
+          index='01'
+          eyebrow='Open-source activity'
+          title='GitHub'
+          icon={GITHUB_ICON}
+          message={githubError ?? 'GitHub data could not be loaded.'}
+        />
+      )}
 
-      <section className='statsSection leetcodeSection' id='leetcode-stats'>
+      {leetcode ? (
+        <section className='statsSection leetcodeSection' id='leetcode-stats'>
         <div className='leetcodeOverview'>
           <header className='statsSectionHeader leetcodeSectionHeader'>
             <div>
@@ -528,9 +628,21 @@ function Stats() {
           <TopicList title='Intermediate' topics={leetcode.intermediateSkills} />
           <TopicList title='Advanced' topics={leetcode.advancedSkills} />
         </div>
-      </section>
+        </section>
+      ) : (
+        <StatsSectionError
+          className='leetcodeSection'
+          id='leetcode-stats'
+          index='02'
+          eyebrow='Problem solving'
+          title='LeetCode'
+          icon={LEETCODE_ICON}
+          message={leetcodeError ?? 'LeetCode data could not be loaded.'}
+        />
+      )}
 
-      <section className='statsSection portfolioSection' id='portfolio'>
+      {portfolio ? (
+        <section className='statsSection portfolioSection' id='portfolio'>
         <div className='portfolioOverview'>
           <header className='statsSectionHeader portfolioSectionHeader'>
             <div>
@@ -603,7 +715,18 @@ function Stats() {
             </div>
           </section>
         </div>
-      </section>
+        </section>
+      ) : (
+        <StatsSectionError
+          className='portfolioSection'
+          id='portfolio'
+          index='03'
+          eyebrow='Body of work'
+          title='Portfolio'
+          icon={FOLDER_ICON}
+          message={portfolioError ?? 'Portfolio data could not be loaded.'}
+        />
+      )}
 
       <button className='statsBackToTop' type='button' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label='Back to top'>
         <span>Back to top</span>

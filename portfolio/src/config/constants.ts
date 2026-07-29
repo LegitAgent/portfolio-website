@@ -31,6 +31,7 @@ import sql from '../assets/icons/sql.svg';
 import tailwind from '../assets/icons/tailwind.svg';
 import typescript from '../assets/icons/typescript.svg';
 import vite from '../assets/icons/vite.svg';
+import unavailable_image from '../assets/icons/unavailable_image.svg';
 
 import skills from '../assets/icons/skills.svg';
 import code from '../assets/icons/code.svg';
@@ -70,6 +71,7 @@ export const SQL = sql;
 export const TAILWIND = tailwind;
 export const TYPESCRIPT = typescript;
 export const VITE = vite;
+export const NO_IMAGE = unavailable_image;
 
 export const SKILLS = skills;
 export const CODE = code;
