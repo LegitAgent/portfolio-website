@@ -113,7 +113,7 @@ function WorkArticle() {
 
       {imageURL && (
         <figure className='workArticleImage'>
-          <img src={imageURL} alt={articleContent?.article_title ?? ''} />
+          <img src={imageURL} alt={articleContent?.article_title ?? ''} decoding='async' loading='lazy'/>
         </figure>
       )}
 

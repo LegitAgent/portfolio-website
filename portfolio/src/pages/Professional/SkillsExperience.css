@@ -253,6 +253,7 @@
 
 .workList {
   --journey-progress: 0;
+  --journey-branch: 50%;
   position: relative;
   min-height: 8rem;
   padding-bottom: 2rem;
@@ -263,7 +264,7 @@
   content: '';
   position: absolute;
   top: 1.2rem;
-  left: 50%;
+  left: var(--journey-branch);
   width: 1px;
   height: calc(100% - 1.2rem);
   transform: translateX(-50%);
@@ -433,11 +434,11 @@
 }
 
 .workMapItem--left .workMapCurve {
-  right: calc(50% + 1rem);
+  right: calc(100% - var(--journey-branch) + 1rem);
 }
 
 .workMapItem--right .workMapCurve {
-  left: calc(50% + 1rem);
+  left: calc(var(--journey-branch) + 1rem);
 }
 
 .workMapItem.is-active .workMapNode {
@@ -602,9 +603,8 @@
     padding-bottom: calc(var(--mobile-nav-clearance) + 3rem);
   }
 
-  .workList::before,
-  .workList::after {
-    left: 38%;
+  .workList {
+    --journey-branch: calc(38.2716% + 0.469rem);
   }
 
   .journeyPhaseHeader,
@@ -617,27 +617,9 @@
   }
 }
 
-@media (max-width: 780px) {
-  .technicalSkills {
-    grid-template-columns: 1fr;
-  }
-
-  .journeyControls {
-    align-items: flex-end;
-    padding-inline: 0.5rem;
-  }
-
-  .journeyControlsLabel {
-    display: none;
-  }
-
-  .journeyFilters {
-    width: 100%;
-  }
-
-  .workList::before,
-  .workList::after {
-    left: 1rem;
+@media (max-width: 1000px) {
+  .workList {
+    --journey-branch: 1rem;
   }
 
   .journeyPhaseHeader {
@@ -684,6 +666,25 @@
 
   .workMapCurve {
     display: none;
+  }
+}
+
+@media (max-width: 780px) {
+  .technicalSkills {
+    grid-template-columns: 1fr;
+  }
+
+  .journeyControls {
+    align-items: flex-end;
+    padding-inline: 0.5rem;
+  }
+
+  .journeyControlsLabel {
+    display: none;
+  }
+
+  .journeyFilters {
+    width: 100%;
   }
 }
 

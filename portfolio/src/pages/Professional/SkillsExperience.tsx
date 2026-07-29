@@ -161,7 +161,7 @@ function SkillTag({ skill }: { skill: Tag }) {
 
   return (
     <div className='tag' key={skill.tag_name}>
-      <img className={iconClassName} src={iconSrc} alt='' aria-hidden='true' />
+      <img className={iconClassName} src={iconSrc} alt='' aria-hidden='true' loading='lazy'/>
       <span>{skill.tag_name}</span>
     </div>
   );

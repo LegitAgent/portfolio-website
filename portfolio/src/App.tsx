@@ -3,29 +3,32 @@ import './App.css';
 // components
 import Background from './components/Background/Background';
 import Navbar from './components/Navbar/Navbar';
+import LoadingScreen from './pages/Misc/LoadingScreen';
 
 // home
 import Home from './pages/Home/Home';
 
 // professional pages
-import SkillsExperience from './pages/Professional/SkillsExperience.tsx';
-import Resume from './pages/Professional/Resume.tsx';
-import Projects from './pages/Professional/Projects.tsx';
-import Certificates from './pages/Professional/Certificates.tsx';
+const SkillsExperience = lazy(() => import('./pages/Professional/SkillsExperience'));
+const Resume = lazy(() => import('./pages/Professional/Resume'));
+const Projects = lazy(() => import('./pages/Professional/Projects'));
+const Certificates = lazy(() => import('./pages/Professional/Certificates'));
 
 // contacts
-import Contacts from './pages/Contacts/Contacts.tsx';
+const Contacts = lazy(() => import('./pages/Contacts/Contacts'));
 
 // dev stats
-import Stats from './pages/Stats/Stats.tsx';
+const Stats = lazy(() => import('./pages/Stats/Stats'));
 
 // dynamic
-import ProjectArticle from './components/ProjectArticle/ProjectArticle.tsx';
-import WorkArticle from './components/WorkArticle/WorkArticle.tsx';
+const ProjectArticle = lazy(() => import('./components/ProjectArticle/ProjectArticle'));
+const WorkArticle = lazy(() => import('./components/WorkArticle/WorkArticle'));
 
 // misc.
-import WrongPage from './pages/Misc/WrongPage.tsx';
+const WrongPage = lazy(() => import('./pages/Misc/WrongPage'));
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 
 interface RoutingLinks {
   url: string;
@@ -58,11 +61,13 @@ function App() {
         <Background />
         <div className='page-shell'>
           <Navbar />
-          <Routes>
-            {routes.map((route) => {
-              return <Route path={route.url} element={route.redirectElement} />;
-            })}
-          </Routes>
+          <Suspense fallback={<LoadingScreen />}>
+            <Routes>
+              {routes.map((route) => {
+                return <Route path={route.url} element={route.redirectElement} />;
+              })}
+            </Routes>
+          </Suspense>
         </div>
       </main>
     </BrowserRouter>

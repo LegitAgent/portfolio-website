@@ -102,7 +102,7 @@ function WorkDisplay({ work }: WorkDisplayProps) {
       </div>
       <div className='workHeader'>
         {!logoFailed && imageUrl ? (
-          <img className='workImage' src={imageUrl} alt={`${work.company_name} logo`} onError={() => setLogoFailed(true)} />
+          <img className='workImage' src={imageUrl} alt={`${work.company_name} logo`} onError={() => setLogoFailed(true)} decoding='async' loading='lazy'/>
         ) : (
           <span className='workMonogram' aria-hidden='true'>
             {getInitials(work.company_name)}

@@ -29,7 +29,7 @@ function CertificateDisplay({ certificate }: { certificate: Certificate }) {
         rel='noreferrer'
         aria-label={`Open ${certificate.title} certificate`}
       >
-        <img className='certificateImage' src={imageUrl} alt={certificate.image_alt} />
+        <img className='certificateImage' src={imageUrl} alt={certificate.image_alt} decoding="async" loading="lazy"/>
         <span className='certificateImageShade' aria-hidden='true' />
       </a>
 

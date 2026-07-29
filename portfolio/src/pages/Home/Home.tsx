@@ -7,7 +7,7 @@ function Home() {
     <main className='hero'>
       <section className='introduction' aria-labelledby='home-title'>
         <div className='pictureWrap'>
-          <img id='portfolioPicture' src={PROFILE_PICTURE} alt='Martin Darius Alba' />
+          <img id='portfolioPicture' src={PROFILE_PICTURE} alt='Martin Darius Alba' decoding='async' loading='lazy'/>
         </div>
 
         <div className='introductionContent'>

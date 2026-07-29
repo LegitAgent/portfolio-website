@@ -192,7 +192,7 @@ function ProjectArticle() {
 
       <div className={isFeatured ? 'projectArticleVisual is-featured' : 'projectArticleVisual'}>
         {imageUrl ? (
-          <img src={imageUrl} alt={articleContent.pArticle_image_alt ?? articleContent.project_name} />
+          <img src={imageUrl} alt={articleContent.pArticle_image_alt ?? articleContent.project_name} decoding='async' loading='lazy'/>
         ) : (
           <div className='projectArticleFallback' aria-hidden='true'>
             <span>&lt;/&gt;</span>
@@ -233,7 +233,7 @@ function ProjectArticle() {
 
           <div className='projectArticleActions'>
             <a className='resumeAction' href={articleContent.project_github} target='_blank' rel='noreferrer'>
-              <img className='projectArticleGithubIcon' src={GITHUB_ICON} alt='' aria-hidden='true' />
+              <img className='projectArticleGithubIcon' src={GITHUB_ICON} alt='' aria-hidden='true' loading='lazy'/>
               <span>View source</span>
             </a>
             {articleContent.live_url && (
