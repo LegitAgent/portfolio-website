@@ -1,11 +1,12 @@
 import './ProjectArticle.css';
-import { CLOUDFLARE_GATEWAY, CLOUDFLARE_R2_BUCKET, GITHUB_ICON } from '../../config/constants.ts';
+import { CLOUDFLARE_GATEWAY, GITHUB_ICON } from '../../config/constants.ts';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import LoadingScreen from '../../pages/Misc/LoadingScreen.tsx';
 import ErrorScreen from '../../pages/Misc/ErrorScreen.tsx';
 import WrongPage from '../../pages/Misc/WrongPage.tsx';
 import type { ArticleResponse } from '../../types/project.ts';
+import ProjectArticleGallery from './ProjectArticleGallery.tsx';
 
 interface ArticleSection {
   id: string;
@@ -26,14 +27,14 @@ function getParagraphs(content: string): string[] {
 
 function ProjectArticle() {
   const navigate = useNavigate();
-  const { slug } = useParams();
-  const articleGateway = `${CLOUDFLARE_GATEWAY}api/project_articles/${slug ?? ''}`;
+  const slug = useParams();
+  const articleGateway = CLOUDFLARE_GATEWAY + 'api/db/project_articles/' + slug.slug;
 
   const [isLoading, setIsLoading] = useState(true);
   const [article, setArticle] = useState<ArticleResponse | null>(null);
   const [hasError, setHasError] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [notFound, setNotFound] = useState<boolean>(false);
+  const progressRef = useRef<HTMLSpanElement>(null);
 
   // fetching from API
   useEffect(() => {
@@ -61,9 +62,22 @@ function ProjectArticle() {
 
   // the scroll bar above
   useEffect(() => {
+    if (!article) {
+      return;
+    }
+
+    let animationFrameId = 0;
+
     const updateProgress = () => {
-      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(scrollableHeight > 0 ? Math.min(window.scrollY / scrollableHeight, 1) : 0);
+      window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = window.requestAnimationFrame(() => {
+        const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollableHeight > 0 ? Math.min(window.scrollY / scrollableHeight, 1) : 0;
+
+        if (progressRef.current) {
+          progressRef.current.style.transform = `scaleX(${progress})`;
+        }
+      });
     };
 
     updateProgress();
@@ -71,10 +85,11 @@ function ProjectArticle() {
     window.addEventListener('resize', updateProgress);
 
     return () => {
+      window.cancelAnimationFrame(animationFrameId);
       window.removeEventListener('scroll', updateProgress);
       window.removeEventListener('resize', updateProgress);
     };
-  }, []);
+  }, [article]);
 
   // animation as it renders into viewport
   useEffect(() => {
@@ -165,14 +180,20 @@ function ProjectArticle() {
     return <LoadingScreen />;
   }
 
-  const imageUrl = articleContent.pArticle_image_url ? new URL(articleContent.pArticle_image_url, CLOUDFLARE_R2_BUCKET).toString() : null;
+  const galleryImagePaths =
+    articleContent.images?.length > 0
+      ? articleContent.images
+      : articleContent.pArticle_image_url
+        ? [articleContent.pArticle_image_url]
+        : [];
+  const galleryR2Url = articleContent.images?.length > 0 ? articleContent.r2_url : '';
   const statusClassName = `projectArticleStatus projectArticleStatus--${articleContent.status.toLowerCase()}`;
   const isFeatured = Number(articleContent.featured) === 1;
 
   return (
     <article className='projectArticlePage'>
       <div className='projectArticleProgress' aria-hidden='true'>
-        <span style={{ transform: `scaleX(${scrollProgress})` }} />
+        <span ref={progressRef} />
       </div>
 
       <nav className='projectArticleTopbar' aria-label='Article navigation'>
@@ -190,17 +211,14 @@ function ProjectArticle() {
         </div>
       </nav>
 
-      <div className={isFeatured ? 'projectArticleVisual is-featured' : 'projectArticleVisual'}>
-        {imageUrl ? (
-          <img src={imageUrl} alt={articleContent.pArticle_image_alt ?? articleContent.project_name} decoding='async' loading='lazy'/>
-        ) : (
-          <div className='projectArticleFallback' aria-hidden='true'>
-            <span>&lt;/&gt;</span>
-            <p>PROJECT_PREVIEW</p>
-          </div>
-        )}
-        {isFeatured && <span className='projectArticleImageFeatured'>Featured project</span>}
-      </div>
+      <ProjectArticleGallery
+        imagePaths={galleryImagePaths}
+        imageAlt={articleContent.pArticle_image_alt}
+        isFeatured={isFeatured}
+        key={articleContent.pArticle_slug}
+        projectName={articleContent.project_name}
+        r2Url={galleryR2Url}
+      />
 
       <header className='projectArticleHero'>
         <div className='projectArticleHeroCopy'>

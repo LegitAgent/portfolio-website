@@ -120,7 +120,6 @@ function getNodeSymbol(category: Exclude<JourneyFilter, 'all'>, workType: WorkEx
 
 const skillIconSources: Record<string, string> = {
   AWS,
-  'AWS Lambda': AWS,
   Cloudflare: CLOUDFLARE,
   'C++': CPP,
   CPP,

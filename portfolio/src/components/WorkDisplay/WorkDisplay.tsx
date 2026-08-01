@@ -75,11 +75,10 @@ function WorkDisplay({ work }: WorkDisplayProps) {
     ...getHighlights(details?.article?.responsibilities),
   ].slice(0, 3);
   const articleLabel = getArticleLabel(work.type, work.employment_type);
-
+  
   useEffect(() => {
-    const controller = new AbortController();
-
-    fetch(`${CLOUDFLARE_GATEWAY}api/work_articles/${work.work_slug}`, { signal: controller.signal })
+    const url = CLOUDFLARE_GATEWAY + 'api/db/work_articles/' + work.work_slug;
+    fetch(url)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Request failed ${response.status}`);
@@ -90,8 +89,6 @@ function WorkDisplay({ work }: WorkDisplayProps) {
       .catch(() => {
         // The overview remains useful even when optional article metadata is unavailable.
       });
-
-    return () => controller.abort();
   }, [work.work_slug]);
 
   return (

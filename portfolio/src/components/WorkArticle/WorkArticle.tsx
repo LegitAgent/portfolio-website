@@ -25,7 +25,7 @@ function WorkArticle() {
   const navigate = useNavigate();
 
   const slug = useParams();
-  const workArticleGateway = CLOUDFLARE_GATEWAY + 'api/work_articles/' + slug.slug;
+  const workArticleGateway = CLOUDFLARE_GATEWAY + 'api/db/work_articles/' + slug.slug;
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [article, setArticle] = useState<WorkResponse | null>(null);

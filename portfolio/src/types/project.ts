@@ -30,6 +30,8 @@ interface ProjectArticle {
   pArticle_challenges: string | null;
   pArticle_lessons: string | null;
   pArticle_future_work: string | null;
+  images: string[];
+  r2_url: string;
   project_github: string;
   started_at: string;
   live_url: string | null;
