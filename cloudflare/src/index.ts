@@ -110,8 +110,8 @@ function getCorsOrigin(env: Env): string {
 
 // for dynamic routes, limit those
 function getRateLimitBucket(pathname: string): string {
-  if (pathname.startsWith('/api/project_articles/')) return '/api/project_articles';
-  if (pathname.startsWith('/api/work_articles/')) return '/api/work_articles';
+  if (pathname.startsWith('/api/db/project_articles/')) return '/api/db/project_articles';
+  if (pathname.startsWith('/api/db/work_articles/')) return '/api/db/work_articles';
   
   return pathname;
 }
@@ -208,8 +208,8 @@ const VALID_PATHS = new Set([
 
 function isKnownRoute(pathname: string): boolean {
   return VALID_PATHS.has(pathname)
-    || pathname.startsWith('/api/project_articles/')
-    || pathname.startsWith('/api/work_articles/');
+    || pathname.startsWith('/api/db/project_articles/')
+    || pathname.startsWith('/api/db/work_articles/');
 }
 
 export default {
@@ -326,9 +326,9 @@ export default {
           return cachedJson(request, ctx, TTL_TIME.WORK, allowedOrigin, loadWork);
         }
 
-        if (url.pathname.startsWith('/api/project_articles/')) {
+        if (url.pathname.startsWith('/api/db/project_articles/')) {
           const loadProjectArticles = async () => {
-            const slug = checkParamSlug(url.pathname, '/api/project_articles/');
+            const slug = checkParamSlug(url.pathname, '/api/db/project_articles/');
 
             if (!slug) {
               return {
@@ -338,7 +338,7 @@ export default {
             }
 
             const articleQuery = env.portfolio_db
-              .prepare('SELECT pa.project_name, pa.pArticle_slug, pa.pArticle_image_url, pa.pArticle_image_alt, pa.pArticle_summary, pa.pArticle_overview, pa.pArticle_content, pa.pArticle_challenges, pa.pArticle_lessons, pa.pArticle_future_work, p.project_github, p.started_at, p.live_url, p.status, p.featured FROM ProjectArticles AS pa JOIN Projects AS p ON pa.project_name = p.project_name WHERE pa.pArticle_slug = ?')
+              .prepare('SELECT pa.project_name, pa.pArticle_slug, pa.pArticle_image_url, pa.pArticle_image_alt, pa.pArticle_summary, pa.pArticle_overview, pa.pArticle_content, pa.pArticle_challenges, pa.pArticle_lessons, pa.pArticle_future_work, p.project_github, p.started_at, p.live_url, p.status, p.featured, ib.images, ib.r2_url FROM ProjectArticles AS pa JOIN Projects AS p ON pa.project_name = p.project_name LEFT JOIN ImageBuckets AS ib ON pa.r2_url = ib.r2_url WHERE pa.pArticle_slug = ?')
               .bind(slug)
 
             const articleTagQuery = env.portfolio_db
@@ -346,8 +346,8 @@ export default {
               .bind(slug)
 
             const [articleContent, articleTagContent] = await env.portfolio_db.batch([articleQuery, articleTagQuery]);
-            const article = articleContent.results[0];
 
+            const article = articleContent.results[0] as ProjectArticleRow | undefined;
             if (!article) {
               return {
                 data: { error: 'Article not found' },
@@ -355,8 +355,13 @@ export default {
               }
             }
 
+            const articleWithImages = {
+              ...article,
+              images: parseImageManifest(article.images),
+            };
+
             return { 
-              data: { article, tags: articleTagContent.results },
+              data: { article: articleWithImages, tags: articleTagContent.results },
               status: 200
             };
           }
@@ -364,9 +369,9 @@ export default {
           return cachedJson(request, ctx, TTL_TIME.ARTICLE, allowedOrigin, loadProjectArticles, TTL_TIME.ARTICLE_NOT_FOUND);
         }
 
-        if (url.pathname.startsWith('/api/work_articles/')) {
+        if (url.pathname.startsWith('/api/db/work_articles/')) {
           const loadWorkArticles = async () => {
-            const slug = checkParamSlug(url.pathname, '/api/work_articles/');
+            const slug = checkParamSlug(url.pathname, '/api/db/work_articles/');
 
             if (!slug) {
               return {
@@ -517,6 +522,28 @@ interface PortfolioStatsRow {
   status?: string;
 }
 
+interface ProjectArticleRow extends Record<string, unknown> {
+  images?: unknown;
+}
+
 function getBatchCount(result: D1Result<PortfolioStatsRow>): number {
   return result.results[0]?.count ?? 0;
+}
+
+function parseImageManifest(value: unknown): string[] {
+  let images = value;
+
+  if (typeof images === 'string') {
+    try {
+      images = JSON.parse(images);
+    } catch {
+      return [];
+    }
+  }
+
+  if (!Array.isArray(images)) {
+    return [];
+  }
+
+  return images.filter((image): image is string => typeof image === 'string' && image.trim().length > 0);
 }

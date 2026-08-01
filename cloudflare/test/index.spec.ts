@@ -23,6 +23,7 @@ async function seedDatabase() {
 		'DROP TABLE IF EXISTS WorkArticle',
 		'DROP TABLE IF EXISTS WorkExperience',
 		'DROP TABLE IF EXISTS ProjectArticles',
+		'DROP TABLE IF EXISTS ImageBuckets',
 		'DROP TABLE IF EXISTS Projects',
 		'DROP TABLE IF EXISTS Certificates',
 		'DROP TABLE IF EXISTS Tag',
@@ -47,7 +48,12 @@ async function seedDatabase() {
 			pArticle_content TEXT,
 			pArticle_challenges TEXT,
 			pArticle_lessons TEXT,
-			pArticle_future_work TEXT
+			pArticle_future_work TEXT,
+			r2_url TEXT
+		)`,
+		`CREATE TABLE ImageBuckets (
+			r2_url TEXT PRIMARY KEY,
+			images TEXT NOT NULL
 		)`,
 		`CREATE TABLE Certificates (
 			id INTEGER PRIMARY KEY,
@@ -100,8 +106,10 @@ async function seedDatabase() {
 		)`,
 		`INSERT INTO Projects (project_name, project_description, project_github, project_img_url, featured, started_at, ended_at, live_url, status)
 		VALUES ('Portfolio', 'Personal portfolio site', 'https://github.com/LegitAgent/portfolio-website', 'projects/portfolio.jpg', 1, '2026-01-01', NULL, 'https://example.com/portfolio', 'WIP')`,
-		`INSERT INTO ProjectArticles (project_name, pArticle_slug, pArticle_image_url, pArticle_image_alt, pArticle_summary, pArticle_overview, pArticle_content, pArticle_challenges, pArticle_lessons, pArticle_future_work)
-		VALUES ('Portfolio', 'portfolio', 'articles/portfolio.jpg', 'Portfolio preview', 'Portfolio summary', 'Portfolio overview', 'Article body', 'Challenges', 'Lessons', 'Future work')`,
+		`INSERT INTO ProjectArticles (project_name, pArticle_slug, pArticle_image_url, pArticle_image_alt, pArticle_summary, pArticle_overview, pArticle_content, pArticle_challenges, pArticle_lessons, pArticle_future_work, r2_url)
+		VALUES ('Portfolio', 'portfolio', 'articles/portfolio.jpg', 'Portfolio preview', 'Portfolio summary', 'Portfolio overview', 'Article body', 'Challenges', 'Lessons', 'Future work', 'articles/portfolio')`,
+		`INSERT INTO ImageBuckets (r2_url, images)
+		VALUES ('articles/portfolio', '["overview.jpg","dashboard.jpg"]')`,
 		`INSERT INTO Certificates (id, title, issuer, completion_date, credential_url, certificate_url, image_alt, skills, image_url, description)
 		VALUES (1, 'AWS Essentials', 'AWS', '2026-03-01', 'https://example.com/credential', 'certificates/AWS_Essentials_Cert.pdf', 'AWS certificate', 'Cloud', 'certificates/aws.jpg', 'AWS course')`,
 		`INSERT INTO Tag (tag_name, skill_type)
@@ -142,10 +150,10 @@ async function clearCachedRoutes() {
 		'/api/db/tags',
 		'/api/db/work',
 		'/api/stats/portfolio',
-		'/api/project_articles/portfolio',
-		'/api/project_articles/missing',
-		'/api/work_articles/hackazouk',
-		'/api/work_articles/missing',
+		'/api/db/project_articles/portfolio',
+		'/api/db/project_articles/missing',
+		'/api/db/work_articles/hackazouk',
+		'/api/db/work_articles/missing',
 		'/api/github',
 		'/api/leetcode',
 	];
@@ -243,7 +251,7 @@ describe('portfolio worker', () => {
 	});
 
 	it('returns a project article and its tags by slug', async () => {
-		const response = await fetchWorker('/api/project_articles/portfolio');
+		const response = await fetchWorker('/api/db/project_articles/portfolio');
 		const body = await jsonBody<{ article: Record<string, unknown>; tags: Record<string, unknown>[] }>(response);
 
 		expect(response.status).toBe(200);
@@ -258,6 +266,8 @@ describe('portfolio worker', () => {
 			pArticle_challenges: 'Challenges',
 			pArticle_lessons: 'Lessons',
 			pArticle_future_work: 'Future work',
+			images: ['overview.jpg', 'dashboard.jpg'],
+			r2_url: 'articles/portfolio',
 			project_github: 'https://github.com/LegitAgent/portfolio-website',
 			started_at: '2026-01-01',
 			live_url: 'https://example.com/portfolio',
@@ -267,8 +277,20 @@ describe('portfolio worker', () => {
 		expect(body.tags).toEqual([{ tag_name: 'Cloudflare' }, { tag_name: 'React' }]);
 	});
 
+	it('returns an empty image list when an article image manifest is malformed', async () => {
+		await env.portfolio_db
+			.prepare("UPDATE ImageBuckets SET images = 'not-valid-json' WHERE r2_url = 'articles/portfolio'")
+			.run();
+
+		const response = await fetchWorker('/api/db/project_articles/portfolio');
+		const body = await jsonBody<{ article: { images: string[] } }>(response);
+
+		expect(response.status).toBe(200);
+		expect(body.article.images).toEqual([]);
+	});
+
 	it('returns a work article and its tags by work slug', async () => {
-		const response = await fetchWorker('/api/work_articles/hackazouk');
+		const response = await fetchWorker('/api/db/work_articles/hackazouk');
 		const body = await jsonBody<{ article: Record<string, unknown>; tags: Record<string, unknown>[] }>(response);
 
 		expect(response.status).toBe(200);
@@ -287,7 +309,7 @@ describe('portfolio worker', () => {
 	});
 
 	it('returns and caches a 404 for an unknown project article slug', async () => {
-		const response = await fetchWorker('/api/project_articles/missing');
+		const response = await fetchWorker('/api/db/project_articles/missing');
 		const body = await jsonBody(response);
 
 		expect(response.status).toBe(404);
@@ -295,7 +317,7 @@ describe('portfolio worker', () => {
 		expect(response.headers.get('Cache-Control')).toBe('public, max-age=0, s-maxage=30');
 		expect(response.headers.get('X-Cache-Status')).toBe('MISS');
 
-		const cachedResponse = await fetchWorker('/api/project_articles/missing');
+		const cachedResponse = await fetchWorker('/api/db/project_articles/missing');
 
 		expect(cachedResponse.status).toBe(404);
 		expect(await jsonBody(cachedResponse)).toEqual({ error: 'Article not found' });
@@ -303,7 +325,7 @@ describe('portfolio worker', () => {
 	});
 
 	it('returns 404 for an unknown work article slug', async () => {
-		const response = await fetchWorker('/api/work_articles/missing');
+		const response = await fetchWorker('/api/db/work_articles/missing');
 
 		expect(response.status).toBe(404);
 		expect(await jsonBody(response)).toEqual({ error: 'Article not found' });
@@ -312,8 +334,8 @@ describe('portfolio worker', () => {
 	});
 
 	it.each([
-		'/api/project_articles/not%2Fa-valid-slug',
-		'/api/work_articles/not%2Fa-valid-slug',
+		'/api/db/project_articles/not%2Fa-valid-slug',
+		'/api/db/work_articles/not%2Fa-valid-slug',
 	])('rejects an invalid article slug at %s', async (path) => {
 		const response = await fetchWorker(path);
 
