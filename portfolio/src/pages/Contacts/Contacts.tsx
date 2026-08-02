@@ -1,5 +1,5 @@
 import './Contacts.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   AVAILABILITY_LABELS,
   COLLAB_AVAILABILITY,
@@ -208,7 +208,8 @@ function Contacts() {
 
   const [selectedInterest, setSelectedInterest] = useState<number | null>(null);
   const [time, setTime] = useState<string>('');
-  const [hasCopied, setHasCopied] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle');
+  const copyResetTimer = useRef<number | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -223,10 +224,27 @@ function Contacts() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (copyResetTimer.current !== null) {
+        window.clearTimeout(copyResetTimer.current);
+      }
+    };
+  }, []);
+
   const copyEmail = async () => {
-    await navigator.clipboard.writeText('albamartindarius@gmail.com');
-    setHasCopied(true);
-    window.setTimeout(() => setHasCopied(false), 1600);
+    if (copyResetTimer.current !== null) {
+      window.clearTimeout(copyResetTimer.current);
+    }
+
+    try {
+      await navigator.clipboard.writeText('albamartindarius@gmail.com');
+      setCopyStatus('copied');
+      copyResetTimer.current = window.setTimeout(() => setCopyStatus('idle'), 1600);
+    } catch {
+      setCopyStatus('error');
+      copyResetTimer.current = window.setTimeout(() => setCopyStatus('idle'), 4000);
+    }
   };
 
   return (
@@ -261,9 +279,19 @@ function Contacts() {
               albamartindarius@gmail.com
             </p>
           </div>
-          <button className='copyButton' type='button' onClick={copyEmail}>
-            {hasCopied ? 'Copied' : 'Copy my Email'}
+          <button
+            className={copyStatus === 'error' ? 'copyButton is-error' : 'copyButton'}
+            type='button'
+            onClick={copyEmail}
+            aria-describedby={copyStatus === 'error' ? 'copy-email-error' : undefined}
+          >
+            {copyStatus === 'copied' ? 'Copied' : copyStatus === 'error' ? 'Try Copy Again' : 'Copy my Email'}
           </button>
+          {copyStatus === 'error' && (
+            <p className='copyFeedback' id='copy-email-error' role='alert'>
+              Clipboard access was blocked. Please select and copy the email address manually.
+            </p>
+          )}
         </div>
         <p className='bestwayDescription'>
           Email is the most reliable way to contact me about professional opportunities, collaborations, or questions about my work.

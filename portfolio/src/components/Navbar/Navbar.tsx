@@ -3,24 +3,68 @@ import { Link, useLocation } from 'react-router-dom';
 import { NavDropDown } from '../NavDropDown/NavDropDown.tsx';
 // type keyword needed since ts technically is still js and type checking disappears (import types with type keyword)
 import type { LinkItem } from '../NavDropDown/NavDropDown.tsx';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type ThemeMode = 'dark' | 'light';
 
 function getInitialTheme(): ThemeMode {
-  const savedTheme = window.localStorage.getItem('portfolio-theme');
-  return savedTheme === 'light' ? 'light' : 'dark';
+  return document.documentElement.dataset.theme === 'light'
+    ? 'light'
+    : 'dark';
 }
 
 function Navbar() {
   const [showProfessionalDropdown, setProfessionalDropdown] = useState(false);
   const [themeMode, setThemeMode] = useState<ThemeMode>(getInitialTheme);
   const location = useLocation();
+  const professionalMenuRef = useRef<HTMLDivElement>(null);
+  const professionalButtonRef = useRef<HTMLButtonElement>(null);
+  const professionalMenuId = 'professional-navigation-menu';
 
   useEffect(() => {
     document.documentElement.dataset.theme = themeMode;
-    window.localStorage.setItem('portfolio-theme', themeMode);
+    document.documentElement.style.colorScheme = themeMode;
+    try {
+      window.localStorage.setItem('portfolio-theme', themeMode);
+    } catch {
+      // just dont update the theme
+    }
   }, [themeMode]);
+
+  useEffect(() => {
+    const closeFrame = window.requestAnimationFrame(() => setProfessionalDropdown(false));
+    return () => window.cancelAnimationFrame(closeFrame);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!showProfessionalDropdown) {
+      return;
+    }
+
+    const closeOnOutsidePointer = (event: PointerEvent) => {
+      if (!professionalMenuRef.current?.contains(event.target as Node)) {
+        setProfessionalDropdown(false);
+      }
+    };
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') {
+        return;
+      }
+
+      event.preventDefault();
+      setProfessionalDropdown(false);
+      professionalButtonRef.current?.focus();
+    };
+
+    document.addEventListener('pointerdown', closeOnOutsidePointer);
+    document.addEventListener('keydown', closeOnEscape);
+
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsidePointer);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [showProfessionalDropdown]);
 
   const ProfessionalLinks: LinkItem[] = [
     { path: '/skills_experience', name: 'Skills & Experience' },
@@ -37,7 +81,7 @@ function Navbar() {
   const isLightMode = themeMode === 'light';
 
   return (
-    <nav className='navbar' role='navigation'>
+    <nav className='navbar' aria-label='Primary navigation'>
       <Link className={location.pathname === '/' ? 'navbar__iconLink is-active' : 'navbar__iconLink'} to='/' aria-label='Home'>
         <svg viewBox='0 0 24 24' aria-hidden='true'>
           <path d='M12 3.5 4 10v10.5h5.5v-6h5v6H20V10l-8-6.5Z' />
@@ -46,17 +90,27 @@ function Navbar() {
 
       <div className='navbar__links'>
         {/* onclick does NOT render anything, just executes, so no rendering, so use usestate instead */}
-        <div className='navbar__item'>
+        <div className='navbar__item' ref={professionalMenuRef}>
           <button
             className={showProfessionalDropdown || isProfessionalActive ? 'navbar__iconLink focus-anim is-active' : 'navbar__iconLink'}
-            onClick={() => setProfessionalDropdown(!showProfessionalDropdown)}
+            type='button'
+            aria-label='Professional pages'
+            aria-expanded={showProfessionalDropdown}
+            aria-controls={professionalMenuId}
+            onClick={() => setProfessionalDropdown((isOpen) => !isOpen)}
+            ref={professionalButtonRef}
           >
             <svg viewBox='0 0 24 24' aria-hidden='true'>
               <path d='M8 6V4.75C8 3.78 8.78 3 9.75 3h4.5C15.22 3 16 3.78 16 4.75V6h1.5A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-8A2.5 2.5 0 0 1 6.5 6H8Zm1.5 0h5V4.75a.25.25 0 0 0-.25-.25h-4.5a.25.25 0 0 0-.25.25V6ZM5.5 10v6.5c0 .55.45 1 1 1h11c.55 0 1-.45 1-1V10h-5v1a.75.75 0 0 1-.75.75h-1.5A.75.75 0 0 1 10.5 11v-1h-5Z' />
             </svg>
           </button>
-          {/* note that for props you can only pass one instance through the component file itself */}
-          <NavDropDown itemsArray={ProfessionalLinks} dropdownType='Professional' isOpen={showProfessionalDropdown} />
+          <NavDropDown
+            id={professionalMenuId}
+            itemsArray={ProfessionalLinks}
+            dropdownType='Professional'
+            isOpen={showProfessionalDropdown}
+            onNavigate={() => setProfessionalDropdown(false)}
+          />
         </div>
         <Link className={isPathActive('/stats') ? 'navbar__iconLink is-active' : 'navbar__iconLink'} to='/stats' aria-label='Statistics'>
           <svg viewBox='0 0 24 24' aria-hidden='true'>

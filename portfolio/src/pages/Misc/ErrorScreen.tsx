@@ -1,6 +1,8 @@
 import './ErrorScreen.css';
+import { useSafeBack } from '../../hooks/useSafeBack';
 
 function ErrorScreen() {
+  const goBackSafely = useSafeBack();
   return (
     <section className='errorScreen' role='alert'>
       <div className='errorScreen__status' aria-hidden='true'>
@@ -27,7 +29,7 @@ function ErrorScreen() {
           </svg>
           <span>Refresh page</span>
         </button>
-        <button className='errorScreen__retry' onClick={() => window.history.back()}>
+        <button className='errorScreen__retry' onClick={goBackSafely}>
           <svg viewBox='0 0 24 24' aria-hidden='true'>
             <path d='m15 18-6-6 6-6' />
           </svg>

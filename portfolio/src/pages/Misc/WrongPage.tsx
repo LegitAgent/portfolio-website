@@ -1,6 +1,7 @@
 import './WrongPage.css';
 import { useRef, useState, type PointerEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSafeBack } from '../../hooks/useSafeBack';
 
 function WrongPage() {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ function WrongPage() {
   });
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const goBackSafely = useSafeBack();
 
   const startDragging = (event: PointerEvent<HTMLDivElement>) => {
     const astronautBounds = event.currentTarget.getBoundingClientRect();
@@ -101,7 +103,7 @@ function WrongPage() {
         <h1>Lost in orbit.</h1>
         <p>The page you tried to open drifted outside the site map.</p>
         <div className='wrong__actions'>
-          <button onClick={() => navigate(-1)}>Go Back</button>
+          <button onClick={goBackSafely}>Go Back</button>
           <button onClick={() => navigate('/')}>Home</button>
         </div>
       </div>

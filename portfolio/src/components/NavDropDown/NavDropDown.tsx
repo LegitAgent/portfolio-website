@@ -8,9 +8,11 @@ export interface LinkItem {
 }
 
 interface NavDropDownProps {
+  id: string;
   itemsArray: LinkItem[];
   dropdownType: string;
   isOpen: boolean;
+  onNavigate: () => void;
 }
 
 function ProfessionalIcon({ path }: { path: string }) {
@@ -29,7 +31,7 @@ function ProfessionalIcon({ path }: { path: string }) {
   return <img className='resumeImage' src={RESUME_ICON} alt='resume' aria-hidden='true' />;
 }
 
-export function NavDropDown({ itemsArray, dropdownType, isOpen }: NavDropDownProps) {
+export function NavDropDown({ id, itemsArray, dropdownType, isOpen, onNavigate }: NavDropDownProps) {
   const location = useLocation();
 
   const isPathActive = (path: string) => {
@@ -37,11 +39,18 @@ export function NavDropDown({ itemsArray, dropdownType, isOpen }: NavDropDownPro
   };
 
   return (
-    <div className={isOpen ? 'box is-open' : 'box'} aria-hidden={!isOpen}>
+    <div className={isOpen ? 'box is-open' : 'box'} id={id} aria-hidden={!isOpen} inert={!isOpen}>
       <p>{dropdownType}</p>
       {itemsArray.map((item) => {
         return (
-          <Link className={isPathActive(item.path) ? 'linkName is-active' : 'linkName'} key={item.name} to={item.path} aria-label={item.name}>
+          <Link
+            className={isPathActive(item.path) ? 'linkName is-active' : 'linkName'}
+            key={item.name}
+            to={item.path}
+            aria-label={item.name}
+            tabIndex={isOpen ? undefined : -1}
+            onClick={onNavigate}
+          >
             <ProfessionalIcon path={item.path} />
             {item.name}
           </Link>

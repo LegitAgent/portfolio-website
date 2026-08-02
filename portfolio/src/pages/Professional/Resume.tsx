@@ -1,11 +1,11 @@
 import './Resume.css';
 import { redirect } from '../../config/routing';
 import { RESUME_NAME, RESUME_ICON } from '../../config/constants';
-import { useNavigate } from 'react-router-dom';
+import { useSafeBack } from '../../hooks/useSafeBack';
 
 function Resume() {
   const resume: string = `${RESUME_NAME}#zoom=80%&pagemode=none`;
-  const navigate = useNavigate();
+  const goBackSafely = useSafeBack();
 
   return (
     <section className='resumeView'>
@@ -25,7 +25,7 @@ function Resume() {
 
       <div className='resumeBox'>
         <div className='topContent'>
-          <button className='resumeAction' onClick={() => navigate(-1)}>
+          <button className='resumeAction' onClick={goBackSafely}>
             <svg viewBox='0 0 24 24' aria-hidden='true'>
               <path d='m15 18-6-6 6-6' />
             </svg>

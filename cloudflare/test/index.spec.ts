@@ -113,13 +113,13 @@ async function seedDatabase() {
 		VALUES ('articles/portfolio', '["overview.jpg","dashboard.jpg"]'),
 		       ('work/hackazouk', '["architecture.jpg","internal-tools.jpg"]')`,
 		`INSERT INTO Certificates (id, title, issuer, completion_date, credential_url, certificate_url, image_alt, skills, image_url, description)
-		VALUES (1, 'AWS Essentials', 'AWS', '2026-03-01', 'https://example.com/credential', 'certificates/AWS_Essentials_Cert.pdf', 'AWS certificate', 'Cloud', 'certificates/aws.jpg', 'AWS course')`,
+		VALUES (1, 'AWS Essentials', 'AWS', '2026-03-01', 'https://example.com/credential', 'certificates/AWS_Essentials_Cert.pdf', 'AWS certificate', '["Cloud"]', 'certificates/aws.jpg', 'AWS course')`,
 		`INSERT INTO Tag (tag_name, skill_type)
 		VALUES ('React', 'frontend'), ('Cloudflare', 'backend'), ('TypeScript', 'language')`,
 		`INSERT INTO ProjectTag (project_name, tag_name)
 		VALUES ('Portfolio', 'React'), ('Portfolio', 'Cloudflare')`,
 		`INSERT INTO WorkExperience (work_id, company_name, role_title, employment_type, location, start_date, end_date, is_current, short_description, company_logo_url, company_website, display_order, work_slug, type)
-		VALUES (1, 'Hackazouk', 'Software Intern', 'Internship', 'Philippines', '2026-01-01', NULL, 1, 'Built internal tools', 'companies/hackazouk.png', 'https://example.com', 1, 'hackazouk', 'backend_development')`,
+		VALUES (1, 'Hackazouk', 'Software Intern', 'Internship', 'Philippines', '2026-01-01', NULL, 1, 'Built internal tools', 'companies/hackazouk.png', 'https://example.com', 1, 'hackazouk', 'internship')`,
 		`INSERT INTO WorkArticle (work_id, article_title, article_summary, article_content, article_image_url, responsibilities, achievements, r2_url)
 		VALUES (1, 'Hackazouk Internship', 'Internship summary', 'Work article body', 'work/hackazouk.jpg', 'Built features', 'Shipped improvements', 'work/hackazouk')`,
 		`INSERT INTO WorkTag (work_id, tag_name)
@@ -248,7 +248,7 @@ describe('portfolio worker', () => {
 				company_website: 'https://example.com',
 				display_order: 1,
 				work_slug: 'hackazouk',
-				type: 'backend_development',
+				type: 'internship',
 			},
 		]);
 	});

@@ -1,12 +1,13 @@
 import './WorkArticle.css';
 import { CLOUDFLARE_GATEWAY } from '../../config/constants.ts';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import LoadingScreen from '../../pages/Misc/LoadingScreen.tsx';
 import ErrorScreen from '../../pages/Misc/ErrorScreen.tsx';
 import WrongPage from '../../pages/Misc/WrongPage.tsx';
 import type { WorkResponse } from '../../types/work.ts';
 import ArticleGallery from '../ArticleGallery/ArticleGallery.tsx';
+import { useArticleFetch } from '../../hooks/useArticleFetch.ts';
 
 interface WorkSection {
   id: string;
@@ -49,35 +50,8 @@ function WorkArticle() {
   const { slug } = useParams();
   const workArticleGateway = CLOUDFLARE_GATEWAY + 'api/db/work_articles/' + slug;
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [article, setArticle] = useState<WorkResponse | null>(null);
-  const [hasError, setHasError] = useState(false);
-  const [notFound, setNotFound] = useState(false);
+  const { data: article, isLoading, hasError, notFound } = useArticleFetch<WorkResponse>(workArticleGateway);
   const progressRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    fetch(workArticleGateway)
-      .then((response) => {
-        if (response.status === 404) {
-          setNotFound(true);
-          return null;
-        }
-
-        if (!response.ok) {
-          throw new Error(`Request failed ${response.status}`);
-        }
-
-        return response.json();
-      })
-      .then((json) => {
-        setArticle(json);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setHasError(true);
-        setIsLoading(false);
-      });
-  }, [workArticleGateway]);
 
   useEffect(() => {
     if (!article) {
@@ -322,7 +296,7 @@ function WorkArticle() {
       <footer className='workArticleFooter workArticleReveal' data-work-article-reveal>
         <div>
           <p>End of experience</p>
-          <h2>That’s my time at {articleContent.company_name}.</h2>
+          <h2>That’s my time at {articleContent.company_name}!</h2>
         </div>
         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           Back to top

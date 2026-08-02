@@ -19,7 +19,7 @@ interface LoadResult {
   status: number;
 }
 
-const TESTING = true;
+const TESTING = false;
 
 /**
  * Parses data into JSON with JSON content and their respective headers.
@@ -107,7 +107,7 @@ function isAllowedOrigin(request: Request, env: Env): boolean {
  * @returns the valid origins from the env file
  */
 function getCorsOrigin(env: Env): string {
-  return env.ORIGIN ?? '*';
+  return env.ORIGIN;
 }
 
 // for dynamic routes, limit those
@@ -392,7 +392,7 @@ export default {
             
             const articleWithImages = {
               ...article,
-              images: JSON.parse(article.images),
+              images: parseImages(article.images),
             };
 
             return { 
@@ -445,7 +445,7 @@ export default {
 
             const articleWithImages = {
               ...article,
-              images: JSON.parse(article.images),
+              images: parseImages(article.images),
             };
 
             return { 
@@ -605,4 +605,13 @@ function getTagNames(rows: unknown[]): string[] {
   return rows
     .map((row) => (row as TagNameRow).tag_name)
     .filter((tagName): tagName is string => typeof tagName === 'string' && tagName.trim().length > 0);
+}
+
+function parseImages(images: string): string[] {
+  try {
+    const parsed: unknown = JSON.parse(images);
+    return Array.isArray(parsed) ? parsed.filter((image): image is string => typeof image === 'string') : [];
+  } catch {
+    return [];
+  }
 }

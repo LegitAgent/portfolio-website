@@ -6,9 +6,9 @@ interface Project {
   project_github: string;
   project_img_url: string;
   pArticle_slug: string | null;
-  featured: boolean;
+  featured: 0 | 1;
   started_at: string;
-  ended_at: string;
+  ended_at: string | null;
   live_url?: string;
   status: ProjectStatus;
   tags: string[];

@@ -193,6 +193,21 @@
   transform: translateY(-2px);
 }
 
+.copyButton.is-error {
+  color: rgba(254, 202, 202, 0.96);
+  border-color: rgba(248, 113, 113, 0.48);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.copyFeedback {
+  grid-column: 1 / -1;
+  margin: -0.25rem 0 0;
+  color: rgba(254, 202, 202, 0.92);
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
 .locationMap {
   position: relative;
   width: 100%;
@@ -1059,6 +1074,16 @@
 :root[data-theme='light'] .copyButton {
   color: rgba(42, 82, 134, 0.94);
   background: rgba(96, 165, 250, 0.08);
+}
+
+:root[data-theme='light'] .copyButton.is-error {
+  color: rgba(140, 36, 43, 0.96);
+  border-color: rgba(185, 55, 65, 0.38);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+:root[data-theme='light'] .copyFeedback {
+  color: rgba(140, 36, 43, 0.92);
 }
 
 :root[data-theme='light'] .linkIcon--invert {

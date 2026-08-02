@@ -1,12 +1,13 @@
 import './ProjectArticle.css';
 import { CLOUDFLARE_GATEWAY, GITHUB_ICON } from '../../config/constants.ts';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import LoadingScreen from '../../pages/Misc/LoadingScreen.tsx';
 import ErrorScreen from '../../pages/Misc/ErrorScreen.tsx';
 import WrongPage from '../../pages/Misc/WrongPage.tsx';
 import type { ArticleResponse } from '../../types/project.ts';
 import ArticleGallery from '../ArticleGallery/ArticleGallery.tsx';
+import { useArticleFetch } from '../../hooks/useArticleFetch.ts';
 
 interface ArticleSection {
   id: string;
@@ -30,35 +31,8 @@ function ProjectArticle() {
   const slug = useParams();
   const articleGateway = CLOUDFLARE_GATEWAY + 'api/db/project_articles/' + slug.slug;
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [article, setArticle] = useState<ArticleResponse | null>(null);
-  const [hasError, setHasError] = useState(false);
-  const [notFound, setNotFound] = useState<boolean>(false);
+  const { data: article, isLoading, hasError, notFound } = useArticleFetch<ArticleResponse>(articleGateway);
   const progressRef = useRef<HTMLSpanElement>(null);
-
-  // fetching from API
-  useEffect(() => {
-    fetch(articleGateway)
-      .then((response) => {
-        if (response.status === 404) {
-          setNotFound(true);
-          return null;
-        }
-
-        if (!response.ok) {
-          throw new Error(`Request failed ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((json) => {
-        setArticle(json);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setHasError(true);
-        setIsLoading(false);
-      });
-  }, [articleGateway]);
 
   // the scroll bar above
   useEffect(() => {
