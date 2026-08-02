@@ -708,10 +708,6 @@
 .githubStatsSplit > .repositoryPanel {
   height: clamp(25rem, 42vw, 31rem);
   min-height: 0;
-}
-
-.githubStatsSplit > .languagePanel,
-.githubStatsSplit > .repositoryPanel {
   display: flex;
   flex-direction: column;
   overflow: hidden;

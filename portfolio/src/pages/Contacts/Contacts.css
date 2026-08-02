@@ -240,35 +240,6 @@
   filter: invert(0.9) hue-rotate(175deg) saturate(0.72) contrast(1.08) brightness(0.72);
 }
 
-.locationMapHud {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  left: 1rem;
-  z-index: 2;
-  padding: 0.65rem 0.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  border: 1px solid rgba(125, 188, 235, 0.26);
-  border-radius: 4px;
-  color: rgba(214, 232, 250, 0.72);
-  background: rgba(2, 8, 22, 0.82);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(12px);
-  font-family: 'Courier New', ui-monospace, monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.05em;
-  pointer-events: none;
-}
-
-.locationMapHud strong {
-  color: rgba(238, 247, 255, 0.94);
-  font-size: 0.72rem;
-  text-align: center;
-}
-
 .linkBoxGroup {
   margin-top: 0.75rem;
   display: grid;
@@ -340,10 +311,6 @@
 .linkBox:focus-visible .linkBoxTop img {
   filter: brightness(1.25);
   transform: scale(1.08);
-}
-
-.linkIcon--invert {
-  filter: invert(1);
 }
 
 .linkIcon--invert {
@@ -597,9 +564,8 @@
 .artifactTitle { display: flex; justify-content: space-between; color: rgba(223, 235, 244, 0.9); font-size: 0.68rem; }
 .artifactTitle b { color: #76c7a9; font-size: 0.6rem; }
 .securityFlow { margin: 0.75rem 0; display: grid; grid-template-columns: auto 1fr auto 1fr auto; align-items: center; gap: 0.35rem; font-size: 0.59rem; color: #d5dfe7; }
-.securityFlow i { position: relative; color: #6ec2a4; font-style: normal; text-align: center; }
+.securityFlow i { position: relative; z-index: 1; color: #6ec2a4; background: rgba(1, 8, 20, 0.82); font-style: normal; text-align: center; }
 .securityFlow i::before { content: ''; position: absolute; top: 50%; right: 0; left: 0; z-index: 0; height: 1px; background: rgba(110, 194, 164, 0.32); }
-.securityFlow i { background: rgba(1, 8, 20, 0.82); z-index: 1; }
 .auditTree { padding: 0.55rem 0.65rem; border-left: 2px solid rgba(110, 198, 164, 0.38); background: rgba(110, 198, 164, 0.045); }
 .auditTree p { margin: 0.2rem 0; display: flex; justify-content: space-between; gap: 0.5rem; color: #aebbc5; font-size: 0.64rem; }
 .auditTree b { color: #78c9a9; font-weight: 600; }
@@ -650,8 +616,6 @@
 .stackPane--code code i { color: #91b7e8; font-style: normal; }
 .stackPane--code code b { color: #cbb57d; font-weight: 500; }
 .stackPane--code code em { color: #83c4aa; font-style: normal; }
-.databaseRows { margin-top: 0.6rem; padding: 0.4rem; border: 1px solid rgba(151, 174, 213, 0.2); border-radius: 50% / 18%; }
-.databaseRows span { height: 1px; margin: 0.28rem; display: block; background: rgba(151, 174, 213, 0.25); }
 .artifact--fullstack > p { grid-column: 1 / -1; margin: 0; color: #8495a6; font-size: 0.53rem; text-align: center; }
 
 .artifact--network { position: relative; padding: 0.7rem; }
@@ -1117,17 +1081,6 @@
   filter: saturate(0.78) contrast(1.02) brightness(1.04);
 }
 
-:root[data-theme='light'] .locationMapHud {
-  border-color: rgba(55, 96, 150, 0.24);
-  color: rgba(42, 82, 134, 0.68);
-  background: rgba(249, 252, 255, 0.86);
-  box-shadow: 0 12px 26px rgba(55, 80, 120, 0.14);
-}
-
-:root[data-theme='light'] .locationMapHud strong {
-  color: rgba(18, 32, 52, 0.92);
-}
-
 :root[data-theme='light'] .clockBox {
   color: rgba(18, 32, 52, 0.92);
 }
@@ -1269,19 +1222,6 @@
     height: 24rem;
   }
 
-  .locationMapHud {
-    right: 0.75rem;
-    left: 0.75rem;
-    padding: 0.55rem 0.65rem;
-  }
-
-  .locationMapHud > span {
-    display: none;
-  }
-
-  .locationMapHud strong {
-    width: 100%;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
