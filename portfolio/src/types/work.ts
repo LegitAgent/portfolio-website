@@ -28,6 +28,11 @@ interface WorkArticle {
   achievements: string | null;
   company_name: string;
   role_title: string;
+  employment_type: string;
+  location: string | null;
+  start_date: string;
+  end_date: string | null;
+  is_current: number;
   company_website: string | null;
   work_slug: string;
   images: string[];

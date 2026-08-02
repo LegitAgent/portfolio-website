@@ -18,7 +18,7 @@ function formatCertificateDate(dateValue: string) {
 
 function CertificateDisplay({ certificate }: { certificate: Certificate }) {
   const imageUrl = new URL(certificate.image_url, CLOUDFLARE_R2_BUCKET).toString();
-  const skills = certificate.skills.split(/\s+/).filter(Boolean);
+  const skills = certificate.skills;
 
   return (
     <article className='certificateDisplay'>

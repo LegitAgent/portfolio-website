@@ -293,8 +293,16 @@ export default {
             .prepare('SELECT id, title, issuer, completion_date, credential_url, certificate_url, image_alt, skills, image_url, description FROM Certificates ORDER BY completion_date DESC')
             .run();
 
+            const certificatesWithTags = certificates.map((values) => {
+              const certificate = values as CertificateRow;
+              return {
+                ...certificate,
+                skills: JSON.parse(certificate.skills),
+              };
+            });
+
             return { 
-              data: { certificates },
+              data: { certificates: certificatesWithTags },
               status: 200
             };
           }
@@ -402,7 +410,7 @@ export default {
             }
 
             const articleQuery = env.portfolio_db
-              .prepare('SELECT wa.article_title, wa.article_summary, wa.article_content, wa.article_image_url, wa.responsibilities, wa.achievements, we.company_name, we.role_title, we.company_website, we.work_slug, ib.r2_url, ib.images FROM WorkArticle AS wa LEFT JOIN WorkExperience AS we ON wa.work_id = we.work_id LEFT JOIN ImageBuckets AS ib ON ib.r2_url = wa.r2_url WHERE we.work_slug = ?')
+              .prepare('SELECT wa.article_title, wa.article_summary, wa.article_content, wa.article_image_url, wa.responsibilities, wa.achievements, we.company_name, we.role_title, we.employment_type, we.location, we.start_date, we.end_date, we.is_current, we.company_website, we.work_slug, ib.r2_url, ib.images FROM WorkArticle AS wa LEFT JOIN WorkExperience AS we ON wa.work_id = we.work_id LEFT JOIN ImageBuckets AS ib ON ib.r2_url = wa.r2_url WHERE we.work_slug = ?')
               .bind(slug);
 
             const articleTagQuery = env.portfolio_db
@@ -566,6 +574,10 @@ interface PortfolioStatsRow {
 
 interface ArticleRow extends Record<string, string> {
   images: string;
+}
+
+interface CertificateRow extends Record<string, string> {
+  skills: string;
 }
 
 function getBatchCount(result: D1Result<PortfolioStatsRow>): number {

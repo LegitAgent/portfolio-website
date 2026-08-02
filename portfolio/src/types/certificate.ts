@@ -6,7 +6,7 @@ export interface Certificate {
   credential_url?: string | null;
   certificate_url: string;
   image_alt: string;
-  skills: string;
+  skills: string[];
   image_url: string;
   description: string;
 }

@@ -5,7 +5,7 @@ import LoadingScreen from '../Misc/LoadingScreen.tsx';
 import ErrorScreen from '../Misc/ErrorScreen.tsx';
 import type { CertificateResponse } from '../../types/certificate.ts';
 import Fuse from 'fuse.js';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 const certificateGatewayURL = `${CLOUDFLARE_GATEWAY}api/db/certificates`;
 
@@ -33,6 +33,29 @@ function Certificates() {
       });
   }, []);
 
+
+  const certificateResults = useMemo(() => certificates?.certificates ?? [], [certificates?.certificates]);
+  const certificateSearch = useMemo(() => 
+    new Fuse(certificateResults, {
+      keys: [
+        { name: 'title', weight: 0.45 },
+        { name: 'issuer', weight: 0.25 },
+        { name: 'skills', weight: 0.2 },
+        { name: 'description', weight: 0.1 },
+      ],
+      threshold: 0.35,
+      ignoreLocation: true,
+      minMatchCharLength: 2,
+      shouldSort: true,
+    }),
+    [certificateResults]
+  );
+  
+  const filteredCertificates = useMemo(() => {
+    const query = searchQuery.trim();
+    return query ? certificateSearch.search(query).map((result) => result.item) : certificateResults;
+  }, [certificateSearch, certificateResults, searchQuery]);
+
   if (hasError) {
     return <ErrorScreen />;
   }
@@ -40,22 +63,6 @@ function Certificates() {
   if (isLoading) {
     return <LoadingScreen />;
   }
-
-  const certificateResults = certificates?.certificates ?? [];
-  const certificateSearch = new Fuse(certificateResults, {
-    keys: [
-      { name: 'title', weight: 0.45 },
-      { name: 'issuer', weight: 0.25 },
-      { name: 'skills', weight: 0.2 },
-      { name: 'description', weight: 0.1 },
-    ],
-    threshold: 0.35,
-    ignoreLocation: true,
-    minMatchCharLength: 2,
-    shouldSort: true,
-  });
-  const query = searchQuery.trim();
-  const filteredCertificates = query ? certificateSearch.search(query).map((result) => result.item) : certificateResults;
 
   return (
     <main className='certificatesPage'>

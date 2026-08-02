@@ -34,8 +34,7 @@ function Projects() {
   }, []);
 
   const projectResults = useMemo(() => projects?.results ?? [], [projects?.results]);
-  const projectSearch = useMemo(
-    () =>
+  const projectSearch = useMemo(() =>
       new Fuse(projectResults, {
         keys: [
           { name: 'project_name', weight: 0.9 },
