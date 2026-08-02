@@ -98,7 +98,8 @@ async function seedDatabase() {
 			article_content TEXT NOT NULL,
 			article_image_url TEXT,
 			responsibilities TEXT,
-			achievements TEXT
+			achievements TEXT,
+			r2_url TEXT
 		)`,
 		`CREATE TABLE WorkTag (
 			work_id INTEGER NOT NULL,
@@ -109,7 +110,8 @@ async function seedDatabase() {
 		`INSERT INTO ProjectArticles (project_name, pArticle_slug, pArticle_image_url, pArticle_image_alt, pArticle_summary, pArticle_overview, pArticle_content, pArticle_challenges, pArticle_lessons, pArticle_future_work, r2_url)
 		VALUES ('Portfolio', 'portfolio', 'articles/portfolio.jpg', 'Portfolio preview', 'Portfolio summary', 'Portfolio overview', 'Article body', 'Challenges', 'Lessons', 'Future work', 'articles/portfolio')`,
 		`INSERT INTO ImageBuckets (r2_url, images)
-		VALUES ('articles/portfolio', '["overview.jpg","dashboard.jpg"]')`,
+		VALUES ('articles/portfolio', '["overview.jpg","dashboard.jpg"]'),
+		       ('work/hackazouk', '["architecture.jpg","internal-tools.jpg"]')`,
 		`INSERT INTO Certificates (id, title, issuer, completion_date, credential_url, certificate_url, image_alt, skills, image_url, description)
 		VALUES (1, 'AWS Essentials', 'AWS', '2026-03-01', 'https://example.com/credential', 'certificates/AWS_Essentials_Cert.pdf', 'AWS certificate', 'Cloud', 'certificates/aws.jpg', 'AWS course')`,
 		`INSERT INTO Tag (tag_name, skill_type)
@@ -118,8 +120,8 @@ async function seedDatabase() {
 		VALUES ('Portfolio', 'React'), ('Portfolio', 'Cloudflare')`,
 		`INSERT INTO WorkExperience (work_id, company_name, role_title, employment_type, location, start_date, end_date, is_current, short_description, company_logo_url, company_website, display_order, work_slug, type)
 		VALUES (1, 'Hackazouk', 'Software Intern', 'Internship', 'Philippines', '2026-01-01', NULL, 1, 'Built internal tools', 'companies/hackazouk.png', 'https://example.com', 1, 'hackazouk', 'backend_development')`,
-		`INSERT INTO WorkArticle (work_id, article_title, article_summary, article_content, article_image_url, responsibilities, achievements)
-		VALUES (1, 'Hackazouk Internship', 'Internship summary', 'Work article body', 'work/hackazouk.jpg', 'Built features', 'Shipped improvements')`,
+		`INSERT INTO WorkArticle (work_id, article_title, article_summary, article_content, article_image_url, responsibilities, achievements, r2_url)
+		VALUES (1, 'Hackazouk Internship', 'Internship summary', 'Work article body', 'work/hackazouk.jpg', 'Built features', 'Shipped improvements', 'work/hackazouk')`,
 		`INSERT INTO WorkTag (work_id, tag_name)
 		VALUES (1, 'TypeScript'), (1, 'Cloudflare')`,
 	];
@@ -304,6 +306,9 @@ describe('portfolio worker', () => {
 			company_name: 'Hackazouk',
 			role_title: 'Software Intern',
 			company_website: 'https://example.com',
+			work_slug: 'hackazouk',
+			images: ['architecture.jpg', 'internal-tools.jpg'],
+			r2_url: 'work/hackazouk',
 		});
 		expect(body.tags).toEqual([{ tag_name: 'Cloudflare' }, { tag_name: 'TypeScript' }]);
 	});

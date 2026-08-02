@@ -1,5 +1,6 @@
-import './ProjectArticleGallery.css';
+import './ArticleGallery.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { KeyboardEvent as ReactKeyboardEvent, MouseEvent as ReactMouseEvent, RefObject } from 'react';
 import { CLOUDFLARE_R2_BUCKET } from '../../config/constants';
 
@@ -17,7 +18,7 @@ interface GalleryDotsProps {
   className?: string;
 }
 
-interface ProjectArticleLightboxProps {
+interface ArticleLightboxProps {
   activeIndex: number;
   altText: string;
   failed: boolean;
@@ -35,11 +36,11 @@ interface ProjectArticleLightboxProps {
   triggerRef: RefObject<HTMLButtonElement | null>;
 }
 
-interface ProjectArticleGalleryProps {
+interface ArticleGalleryProps {
+  articleTitle: string;
   imagePaths: string[];
   imageAlt?: string | null;
   isFeatured?: boolean;
-  projectName: string;
   r2Url: string;
 }
 
@@ -92,9 +93,9 @@ function GalleryDots({ activeIndex, imageCount, onSelect, className = '' }: Gall
   );
 }
 
-function ImageFallback({ projectName }: { projectName: string }) {
+function ImageFallback({ articleTitle }: { articleTitle: string }) {
   return (
-    <div className='projectGalleryFallback' role='img' aria-label={`${projectName} screenshot unavailable`}>
+    <div className='projectGalleryFallback' role='img' aria-label={`${articleTitle} image unavailable`}>
       <svg viewBox='0 0 24 24' aria-hidden='true'>
         <path d='M4 5.75C4 4.78 4.78 4 5.75 4h12.5C19.22 4 20 4.78 20 5.75v12.5c0 .97-.78 1.75-1.75 1.75H5.75C4.78 20 4 19.22 4 18.25V5.75Z' />
         <circle cx='9' cy='9' r='1.5' />
@@ -106,7 +107,7 @@ function ImageFallback({ projectName }: { projectName: string }) {
   );
 }
 
-function ProjectArticleLightbox({
+function ArticleLightbox({
   activeIndex,
   altText,
   failed,
@@ -122,7 +123,7 @@ function ProjectArticleLightbox({
   onSelect,
   showFocusRingOnRestore,
   triggerRef,
-}: ProjectArticleLightboxProps) {
+}: ArticleLightboxProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -205,7 +206,7 @@ function ProjectArticleLightbox({
     }
   };
 
-  return (
+  return createPortal(
     <div className='projectArticleLightbox' onMouseDown={handleBackdropClick}>
       <div
         className='projectArticleLightboxDialog'
@@ -223,7 +224,7 @@ function ProjectArticleLightbox({
         <div className='projectArticleLightboxImage'>
           {!isLoaded && !failed && <span className='projectGalleryLoading'>Loading screenshot…</span>}
           {failed ? (
-            <ImageFallback projectName={altText} />
+            <ImageFallback articleTitle={altText} />
           ) : (
             <img
               className={isLoaded ? 'is-loaded' : ''}
@@ -245,11 +246,12 @@ function ProjectArticleLightbox({
           </span>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
-function ProjectArticleGallery({ imagePaths, imageAlt, isFeatured = false, projectName, r2Url }: ProjectArticleGalleryProps) {
+function ArticleGallery({ articleTitle, imagePaths, imageAlt, isFeatured = false, r2Url }: ArticleGalleryProps) {
   const images = imagePaths.filter((path) => path.trim().length > 0);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -270,8 +272,8 @@ function ProjectArticleGallery({ imagePaths, imageAlt, isFeatured = false, proje
 
   if (images.length === 0) {
     return (
-      <div className={isFeatured ? 'projectArticleVisual projectArticleGallery is-featured' : 'projectArticleVisual projectArticleGallery'}>
-        <ImageFallback projectName={projectName} />
+      <div className={isFeatured ? 'articleGallery is-featured' : 'articleGallery'}>
+        <ImageFallback articleTitle={articleTitle} />
         {isFeatured && <span className='projectArticleImageFeatured'>Featured project</span>}
       </div>
     );
@@ -279,12 +281,11 @@ function ProjectArticleGallery({ imagePaths, imageAlt, isFeatured = false, proje
 
   const activeImagePath = images[activeImageIndex];
   const activeImageUrl = buildR2ImageUrl(r2Url, activeImagePath);
-  const activeAltText = activeImageIndex === 0 && imageAlt ? imageAlt : `${projectName} project screenshot ${activeImageIndex + 1}`;
+  const activeAltText = activeImageIndex === 0 && imageAlt ? imageAlt : `${articleTitle} image ${activeImageIndex + 1}`;
   const activeImageFailed = failedImages.has(activeImageIndex);
   const activeImageLoaded = loadedImages.has(activeImageIndex);
   const galleryClassName = [
-    'projectArticleVisual',
-    'projectArticleGallery',
+    'articleGallery',
     images.length === 1 ? 'has-single-image' : '',
     isFeatured ? 'is-featured' : '',
   ]
@@ -317,7 +318,7 @@ function ProjectArticleGallery({ imagePaths, imageAlt, isFeatured = false, proje
     <>
       <section
         className={galleryClassName}
-        aria-label={`${projectName} project screenshots`}
+        aria-label={`${articleTitle} images`}
         onKeyDown={handleGalleryKeyDown}
       >
         <div className='projectArticleGalleryViewport'>
@@ -338,7 +339,7 @@ function ProjectArticleGallery({ imagePaths, imageAlt, isFeatured = false, proje
           >
             {!activeImageLoaded && !activeImageFailed && <span className='projectGalleryLoading'>Loading screenshot…</span>}
             {activeImageFailed ? (
-              <ImageFallback projectName={projectName} />
+              <ImageFallback articleTitle={articleTitle} />
             ) : (
               <img
                 className={activeImageLoaded ? 'is-loaded' : ''}
@@ -367,7 +368,7 @@ function ProjectArticleGallery({ imagePaths, imageAlt, isFeatured = false, proje
         {isFeatured && <span className='projectArticleImageFeatured'>Featured project</span>}
       </section>
 
-      <ProjectArticleLightbox
+      <ArticleLightbox
         activeIndex={activeImageIndex}
         altText={activeAltText}
         failed={activeImageFailed}
@@ -388,4 +389,4 @@ function ProjectArticleGallery({ imagePaths, imageAlt, isFeatured = false, proje
   );
 }
 
-export default ProjectArticleGallery;
+export default ArticleGallery;

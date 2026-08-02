@@ -1,11 +1,12 @@
 import './WorkArticle.css';
-import { CLOUDFLARE_GATEWAY, CLOUDFLARE_R2_BUCKET } from '../../config/constants.ts';
+import { CLOUDFLARE_GATEWAY } from '../../config/constants.ts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import LoadingScreen from '../../pages/Misc/LoadingScreen.tsx';
 import ErrorScreen from '../../pages/Misc/ErrorScreen.tsx';
 import WrongPage from '../../pages/Misc/WrongPage.tsx';
 import type { WorkResponse } from '../../types/work.ts';
+import ArticleGallery from '../ArticleGallery/ArticleGallery.tsx';
 
 function getBulletItems(content: string): string[] {
   return content
@@ -63,14 +64,21 @@ function WorkArticle() {
     return <WrongPage />;
   }
 
-  if (isLoading) {
+  if (isLoading || !article?.article) {
     return <LoadingScreen />;
   }
 
-  const articleContent = article?.article;
-  const articleSkills = article?.tags;
+  const articleContent = article.article;
+  const articleSkills = article.tags;
+  const articleImages = Array.isArray(articleContent.images) ? articleContent.images : [];
 
-  const imageURL = articleContent?.article_image_url ? CLOUDFLARE_R2_BUCKET + articleContent.article_image_url : null;
+  const galleryImagePaths =
+    articleImages.length > 0
+      ? articleImages
+      : articleContent.article_image_url
+        ? [articleContent.article_image_url]
+        : [];
+  const galleryR2Url = articleImages.length > 0 ? articleContent.r2_url : '';
 
   return (
     <section className='workArticleContainer'>
@@ -111,10 +119,13 @@ function WorkArticle() {
         </div>
       </header>
 
-      {imageURL && (
-        <figure className='workArticleImage'>
-          <img src={imageURL} alt={articleContent?.article_title ?? ''} decoding='async' loading='lazy'/>
-        </figure>
+      {articleContent && (
+        <ArticleGallery
+          articleTitle={articleContent.article_title}
+          imagePaths={galleryImagePaths}
+          key={articleContent.work_slug}
+          r2Url={galleryR2Url}
+        />
       )}
 
       <div className='workArticleBody'>

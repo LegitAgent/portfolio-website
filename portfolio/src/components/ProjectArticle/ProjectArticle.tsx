@@ -6,7 +6,7 @@ import LoadingScreen from '../../pages/Misc/LoadingScreen.tsx';
 import ErrorScreen from '../../pages/Misc/ErrorScreen.tsx';
 import WrongPage from '../../pages/Misc/WrongPage.tsx';
 import type { ArticleResponse } from '../../types/project.ts';
-import ProjectArticleGallery from './ProjectArticleGallery.tsx';
+import ArticleGallery from '../ArticleGallery/ArticleGallery.tsx';
 
 interface ArticleSection {
   id: string;
@@ -211,12 +211,12 @@ function ProjectArticle() {
         </div>
       </nav>
 
-      <ProjectArticleGallery
+      <ArticleGallery
+        articleTitle={articleContent.project_name}
         imagePaths={galleryImagePaths}
         imageAlt={articleContent.pArticle_image_alt}
         isFeatured={isFeatured}
         key={articleContent.pArticle_slug}
-        projectName={articleContent.project_name}
         r2Url={galleryR2Url}
       />
 

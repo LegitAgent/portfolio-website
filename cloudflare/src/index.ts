@@ -19,6 +19,8 @@ interface LoadResult {
   status: number;
 }
 
+const TESTING = true;
+
 /**
  * Parses data into JSON with JSON content and their respective headers.
  * @param data data body
@@ -194,6 +196,7 @@ const TTL_TIME = {
   LEETCODE: ONE_HOUR,
   GITHUB: ONE_HOUR,
   ARTICLE_NOT_FOUND: 30,
+  TESTING: 0,
 } as const;
 
 const VALID_PATHS = new Set([
@@ -279,7 +282,9 @@ export default {
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME.PROJECTS, allowedOrigin, loadProjects);
+          const TTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.PROJECTS;
+
+          return cachedJson(request, ctx, TTL, allowedOrigin, loadProjects);
         }
 
         if (url.pathname === '/api/db/certificates') {
@@ -294,7 +299,9 @@ export default {
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME.CERTIFICATES, allowedOrigin, loadCertificates);
+          const TTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.CERTIFICATES;
+
+          return cachedJson(request, ctx, TTL, allowedOrigin, loadCertificates);
         }
 
         if (url.pathname === '/api/db/tags') {
@@ -308,7 +315,9 @@ export default {
               status: 200
             };
           }
-          return cachedJson(request, ctx, TTL_TIME.TAGS, allowedOrigin, loadTags)
+          const TTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.TAGS;
+
+          return cachedJson(request, ctx, TTL, allowedOrigin, loadTags)
         }
 
         if (url.pathname === '/api/db/work') {
@@ -323,7 +332,9 @@ export default {
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME.WORK, allowedOrigin, loadWork);
+          const TTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.WORK;
+
+          return cachedJson(request, ctx, TTL, allowedOrigin, loadWork);
         }
 
         if (url.pathname.startsWith('/api/db/project_articles/')) {
@@ -347,17 +358,24 @@ export default {
 
             const [articleContent, articleTagContent] = await env.portfolio_db.batch([articleQuery, articleTagQuery]);
 
-            const article = articleContent.results[0] as ProjectArticleRow | undefined;
+            const article = articleContent.results[0] as ArticleRow;
             if (!article) {
               return {
                 data: { error: 'Article not found' },
                 status: 404
               }
             }
-
+            
+            if (!article.images) {
+              return {
+                data: { error: 'Images not found' },
+                status: 404
+              }
+            }
+            
             const articleWithImages = {
               ...article,
-              images: parseImageManifest(article.images),
+              images: JSON.parse(article.images),
             };
 
             return { 
@@ -366,7 +384,10 @@ export default {
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME.ARTICLE, allowedOrigin, loadProjectArticles, TTL_TIME.ARTICLE_NOT_FOUND);
+          const TTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.ARTICLE;
+          const notFoundTTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.ARTICLE_NOT_FOUND;
+
+          return cachedJson(request, ctx, TTL, allowedOrigin, loadProjectArticles, notFoundTTL);
         }
 
         if (url.pathname.startsWith('/api/db/work_articles/')) {
@@ -381,7 +402,7 @@ export default {
             }
 
             const articleQuery = env.portfolio_db
-              .prepare('SELECT wa.article_title, wa.article_summary, wa.article_content, wa.article_image_url, wa.responsibilities, wa.achievements, we.company_name, we.role_title, we.company_website FROM WorkArticle AS wa LEFT JOIN WorkExperience AS we ON wa.work_id = we.work_id WHERE we.work_slug = ?')
+              .prepare('SELECT wa.article_title, wa.article_summary, wa.article_content, wa.article_image_url, wa.responsibilities, wa.achievements, we.company_name, we.role_title, we.company_website, we.work_slug, ib.r2_url, ib.images FROM WorkArticle AS wa LEFT JOIN WorkExperience AS we ON wa.work_id = we.work_id LEFT JOIN ImageBuckets AS ib ON ib.r2_url = wa.r2_url WHERE we.work_slug = ?')
               .bind(slug);
 
             const articleTagQuery = env.portfolio_db
@@ -389,7 +410,7 @@ export default {
               .bind(slug)
 
             const [articleContent, articleTagContent] = await env.portfolio_db.batch([articleQuery, articleTagQuery]);
-            const article = articleContent.results[0];
+            const article = articleContent.results[0] as ArticleRow;
 
             if (!article) {
               return {
@@ -398,13 +419,28 @@ export default {
               }
             }
 
+            if (!article.images) {
+              return {
+                data: { error: 'Images not found' },
+                status: 404
+              }
+            }
+
+            const articleWithImages = {
+              ...article,
+              images: JSON.parse(article.images),
+            };
+
             return { 
-              data: { article, tags: articleTagContent.results },
+              data: { article: articleWithImages, tags: articleTagContent.results },
               status: 200
             };
           }
 
-          return cachedJson(request, ctx, TTL_TIME.ARTICLE, allowedOrigin, loadWorkArticles, TTL_TIME.ARTICLE_NOT_FOUND);
+          const TTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.ARTICLE;
+          const notFoundTTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.ARTICLE_NOT_FOUND;
+
+          return cachedJson(request, ctx, TTL, allowedOrigin, loadWorkArticles, notFoundTTL);
         }
 
         if (url.pathname === '/api/stats/portfolio') {
@@ -448,7 +484,9 @@ export default {
             };
           };
 
-          return cachedJson(request, ctx, TTL_TIME.PORTFOLIO_STATS, allowedOrigin, loadPortfolioStats);
+          const TTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.PORTFOLIO_STATS;
+
+          return cachedJson(request, ctx, TTL, allowedOrigin, loadPortfolioStats);
         }
 
         if (url.pathname === '/api/leetcode') {
@@ -467,7 +505,9 @@ export default {
             }
           }
 
-          return cachedJson(request, ctx, TTL_TIME.LEETCODE, allowedOrigin, loadLeetcode);
+          const TTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.LEETCODE;
+
+          return cachedJson(request, ctx, TTL, allowedOrigin, loadLeetcode);
         }
 
         if (url.pathname === '/api/github') {
@@ -488,7 +528,9 @@ export default {
             }
           }
 
-          return cachedJson(request, ctx, TTL_TIME.GITHUB, allowedOrigin, loadGithub);
+          const TTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.GITHUB;
+
+          return cachedJson(request, ctx, TTL, allowedOrigin, loadGithub);
         }
 
         return json(
@@ -522,28 +564,10 @@ interface PortfolioStatsRow {
   status?: string;
 }
 
-interface ProjectArticleRow extends Record<string, unknown> {
-  images?: unknown;
+interface ArticleRow extends Record<string, string> {
+  images: string;
 }
 
 function getBatchCount(result: D1Result<PortfolioStatsRow>): number {
   return result.results[0]?.count ?? 0;
-}
-
-function parseImageManifest(value: unknown): string[] {
-  let images = value;
-
-  if (typeof images === 'string') {
-    try {
-      images = JSON.parse(images);
-    } catch {
-      return [];
-    }
-  }
-
-  if (!Array.isArray(images)) {
-    return [];
-  }
-
-  return images.filter((image): image is string => typeof image === 'string' && image.trim().length > 0);
 }

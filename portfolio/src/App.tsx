@@ -27,12 +27,22 @@ const WorkArticle = lazy(() => import('./components/WorkArticle/WorkArticle'));
 // misc.
 const WrongPage = lazy(() => import('./pages/Misc/WrongPage'));
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { lazy, Suspense, useLayoutEffect } from 'react';
 
 interface RoutingLinks {
   url: string;
   redirectElement: React.ReactElement;
+}
+
+function RouteScrollReset() {
+  const { pathname } = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [pathname]);
+
+  return null;
 }
 
 function App() {
@@ -57,6 +67,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <RouteScrollReset />
       <main className='app-shell'>
         <Background />
         <div className='page-shell'>
@@ -64,7 +75,7 @@ function App() {
           <Suspense fallback={<LoadingScreen />}>
             <Routes>
               {routes.map((route) => {
-                return <Route path={route.url} element={route.redirectElement} />;
+                return <Route path={route.url} element={route.redirectElement} key={route.url} />;
               })}
             </Routes>
           </Suspense>

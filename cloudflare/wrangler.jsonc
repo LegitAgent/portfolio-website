@@ -6,7 +6,7 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "portfolio_worker",
 	"main": "src/index.ts",
-	"compatibility_date": "2026-05-07",
+	"compatibility_date": "2026-08-02",
 	"observability": {
 		"enabled": true
 	},
@@ -21,6 +21,14 @@
 			"database_id": "251f75ba-905c-4154-a406-c285738752f8"
 		}
 	],
+	"workers_dev": false,
+	"routes": [
+		{
+			"pattern": "api.martinalba.dev",
+			"custom_domain": true
+		}
+	],
+	"preview_urls": false,
 	"ratelimits": [
 		{
 			"name": "PORTFOLIO_LIMITER",

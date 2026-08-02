@@ -30,6 +30,8 @@ interface WorkArticle {
   role_title: string;
   company_website: string | null;
   work_slug: string;
+  images: string[];
+  r2_url: string;
 }
 
 export interface WorkResponse {
@@ -39,6 +41,7 @@ export interface WorkResponse {
 
 export interface WorkExperience {
   work_id: number;
+  r2_url: string;
   company_name: string;
   role_title: string;
   employment_type: string;

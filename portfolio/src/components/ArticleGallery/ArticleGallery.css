@@ -1,5 +1,27 @@
-.projectArticleGallery {
+.articleGallery {
+  --article-blue: 125, 188, 235;
+  --article-green: 134, 239, 172;
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  margin-top: clamp(2rem, 5vw, 3.5rem);
   overflow: visible;
+  border: 1px solid rgba(var(--article-blue), 0.18);
+  border-radius: 10px;
+  color: rgba(238, 247, 255, 0.94);
+  background: rgba(2, 9, 24, 0.84);
+  box-shadow:
+    0 0 0 1px rgba(var(--article-blue), 0.04),
+    0 0 32px rgba(var(--article-blue), 0.16),
+    0 28px 70px rgba(0, 0, 0, 0.3);
+}
+
+.articleGallery.is-featured {
+  border-color: rgba(235, 198, 104, 0.62);
+  box-shadow:
+    0 0 0 1px rgba(235, 198, 104, 0.1),
+    0 0 38px rgba(224, 181, 73, 0.2),
+    0 28px 70px rgba(70, 47, 4, 0.26);
 }
 
 .projectArticleGalleryViewport {
@@ -10,7 +32,7 @@
   background: rgba(1, 7, 18, 0.92);
 }
 
-.projectArticleGallery.has-single-image .projectArticleGalleryViewport {
+.articleGallery.has-single-image .projectArticleGalleryViewport {
   border-radius: 9px;
 }
 
@@ -222,6 +244,8 @@
 }
 
 .projectArticleLightbox {
+  --article-blue: 125, 188, 235;
+  --article-green: 134, 239, 172;
   position: fixed;
   inset: 0;
   z-index: 2200;
@@ -295,16 +319,67 @@
   background: rgba(235, 242, 250, 0.9);
 }
 
-:root[data-theme='light'] .projectArticleGalleryFooter {
+:root[data-theme='light'] .articleGallery {
+  --article-blue: 55, 96, 150;
+  --article-green: 18, 32, 52;
+  color: rgba(18, 32, 52, 0.94);
+  border-color: rgba(55, 96, 150, 0.18);
+  background: rgba(247, 250, 255, 0.9);
+  box-shadow:
+    0 0 0 1px rgba(55, 96, 150, 0.04),
+    0 0 30px rgba(55, 96, 150, 0.12),
+    0 28px 70px rgba(55, 80, 120, 0.18);
+}
+
+:root[data-theme='light'] .projectArticleLightbox {
+  --article-blue: 55, 96, 150;
+  --article-green: 18, 32, 52;
+  background: rgba(24, 37, 55, 0.68);
+}
+
+:root[data-theme='light'] .projectArticleLightboxDialog {
+  border-color: rgba(55, 96, 150, 0.24);
+  background: #f7faff;
+  box-shadow: 0 30px 90px rgba(32, 52, 78, 0.3);
+}
+
+:root[data-theme='light'] .projectGalleryNavigation button,
+:root[data-theme='light'] .projectArticleLightboxClose {
+  color: rgba(34, 49, 72, 0.9);
+  border-color: rgba(55, 96, 150, 0.24);
+  background: rgba(247, 250, 255, 0.94);
+  box-shadow: 0 8px 22px rgba(55, 80, 120, 0.16);
+}
+
+:root[data-theme='light'] .projectGalleryNavigation button:hover,
+:root[data-theme='light'] .projectGalleryNavigation button:focus-visible,
+:root[data-theme='light'] .projectArticleLightboxClose:hover,
+:root[data-theme='light'] .projectArticleLightboxClose:focus-visible {
+  color: rgba(18, 32, 52, 0.98);
+  border-color: rgba(55, 96, 150, 0.5);
+  background: #eaf1f8;
+}
+
+:root[data-theme='light'] .articleGallery.is-featured {
+  border-color: rgba(151, 105, 18, 0.52);
+  box-shadow:
+    0 0 0 1px rgba(151, 105, 18, 0.08),
+    0 0 34px rgba(151, 105, 18, 0.14),
+    0 28px 70px rgba(112, 78, 14, 0.16);
+}
+
+:root[data-theme='light'] .projectArticleGalleryFooter,
+:root[data-theme='light'] .projectArticleLightboxFooter {
   background: rgba(247, 250, 255, 0.94);
 }
 
-:root[data-theme='light'] .projectArticleGalleryFooter > span {
+:root[data-theme='light'] .projectArticleGalleryFooter > span,
+:root[data-theme='light'] .projectArticleLightboxFooter > span {
   color: rgba(34, 49, 72, 0.58);
 }
 
 @media (max-width: 560px) {
-  .projectArticleGallery {
+  .articleGallery {
     margin-top: 1.5rem;
   }
 
