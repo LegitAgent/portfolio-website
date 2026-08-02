@@ -81,7 +81,7 @@ export const CERTIFICATE = certificate;
 export const GITHUB_URL = 'https://github.com/LegitAgent';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/martin-darius-alba-836826294/';
 export const CLOUDFLARE_GATEWAY = 'https://api.martinalba.dev/';
-export const CLOUDFLARE_R2_BUCKET = 'https://pub-301ee5c2e9c34bb9961b75fd092e680d.r2.dev/';
+export const CLOUDFLARE_R2_BUCKET = 'https://assets.martinalba.dev/';
 
 // updatables
 export const RESUME_NAME = '/resume-03-01-2026.pdf';

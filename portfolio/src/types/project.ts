@@ -1,5 +1,3 @@
-import type { Tag } from './tag';
-
 export type ProjectStatus = 'Done' | 'WIP' | 'Draft' | 'Review' | 'Blocked';
 
 interface Project {
@@ -13,6 +11,7 @@ interface Project {
   ended_at: string;
   live_url?: string;
   status: ProjectStatus;
+  tags: string[];
 }
 
 // - summary: one or two sentences used for previews, search results, or metadata
@@ -45,7 +44,7 @@ export interface ProjectResponse {
 
 export interface ArticleResponse {
   article: ProjectArticle;
-  tags: Tag[];
+  tags: string[];
 }
 
 export interface ProjectDisplayProps {

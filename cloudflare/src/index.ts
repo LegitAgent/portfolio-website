@@ -274,10 +274,19 @@ export default {
         if (url.pathname === '/api/db/projects') {
           const loadProjects = async () => {
             const { results } = await env.portfolio_db
-              .prepare("SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, p.featured, p.started_at, p.ended_at, p.live_url, p.status, pa.pArticle_slug FROM Projects AS p LEFT JOIN ProjectArticles AS pa ON pa.project_name = p.project_name ORDER BY p.featured DESC, CASE p.status WHEN 'Done' THEN 1 WHEN 'WIP' THEN 2 WHEN 'Draft' THEN 3 WHEN 'Review' THEN 4 ELSE 5 END, p.started_at DESC")
+              .prepare(`SELECT p.project_name, p.project_description, p.project_github, p.project_img_url, p.featured, p.started_at, p.ended_at, p.live_url, p.status, pa.pArticle_slug, COALESCE((SELECT json_group_array(tag_name) FROM (SELECT t.tag_name FROM ProjectTag AS pt JOIN Tag AS t ON t.tag_name = pt.tag_name WHERE pt.project_name = p.project_name ORDER BY t.tag_name ASC) AS project_tags), json('[]')) AS tags FROM Projects AS p LEFT JOIN ProjectArticles AS pa ON pa.project_name = p.project_name ORDER BY p.featured DESC, CASE p.status WHEN 'Done' THEN 1 WHEN 'WIP' THEN 2 WHEN 'Draft' THEN 3 WHEN 'Review' THEN 4 ELSE 5 END, p.started_at DESC`)
               .run();
+
+            const projects = results.map((result) => {
+              const project = result as ProjectRow;
+              return {
+                ...project,
+                tags: JSON.parse(project.tags),
+              };
+            });
+
             return { 
-              data: { results },
+              data: { results: projects },
               status: 200
             };
           }
@@ -387,7 +396,7 @@ export default {
             };
 
             return { 
-              data: { article: articleWithImages, tags: articleTagContent.results },
+              data: { article: articleWithImages, tags: getTagNames(articleTagContent.results) },
               status: 200
             };
           }
@@ -440,7 +449,7 @@ export default {
             };
 
             return { 
-              data: { article: articleWithImages, tags: articleTagContent.results },
+              data: { article: articleWithImages, tags: getTagNames(articleTagContent.results) },
               status: 200
             };
           }
@@ -576,10 +585,24 @@ interface ArticleRow extends Record<string, string> {
   images: string;
 }
 
+interface ProjectRow extends Record<string, string> {
+  tags: string;
+}
+
+interface TagNameRow extends Record<string, unknown> {
+  tag_name?: unknown;
+}
+
 interface CertificateRow extends Record<string, string> {
   skills: string;
 }
 
 function getBatchCount(result: D1Result<PortfolioStatsRow>): number {
   return result.results[0]?.count ?? 0;
+}
+
+function getTagNames(rows: unknown[]): string[] {
+  return rows
+    .map((row) => (row as TagNameRow).tag_name)
+    .filter((tagName): tagName is string => typeof tagName === 'string' && tagName.trim().length > 0);
 }

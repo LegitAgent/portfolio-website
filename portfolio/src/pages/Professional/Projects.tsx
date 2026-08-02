@@ -37,8 +37,9 @@ function Projects() {
   const projectSearch = useMemo(() =>
       new Fuse(projectResults, {
         keys: [
-          { name: 'project_name', weight: 0.9 },
-          { name: 'project_description', weight: 0.1 },
+          { name: 'project_name', weight: 0.8 },
+          { name: 'tags', weight: 0.15 },
+          { name: 'project_description', weight: 0.05 },
         ],
         threshold: 0.35,
         ignoreLocation: true,

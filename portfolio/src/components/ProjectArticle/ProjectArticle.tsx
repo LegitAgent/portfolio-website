@@ -272,8 +272,8 @@ function ProjectArticle() {
         <h2 id='project-article-stack-title'>Built with</h2>
         <div>
           {article.tags.map((skill) => (
-            <span className='projectArticleTech' key={skill.tag_name}>
-              {skill.tag_name}
+            <span className='projectArticleTech' key={skill}>
+              {skill}
             </span>
           ))}
         </div>

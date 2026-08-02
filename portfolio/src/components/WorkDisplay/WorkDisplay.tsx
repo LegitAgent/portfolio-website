@@ -130,7 +130,7 @@ function WorkDisplay({ work }: WorkDisplayProps) {
         {details?.tags && details.tags.length > 0 && (
           <div className='workTech' aria-label='Technologies used'>
             {details.tags.slice(0, 6).map((technology) => (
-              <span key={technology.tag_name}>{technology.tag_name}</span>
+              <span key={technology}>{technology}</span>
             ))}
           </div>
         )}

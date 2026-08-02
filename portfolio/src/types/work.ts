@@ -1,5 +1,3 @@
-import type { Tag } from './tag';
-
 export type ExperienceType =
   | 'work'
   | 'internship'
@@ -41,7 +39,7 @@ interface WorkArticle {
 
 export interface WorkResponse {
   article: WorkArticle;
-  tags: Tag[];
+  tags: string[];
 }
 
 export interface WorkExperience {

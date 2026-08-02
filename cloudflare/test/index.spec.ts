@@ -190,6 +190,7 @@ describe('portfolio worker', () => {
 				live_url: 'https://example.com/portfolio',
 				status: 'WIP',
 				pArticle_slug: 'portfolio',
+				tags: ['Cloudflare', 'React'],
 			},
 		]);
 	});
@@ -254,7 +255,7 @@ describe('portfolio worker', () => {
 
 	it('returns a project article and its tags by slug', async () => {
 		const response = await fetchWorker('/api/db/project_articles/portfolio');
-		const body = await jsonBody<{ article: Record<string, unknown>; tags: Record<string, unknown>[] }>(response);
+		const body = await jsonBody<{ article: Record<string, unknown>; tags: string[] }>(response);
 
 		expect(response.status).toBe(200);
 		expect(body.article).toEqual({
@@ -276,7 +277,7 @@ describe('portfolio worker', () => {
 			status: 'WIP',
 			featured: 1,
 		});
-		expect(body.tags).toEqual([{ tag_name: 'Cloudflare' }, { tag_name: 'React' }]);
+		expect(body.tags).toEqual(['Cloudflare', 'React']);
 	});
 
 	it('returns an empty image list when an article image manifest is malformed', async () => {
@@ -293,7 +294,7 @@ describe('portfolio worker', () => {
 
 	it('returns a work article and its tags by work slug', async () => {
 		const response = await fetchWorker('/api/db/work_articles/hackazouk');
-		const body = await jsonBody<{ article: Record<string, unknown>; tags: Record<string, unknown>[] }>(response);
+		const body = await jsonBody<{ article: Record<string, unknown>; tags: string[] }>(response);
 
 		expect(response.status).toBe(200);
 		expect(body.article).toEqual({
@@ -315,7 +316,7 @@ describe('portfolio worker', () => {
 			images: ['architecture.jpg', 'internal-tools.jpg'],
 			r2_url: 'work/hackazouk',
 		});
-		expect(body.tags).toEqual([{ tag_name: 'Cloudflare' }, { tag_name: 'TypeScript' }]);
+		expect(body.tags).toEqual(['Cloudflare', 'TypeScript']);
 	});
 
 	it('returns and caches a 404 for an unknown project article slug', async () => {

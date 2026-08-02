@@ -301,9 +301,6 @@ function Contacts() {
         </header>
         <div className='interestMapIntro'>
           <p>These are the systems, tools, and ideas I keep returning to, not necessarily a list of mastered skills, but a map of what I am learning and how the pieces connect.</p>
-          <div className='interestTrail' aria-label='A loose connection between my areas of interest'>
-            <span>systems</span><i /><span>security</span><i /><span>networks</span><i /><span>products</span><i /><span>data</span>
-          </div>
         </div>
         <div className='interestsWorkbench'>
           {interest.map((interestItem, index) => {

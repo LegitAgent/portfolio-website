@@ -264,8 +264,8 @@ function WorkArticle() {
           <h2 id='work-article-stack-title'>Worked with</h2>
           <div>
             {articleSkills.map((skill) => (
-              <span className='workArticleTech' key={skill.tag_name}>
-                {skill.tag_name}
+              <span className='workArticleTech' key={skill}>
+                {skill}
               </span>
             ))}
           </div>
