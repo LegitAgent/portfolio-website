@@ -39,7 +39,7 @@ export function NavDropDown({ id, itemsArray, dropdownType, isOpen, onNavigate }
   };
 
   return (
-    <div className={isOpen ? 'box is-open' : 'box'} id={id} aria-hidden={!isOpen} inert={!isOpen}>
+    <div className={isOpen ? 'box is-open' : 'box'} id={id} inert={!isOpen}>
       <p>{dropdownType}</p>
       {itemsArray.map((item) => {
         return (

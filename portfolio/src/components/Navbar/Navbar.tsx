@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { NavDropDown } from '../NavDropDown/NavDropDown.tsx';
 // type keyword needed since ts technically is still js and type checking disappears (import types with type keyword)
 import type { LinkItem } from '../NavDropDown/NavDropDown.tsx';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type ThemeMode = 'dark' | 'light';
 
@@ -21,6 +21,20 @@ function Navbar() {
   const professionalButtonRef = useRef<HTMLButtonElement>(null);
   const professionalMenuId = 'professional-navigation-menu';
 
+  const closeProfessionalDropdown = useCallback(() => {
+    const focusedElement = document.activeElement;
+
+    if (
+      focusedElement instanceof HTMLElement
+      && focusedElement !== professionalButtonRef.current
+      && professionalMenuRef.current?.contains(focusedElement)
+    ) {
+      professionalButtonRef.current?.focus();
+    }
+
+    setProfessionalDropdown(false);
+  }, []);
+
   useEffect(() => {
     document.documentElement.dataset.theme = themeMode;
     document.documentElement.style.colorScheme = themeMode;
@@ -32,9 +46,9 @@ function Navbar() {
   }, [themeMode]);
 
   useEffect(() => {
-    const closeFrame = window.requestAnimationFrame(() => setProfessionalDropdown(false));
+    const closeFrame = window.requestAnimationFrame(closeProfessionalDropdown);
     return () => window.cancelAnimationFrame(closeFrame);
-  }, [location.pathname]);
+  }, [closeProfessionalDropdown, location.pathname]);
 
   useEffect(() => {
     if (!showProfessionalDropdown) {
@@ -43,7 +57,7 @@ function Navbar() {
 
     const closeOnOutsidePointer = (event: PointerEvent) => {
       if (!professionalMenuRef.current?.contains(event.target as Node)) {
-        setProfessionalDropdown(false);
+        closeProfessionalDropdown();
       }
     };
 
@@ -53,8 +67,7 @@ function Navbar() {
       }
 
       event.preventDefault();
-      setProfessionalDropdown(false);
-      professionalButtonRef.current?.focus();
+      closeProfessionalDropdown();
     };
 
     document.addEventListener('pointerdown', closeOnOutsidePointer);
@@ -64,7 +77,7 @@ function Navbar() {
       document.removeEventListener('pointerdown', closeOnOutsidePointer);
       document.removeEventListener('keydown', closeOnEscape);
     };
-  }, [showProfessionalDropdown]);
+  }, [closeProfessionalDropdown, showProfessionalDropdown]);
 
   const ProfessionalLinks: LinkItem[] = [
     { path: '/skills_experience', name: 'Skills & Experience' },
@@ -109,7 +122,7 @@ function Navbar() {
             itemsArray={ProfessionalLinks}
             dropdownType='Professional'
             isOpen={showProfessionalDropdown}
-            onNavigate={() => setProfessionalDropdown(false)}
+            onNavigate={closeProfessionalDropdown}
           />
         </div>
         <Link className={isPathActive('/stats') ? 'navbar__iconLink is-active' : 'navbar__iconLink'} to='/stats' aria-label='Statistics'>
