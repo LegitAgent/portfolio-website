@@ -113,6 +113,14 @@
   outline: none;
 }
 
+.navbar__bottomLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: auto;
+  margin-bottom: 3.2rem;
+}
+
 .navbar__collapseButton,
 .navbar__revealButton {
   display: flex;
@@ -236,6 +244,12 @@
     flex-direction: row;
   }
 
+  .navbar__bottomLinks {
+    flex-direction: row;
+    gap: 0.45rem;
+    margin: 0;
+  }
+
   .navbar__collapseButton {
     position: static;
     width: 2.75rem;
@@ -341,5 +355,9 @@
   .navbar__collapseButton,
   .navbar__revealButton {
     transition: none;
+  }
+
+  .navbar__bottomLinks {
+    gap: 0.25rem;
   }
 }

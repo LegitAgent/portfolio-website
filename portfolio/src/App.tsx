@@ -2,8 +2,10 @@ import './App.css';
 
 // components
 import Background from './components/Background/Background';
+import type { BackgroundId } from './components/Background/backgroundCatalog';
 import Navbar from './components/Navbar/Navbar';
 import LoadingScreen from './pages/Misc/LoadingScreen';
+import Sandbox from './pages/Misc/Sandbox';
 
 // home
 import Home from './pages/Home/Home';
@@ -47,6 +49,7 @@ function RouteScrollReset() {
 
 function App() {
   const [isNavbarCollapsed, setNavbarCollapsed] = useState(false);
+  const [selectedBackground, setSelectedBackground] = useState<BackgroundId>('game-of-life');
 
   const routes: Array<RoutingLinks> = [
     // home
@@ -63,6 +66,8 @@ function App() {
     // dynamic
     { url: '/projects/:slug', redirectElement: <ProjectArticle /> },
     { url: '/skills_experience/:slug', redirectElement: <WorkArticle /> },
+    // sandbox
+    { url: '/sandbox', redirectElement: <Sandbox />},
     // misc.
     { url: '*', redirectElement: <WrongPage /> },
   ];
@@ -71,9 +76,14 @@ function App() {
     <BrowserRouter>
       <RouteScrollReset />
       <main className='app-shell'>
-        <Background />
+        <Background selectedBackground={selectedBackground} />
         <div className={isNavbarCollapsed ? 'page-shell is-navbar-collapsed' : 'page-shell'}>
-          <Navbar isCollapsed={isNavbarCollapsed} onCollapsedChange={setNavbarCollapsed} />
+          <Navbar
+            isCollapsed={isNavbarCollapsed}
+            onCollapsedChange={setNavbarCollapsed}
+            selectedBackground={selectedBackground}
+            onBackgroundChange={setSelectedBackground}
+          />
           <Suspense fallback={<LoadingScreen />}>
             <Routes>
               {routes.map((route) => {
