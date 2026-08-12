@@ -534,98 +534,20 @@
   }
 }
 
-:root[data-theme='light'] .workArticlePage {
-  --work-green: 18, 32, 52;
-  --work-blue: 55, 96, 150;
-  color: rgba(18, 32, 52, 0.94);
-}
 
-:root[data-theme='light'] .workArticleProgress {
-  background: rgba(55, 96, 150, 0.08);
-}
 
-:root[data-theme='light'] .workArticleBack,
-:root[data-theme='light'] .workArticleRoute,
-:root[data-theme='light'] .workArticleSummary,
-:root[data-theme='light'] .workArticleSectionContent p,
-:root[data-theme='light'] .workArticleList p {
-  color: rgba(34, 49, 72, 0.7);
-}
 
-:root[data-theme='light'] .workArticleBack {
-  color: rgba(18, 32, 52, 0.9);
-  border-color: rgba(55, 96, 150, 0.2);
-  background: rgba(255, 255, 255, 0.72);
-}
 
-:root[data-theme='light'] .workArticleBack:hover,
-:root[data-theme='light'] .workArticleBack:focus-visible {
-  color: rgba(18, 32, 52, 0.94);
-  border-color: rgba(12, 105, 57, 0.32);
-  background: rgba(201, 240, 214, 0.62);
-}
 
-:root[data-theme='light'] .workArticleRoute strong,
-:root[data-theme='light'] .workArticleMeta strong,
-:root[data-theme='light'] .workArticleStack > h2 {
-  color: rgba(18, 32, 52, 0.9);
-}
 
-:root[data-theme='light'] .workArticleRole,
-:root[data-theme='light'] .workArticleMeta span {
-  color: rgba(42, 82, 134, 0.86);
-}
 
-:root[data-theme='light'] .workArticleMeta,
-:root[data-theme='light'] .workArticleList li,
-:root[data-theme='light'] .workArticleFooter {
-  border-color: rgba(55, 96, 150, 0.16);
-  background: rgba(247, 250, 255, 0.72);
-}
 
-:root[data-theme='light'] .workArticleMeta div + div,
-:root[data-theme='light'] .workArticleStack,
-:root[data-theme='light'] .workArticleSection + .workArticleSection {
-  border-color: rgba(55, 96, 150, 0.14);
-}
 
-:root[data-theme='light'] .workArticleExperienceLabel {
-  color: rgba(12, 105, 57, 0.9);
-  border-color: rgba(12, 105, 57, 0.24);
-  background: rgba(201, 240, 214, 0.62);
-}
 
-:root[data-theme='light'] .workArticleCompanyLabel {
-  color: rgba(42, 82, 134, 0.9);
-  border-color: rgba(55, 96, 150, 0.22);
-  background: rgba(223, 236, 250, 0.72);
-}
 
-:root[data-theme='light'] .workArticleTech {
-  color: rgba(18, 32, 52, 0.92);
-  border-color: rgba(12, 105, 57, 0.18);
-  background: rgba(201, 240, 214, 0.62);
-}
 
-:root[data-theme='light'] .workArticleActions a,
-:root[data-theme='light'] .workArticleFooter button {
-  color: rgba(18, 32, 52, 0.9);
-  border-color: rgba(55, 96, 150, 0.22);
-  background: rgba(255, 255, 255, 0.8);
-}
 
-:root[data-theme='light'] .workArticleActions a:hover,
-:root[data-theme='light'] .workArticleActions a:focus-visible,
-:root[data-theme='light'] .workArticleFooter button:hover,
-:root[data-theme='light'] .workArticleFooter button:focus-visible {
-  color: rgba(18, 32, 52, 0.96);
-  border-color: rgba(12, 105, 57, 0.32);
-  background: rgba(201, 240, 214, 0.7);
-}
 
-:root[data-theme='light'] .workArticleSectionContent p:first-child::first-letter {
-  color: rgba(18, 32, 52, 0.95);
-}
 
 @media (max-width: 1150px) {
   .workArticleProgress {

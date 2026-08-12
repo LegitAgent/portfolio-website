@@ -142,46 +142,12 @@
   }
 }
 
-:root[data-theme='light'] .box {
-  color: rgba(18, 32, 52, 0.94);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(236, 243, 252, 0.96)), rgba(247, 250, 255, 0.92);
-  border-color: rgba(72, 98, 135, 0.16);
-  box-shadow:
-    0 18px 44px rgba(55, 80, 120, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-}
 
-:root[data-theme='light'] .box > p {
-  color: rgba(42, 82, 134, 0.78);
-}
 
-:root[data-theme='light'] .linkName {
-  color: rgba(18, 32, 52, 0.88);
-  border-color: rgba(72, 98, 135, 0.12);
-}
 
-:root[data-theme='light'] .linkImage {
-  color: rgba(55, 96, 150, 0.76);
-}
 
-:root[data-theme='light'] .resumeImage {
-  filter: none;
-}
 
-:root[data-theme='light'] .linkName:hover,
-:root[data-theme='light'] .linkName:focus-visible,
-:root[data-theme='light'] .linkName.is-active {
-  color: #0f1d33;
-  background: rgba(224, 235, 249, 0.82);
-  border-color: rgba(55, 96, 150, 0.32);
-  box-shadow: inset 3px 0 0 rgba(55, 96, 150, 0.58);
-}
 
-:root[data-theme='light'] .linkName:hover .linkImage,
-:root[data-theme='light'] .linkName:focus-visible .linkImage,
-:root[data-theme='light'] .linkName.is-active .linkImage {
-  color: rgba(28, 65, 112, 0.96);
-}
 
 @media (prefers-reduced-motion: reduce) {
   .linkImage {
@@ -190,16 +156,5 @@
 }
 
 @media (hover: none) {
-  :root[data-theme='light'] .linkName:hover {
-    color: rgba(18, 32, 52, 0.88);
-    background: transparent;
-    border-color: rgba(72, 98, 135, 0.12);
-  }
 
-  :root[data-theme='light'] .linkName.is-active:hover {
-    color: #0f1d33;
-    background: rgba(224, 235, 249, 0.82);
-    border-color: rgba(55, 96, 150, 0.32);
-    box-shadow: inset 3px 0 0 rgba(55, 96, 150, 0.58);
-  }
 }

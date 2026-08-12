@@ -206,72 +206,20 @@
   }
 }
 
-:root[data-theme='light'] .projectsPage {
-  color: rgba(18, 32, 52, 0.94);
-}
 
-:root[data-theme='light'] .projectsHeader > p {
-  color: rgba(18, 32, 52, 0.92);
-}
 
-:root[data-theme='light'] .projectsHeader > span {
-  color: rgba(34, 49, 72, 0.68);
-}
 
-:root[data-theme='light'] .projectSearch {
-  color: rgba(42, 82, 134, 0.68);
-  border-color: rgba(72, 98, 135, 0.18);
-  background: rgba(255, 255, 255, 0.68);
-}
 
-:root[data-theme='light'] .projectSearch:focus-within {
-  border-color: rgba(55, 96, 150, 0.4);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 0 3px rgba(55, 96, 150, 0.07);
-}
 
-:root[data-theme='light'] .projectSearch input {
-  color: rgba(18, 32, 52, 0.94);
-}
 
-:root[data-theme='light'] .projectSearch input::placeholder {
-  color: rgba(34, 49, 72, 0.44);
-}
 
-:root[data-theme='light'] .projectSearch button {
-  color: rgba(34, 49, 72, 0.58);
-}
 
-:root[data-theme='light'] .projectSearch button:hover,
-:root[data-theme='light'] .projectSearch button:focus-visible {
-  color: rgba(18, 32, 52, 0.94);
-  background: rgba(72, 98, 135, 0.08);
-}
 
-:root[data-theme='light'] .projectSearchEmpty {
-  border-color: rgba(72, 98, 135, 0.16);
-}
 
-:root[data-theme='light'] .projectSearchEmpty span {
-  color: rgba(34, 49, 72, 0.58);
-}
 
-:root[data-theme='light'] .projectsSectionHeading {
-  border-color: rgba(72, 98, 135, 0.16);
-}
 
-:root[data-theme='light'] .projectsSection--featured .projectsSectionHeading {
-  border-color: rgba(151, 105, 18, 0.28);
-}
 
-:root[data-theme='light'] .projectsSection--featured .projectsSectionHeading span {
-  color: rgba(125, 82, 7, 0.82);
-}
 
-:root[data-theme='light'] .projectsSectionHeading span,
-:root[data-theme='light'] .projectsSectionHeading > p {
-  color: rgba(34, 49, 72, 0.48);
-}
 
 @media (max-width: 850px) {
   .projectsPage {

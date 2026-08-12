@@ -297,50 +297,14 @@
   outline: none;
 }
 
-:root[data-theme='light'] .workDisplay {
-  color: rgba(18, 32, 52, 0.94);
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 7%, transparent), transparent 42%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(237, 244, 251, 0.98));
-  box-shadow: 0 18px 42px rgba(55, 80, 120, 0.11);
-}
 
-:root[data-theme='light'] .workDisplay:hover,
-:root[data-theme='light'] .workDisplay:focus-within {
-  box-shadow: 0 20px 48px rgba(55, 80, 120, 0.17);
-}
 
-:root[data-theme='light'] .workImage,
-:root[data-theme='light'] .workMonogram {
-  background: rgba(255, 255, 255, 0.74);
-}
 
-:root[data-theme='light'] .workTitle {
-  color: rgba(18, 32, 52, 0.96);
-}
 
-:root[data-theme='light'] .workRole {
-  color: color-mix(in srgb, var(--card-accent) 65%, #293e55);
-}
 
-:root[data-theme='light'] .workMeta span,
-:root[data-theme='light'] .workDescription,
-:root[data-theme='light'] .workContributions li {
-  color: rgba(34, 49, 72, 0.74);
-}
 
-:root[data-theme='light'] .workDate {
-  color: rgba(25, 40, 60, 0.88) !important;
-}
 
-:root[data-theme='light'] .workTech span {
-  color: rgba(42, 65, 91, 0.76);
-  background: rgba(255, 255, 255, 0.58);
-}
 
-:root[data-theme='light'] .workLink {
-  color: color-mix(in srgb, var(--card-accent) 78%, #183954);
-}
 
 @media (max-width: 520px) {
   .workDisplay {

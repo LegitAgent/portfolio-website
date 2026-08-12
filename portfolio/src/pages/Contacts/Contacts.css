@@ -869,136 +869,27 @@
   }
 }
 
-:root[data-theme='light'] .contactContainer {
-  color: rgba(18, 32, 52, 0.94);
-}
 
-:root[data-theme='light'] .contactStatusBadge,
-:root[data-theme='light'] .contactHeader h1 > span,
-:root[data-theme='light'] .contactSectionHeader > span,
-:root[data-theme='light'] .contactSectionHeader p {
-  color: rgba(18, 32, 52, 0.92);
-}
 
-:root[data-theme='light'] .contactIntro,
-:root[data-theme='light'] .bestwayDescription,
-:root[data-theme='light'] .availabilityDescription,
-:root[data-theme='light'] .locationDescription,
-:root[data-theme='light'] .linkDesc,
-:root[data-theme='light'] .interestMapIntro > p,
-:root[data-theme='light'] .interestDescription {
-  color: rgba(34, 49, 72, 0.66);
-}
 
-:root[data-theme='light'] .professionalLinksHeading {
-  color: rgba(18, 32, 52, 0.92);
-}
 
-:root[data-theme='light'] .contactSectionHeader {
-  border-color: rgba(72, 98, 135, 0.16);
-}
 
-:root[data-theme='light'] .emailCopy,
-:root[data-theme='light'] .linkBox,
-:root[data-theme='light'] .interestModuleFace,
-:root[data-theme='light'] .statusTable li,
-:root[data-theme='light'] .clockBox {
-  background: #f7faff;
-}
 
-:root[data-theme='light'] .emailCopy {
-  border-color: rgb(96, 165, 250);
-  background: #e4f1fb;
-}
 
-:root[data-theme='light'] .linkBox {
-  border-color: rgb(192, 132, 252);
-  background: #eee2f8;
-}
 
-:root[data-theme='light'] .linkBox:hover,
-:root[data-theme='light'] .linkBox:focus-visible {
-  border-color: rgb(147, 51, 234);
-  background: #e5d2f4;
-}
 
-:root[data-theme='light'] .interestModule--operating_systems { --module-surface: #e4f1fb; --module-surface-hover: #d8ebf8; }
-:root[data-theme='light'] .interestModule--cyber_security { --module-surface: #e0f3e8; --module-surface-hover: #d3eddd; }
-:root[data-theme='light'] .interestModule--system_design { --module-surface: #e6eef9; --module-surface-hover: #d9e6f6; }
-:root[data-theme='light'] .interestModule--data_analytics { --module-surface: #f7f0dc; --module-surface-hover: #f0e6c8; }
-:root[data-theme='light'] .interestModule--fullstack_development { --module-surface: #e9edf5; --module-surface-hover: #dde4ef; }
-:root[data-theme='light'] .interestModule--networking { --module-surface: #ddf1f0; --module-surface-hover: #cfe9e8; }
 
-:root[data-theme='light'] .emailIdentity p,
-:root[data-theme='light'] .interestModuleFace,
-:root[data-theme='light'] .statusTable li {
-  color: rgba(18, 32, 52, 0.94);
-}
 
-:root[data-theme='light'] .availabilityHeading > span:first-child {
-  color: rgba(18, 32, 52, 0.98);
-  text-shadow: 0 0 12px rgba(var(--status-color), 0.22);
-}
 
-:root[data-theme='light'] .interestModuleFace {
-  border-color: rgb(var(--module-accent));
-  background: var(--module-surface);
-  box-shadow: inset 3px 0 0 rgba(var(--module-accent), 0.38);
-}
 
-:root[data-theme='light'] .interestModule:hover .interestModuleFace,
-:root[data-theme='light'] .interestModule.is-selected .interestModuleFace {
-  background: var(--module-surface-hover);
-}
 
-:root[data-theme='light'] .statusTable li {
-  --status-surface: #cfe7fb;
-  --status-surface-hover: #bdddf7;
-  border-color: rgb(var(--status-color));
-  background: var(--status-surface);
-  box-shadow:
-    0 0 0 1px rgba(var(--status-color), 0.12),
-    0 8px 22px rgba(var(--status-color), 0.18),
-    inset 0 0 18px rgba(var(--status-color), 0.04);
-}
 
-:root[data-theme='light'] .statusTable li:hover {
-  box-shadow:
-    0 0 0 1px rgba(var(--status-color), 0.28),
-    0 10px 30px rgba(var(--status-color), 0.3),
-    inset 0 0 22px rgba(var(--status-color), 0.08);
-}
 
-:root[data-theme='light'] .availabilityStatusBadge {
-  color: rgba(18, 32, 52, 0.94);
-  background: rgba(var(--status-color), 0.22);
-}
 
-:root[data-theme='light'] .statusTable li:hover .availabilityStatusBadge {
-  color: rgba(18, 32, 52, 0.98);
-  background: rgba(var(--status-color), 0.4);
-}
 
-:root[data-theme='light'] .statusTable li.green {
-  --status-surface: #c9efd8;
-  --status-surface-hover: #b4e7c8;
-}
 
-:root[data-theme='light'] .statusTable li.yellow {
-  --status-surface: #ffed9b;
-  --status-surface-hover: #f9df78;
-}
 
-:root[data-theme='light'] .statusTable li.red {
-  --status-surface: #ffd0d0;
-  --status-surface-hover: #f9baba;
-}
 
-:root[data-theme='light'] .clockBox {
-  border-color: rgb(52, 211, 153);
-  color: rgba(12, 80, 55, 0.94);
-  background: #e0f3e8;
-}
 
 .contactBackToTop {
   position: fixed;
@@ -1043,72 +934,18 @@
   transform: translateY(-3px);
 }
 
-:root[data-theme='light'] .contactBackToTop {
-  border-color: rgba(55, 96, 150, 0.28);
-  color: rgba(18, 32, 52, 0.9);
-  background: rgba(249, 252, 255, 0.9);
-  box-shadow: 0 12px 30px rgba(55, 80, 120, 0.16);
-}
 
-:root[data-theme='light'] .contactBackToTop:hover,
-:root[data-theme='light'] .contactBackToTop:focus-visible {
-  border-color: rgba(12, 105, 57, 0.4);
-  background: rgba(235, 247, 240, 0.96);
-}
 
-:root[data-theme='light'] .interestTrail,
-:root[data-theme='light'] .learningStatus {
-  color: rgba(52, 76, 103, 0.7);
-}
 
-:root[data-theme='light'] .interestModuleBack blockquote {
-  color: rgba(18, 32, 52, 0.92);
-}
 
-:root[data-theme='light'] .interestModuleHeader h3,
-:root[data-theme='light'] .interestModuleBack h3 {
-  color: rgba(18, 32, 52, 0.98);
-  text-shadow: none;
-}
 
-:root[data-theme='light'] .copyButton {
-  color: rgba(42, 82, 134, 0.94);
-  background: rgba(96, 165, 250, 0.08);
-}
 
-:root[data-theme='light'] .copyButton.is-error {
-  color: rgba(140, 36, 43, 0.96);
-  border-color: rgba(185, 55, 65, 0.38);
-  background: rgba(239, 68, 68, 0.08);
-}
 
-:root[data-theme='light'] .copyFeedback {
-  color: rgba(140, 36, 43, 0.92);
-}
 
-:root[data-theme='light'] .linkIcon--invert {
-  filter: none;
-}
 
-:root[data-theme='light'] .linkBox:hover .linkBoxTop img.linkIcon--invert,
-:root[data-theme='light'] .linkBox:focus-visible .linkBoxTop img.linkIcon--invert {
-  filter: none;
-}
 
-:root[data-theme='light'] .locationMap {
-  background: linear-gradient(135deg, rgba(55, 96, 150, 0.84), rgba(132, 82, 174, 0.5), rgba(22, 120, 68, 0.58));
-  box-shadow:
-    0 0 0 1px rgba(55, 96, 150, 0.12),
-    0 24px 52px rgba(55, 80, 120, 0.18);
-}
 
-:root[data-theme='light'] .locationMap iframe {
-  filter: saturate(0.78) contrast(1.02) brightness(1.04);
-}
 
-:root[data-theme='light'] .clockBox {
-  color: rgba(18, 32, 52, 0.92);
-}
 
 @media (max-width: 900px) {
   .linkBoxGroup,

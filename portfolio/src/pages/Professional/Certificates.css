@@ -191,58 +191,16 @@
   }
 }
 
-:root[data-theme='light'] .certificatesPage {
-  color: rgba(18, 32, 52, 0.94);
-}
 
-:root[data-theme='light'] .certificatesHeader > p {
-  color: rgba(18, 32, 52, 0.92);
-}
 
-:root[data-theme='light'] .certificatesHeader > span {
-  color: rgba(34, 49, 72, 0.68);
-}
 
-:root[data-theme='light'] .certificateSearch {
-  color: rgba(42, 82, 134, 0.68);
-  border-color: rgba(72, 98, 135, 0.18);
-  background: rgba(255, 255, 255, 0.68);
-}
 
-:root[data-theme='light'] .certificateSearch:focus-within {
-  border-color: rgba(55, 96, 150, 0.4);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 0 3px rgba(55, 96, 150, 0.07);
-}
 
-:root[data-theme='light'] .certificateSearch input {
-  color: rgba(18, 32, 52, 0.94);
-}
 
-:root[data-theme='light'] .certificateSearch input::placeholder {
-  color: rgba(34, 49, 72, 0.44);
-}
 
-:root[data-theme='light'] .certificateSearch button {
-  color: rgba(34, 49, 72, 0.58);
-}
 
-:root[data-theme='light'] .certificateSearch button:hover,
-:root[data-theme='light'] .certificateSearch button:focus-visible {
-  color: rgba(18, 32, 52, 0.94);
-  background: rgba(72, 98, 135, 0.08);
-}
 
-:root[data-theme='light'] .certificateSearchEmpty,
-:root[data-theme='light'] .certificatesSectionHeading {
-  border-color: rgba(72, 98, 135, 0.16);
-}
 
-:root[data-theme='light'] .certificateSearchEmpty span,
-:root[data-theme='light'] .certificatesSectionHeading span,
-:root[data-theme='light'] .certificatesSectionHeading > p {
-  color: rgba(34, 49, 72, 0.48);
-}
 
 @media (max-width: 1150px) {
   .certificatesPage {

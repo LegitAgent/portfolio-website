@@ -281,9 +281,6 @@
   font-weight: 700;
 }
 
-:root[data-theme='light'] .buttonContact img {
-  filter: none;
-}
 
 @media (max-width: 1150px) {
   .hero {

@@ -315,68 +315,14 @@
   }
 }
 
-:root[data-theme='light'] .projectArticleGalleryViewport {
-  background: rgba(235, 242, 250, 0.9);
-}
 
-:root[data-theme='light'] .articleGallery {
-  --article-blue: 55, 96, 150;
-  --article-green: 18, 32, 52;
-  color: rgba(18, 32, 52, 0.94);
-  border-color: rgba(55, 96, 150, 0.18);
-  background: rgba(247, 250, 255, 0.9);
-  box-shadow:
-    0 0 0 1px rgba(55, 96, 150, 0.04),
-    0 0 30px rgba(55, 96, 150, 0.12),
-    0 28px 70px rgba(55, 80, 120, 0.18);
-}
 
-:root[data-theme='light'] .projectArticleLightbox {
-  --article-blue: 55, 96, 150;
-  --article-green: 18, 32, 52;
-  background: rgba(24, 37, 55, 0.68);
-}
 
-:root[data-theme='light'] .projectArticleLightboxDialog {
-  border-color: rgba(55, 96, 150, 0.24);
-  background: #f7faff;
-  box-shadow: 0 30px 90px rgba(32, 52, 78, 0.3);
-}
 
-:root[data-theme='light'] .projectGalleryNavigation button,
-:root[data-theme='light'] .projectArticleLightboxClose {
-  color: rgba(34, 49, 72, 0.9);
-  border-color: rgba(55, 96, 150, 0.24);
-  background: rgba(247, 250, 255, 0.94);
-  box-shadow: 0 8px 22px rgba(55, 80, 120, 0.16);
-}
 
-:root[data-theme='light'] .projectGalleryNavigation button:hover,
-:root[data-theme='light'] .projectGalleryNavigation button:focus-visible,
-:root[data-theme='light'] .projectArticleLightboxClose:hover,
-:root[data-theme='light'] .projectArticleLightboxClose:focus-visible {
-  color: rgba(18, 32, 52, 0.98);
-  border-color: rgba(55, 96, 150, 0.5);
-  background: #eaf1f8;
-}
 
-:root[data-theme='light'] .articleGallery.is-featured {
-  border-color: rgba(151, 105, 18, 0.52);
-  box-shadow:
-    0 0 0 1px rgba(151, 105, 18, 0.08),
-    0 0 34px rgba(151, 105, 18, 0.14),
-    0 28px 70px rgba(112, 78, 14, 0.16);
-}
 
-:root[data-theme='light'] .projectArticleGalleryFooter,
-:root[data-theme='light'] .projectArticleLightboxFooter {
-  background: rgba(247, 250, 255, 0.94);
-}
 
-:root[data-theme='light'] .projectArticleGalleryFooter > span,
-:root[data-theme='light'] .projectArticleLightboxFooter > span {
-  color: rgba(34, 49, 72, 0.58);
-}
 
 @media (max-width: 560px) {
   .articleGallery {

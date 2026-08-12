@@ -555,115 +555,26 @@
   }
 }
 
-:root[data-theme='light'] .projectArticlePage {
-  --article-green: 18, 32, 52;
-  --article-blue: 55, 96, 150;
-  color: rgba(18, 32, 52, 0.94);
-}
 
-:root[data-theme='light'] .projectArticleProgress {
-  background: rgba(55, 96, 150, 0.08);
-}
 
-:root[data-theme='light'] .projectArticleBack,
-:root[data-theme='light'] .projectArticleRoute,
-:root[data-theme='light'] .projectArticleSummary,
-:root[data-theme='light'] .projectArticleSectionContent p {
-  color: rgba(34, 49, 72, 0.7);
-}
 
-:root[data-theme='light'] .projectArticleBack {
-  color: rgba(18, 32, 52, 0.9);
-  border-color: rgba(55, 96, 150, 0.2);
-  background: rgba(255, 255, 255, 0.72);
-}
 
-:root[data-theme='light'] .projectArticleBack:hover,
-:root[data-theme='light'] .projectArticleBack:focus-visible {
-  color: rgba(18, 32, 52, 0.94);
-  border-color: rgba(12, 105, 57, 0.32);
-  background: rgba(201, 240, 214, 0.62);
-}
 
-:root[data-theme='light'] .projectArticleRoute strong,
-:root[data-theme='light'] .projectArticleMeta strong {
-  color: rgba(18, 32, 52, 0.9);
-}
 
-:root[data-theme='light'] .projectArticleMeta span {
-  color: rgba(18, 32, 52, 0.82);
-}
 
-:root[data-theme='light'] .projectArticleMeta {
-  border-color: rgba(55, 96, 150, 0.16);
-  background: rgba(247, 250, 255, 0.68);
-}
 
-:root[data-theme='light'] .projectArticleMeta div + div {
-  border-color: rgba(55, 96, 150, 0.14);
-}
 
-:root[data-theme='light'] .projectArticleStack > h2 {
-  color: rgba(18, 32, 52, 0.86);
-}
 
-:root[data-theme='light'] .projectArticleImageFeatured {
-  color: rgba(92, 59, 4, 0.96);
-  border-color: rgba(151, 105, 18, 0.4);
-  background: rgba(255, 246, 218, 0.94);
-}
 
-:root[data-theme='light'] .projectArticleTech {
-  color: rgba(18, 32, 52, 0.92);
-  border-color: rgba(12, 105, 57, 0.18);
-  background: rgba(201, 240, 214, 0.62);
-}
 
-:root[data-theme='light'] .projectArticleGithubIcon {
-  filter: none;
-}
 
-:root[data-theme='light'] .projectArticleActions .resumeAction {
-  color: rgba(18, 32, 52, 0.9);
-  border-color: rgba(55, 96, 150, 0.22);
-  background: rgba(255, 255, 255, 0.78);
-}
 
-:root[data-theme='light'] .projectArticleActions .resumeAction--primary {
-  border-color: rgba(12, 105, 57, 0.24);
-  background: rgba(201, 240, 214, 0.62);
-}
 
-:root[data-theme='light'] .projectArticleActions .resumeAction:hover,
-:root[data-theme='light'] .projectArticleActions .resumeAction:focus-visible {
-  color: rgba(18, 32, 52, 0.96);
-  border-color: rgba(12, 105, 57, 0.38);
-  background: rgba(224, 245, 232, 0.94);
-}
 
-:root[data-theme='light'] .projectArticleAside a {
-  color: rgba(34, 49, 72, 0.6);
-}
 
-:root[data-theme='light'] .projectArticleAside a:hover,
-:root[data-theme='light'] .projectArticleAside a:focus-visible {
-  color: rgba(18, 32, 52, 0.94);
-}
 
-:root[data-theme='light'] .projectArticleSectionContent p:first-child::first-letter {
-  color: rgba(18, 32, 52, 0.95);
-}
 
-:root[data-theme='light'] .projectArticleFooter button {
-  color: rgba(18, 32, 52, 0.88);
-  border-color: rgba(55, 96, 150, 0.18);
-  background: rgba(255, 255, 255, 0.72);
-}
 
-:root[data-theme='light'] .projectArticleFooter {
-  border-color: rgba(55, 96, 150, 0.16);
-  background: rgba(247, 250, 255, 0.76);
-}
 
 @media (max-width: 1000px) {
   .projectArticleHeroCopy {

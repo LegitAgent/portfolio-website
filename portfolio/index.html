@@ -9,22 +9,6 @@
       name="description"
       content="Martin Darius Alba's portfolio — backend systems, full-stack projects, technical experience, and software engineering work."
     />
-    <script>
-      (() => {
-        let theme = 'dark';
-
-        try {
-          if (localStorage.getItem('portfolio-theme') === 'light') {
-            theme = 'light';
-          }
-        } catch {
-          // if storage unavailable, just use default dark
-        }
-
-        document.documentElement.dataset.theme = theme;
-        document.documentElement.style.colorScheme = theme;
-      })();
-    </script>
     <title>Martin Darius Alba</title>
     <link rel="preconnect" href="https://googleapis.com" />
     <link rel="preconnect" href="https://gstatic.com" crossorigin />

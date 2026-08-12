@@ -5,17 +5,8 @@ import { NavDropDown } from '../NavDropDown/NavDropDown.tsx';
 import type { LinkItem } from '../NavDropDown/NavDropDown.tsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-type ThemeMode = 'dark' | 'light';
-
-function getInitialTheme(): ThemeMode {
-  return document.documentElement.dataset.theme === 'light'
-    ? 'light'
-    : 'dark';
-}
-
 function Navbar() {
   const [showProfessionalDropdown, setProfessionalDropdown] = useState(false);
-  const [themeMode, setThemeMode] = useState<ThemeMode>(getInitialTheme);
   const location = useLocation();
   const professionalMenuRef = useRef<HTMLDivElement>(null);
   const professionalButtonRef = useRef<HTMLButtonElement>(null);
@@ -34,16 +25,6 @@ function Navbar() {
 
     setProfessionalDropdown(false);
   }, []);
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = themeMode;
-    document.documentElement.style.colorScheme = themeMode;
-    try {
-      window.localStorage.setItem('portfolio-theme', themeMode);
-    } catch {
-      // just dont update the theme
-    }
-  }, [themeMode]);
 
   useEffect(() => {
     const closeFrame = window.requestAnimationFrame(closeProfessionalDropdown);
@@ -91,8 +72,6 @@ function Navbar() {
   };
 
   const isProfessionalActive = ProfessionalLinks.some((link) => isPathActive(link.path));
-  const isLightMode = themeMode === 'light';
-
   return (
     <nav className='navbar' aria-label='Primary navigation'>
       <Link className={location.pathname === '/' ? 'navbar__iconLink is-active' : 'navbar__iconLink'} to='/' aria-label='Home'>
@@ -136,23 +115,6 @@ function Navbar() {
           </svg>
         </Link>
       </div>
-      <button
-        className={isLightMode ? 'navbar__iconLink navbar__themeToggle is-light' : 'navbar__iconLink navbar__themeToggle'}
-        type='button'
-        aria-label={isLightMode ? 'Switch to dark mode' : 'Switch to light mode'}
-        aria-pressed={isLightMode}
-        onClick={() => setThemeMode(isLightMode ? 'dark' : 'light')}
-      >
-        {isLightMode ? (
-          <svg viewBox='0 0 24 24' aria-hidden='true'>
-            <path d='M12 3.25a.75.75 0 0 1 .75.75v1.25a.75.75 0 0 1-1.5 0V4a.75.75 0 0 1 .75-.75Zm0 15.5a.75.75 0 0 1 .75.75V20a.75.75 0 0 1-1.5 0v-.5a.75.75 0 0 1 .75-.75ZM20.75 12a.75.75 0 0 1-.75.75h-1.25a.75.75 0 0 1 0-1.5H20a.75.75 0 0 1 .75.75ZM5.25 12a.75.75 0 0 1-.75.75H4a.75.75 0 0 1 0-1.5h.5a.75.75 0 0 1 .75.75Zm12.43-6.74a.75.75 0 0 1 0 1.06l-.88.88a.75.75 0 0 1-1.06-1.06l.88-.88a.75.75 0 0 1 1.06 0ZM7.2 16.8a.75.75 0 0 1 0 1.06l-.88.88a.75.75 0 0 1-1.06-1.06l.88-.88a.75.75 0 0 1 1.06 0Zm10.48 1.94a.75.75 0 0 1-1.06 0l-.88-.88a.75.75 0 1 1 1.06-1.06l.88.88a.75.75 0 0 1 0 1.06ZM7.2 7.2a.75.75 0 0 1-1.06 0l-.88-.88a.75.75 0 0 1 1.06-1.06l.88.88a.75.75 0 0 1 0 1.06ZM12 7.25A4.75 4.75 0 1 1 12 16.75 4.75 4.75 0 0 1 12 7.25Z' />
-          </svg>
-        ) : (
-          <svg viewBox='0 0 24 24' aria-hidden='true'>
-            <path d='M19.35 14.78a.75.75 0 0 1 .82.94A8.75 8.75 0 1 1 8.29 3.84a.75.75 0 0 1 .94.82 7.25 7.25 0 0 0 10.12 10.12ZM5.25 12A6.75 6.75 0 0 0 18.3 14.4 8.75 8.75 0 0 1 9.6 5.7 6.75 6.75 0 0 0 5.25 12Z' />
-          </svg>
-        )}
-      </button>
     </nav>
   );
 }

@@ -144,35 +144,11 @@
   }
 }
 
-:root[data-theme='light'] .errorScreen {
-  color: rgba(18, 32, 52, 0.94);
-}
 
-:root[data-theme='light'] .errorScreen__status,
-:root[data-theme='light'] .errorScreen__icon {
-  color: rgba(176, 38, 38, 0.9);
-}
 
-:root[data-theme='light'] .errorScreen__icon {
-  border-color: rgba(176, 38, 38, 0.2);
-  background: rgba(220, 38, 38, 0.05);
-}
 
-:root[data-theme='light'] .errorScreen > p {
-  color: rgba(34, 49, 72, 0.68);
-}
 
-:root[data-theme='light'] .errorScreen__retry {
-  color: rgba(18, 32, 52, 0.92);
-  border-color: rgba(72, 98, 135, 0.18);
-  background: rgba(255, 255, 255, 0.72);
-}
 
-:root[data-theme='light'] .errorScreen__retry:hover,
-:root[data-theme='light'] .errorScreen__retry:focus-visible {
-  border-color: rgba(55, 96, 150, 0.36);
-  background: rgba(224, 235, 249, 0.88);
-}
 
 @media (max-width: 850px) {
   .errorScreen {

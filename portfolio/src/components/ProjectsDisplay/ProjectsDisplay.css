@@ -269,95 +269,23 @@
   }
 }
 
-:root[data-theme='light'] .projectDisplay {
-  color: rgba(18, 32, 52, 0.94);
-  border-color: rgba(72, 98, 135, 0.14);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(232, 240, 250, 0.9)), rgba(247, 250, 255, 0.92);
-  box-shadow:
-    0 18px 42px rgba(55, 80, 120, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
 
-:root[data-theme='light'] .projectDisplay:hover {
-  border-color: rgba(55, 96, 150, 0.28);
-  box-shadow:
-    0 24px 50px rgba(55, 80, 120, 0.2),
-    inset 0 1px 0 white;
-}
 
-:root[data-theme='light'] .projectDisplay.is-featured {
-  border-color: rgba(151, 105, 18, 0.3);
-  box-shadow:
-    0 0 0 1px rgba(151, 105, 18, 0.04),
-    0 14px 32px rgba(112, 78, 14, 0.1);
-}
 
-:root[data-theme='light'] .projectDisplay.is-featured:hover {
-  border-color: rgba(151, 105, 18, 0.5);
-}
 
-:root[data-theme='light'] .projectFeaturedLabel {
-  color: rgba(92, 59, 4, 0.96);
-  border-color: rgba(151, 105, 18, 0.34);
-  background: rgba(255, 246, 218, 0.94);
-}
 
-:root[data-theme='light'] .projectTitleRow > span {
-  color: rgba(34, 49, 72, 0.7);
-}
 
-:root[data-theme='light'] .projectStatus {
-  background: rgba(var(--project-status-color), 0.12);
-  border-color: rgba(var(--project-status-color), 0.34);
-}
 
-:root[data-theme='light'] .projectStatus--done {
-  --project-status-color: 12, 105, 57;
-}
 
-:root[data-theme='light'] .projectStatus--wip {
-  --project-status-color: 29, 78, 216;
-}
 
-:root[data-theme='light'] .projectStatus--draft {
-  --project-status-color: 71, 85, 105;
-}
 
-:root[data-theme='light'] .projectStatus--review {
-  --project-status-color: 146, 94, 4;
-}
 
-:root[data-theme='light'] .projectStatus--blocked {
-  --project-status-color: 185, 28, 28;
-}
 
-:root[data-theme='light'] .projectDescription {
-  color: rgba(34, 49, 72, 0.68);
-}
 
-:root[data-theme='light'] .projectImageShade {
-  background: linear-gradient(180deg, transparent, rgba(24, 43, 70, 0.18));
-}
 
-:root[data-theme='light'] .projectLinks {
-  border-color: rgba(72, 98, 135, 0.12);
-}
 
-:root[data-theme='light'] .projectLinks a {
-  color: rgba(42, 82, 134, 0.88);
-  background: rgba(72, 98, 135, 0.06);
-}
 
-:root[data-theme='light'] .projectLinks a:hover,
-:root[data-theme='light'] .projectLinks a:focus-visible {
-  color: rgba(18, 32, 52, 0.98);
-  background: rgba(72, 98, 135, 0.12);
-}
 
-:root[data-theme='light'] .projectLinks .projectLink {
-  color: rgba(18, 32, 52, 0.9);
-  background: rgba(22, 120, 68, 0.07);
-}
 
 @media (max-width: 620px) {
   .projectTitleRow {

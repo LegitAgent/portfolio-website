@@ -33,25 +33,6 @@
   --content-width: 1180px;
 }
 
-:root[data-theme='light'] {
-  color-scheme: light;
-  color: #102033;
-  --color-bg: #f5f8fc;
-  --color-bg-deep: #e9f0f8;
-  --color-surface: rgba(255, 255, 255, 0.82);
-  --color-surface-strong: #ffffff;
-  --color-surface-subtle: rgba(235, 242, 250, 0.76);
-  --color-border: rgba(54, 82, 116, 0.16);
-  --color-border-strong: rgba(54, 82, 116, 0.3);
-  --color-text: #102033;
-  --color-text-soft: #40536a;
-  --color-text-muted: #64768a;
-  --color-accent: #326b99;
-  --color-accent-strong: #204f78;
-  --color-accent-soft: rgba(50, 107, 153, 0.1);
-  --shadow-sm: 0 12px 30px rgba(45, 67, 94, 0.09);
-  --shadow-md: 0 24px 60px rgba(45, 67, 94, 0.13);
-}
 
 ::selection {
   color: #f4fbff;
@@ -63,15 +44,7 @@
   background: rgba(72, 170, 235, 0.32);
 }
 
-:root[data-theme='light'] ::selection {
-  color: #0f1d33;
-  background: rgba(82, 125, 178, 0.22);
-}
 
-:root[data-theme='light'] ::-moz-selection {
-  color: #0f1d33;
-  background: rgba(82, 125, 178, 0.22);
-}
 
 html {
   scroll-behavior: smooth;
@@ -118,23 +91,9 @@ body {
   background: rgba(1, 8, 22, 0.82);
 }
 
-:root[data-theme='light'] {
-  scrollbar-color: rgba(55, 96, 150, 0.56) rgba(229, 237, 248, 0.88);
-}
 
-:root[data-theme='light'] ::-webkit-scrollbar-track,
-:root[data-theme='light'] ::-webkit-scrollbar-corner {
-  background: rgba(229, 237, 248, 0.88);
-}
 
-:root[data-theme='light'] ::-webkit-scrollbar-thumb {
-  border-color: rgba(229, 237, 248, 0.88);
-  background: rgba(55, 96, 150, 0.56);
-}
 
-:root[data-theme='light'] ::-webkit-scrollbar-thumb:hover {
-  background: rgba(42, 82, 134, 0.76);
-}
 
 img,
 svg,
@@ -164,14 +123,7 @@ button {
   outline-offset: 3px;
 }
 
-:root[data-theme='light'] body {
-  color: #102033;
-}
 
-:root[data-theme='light'] a,
-:root[data-theme='light'] button {
-  color: inherit;
-}
 
 @media (prefers-reduced-motion: reduce) {
   html {

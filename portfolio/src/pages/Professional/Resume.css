@@ -207,49 +207,15 @@
   }
 }
 
-:root[data-theme='light'] .resumeView {
-  color: rgba(18, 32, 52, 0.94);
-}
 
-:root[data-theme='light'] .resumeEyebrow {
-  color: rgba(18, 32, 52, 0.9);
-}
 
-:root[data-theme='light'] .resumeIcon {
-  filter: none;
-}
 
-:root[data-theme='light'] .update {
-  color: rgba(34, 49, 72, 0.62);
-}
 
-:root[data-theme='light'] .resumeBox {
-  border-color: rgba(72, 98, 135, 0.16);
-  background: rgba(247, 250, 255, 0.78);
-  box-shadow: 0 18px 44px rgba(55, 80, 120, 0.1);
-}
 
-:root[data-theme='light'] .topContent {
-  border-color: rgba(72, 98, 135, 0.14);
-}
 
-:root[data-theme='light'] .resumeDocumentLabel {
-  color: rgba(34, 49, 72, 0.5);
-}
 
-:root[data-theme='light'] .resumeAction {
-  color: rgba(18, 32, 52, 0.9);
-  background: rgba(250, 252, 255, 0.98);
-}
 
-:root[data-theme='light'] .resumeAction::after {
-  background: rgba(250, 252, 255, 0.98);
-}
 
-:root[data-theme='light'] .resumeAction:hover::after,
-:root[data-theme='light'] .resumeAction:focus-visible::after {
-  background: rgba(232, 240, 249, 0.98);
-}
 
 @media (max-width: 850px) {
   .resumeView {

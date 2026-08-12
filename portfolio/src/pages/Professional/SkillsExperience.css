@@ -110,7 +110,7 @@
   opacity: 0.82;
 }
 
-.tagIcon--theme-invert {
+.tagIcon--contrast-invert {
   filter: invert(1);
 }
 
@@ -514,77 +514,19 @@
   transform: translateY(-2px);
 }
 
-:root[data-theme='light'] .seContainer::before {
-  background: radial-gradient(circle at 72% 38%, rgba(55, 96, 150, 0.08), transparent 26rem);
-}
 
-:root[data-theme='light'] .subtitleHeader {
-  color: #246b59;
-}
 
-:root[data-theme='light'] .skillsDescription,
-:root[data-theme='light'] .experienceDescription,
-:root[data-theme='light'] .journeyPhaseHeader > div p {
-  color: rgba(34, 49, 72, 0.7);
-}
 
-:root[data-theme='light'] .skillGroup,
-:root[data-theme='light'] .journeyHeader {
-  border-color: rgba(55, 96, 150, 0.14);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(235, 242, 250, 0.82));
-}
 
-:root[data-theme='light'] .tag {
-  color: rgba(18, 32, 52, 0.9);
-  border-color: rgba(55, 96, 150, 0.15);
-  background: rgba(255, 255, 255, 0.7);
-}
 
-:root[data-theme='light'] .tagIcon--theme-invert {
-  filter: none;
-}
 
-:root[data-theme='light'] .journeyIndex span,
-:root[data-theme='light'] .journeyControlsLabel {
-  color: rgba(42, 65, 91, 0.68);
-}
 
-:root[data-theme='light'] .journeyControls {
-  border-color: rgba(55, 96, 150, 0.14);
-  background: rgba(245, 249, 253, 0.91);
-}
 
-:root[data-theme='light'] .journeyFilter {
-  color: rgba(42, 65, 91, 0.7);
-}
 
-:root[data-theme='light'] .journeyFilter:hover,
-:root[data-theme='light'] .journeyFilter:focus-visible,
-:root[data-theme='light'] .journeyFilter.is-active {
-  color: #194f69;
-  background: rgba(42, 120, 145, 0.06);
-}
 
-:root[data-theme='light'] .journeyYear,
-:root[data-theme='light'] .journeyPhaseHeader h2 {
-  color: rgba(18, 32, 52, 0.92);
-}
 
-:root[data-theme='light'] .journeyPhaseTick,
-:root[data-theme='light'] .workMapNode {
-  background: #f7fbff;
-  box-shadow: inset 0 0 0 4px #edf4fa;
-}
 
-:root[data-theme='light'] .workMapItem.is-active .workMapNode {
-  box-shadow: 0 0 0 6px color-mix(in srgb, var(--node-accent) 10%, transparent), 0 0 16px color-mix(in srgb, var(--node-accent) 24%, transparent), inset 0 0 0 4px #edf4fa;
-}
 
-:root[data-theme='light'] .journeyEmpty,
-:root[data-theme='light'] .seBackToTop {
-  color: rgba(18, 32, 52, 0.84);
-  background: rgba(249, 252, 255, 0.92);
-}
 
 @keyframes seFadeUp {
   from { opacity: 0; transform: translateY(14px); }

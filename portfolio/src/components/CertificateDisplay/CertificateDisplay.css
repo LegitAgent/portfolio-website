@@ -214,65 +214,16 @@
   }
 }
 
-:root[data-theme='light'] .certificateDisplay {
-  color: rgba(18, 32, 52, 0.94);
-  border-color: rgba(72, 98, 135, 0.14);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(232, 240, 250, 0.9)), rgba(247, 250, 255, 0.92);
-  box-shadow:
-    0 18px 42px rgba(55, 80, 120, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
 
-:root[data-theme='light'] .certificateDisplay:hover {
-  border-color: rgba(55, 96, 150, 0.28);
-  box-shadow:
-    0 24px 50px rgba(55, 80, 120, 0.2),
-    inset 0 1px 0 white;
-}
 
-:root[data-theme='light'] .certificateTitleRow > span {
-  color: rgba(34, 49, 72, 0.7);
-}
 
-:root[data-theme='light'] .certificateIssuer {
-  color: rgba(29, 78, 216, 0.9);
-  border-color: rgba(29, 78, 216, 0.24);
-  background: rgba(219, 234, 254, 0.72);
-}
 
-:root[data-theme='light'] .certificateDescription {
-  color: rgba(34, 49, 72, 0.68);
-}
 
-:root[data-theme='light'] .certificateSkills span {
-  color: rgba(18, 32, 52, 0.9);
-  border-color: rgba(22, 120, 68, 0.18);
-  background: rgba(201, 240, 214, 0.62);
-}
 
-:root[data-theme='light'] .certificateImageShade {
-  background: linear-gradient(180deg, transparent, rgba(24, 43, 70, 0.18));
-}
 
-:root[data-theme='light'] .certificateLinks {
-  border-color: rgba(72, 98, 135, 0.12);
-}
 
-:root[data-theme='light'] .certificateLinks a {
-  color: rgba(42, 82, 134, 0.88);
-  background: rgba(72, 98, 135, 0.06);
-}
 
-:root[data-theme='light'] .certificateLinks a:hover,
-:root[data-theme='light'] .certificateLinks a:focus-visible {
-  color: rgba(18, 32, 52, 0.98);
-  background: rgba(72, 98, 135, 0.12);
-}
 
-:root[data-theme='light'] .certificateLinks .certificateLink {
-  color: rgba(18, 32, 52, 0.9);
-  background: rgba(22, 120, 68, 0.07);
-}
 
 @media (max-width: 620px) {
   .certificateContent {

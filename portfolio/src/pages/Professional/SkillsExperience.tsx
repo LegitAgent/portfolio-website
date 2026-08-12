@@ -155,8 +155,8 @@ const skillIconSources: Record<string, string> = {
 
 function SkillTag({ skill }: { skill: Tag }) {
   const iconSrc = skillIconSources[skill.tag_name] ?? skillIconSources.default;
-  const needsThemeInversion = ['GitHub', 'AWS'].includes(skill.tag_name);
-  const iconClassName = needsThemeInversion ? 'tagIcon tagIcon--theme-invert' : 'tagIcon';
+  const needsContrastInversion = ['GitHub', 'AWS'].includes(skill.tag_name);
+  const iconClassName = needsContrastInversion ? 'tagIcon tagIcon--contrast-invert' : 'tagIcon';
 
   return (
     <div className='tag' key={skill.tag_name}>

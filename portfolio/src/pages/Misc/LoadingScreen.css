@@ -59,15 +59,3 @@
     animation: none;
   }
 }
-
-:root[data-theme='light'] .loadingScreen {
-  color: rgba(18, 32, 52, 0.92);
-}
-
-:root[data-theme='light'] .loadingScreen__mark span {
-  background: rgba(42, 82, 134, 0.78);
-}
-
-:root[data-theme='light'] .loadingScreen__text {
-  color: rgba(34, 49, 72, 0.72);
-}

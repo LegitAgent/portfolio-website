@@ -264,38 +264,3 @@
     transition: none;
   }
 }
-
-:root[data-theme='light'] .wrong {
-  color: rgba(18, 32, 52, 0.94);
-}
-
-:root[data-theme='light'] .astronaut {
-  color: rgba(38, 60, 92, 0.88);
-  filter: drop-shadow(0 18px 24px rgba(55, 96, 150, 0.16));
-}
-
-:root[data-theme='light'] .spaceBit,
-:root[data-theme='light'] .wrong__eyebrow {
-  color: #000;
-  text-shadow: none;
-}
-
-:root[data-theme='light'] .spaceBit {
-  animation-name: lightSpaceBitFloat;
-}
-
-:root[data-theme='light'] .wrong__content > p:not(.wrong__eyebrow) {
-  color: rgba(34, 49, 72, 0.72);
-}
-
-:root[data-theme='light'] .wrong__actions button {
-  color: rgba(18, 32, 52, 0.94);
-  background: rgba(255, 255, 255, 0.72);
-  border-color: rgba(72, 98, 135, 0.16);
-}
-
-:root[data-theme='light'] .wrong__actions button:hover,
-:root[data-theme='light'] .wrong__actions button:focus-visible {
-  background: rgba(224, 235, 249, 0.88);
-  border-color: rgba(55, 96, 150, 0.36);
-}
