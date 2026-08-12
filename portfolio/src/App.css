@@ -12,6 +12,14 @@
   width: calc(100% - var(--desktop-nav-width));
   min-height: 100dvh;
   margin-left: var(--desktop-nav-width);
+  transition:
+    width 320ms ease,
+    margin-left 320ms ease;
+}
+
+.page-shell.is-navbar-collapsed {
+  width: 100%;
+  margin-left: 0;
 }
 
 @media (max-width: 1150px) {
@@ -20,10 +28,20 @@
     min-height: calc(100dvh - var(--mobile-nav-clearance));
     margin-left: 0;
   }
+
+  .page-shell.is-navbar-collapsed {
+    min-height: 100dvh;
+  }
 }
 
 @media (max-width: 420px) {
   .app-shell {
     --mobile-nav-clearance: 4.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-shell {
+    transition: none;
   }
 }

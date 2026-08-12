@@ -20,6 +20,13 @@
     14px 0 42px rgba(0, 0, 0, 0.26),
     inset -1px 0 0 rgba(180, 220, 255, 0.05);
   backdrop-filter: blur(14px);
+  transform: translateX(0);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.navbar.is-collapsed {
+  transform: translateX(calc(-100% - 1rem));
 }
 
 .navbar::before {
@@ -106,6 +113,88 @@
   outline: none;
 }
 
+.navbar__collapseButton,
+.navbar__revealButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(130, 180, 255, 0.22);
+  background: rgba(6, 18, 42, 0.9);
+  color: rgba(214, 232, 250, 0.9);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+}
+
+.navbar__collapseButton {
+  position: absolute;
+  right: 50%;
+  bottom: 1rem;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 50%;
+  transform: translateX(50%);
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.navbar__revealButton {
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 0;
+  width: 2.25rem;
+  height: 3.5rem;
+  border-left: 0;
+  border-radius: 0 1rem 1rem 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-100%, -50%);
+  transition:
+    opacity 220ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 320ms,
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.navbar__revealButton.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(0, -50%);
+  transition-delay: 80ms, 80ms, 0s, 0s, 0s, 0s;
+}
+
+.navbar__collapseButton svg,
+.navbar__revealButton svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.navbar__collapseButton:hover,
+.navbar__collapseButton:focus-visible,
+.navbar__revealButton:hover,
+.navbar__revealButton:focus-visible {
+  border-color: rgba(125, 188, 235, 0.55);
+  background: rgba(44, 119, 190, 0.34);
+  color: #f0f9ff;
+  outline: none;
+}
+
+.navbar__collapseButton:hover,
+.navbar__collapseButton:focus-visible {
+  transform: translateX(50%) scale(1.06);
+}
+
 @media (max-width: 1150px) {
   .navbar {
     bottom: 0.85rem;
@@ -127,6 +216,10 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
+  .navbar.is-collapsed {
+    transform: translate(-50%, calc(100% + 2rem));
+  }
+
   .navbar__iconLink {
     width: 2.75rem;
     height: 2.75rem;
@@ -141,6 +234,43 @@
   .navbar__links {
     gap: 0.45rem;
     flex-direction: row;
+  }
+
+  .navbar__collapseButton {
+    position: static;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex: 0 0 auto;
+    transform: none;
+  }
+
+  .navbar__collapseButton svg {
+    transform: rotate(-90deg);
+  }
+
+  .navbar__collapseButton:hover,
+  .navbar__collapseButton:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .navbar__revealButton {
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    width: 3.5rem;
+    height: 2.25rem;
+    border-bottom: 0;
+    border-left: 1px solid rgba(130, 180, 255, 0.22);
+    border-radius: 1rem 1rem 0 0;
+    transform: translate(-50%, 100%);
+  }
+
+  .navbar__revealButton.is-visible {
+    transform: translate(-50%, 0);
+  }
+
+  .navbar__revealButton svg {
+    transform: rotate(-90deg);
   }
 
   .focus-anim,
@@ -173,6 +303,11 @@
     border-radius: 50%;
   }
 
+  .navbar__collapseButton {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
   .navbar__links {
     width: auto;
     flex: 0 0 auto;
@@ -199,4 +334,12 @@
   }
 
 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar__collapseButton,
+  .navbar__revealButton {
+    transition: none;
+  }
 }

@@ -28,7 +28,7 @@ const WorkArticle = lazy(() => import('./components/WorkArticle/WorkArticle'));
 const WrongPage = lazy(() => import('./pages/Misc/WrongPage'));
 
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
-import { lazy, Suspense, useLayoutEffect } from 'react';
+import { lazy, Suspense, useLayoutEffect, useState } from 'react';
 
 interface RoutingLinks {
   url: string;
@@ -46,6 +46,8 @@ function RouteScrollReset() {
 }
 
 function App() {
+  const [isNavbarCollapsed, setNavbarCollapsed] = useState(false);
+
   const routes: Array<RoutingLinks> = [
     // home
     { url: '/', redirectElement: <Home /> },
@@ -70,8 +72,8 @@ function App() {
       <RouteScrollReset />
       <main className='app-shell'>
         <Background />
-        <div className='page-shell'>
-          <Navbar />
+        <div className={isNavbarCollapsed ? 'page-shell is-navbar-collapsed' : 'page-shell'}>
+          <Navbar isCollapsed={isNavbarCollapsed} onCollapsedChange={setNavbarCollapsed} />
           <Suspense fallback={<LoadingScreen />}>
             <Routes>
               {routes.map((route) => {
