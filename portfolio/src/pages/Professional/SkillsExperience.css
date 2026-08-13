@@ -2,11 +2,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: calc(100% - 4.5rem);
-  max-width: none;
-  margin-left: 4.5rem;
-  padding: 5vh max(1rem, calc((100vw - 4.5rem - 1400px) / 2)) 7rem;
-  gap: clamp(4rem, 8vw, 7rem);
+  width: min(100% - 2rem, 1280px);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(5rem, 9vw, 8rem);
+  gap: clamp(3rem, 7vw, 5rem);
   overflow: hidden;
 }
 
@@ -24,6 +23,14 @@
 .experienceContainer {
   width: 100%;
   animation: seFadeUp 500ms ease-out both;
+}
+
+.skillsContainer {
+  padding: clamp(1.5rem, 3.5vw, 2.5rem);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: linear-gradient(145deg, var(--color-surface-strong), var(--color-surface) 72%);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.2);
 }
 
 .skillsContainer h2,
@@ -61,17 +68,20 @@
 .technicalSkills {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.8rem;
-  margin-top: 1.5rem;
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+  gap: 1rem;
+  margin-top: clamp(1.5rem, 3vw, 2rem);
 }
 
 .skillGroup {
   min-width: 0;
-  padding: 1rem;
-  border: 1px solid rgba(125, 188, 235, 0.13);
-  border-radius: 5px;
-  background: linear-gradient(145deg, rgba(8, 25, 51, 0.7), rgba(2, 9, 22, 0.86));
-  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.14);
+  min-height: 9rem;
+  height: 100%;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-surface-subtle);
 }
 
 .skillType {
@@ -95,10 +105,10 @@
   gap: 0.42rem;
   min-height: 2.05rem;
   padding: 0.34rem 0.64rem 0.34rem 0.43rem;
-  border: 1px solid rgba(125, 188, 235, 0.15);
+  border: 1px solid #304052;
   border-radius: 999px;
   color: rgba(238, 247, 255, 0.9);
-  background: rgba(5, 17, 38, 0.62);
+  background: #151f2b;
   font-size: 0.86rem;
   font-weight: 680;
 }
@@ -117,23 +127,21 @@
 .experienceContainer {
   position: relative;
   isolation: isolate;
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
 .journeyHeader {
   position: relative;
   padding: clamp(1.5rem, 3vw, 2.5rem);
-  border-top: 1px solid rgba(125, 188, 235, 0.2);
-  border-bottom: 1px solid rgba(125, 188, 235, 0.13);
-  background: linear-gradient(90deg, rgba(10, 29, 58, 0.62), rgba(3, 11, 25, 0.2) 70%);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: linear-gradient(145deg, var(--color-surface-strong), var(--color-surface) 72%);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.18);
 }
 
 .journeyHeader::before,
 .journeyHeader::after {
-  content: '';
-  position: absolute;
-  width: 0.45rem;
-  height: 0.45rem;
-  border: 1px solid rgba(125, 188, 235, 0.42);
+  display: none;
 }
 
 .journeyHeader::before {
@@ -171,15 +179,17 @@
 
 .journeyControls {
   position: sticky;
-  top: 0;
+  top: 0.75rem;
   z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  margin-top: 1.25rem;
   padding: 0.72rem clamp(0.75rem, 2vw, 1.2rem);
-  border-bottom: 1px solid rgba(125, 188, 235, 0.15);
-  background: rgba(2, 9, 22, 0.9);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: rgba(12, 18, 28, 0.94);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
   backdrop-filter: blur(14px);
 }
@@ -238,7 +248,7 @@
 .journeyFilter:focus-visible,
 .journeyFilter.is-active {
   color: #dff8ff;
-  background: rgba(83, 190, 211, 0.06);
+  background: #172630;
 }
 
 .journeyFilter.is-active {
@@ -248,7 +258,8 @@
 
 .workTree {
   position: relative;
-  padding-top: 1.5rem;
+  margin-top: 1.25rem;
+  padding: clamp(0.5rem, 2vw, 1.25rem) 0 0;
 }
 
 .workList {
@@ -256,7 +267,7 @@
   --journey-branch: 50%;
   position: relative;
   min-height: 8rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .workList::before,
@@ -348,7 +359,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
   align-items: center;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   animation: workPathIn 380ms ease-out both;
 }
 
@@ -372,7 +383,7 @@
   position: relative;
   z-index: 3;
   grid-row: 1;
-  width: min(100%, 38rem);
+  width: min(100%, 31rem);
 }
 
 .workMapItem--left > .workDisplay {
@@ -462,7 +473,7 @@
   padding: 2rem;
   border: 1px dashed rgba(125, 188, 235, 0.2);
   color: rgba(183, 205, 224, 0.7);
-  background: rgba(4, 14, 30, 0.72);
+  background: var(--color-surface);
   text-align: center;
 }
 
@@ -490,7 +501,7 @@
   border: 1px solid rgba(125, 188, 235, 0.28);
   border-radius: 5px;
   color: rgba(238, 247, 255, 0.88);
-  background: rgba(3, 12, 29, 0.9);
+  background: rgba(16, 23, 34, 0.94);
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
   font-size: 0.75rem;
   font-weight: 760;
@@ -540,8 +551,7 @@
 
 @media (max-width: 1150px) {
   .seContainer {
-    width: min(100% - 2rem, 1080px);
-    margin-inline: auto;
+    width: min(100% - 2rem, 1280px);
     padding-bottom: calc(var(--mobile-nav-clearance) + 3rem);
   }
 
@@ -588,7 +598,7 @@
 
   .workMapItem {
     grid-template-columns: 2rem minmax(0, 1fr);
-    padding: 1rem 0;
+    padding: 0.75rem 0;
   }
 
   .workMapItem > .workDisplay,
@@ -621,6 +631,10 @@
     padding-inline: 0.5rem;
   }
 
+  .workTree {
+    padding: 0.75rem 0 0;
+  }
+
   .journeyControlsLabel {
     display: none;
   }
@@ -632,12 +646,26 @@
 
 @media (max-width: 520px) {
   .seContainer {
-    width: min(100% - 1.1rem, 1080px);
+    width: min(100% - 1rem, 1280px);
     padding-top: 2rem;
+    gap: 2.5rem;
+  }
+
+  .skillsContainer {
+    padding: 1.25rem;
+  }
+
+  .skillGroup {
+    min-height: 9rem;
+    padding: 1rem;
   }
 
   .journeyHeader {
-    padding: 1.25rem 0.85rem;
+    padding: 1.25rem;
+  }
+
+  .workTree {
+    padding: 0.5rem 0 0;
   }
 
   .journeyIndex {

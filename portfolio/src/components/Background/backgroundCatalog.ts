@@ -9,7 +9,7 @@ interface BackgroundOption {
   component: ComponentType | null;
 }
 
-export const BACKGROUNDS: readonly BackgroundOption[] = [
+export const BACKGROUNDS: BackgroundOption[] = [
   {
     id: 'game-of-life',
     label: 'Game of Life',

@@ -8,6 +8,7 @@
 
   z-index: 0;
   pointer-events: none;
+  justify-content: center; 
 }
 
 .backgroundControls {

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 const PIXEL_SIZE = 10;
 const GOSPER_GLIDER_GUN_WIDTH = 36;
 const GOSPER_GLIDER_GUN_HEIGHT = 9;
-const GOSPER_GLIDER_GUN_CELLS: ReadonlyArray<readonly [number, number]> = [
+const GOSPER_GLIDER_GUN_CELLS = [
   [1, 5], [1, 6], [2, 5], [2, 6],
   [11, 5], [11, 6], [11, 7], [12, 4], [12, 8], [13, 3], [13, 9],
   [14, 3], [14, 9], [15, 6], [16, 4], [16, 8], [17, 5], [17, 6],
@@ -83,6 +83,7 @@ function createSeededGrid(rows: number, cols: number) {
 
 function calculateNextGeneration(currentGrid: Uint8Array, nextGrid: Uint8Array, rows: number, cols: number) {
   // current grid = read-only, next grid = write-only
+  // could use only currentGrid, but it's cleaner this way plus only +40Kb memory anyways for a 1080p screen
   const directions = [[-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1]];
   
   const checkNeighbors = (i: number, j: number): number => {
@@ -180,7 +181,8 @@ function GameOfLife() {
       if (event.button !== 0) {
         return;
       }
-
+      
+      // if clicked something interactive, ignore click in bg
       const target = event.target;
       if (target instanceof Element && target.closest('a, button, input, textarea, select')) {
         return;

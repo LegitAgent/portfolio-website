@@ -2,14 +2,14 @@
   --article-blue: 125, 188, 235;
   --article-green: 134, 239, 172;
   position: relative;
-  width: 100%;
+  width: min(100%, 1120px);
   min-width: 0;
-  margin-top: clamp(2rem, 5vw, 3.5rem);
+  margin: clamp(1.75rem, 4vw, 3rem) auto 0;
   overflow: visible;
   border: 1px solid rgba(var(--article-blue), 0.18);
-  border-radius: 10px;
+  border-radius: 14px;
   color: rgba(238, 247, 255, 0.94);
-  background: rgba(2, 9, 24, 0.84);
+  background: #0b111a;
   box-shadow:
     0 0 0 1px rgba(var(--article-blue), 0.04),
     0 0 32px rgba(var(--article-blue), 0.16),
@@ -26,10 +26,10 @@
 
 .projectArticleGalleryViewport {
   position: relative;
-  height: clamp(19rem, 54vw, 650px);
+  height: clamp(18rem, 44vw, 520px);
   overflow: hidden;
-  border-radius: 9px 9px 0 0;
-  background: rgba(1, 7, 18, 0.92);
+  border-radius: 13px 13px 0 0;
+  background: #070b11;
 }
 
 .articleGallery.has-single-image .projectArticleGalleryViewport {
@@ -137,7 +137,7 @@
   border: 1px solid rgba(var(--article-blue), 0.28);
   border-radius: 6px;
   color: rgba(232, 243, 252, 0.9);
-  background: rgba(3, 12, 29, 0.9);
+  background: #121c28;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
   cursor: pointer;
   pointer-events: auto;
@@ -184,7 +184,7 @@
   gap: 1rem;
   border-top: 1px solid rgba(var(--article-blue), 0.12);
   border-radius: 0 0 9px 9px;
-  background: rgba(3, 12, 29, 0.78);
+  background: #101822;
 }
 
 .projectArticleGalleryFooter > span,
