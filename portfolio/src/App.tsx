@@ -67,7 +67,7 @@ function App() {
     { url: '/projects/:slug', redirectElement: <ProjectArticle /> },
     { url: '/skills_experience/:slug', redirectElement: <WorkArticle /> },
     // sandbox
-    { url: '/sandbox', redirectElement: <Sandbox />},
+    { url: '/sandbox', redirectElement: <Sandbox selectedBackground={selectedBackground} />},
     // misc.
     { url: '*', redirectElement: <WrongPage /> },
   ];

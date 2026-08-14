@@ -1,0 +1,169 @@
+.sandboxPage {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  pointer-events: none;
+}
+
+.sandboxInfoButton {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 800;
+  width: 3.25rem;
+  height: 3.25rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 50%;
+  color: var(--color-text);
+  background: rgba(16, 23, 34, 0.94);
+  box-shadow:
+    0 0 0 1px rgba(120, 183, 201, 0.1),
+    0 14px 34px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(14px);
+  pointer-events: auto;
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.sandboxInfoButton:hover,
+.sandboxInfoButton:focus-visible {
+  border-color: rgba(120, 183, 201, 0.72);
+  background: #172630;
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.infoIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: brightness(0) saturate(100%) invert(83%) sepia(14%) saturate(1075%) hue-rotate(146deg) brightness(88%) contrast(88%);
+}
+
+.sandboxInfoLightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2200;
+  padding: clamp(1rem, 4vw, 3rem);
+  display: grid;
+  place-items: center;
+  background: rgba(0, 3, 8, 0.88);
+  backdrop-filter: blur(5px);
+  animation: sandboxInfoFadeIn 160ms ease-out both;
+}
+
+.sandboxInfoDialog {
+  position: relative;
+  width: min(100%, 760px);
+  max-height: min(86dvh, 760px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 14px;
+  color: var(--color-text);
+  background: linear-gradient(145deg, #151f2d, #0c121c 72%);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+  animation: sandboxInfoScaleIn 180ms ease-out both;
+}
+
+.sandboxInfoDialogHeader {
+  min-height: 4.25rem;
+  padding: 1rem 1rem 1rem 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  background: #101722;
+}
+
+.sandboxInfoDialogHeader h1 {
+  margin: 0;
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  font-weight: 760;
+  line-height: 1.2;
+}
+
+.sandboxInfoDialogHeader button {
+  width: 2.4rem;
+  height: 2.4rem;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  color: var(--color-text-muted);
+  background: var(--color-surface-subtle);
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
+}
+
+.sandboxInfoDialogHeader button:hover,
+.sandboxInfoDialogHeader button:focus-visible {
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+  background: #172630;
+  outline: none;
+}
+
+.sandboxInfoDialogHeader button:active {
+  transform: scale(0.96);
+}
+
+.sandboxInfoDialogHeader svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.sandboxInfoDialogContent {
+  min-height: 20rem;
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  overflow-y: auto;
+  color: var(--color-text-soft);
+}
+
+@keyframes sandboxInfoFadeIn {
+  from { opacity: 0; }
+}
+
+@keyframes sandboxInfoScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+}
+
+@media (max-width: 1150px) {
+  .sandboxInfoButton {
+    right: 0.75rem;
+    bottom: calc(var(--mobile-nav-clearance) + 0.75rem);
+  }
+}
+
+@media (max-width: 520px) {
+  .sandboxInfoLightbox {
+    padding: 0.75rem;
+  }
+
+  .sandboxInfoDialog {
+    max-height: calc(100dvh - 1.5rem);
+  }
+
+  .sandboxInfoDialogContent {
+    min-height: 15rem;
+    padding: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sandboxInfoButton,
+  .sandboxInfoLightbox,
+  .sandboxInfoDialog {
+    animation: none;
+    transition: none;
+  }
+}

@@ -1,7 +1,7 @@
 import './GameofLife.css';
 import { useEffect, useRef, useState } from 'react';
 
-const PIXEL_SIZE = 10;
+const BASE_CELL_SIZE = 10;
 const GOSPER_GLIDER_GUN_WIDTH = 36;
 const GOSPER_GLIDER_GUN_HEIGHT = 9;
 const GOSPER_GLIDER_GUN_CELLS = [
@@ -39,6 +39,24 @@ const PULSAR_CELLS = [
 interface GridDimensions {
   rows: number;
   cols: number;
+  cellSize: number;
+}
+
+// dynamic cell sizes optimization
+function getAdaptiveCellSize(width: number, height: number) {
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  const isSmallViewport = width <= 768 || height <= 600;
+  const isHighResolution = width * height >= 3_000_000 || devicePixelRatio >= 2.5;
+
+  if (isHighResolution) {
+    return 16;
+  }
+
+  if (isSmallViewport) {
+    return 14;
+  }
+
+  return BASE_CELL_SIZE;
 }
 
 function createSeededGrid(rows: number, cols: number) {
@@ -121,12 +139,13 @@ function GameOfLife() {
   const [isRunning, setIsRunning] = useState(true);
   const [speed, setSpeed] = useState(8);
   const [areControlsHidden, setControlsHidden] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const hideControlsRef = useRef<HTMLButtonElement>(null);
   const showControlsRef = useRef<HTMLButtonElement>(null);
   const currentGridRef = useRef(new Uint8Array());
   const nextGridRef = useRef(new Uint8Array());
-  const dimensionsRef = useRef<GridDimensions>({ rows: 0, cols: 0 });
+  const dimensionsRef = useRef<GridDimensions>({ rows: 0, cols: 0, cellSize: BASE_CELL_SIZE });
   const advanceGenerationRef = useRef<() => void>(() => undefined);
 
   useEffect(() => {
@@ -141,7 +160,7 @@ function GameOfLife() {
     }
 
     const drawGrid = () => {
-      const { rows, cols } = dimensionsRef.current;
+      const { rows, cols, cellSize } = dimensionsRef.current;
       const grid = currentGridRef.current;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -150,14 +169,14 @@ function GameOfLife() {
 
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
-          const x = col * PIXEL_SIZE;
-          const y = row * PIXEL_SIZE;
+          const x = col * cellSize;
+          const y = row * cellSize;
           const cellIndex = row * cols + col;
 
           if (grid[cellIndex] === 1) {
-            context.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
+            context.fillRect(x, y, cellSize, cellSize);
           } else {
-            context.strokeRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
+            context.strokeRect(x, y, cellSize, cellSize);
           }
         }
       }
@@ -166,15 +185,23 @@ function GameOfLife() {
     const resizeGrid = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      const rows = Math.floor(height / PIXEL_SIZE) + 2;
-      const cols = Math.floor(width / PIXEL_SIZE) + 2;
+      const cellSize = getAdaptiveCellSize(width, height);
+      const rows = Math.floor(height / cellSize) + 2;
+      const cols = Math.floor(width / cellSize) + 2;
 
       canvas.width = width;
       canvas.height = height;
-      dimensionsRef.current = { rows, cols };
+      dimensionsRef.current = { rows, cols, cellSize };
       currentGridRef.current = createSeededGrid(rows, cols);
       nextGridRef.current = new Uint8Array(rows * cols);
       drawGrid();
+    };
+
+    // resizer debouncer, lags when resized
+    let resizeTimeoutId: number | undefined;
+    const handleResize = () => {
+      window.clearTimeout(resizeTimeoutId);
+      resizeTimeoutId = window.setTimeout(resizeGrid, 100);
     };
 
     const handlePointerDown = (event: PointerEvent) => {
@@ -188,9 +215,9 @@ function GameOfLife() {
         return;
       }
 
-      const { rows, cols } = dimensionsRef.current;
-      const col = Math.floor(event.clientX / PIXEL_SIZE);
-      const row = Math.floor(event.clientY / PIXEL_SIZE);
+      const { rows, cols, cellSize } = dimensionsRef.current;
+      const col = Math.floor(event.clientX / cellSize);
+      const row = Math.floor(event.clientY / cellSize);
 
       if (row < 0 || row >= rows || col < 0 || col >= cols) {
         return;
@@ -217,27 +244,60 @@ function GameOfLife() {
 
     resizeGrid();
 
-    window.addEventListener('resize', resizeGrid);
+    window.addEventListener('resize', handleResize);
     window.addEventListener('pointerdown', handlePointerDown);
 
     return () => {
       advanceGenerationRef.current = () => undefined;
-      window.removeEventListener('resize', resizeGrid);
+      window.clearTimeout(resizeTimeoutId);
+      window.removeEventListener('resize', handleResize);
       window.removeEventListener('pointerdown', handlePointerDown);
     };
   }, []);
 
   useEffect(() => {
-    if (!isRunning) {
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleReducedMotionChange = (event: MediaQueryListEvent) => setPrefersReducedMotion(event.matches);
+
+    reducedMotionQuery.addEventListener('change', handleReducedMotionChange);
+
+    return () => {
+      reducedMotionQuery.removeEventListener('change', handleReducedMotionChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isRunning || prefersReducedMotion) {
       return;
     }
 
-    const simulationInterval = window.setInterval(() => {
-      advanceGenerationRef.current();
-    }, 1000 / speed);
+    let animationFrameId = 0;
+    let previousTimestamp: number | null = null;
+    let elapsedSinceGeneration = 0;
+    const generationInterval = 1000 / speed;
 
-    return () => window.clearInterval(simulationInterval);
-  }, [isRunning, speed]);
+    const animate = (timestamp: number) => {
+      if (previousTimestamp === null) {
+        previousTimestamp = timestamp;
+      } else {
+        const elapsed = Math.min(timestamp - previousTimestamp, 250);
+        previousTimestamp = timestamp;
+        elapsedSinceGeneration += elapsed;
+
+        if (elapsedSinceGeneration >= generationInterval) {
+          advanceGenerationRef.current();
+          elapsedSinceGeneration %= generationInterval;
+        }
+      }
+
+      // use this instead of setInterval(), https://stackoverflow.com/questions/38709923/why-is-requestanimationframe-better-than-setinterval-or-settimeout
+      animationFrameId = window.requestAnimationFrame(animate);
+    };
+
+    animationFrameId = window.requestAnimationFrame(animate);
+
+    return () => window.cancelAnimationFrame(animationFrameId);
+  }, [isRunning, prefersReducedMotion, speed]);
 
   return (
     <>
@@ -252,11 +312,12 @@ function GameOfLife() {
         <button
           className='backgroundControls__playButton'
           type='button'
-          aria-pressed={isRunning}
+          aria-pressed={isRunning && !prefersReducedMotion}
+          disabled={prefersReducedMotion}
           onClick={() => setIsRunning((running) => !running)}
         >
-          <span aria-hidden='true'>{isRunning ? 'II' : '▶'}</span>
-          {isRunning ? 'Pause' : 'Play'}
+          <span aria-hidden='true'>{prefersReducedMotion ? '—' : isRunning ? 'II' : '▶'}</span>
+          {prefersReducedMotion ? 'Motion off' : isRunning ? 'Pause' : 'Play'}
         </button>
 
         <label className='backgroundControls__speed' htmlFor='game-of-life-speed'>
@@ -268,6 +329,7 @@ function GameOfLife() {
             max='20'
             step='1'
             value={speed}
+            disabled={prefersReducedMotion}
             onChange={(event) => setSpeed(Number(event.target.value))}
           />
           <output htmlFor='game-of-life-speed'>{speed} gen/s</output>

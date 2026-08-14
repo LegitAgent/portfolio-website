@@ -6,6 +6,7 @@ import profilePicture from '../assets/images/website_pic.jpg';
 import folder from '../assets/icons/folder.svg';
 import leetcode from '../assets/icons/leetcode.svg';
 import stack from '../assets/icons/stack.svg';
+import infoIcon from '../assets/icons/info.svg';
 
 import aws from '../assets/icons/aws.svg';
 import cloudflare from '../assets/icons/cloudflare.svg';
@@ -46,6 +47,7 @@ export const PROFILE_PICTURE = profilePicture;
 export const FOLDER_ICON = folder;
 export const LEETCODE_ICON = leetcode;
 export const STACK_ICON = stack;
+export const INFO_ICON = infoIcon;
 
 export const AWS = aws;
 export const CLOUDFLARE = cloudflare;

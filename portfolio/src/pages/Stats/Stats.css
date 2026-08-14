@@ -136,9 +136,11 @@
 }
 .statsOverviewCard--leetcode {
   --overview-accent: 250, 204, 21;
+  background: #17130a;
 }
 .statsOverviewCard--github {
-  --overview-accent: 192, 132, 252;
+  --overview-accent: 201, 209, 217;
+  background: #161b22;
 }
 .statsOverviewCard--technologies {
   --overview-accent: 52, 211, 153;
@@ -435,7 +437,13 @@
 }
 
 .githubSection {
-  --github-violet: 192, 132, 252;
+  --github-violet: 201, 209, 217;
+  --github-bg: #0d1117;
+  --github-surface: #161b22;
+  --github-surface-hover: #1c2128;
+  --github-border: #30363d;
+  --github-text: #f0f6fc;
+  --github-muted: #8b949e;
   position: relative;
 }
 
@@ -445,15 +453,15 @@
   inset: -1.5rem -1rem -1.5rem;
   z-index: -1;
   border-radius: 18px;
-  background: rgba(var(--github-violet), 0.035);
+  background: rgba(13, 17, 23, 0.72);
   pointer-events: none;
 }
 
 .githubOverview {
   padding: 1rem;
-  border: 1px solid rgba(var(--github-violet), 0.34);
+  border: 1px solid var(--github-border);
   border-radius: 12px;
-  background: rgba(var(--github-violet), 0.025);
+  background: var(--github-bg);
 }
 
 .githubSectionHeader {
@@ -467,19 +475,19 @@
 
 .githubSectionHeader > div > span,
 .githubSectionHeader p {
-  color: rgba(var(--github-violet), 0.8);
+  color: #b1bac4;
 }
 
 .githubSectionHeader > a {
-  border-color: rgba(var(--github-violet), 0.34);
-  color: rgba(239, 222, 255, 0.96);
-  background: rgba(var(--github-violet), 0.1);
+  border-color: var(--github-border);
+  color: var(--github-text);
+  background: var(--github-surface);
 }
 
 .githubSectionHeader > a:hover,
 .githubSectionHeader > a:focus-visible {
-  border-color: rgba(var(--github-violet), 0.58);
-  background: rgba(var(--github-violet), 0.14);
+  border-color: #6e7681;
+  background: var(--github-surface-hover);
   outline: none;
 }
 
@@ -499,7 +507,7 @@
 }
 
 .githubProfileLink small {
-  color: rgba(var(--github-violet), 0.68);
+  color: var(--github-muted);
   font-family: 'Courier New', ui-monospace, monospace;
   font-size: 0.58rem;
   font-weight: 800;
@@ -523,10 +531,10 @@
   height: 2.65rem;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(var(--github-violet), 0.34);
+  border: 1px solid var(--github-border);
   border-radius: 9px;
-  background: rgba(var(--github-violet), 0.1);
-  box-shadow: 0 0 22px rgba(var(--github-violet), 0.12);
+  background: var(--github-surface);
+  box-shadow: 0 0 22px rgba(240, 246, 252, 0.06);
 }
 
 .githubSectionIcon img {
@@ -541,17 +549,17 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  border: 1px solid rgba(var(--github-violet), 0.2);
+  border: 1px solid var(--github-border);
   border-radius: 10px;
-  background: rgba(var(--github-violet), 0.055);
+  background: var(--github-surface);
 }
 
 .githubProfile img {
   width: 4.5rem;
   height: 4.5rem;
-  border: 2px solid rgba(var(--github-violet), 0.5);
+  border: 2px solid #6e7681;
   border-radius: 14px;
-  box-shadow: 0 0 24px rgba(var(--github-violet), 0.18);
+  box-shadow: 0 0 24px rgba(240, 246, 252, 0.08);
 }
 
 .githubProfile h3 {
@@ -561,13 +569,13 @@
 
 .githubProfile p {
   margin: 0.3rem 0 0;
-  color: rgba(214, 229, 245, 0.68);
+  color: var(--github-muted);
 }
 
 .githubProfileLabel {
   display: block;
   margin-bottom: 0.25rem;
-  color: rgba(var(--github-violet), 0.8);
+  color: #b1bac4;
   font-family: 'Courier New', ui-monospace, monospace;
   font-size: 0.65rem;
   font-weight: 800;
@@ -578,7 +586,7 @@
 .githubProfile small {
   display: block;
   margin-top: 0.4rem;
-  color: rgba(226, 201, 255, 0.76);
+  color: var(--github-muted);
   font-size: 0.76rem;
 }
 
@@ -600,8 +608,8 @@
   min-height: 9.5rem;
   padding: 1rem;
   overflow: hidden;
-  border-color: rgba(var(--github-violet), 0.24) !important;
-  background: rgba(var(--github-violet), 0.055) !important;
+  border-color: var(--github-border) !important;
+  background: var(--github-surface) !important;
   transition:
     border-color 180ms ease,
     background-color 180ms ease,
@@ -609,8 +617,8 @@
 }
 
 .githubMetricCard:hover {
-  border-color: rgba(var(--github-violet), 0.5) !important;
-  background: rgba(var(--github-violet), 0.09) !important;
+  border-color: #6e7681 !important;
+  background: var(--github-surface-hover) !important;
   transform: translateY(-3px);
 }
 
@@ -625,10 +633,10 @@
   height: 2rem;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(var(--github-violet), 0.28);
+  border: 1px solid var(--github-border);
   border-radius: 7px;
-  color: rgb(var(--github-violet));
-  background: rgba(var(--github-violet), 0.1);
+  color: #c9d1d9;
+  background: #21262d;
 }
 
 .githubMetricCard svg {
@@ -643,7 +651,7 @@
 
 .githubMetricCard > strong {
   margin-top: 1rem;
-  color: rgba(247, 239, 255, 0.98);
+  color: var(--github-text);
   font-size: clamp(1.8rem, 3vw, 2.5rem);
   line-height: 0.9;
 }
@@ -651,7 +659,7 @@
 .githubMetricCard > small {
   display: block;
   margin-top: 0.5rem;
-  color: rgba(226, 201, 255, 0.5);
+  color: var(--github-muted);
   font-size: 0.67rem;
 }
 
@@ -679,12 +687,12 @@
 
 .githubSection .languagePanel,
 .githubSection .repositoryPanel {
-  border-color: rgba(var(--github-violet), 0.2);
-  background: rgba(var(--github-violet), 0.045);
+  border-color: var(--github-border);
+  background: var(--github-bg);
 }
 
 .githubSection .statsSubheading > p {
-  color: rgba(var(--github-violet), 0.76);
+  color: #b1bac4;
 }
 
 .statsSplit {
@@ -718,7 +726,7 @@
   min-height: 0;
   padding-right: 0.35rem;
   overflow-y: auto;
-  scrollbar-color: rgba(var(--github-violet), 0.42) rgba(var(--github-violet), 0.08);
+  scrollbar-color: #484f58 #161b22;
   scrollbar-width: thin;
 }
 
@@ -730,13 +738,13 @@
 .githubStatsSplit .languageList::-webkit-scrollbar-track,
 .githubStatsSplit .repositoryList::-webkit-scrollbar-track {
   border-radius: 999px;
-  background: rgba(var(--github-violet), 0.08);
+  background: var(--github-surface);
 }
 
 .githubStatsSplit .languageList::-webkit-scrollbar-thumb,
 .githubStatsSplit .repositoryList::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: rgba(var(--github-violet), 0.42);
+  background: #484f58;
 }
 
 .statsSubheading h3 {
@@ -759,13 +767,13 @@
   grid-template-columns: 1.5rem minmax(0, 1fr);
   align-items: center;
   gap: 0.65rem;
-  border: 1px solid rgba(var(--github-violet), 0.1);
+  border: 1px solid var(--github-border);
   border-radius: 7px;
-  background: rgba(var(--github-violet), 0.035);
+  background: var(--github-surface);
 }
 
 .languageRankNumber {
-  color: rgba(var(--github-violet), 0.48);
+  color: var(--github-muted);
   font-family: 'Courier New', ui-monospace, monospace;
   font-size: 0.65rem;
   font-weight: 800;
@@ -807,8 +815,8 @@
   padding: 2px;
   overflow: hidden;
   border-radius: 999px;
-  border: 1px solid rgba(var(--github-violet), 0.14);
-  background: rgba(8, 3, 18, 0.48);
+  border: 1px solid var(--github-border);
+  background: #010409;
   box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.42);
 }
 
@@ -837,9 +845,9 @@
 }
 
 .githubSection .repositorySummary span {
-  border-color: rgba(var(--github-violet), 0.16);
-  color: rgba(226, 201, 255, 0.68);
-  background: rgba(var(--github-violet), 0.055);
+  border-color: var(--github-border);
+  color: #b1bac4;
+  background: var(--github-surface);
 }
 
 .repositoryList a {
@@ -852,8 +860,8 @@
 }
 
 .githubSection .repositoryList a {
-  border-color: rgba(var(--github-violet), 0.12);
-  background: rgba(var(--github-violet), 0.04);
+  border-color: var(--github-border);
+  background: var(--github-surface);
   transition:
     border-color 180ms ease,
     background-color 180ms ease,
@@ -862,8 +870,8 @@
 
 .githubSection .repositoryList a:hover,
 .githubSection .repositoryList a:focus-visible {
-  border-color: rgba(var(--github-violet), 0.34);
-  background: rgba(var(--github-violet), 0.08);
+  border-color: #6e7681;
+  background: var(--github-surface-hover);
   outline: none;
   transform: translateX(3px);
 }
@@ -875,13 +883,13 @@
 }
 
 .repositoryList a > div span {
-  color: rgba(var(--github-violet), 0.76);
+  color: #b1bac4;
   font-size: 0.7rem;
 }
 
 .repositoryList p {
   margin: 0.4rem 0 0;
-  color: rgba(214, 229, 245, 0.62);
+  color: var(--github-muted);
   font-size: 0.78rem;
   line-height: 1.5;
 }
@@ -889,7 +897,7 @@
 .repositoryList small {
   display: block;
   margin-top: 0.45rem;
-  color: rgba(214, 229, 245, 0.46);
+  color: #6e7681;
 }
 
 .leetcodeHero {
@@ -900,7 +908,13 @@
 }
 
 .leetcodeSection {
-  --leetcode-gold: 255, 184, 77;
+  --leetcode-gold: 255, 161, 22;
+  --leetcode-bg: #0a0a0a;
+  --leetcode-surface: #171717;
+  --leetcode-surface-raised: #202020;
+  --leetcode-border: #6b4917;
+  --leetcode-text: #f5f5f5;
+  --leetcode-muted: #a3a3a3;
   position: relative;
 }
 
@@ -910,7 +924,7 @@
   inset: -1.5rem -1rem -1.5rem;
   z-index: -1;
   border-radius: 18px;
-  background: rgba(var(--leetcode-gold), 0.035);
+  background: rgba(var(--leetcode-gold), 0.075);
   pointer-events: none;
 }
 
@@ -921,9 +935,9 @@
 
 .leetcodeOverview {
   padding: 1rem;
-  border: 1px solid rgba(var(--leetcode-gold), 0.34);
+  border: 1px solid rgba(var(--leetcode-gold), 0.62);
   border-radius: 12px;
-  background: rgba(var(--leetcode-gold), 0.025);
+  background: var(--leetcode-bg);
 }
 
 .leetcodeSectionHeader > div {
@@ -932,7 +946,7 @@
 
 .leetcodeSectionHeader > div > span,
 .leetcodeSectionHeader p {
-  color: rgba(var(--leetcode-gold), 0.84);
+  color: rgb(var(--leetcode-gold));
 }
 
 .leetcodeSectionIcon {
@@ -940,10 +954,10 @@
   height: 2.65rem;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(var(--leetcode-gold), 0.38);
+  border: 1px solid rgba(var(--leetcode-gold), 0.72);
   border-radius: 9px;
-  background: rgba(var(--leetcode-gold), 0.1);
-  box-shadow: 0 0 22px rgba(var(--leetcode-gold), 0.12);
+  background: rgba(var(--leetcode-gold), 0.16);
+  box-shadow: 0 0 22px rgba(var(--leetcode-gold), 0.18);
 }
 
 .leetcodeSectionIcon img {
@@ -953,15 +967,15 @@
 }
 
 .leetcodeSectionHeader > a {
-  border-color: rgba(var(--leetcode-gold), 0.34);
-  color: rgba(255, 225, 174, 0.96);
-  background: rgba(var(--leetcode-gold), 0.09);
+  border-color: rgba(var(--leetcode-gold), 0.62);
+  color: var(--leetcode-text);
+  background: rgba(var(--leetcode-gold), 0.13);
 }
 
 .leetcodeSectionHeader > a:hover,
 .leetcodeSectionHeader > a:focus-visible {
-  border-color: rgba(var(--leetcode-gold), 0.62);
-  background: rgba(var(--leetcode-gold), 0.15);
+  border-color: rgb(var(--leetcode-gold));
+  background: rgba(var(--leetcode-gold), 0.22);
   outline: none;
 }
 
@@ -981,7 +995,7 @@
 }
 
 .leetcodeProfileLink small {
-  color: rgba(var(--leetcode-gold), 0.7);
+  color: rgb(var(--leetcode-gold));
   font-family: 'Courier New', ui-monospace, monospace;
   font-size: 0.58rem;
   font-weight: 800;
@@ -1013,16 +1027,17 @@
   border: 0;
   border-radius: 10px;
   text-align: center;
-  background: rgba(var(--leetcode-gold), 0.075);
+  color: var(--leetcode-text);
+  background: linear-gradient(145deg, rgba(var(--leetcode-gold), 0.16), rgba(var(--leetcode-gold), 0.06)), var(--leetcode-bg);
   box-shadow:
-    inset 0 0 0 2px rgba(var(--leetcode-gold), 0.72),
+    inset 0 0 0 2px rgba(var(--leetcode-gold), 0.86),
     inset 0 1px 0 rgba(255, 255, 255, 0.04),
     0 18px 40px rgba(0, 0, 0, 0.15);
 }
 
 .leetcodeScoreEyebrow {
   display: block;
-  color: rgba(var(--leetcode-gold), 0.78);
+  color: rgb(var(--leetcode-gold));
   font-family: 'Courier New', ui-monospace, monospace;
   font-size: 0.68rem;
   font-weight: 800;
@@ -1046,7 +1061,7 @@
 
 .leetcodeScore > div span {
   padding-bottom: 0.2rem;
-  color: rgba(255, 225, 174, 0.52);
+  color: var(--leetcode-muted);
   font-size: 0.85rem;
   font-weight: 800;
 }
@@ -1054,7 +1069,7 @@
 .leetcodeScore p {
   max-width: 15rem;
   margin: 0.9rem 0 0;
-  color: rgba(255, 225, 174, 0.68);
+  color: #d6a75f;
   font-size: 0.78rem;
 }
 
@@ -1114,8 +1129,8 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  border-color: rgba(var(--leetcode-gold), 0.22);
-  background: rgba(var(--leetcode-gold), 0.045);
+  border-color: rgba(var(--leetcode-gold), 0.5);
+  background: var(--leetcode-surface);
   transition:
     border-color 180ms ease,
     background-color 180ms ease,
@@ -1123,8 +1138,8 @@
 }
 
 .leetcodeMetrics article:hover {
-  border-color: rgba(var(--leetcode-gold), 0.48);
-  background: rgba(var(--leetcode-gold), 0.08);
+  border-color: rgb(var(--leetcode-gold));
+  background: var(--leetcode-surface-raised);
   transform: translateY(-3px);
 }
 
@@ -1134,10 +1149,10 @@
   margin-bottom: auto;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(var(--leetcode-gold), 0.3);
+  border: 1px solid rgba(var(--leetcode-gold), 0.7);
   border-radius: 7px;
   color: rgb(var(--leetcode-gold));
-  background: rgba(var(--leetcode-gold), 0.1);
+  background: rgba(var(--leetcode-gold), 0.16);
 }
 
 .leetcodeMetrics svg {
@@ -1151,22 +1166,22 @@
 }
 
 .leetcodeMetrics article > strong {
-  color: rgba(255, 248, 235, 0.98);
+  color: var(--leetcode-text);
   font-size: clamp(1.5rem, 2.7vw, 2rem);
 }
 
 .leetcodeMetrics article > small {
   display: block;
   margin-top: 0.45rem;
-  color: rgba(255, 225, 174, 0.46);
+  color: var(--leetcode-muted);
   font-size: 0.66rem;
 }
 
 .difficultyPanel {
   margin-top: 1rem;
   padding: 1rem;
-  border-color: rgba(var(--leetcode-gold), 0.22);
-  background: rgba(var(--leetcode-gold), 0.04);
+  border-color: rgba(var(--leetcode-gold), 0.55);
+  background: var(--leetcode-bg);
 }
 
 .leetcodePanelHeading {
@@ -1178,7 +1193,7 @@
 
 .leetcodePanelHeading p {
   margin: 0;
-  color: rgba(var(--leetcode-gold), 0.74);
+  color: rgb(var(--leetcode-gold));
   font-family: 'Courier New', ui-monospace, monospace;
   font-size: 0.66rem;
   font-weight: 800;
@@ -1192,7 +1207,7 @@
 }
 
 .leetcodePanelHeading > span {
-  color: rgba(255, 225, 174, 0.54);
+  color: var(--leetcode-muted);
   font-size: 0.72rem;
 }
 
@@ -1204,11 +1219,11 @@
 }
 
 .statsProgress {
-  --difficulty-color: 255, 184, 77;
+  --difficulty-color: 255, 161, 22;
   padding: 0.85rem;
   border: 1px solid rgba(var(--difficulty-color), 0.18);
   border-radius: 7px;
-  background: rgba(var(--difficulty-color), 0.045);
+  background: var(--leetcode-surface);
 }
 
 .statsProgress:has(.statsProgressFill--easy) {
@@ -1240,7 +1255,7 @@
   overflow: hidden;
   border: 1px solid rgba(var(--difficulty-color), 0.14);
   border-radius: 999px;
-  background: rgba(2, 7, 18, 0.45);
+  background: #050505;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.38);
 }
 
@@ -1271,8 +1286,8 @@
 .statsTopicGroup {
   position: relative;
   padding: 1rem;
-  border-color: rgba(var(--leetcode-gold), 0.18);
-  background: rgba(var(--leetcode-gold), 0.035);
+  border-color: rgba(var(--leetcode-gold), 0.48);
+  background: var(--leetcode-surface);
 }
 
 .statsTopicGroup h3 {
@@ -1283,7 +1298,7 @@
 .leetcodeTopicsHeading {
   margin-top: 1.5rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(var(--leetcode-gold), 0.2);
+  border-top: 1px solid rgba(var(--leetcode-gold), 0.5);
 }
 
 .statsTopicGroup > div {
@@ -1297,15 +1312,15 @@
   padding: 0.38rem 0.55rem;
   display: inline-flex;
   gap: 0.5rem;
-  border: 1px solid rgba(var(--leetcode-gold), 0.14);
+  border: 1px solid rgba(var(--leetcode-gold), 0.38);
   border-radius: 999px;
-  color: rgba(214, 229, 245, 0.72);
-  background: rgba(var(--leetcode-gold), 0.045);
+  color: #e5e5e5;
+  background: #202020;
   font-size: 0.72rem;
 }
 
 .statsTopicGroup strong {
-  color: rgba(var(--leetcode-gold), 0.86);
+  color: rgb(var(--leetcode-gold));
 }
 
 .statusBreakdown > div,
@@ -1588,11 +1603,11 @@
 }
 
 .statsOverviewCard--leetcode {
-  background: #261d0d;
+  background: #17130a;
 }
 
 .statsOverviewCard--github {
-  background: #1c112c;
+  background: #161b22;
 }
 
 .statsOverviewCard--technologies {
@@ -1606,15 +1621,15 @@
 .githubMetricCard,
 .githubSection .repositoryList a,
 .languageRank {
-  border-color: rgb(var(--github-violet)) !important;
-  background: #1c112c !important;
+  border-color: var(--github-border) !important;
+  background: var(--github-bg) !important;
 }
 
 .githubProfile,
 .githubMetricCard,
 .githubSection .repositoryList a,
 .languageRank {
-  background: #241538 !important;
+  background: var(--github-surface) !important;
 }
 
 .leetcodeOverview,
@@ -1622,14 +1637,14 @@
 .statsTopicGroup,
 .leetcodeMetrics article,
 .statsProgress {
-  border-color: rgb(var(--leetcode-gold));
-  background: #261d0d;
+  border-color: rgba(var(--leetcode-gold), 0.62);
+  background: var(--leetcode-bg);
 }
 
 .leetcodeMetrics article,
 .statsProgress,
 .statsTopicGroup {
-  background: #302511;
+  background: var(--leetcode-surface);
 }
 
 .portfolioOverview,
