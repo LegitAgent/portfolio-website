@@ -8,6 +8,10 @@ import leetcode from '../assets/icons/leetcode.svg';
 import stack from '../assets/icons/stack.svg';
 import infoIcon from '../assets/icons/info.svg';
 
+import gliderGunPattern from '../assets/misc/glider_gun_game_of_life.svg';
+import gliderGunAnimation from '../assets/misc/glider_gun_game_of_life.gif';
+import andGateAnimation from '../assets/misc/and_gate_game_of_life.gif';
+
 import aws from '../assets/icons/aws.svg';
 import cloudflare from '../assets/icons/cloudflare.svg';
 import cpp from '../assets/icons/cpp.svg';
@@ -48,6 +52,10 @@ export const FOLDER_ICON = folder;
 export const LEETCODE_ICON = leetcode;
 export const STACK_ICON = stack;
 export const INFO_ICON = infoIcon;
+
+export const GLIDER_GUN_PATTERN = gliderGunPattern;
+export const GLIDER_GUN_ANIMATION = gliderGunAnimation;
+export const AND_GATE_ANIMATION = andGateAnimation;
 
 export const AWS = aws;
 export const CLOUDFLARE = cloudflare;

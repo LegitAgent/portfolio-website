@@ -2,6 +2,7 @@ import './App.css';
 
 // components
 import Background from './components/Background/Background';
+import { isBackgroundId } from './components/Background/backgroundCatalog';
 import type { BackgroundId } from './components/Background/backgroundCatalog';
 import Navbar from './components/Navbar/Navbar';
 import LoadingScreen from './pages/Misc/LoadingScreen';
@@ -30,7 +31,18 @@ const WorkArticle = lazy(() => import('./components/WorkArticle/WorkArticle'));
 const WrongPage = lazy(() => import('./pages/Misc/WrongPage'));
 
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
-import { lazy, Suspense, useLayoutEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useState } from 'react';
+
+const BACKGROUND_STORAGE_KEY = 'portfolio:selected-background';
+
+function getInitialBackground(): BackgroundId {
+  try {
+    const savedBackground = window.localStorage.getItem(BACKGROUND_STORAGE_KEY);
+    return isBackgroundId(savedBackground) ? savedBackground : 'game-of-life';
+  } catch {
+    return 'game-of-life';
+  }
+}
 
 interface RoutingLinks {
   url: string;
@@ -49,7 +61,15 @@ function RouteScrollReset() {
 
 function App() {
   const [isNavbarCollapsed, setNavbarCollapsed] = useState(false);
-  const [selectedBackground, setSelectedBackground] = useState<BackgroundId>('game-of-life');
+  const [selectedBackground, setSelectedBackground] = useState<BackgroundId>(getInitialBackground);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(BACKGROUND_STORAGE_KEY, selectedBackground);
+    } catch {
+      // Keep the in-memory selection working when browser storage is unavailable.
+    }
+  }, [selectedBackground]);
 
   const routes: Array<RoutingLinks> = [
     // home

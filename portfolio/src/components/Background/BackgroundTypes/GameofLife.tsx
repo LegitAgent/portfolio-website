@@ -49,11 +49,11 @@ function getAdaptiveCellSize(width: number, height: number) {
   const isHighResolution = width * height >= 3_000_000 || devicePixelRatio >= 2.5;
 
   if (isHighResolution) {
-    return 16;
+    return 14;
   }
 
   if (isSmallViewport) {
-    return 14;
+    return 12;
   }
 
   return BASE_CELL_SIZE;

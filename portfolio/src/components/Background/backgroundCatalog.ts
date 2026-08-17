@@ -21,3 +21,7 @@ export const BACKGROUNDS: BackgroundOption[] = [
     component: null
   }
 ];
+
+export function isBackgroundId(value: string | null): value is BackgroundId {
+  return BACKGROUNDS.some(({ id }) => id === value);
+}
