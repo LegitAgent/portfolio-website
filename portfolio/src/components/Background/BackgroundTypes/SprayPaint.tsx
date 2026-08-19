@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './SprayPaint.css';
+import './GameofLife.css';
 import { SPRAY_SOUND } from '../../../config/constants';
 
-const BASE_CELL_SIZE = 10;
-const CELL_SPACING = 3;
-const PAINT_COLOR = '#111184';
-const PAINT_HOLD_DURATION_MS = 3_000;
+const BASE_CELL_SIZE = 5;
+const CELL_SPACING = 1;
+const PAINT_COLOR = '#005EB8';
+const PAINT_HOLD_DURATION_MS = 5_000;
 const PAINT_FADE_DURATION_MS = 1_000;
 
 interface GridDimensions {
@@ -14,8 +15,47 @@ interface GridDimensions {
   cellSize: number;
 }
 
+const isPointOverText = (x: number, y: number) => {
+  const documentWithCaret = document as Document & {
+    caretPositionFromPoint?: (x: number, y: number) => { offsetNode: Node; offset: number } | null;
+  };
+  const caretPosition = documentWithCaret.caretPositionFromPoint?.(x, y);
+  const node = caretPosition?.offsetNode;
+  const offset = caretPosition?.offset;
+
+  if (!node || offset === undefined || node.nodeType !== Node.TEXT_NODE || !node.textContent) {
+    return false;
+  }
+
+  return [offset, offset - 1].some((characterOffset) => {
+    if (characterOffset < 0 || characterOffset >= node.textContent!.length) {
+      return false;
+    }
+
+    const range = document.createRange();
+    range.setStart(node, characterOffset);
+    range.setEnd(node, characterOffset + 1);
+
+    return Array.from(range.getClientRects()).some(
+      (rect) => x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom,
+    );
+  });
+};
+
+const canSprayAt = (target: EventTarget | null, x: number, y: number) => {
+  if (!(target instanceof Element)) {
+    return false;
+  }
+
+  const isControl = target.closest('a, button, input, textarea, select, label, [contenteditable="true"]');
+  return !isControl && !isPointOverText(x, y);
+};
+
 function SprayPaint() {
+  const [areInstructionsHidden, setInstructionsHidden] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const hideInstructionsRef = useRef<HTMLButtonElement>(null);
+  const showInstructionsRef = useRef<HTMLButtonElement>(null);
   const paintedAtRef = useRef(new Float64Array()); // timing array
   const activeCellsRef = useRef(new Set<number>());
   const dimensionsRef = useRef<GridDimensions>({ rows: 0, cols: 0, cellSize: BASE_CELL_SIZE });
@@ -117,7 +157,7 @@ function SprayPaint() {
     };
 
     const fillCircle = (cellIndex: number) => {
-      const BRUSH_SIZE = 5;
+      const BRUSH_SIZE = 3;
       const paintedAt = performance.now();
       const radius = Math.floor(BRUSH_SIZE / 2);
       const { rows, cols } = dimensionsRef.current;
@@ -162,6 +202,19 @@ function SprayPaint() {
     let activePointerId: number | null = null;
     let previousPointerPosition: { x: number; y: number } | null = null;
 
+    const handleTouchStart = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (event.touches.length === 1 && touch && canSprayAt(event.target, touch.clientX, touch.clientY)) {
+        event.preventDefault();
+      }
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (activePointerId !== null) {
+        event.preventDefault();
+      }
+    };
+
     const stopPainting = (event?: PointerEvent) => {
       if (event && activePointerId !== event.pointerId) {
         return;
@@ -178,13 +231,11 @@ function SprayPaint() {
       }
 
       const target = event.target;
-      if (target instanceof Element && target.closest('a, button, input, textarea, select')) {
+      if (!canSprayAt(target, event.clientX, event.clientY)) {
         return;
       }
 
-      if (event.pointerType !== 'touch') {
-        event.preventDefault();
-      }
+      event.preventDefault();
 
       const { width, height } = canvas.getBoundingClientRect();
       if (event.clientX < 0 || event.clientX >= width || event.clientY < 0 || event.clientY >= height) {
@@ -198,7 +249,7 @@ function SprayPaint() {
     };
 
     const handlePointerMove = (event: PointerEvent) => {
-      if (activePointerId !== event.pointerId || previousPointerPosition === null) {
+      if (activePointerId !== event.pointerId) {
         return;
       }
 
@@ -208,9 +259,19 @@ function SprayPaint() {
         return;
       }
 
-      // on select
-      if (event.pointerType !== 'touch') {
-        event.preventDefault();
+      if (!canSprayAt(event.target, event.clientX, event.clientY)) {
+        previousPointerPosition = null;
+        stopSpraySound();
+        return;
+      }
+
+      event.preventDefault();
+
+      if (previousPointerPosition === null) {
+        previousPointerPosition = { x: event.clientX, y: event.clientY };
+        startSpraySound();
+        paintAtPosition(event.clientX, event.clientY);
+        return;
       }
 
       // interpolation
@@ -236,6 +297,8 @@ function SprayPaint() {
 
     resizeCanvas();
     window.addEventListener('resize', handleResize);
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('pointerdown', handlePointerDown);
     window.addEventListener('pointermove', handlePointerMove);
     window.addEventListener('pointerup', stopPainting);
@@ -248,6 +311,8 @@ function SprayPaint() {
       window.cancelAnimationFrame(animationFrameId);
       window.clearTimeout(resizeTimeoutId);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('pointerdown', handlePointerDown);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerup', stopPainting);
@@ -257,7 +322,51 @@ function SprayPaint() {
   }, []);
 
   return(
-    <canvas ref={canvasRef} className='sprayContainer' aria-hidden='true' />
+    <>
+      <canvas ref={canvasRef} className='sprayContainer' aria-hidden='true' />
+      <div
+        className={areInstructionsHidden ? 'backgroundControls is-hidden' : 'backgroundControls'}
+        id='spray-paint-instructions'
+        role='note'
+        inert={areInstructionsHidden}
+      >
+        <span>Press and hold to spray</span>
+        <button
+          className='backgroundControls__hideButton'
+          type='button'
+          aria-label='Hide spray paint instructions'
+          aria-controls='spray-paint-instructions'
+          onClick={() => {
+            setInstructionsHidden(true);
+            window.requestAnimationFrame(() => showInstructionsRef.current?.focus());
+          }}
+          ref={hideInstructionsRef}
+        >
+          <svg viewBox='0 0 24 24' aria-hidden='true'>
+            <g transform='rotate(180 12 11.5)'>
+              <path d='m7 9 5 5 5-5' />
+            </g>
+          </svg>
+        </button>
+      </div>
+      <button
+        className={areInstructionsHidden ? 'backgroundControlsReveal is-visible' : 'backgroundControlsReveal'}
+        type='button'
+        aria-label='Show spray paint instructions'
+        aria-controls='spray-paint-instructions'
+        aria-expanded={!areInstructionsHidden}
+        tabIndex={areInstructionsHidden ? 0 : -1}
+        onClick={() => {
+          setInstructionsHidden(false);
+          window.requestAnimationFrame(() => hideInstructionsRef.current?.focus());
+        }}
+        ref={showInstructionsRef}
+      >
+        <svg viewBox='0 0 24 24' aria-hidden='true'>
+          <path d='m7 9 5 5 5-5' />
+        </svg>
+      </button>
+    </>
   );
 }
 

@@ -1,6 +1,6 @@
 import './NavDropDown.css';
 import { Link, useLocation } from 'react-router-dom';
-import { SKILLS, CODE, CERTIFICATE, RESUME_ICON, GAME_OF_LIFE_ICON, NONE_ICON } from '../../config/constants';
+import { SKILLS, CODE, CERTIFICATE, RESUME_ICON, GAME_OF_LIFE_ICON, NONE_ICON, SPRAY_CLICK_ICON } from '../../config/constants';
 import { useEffect, useRef } from 'react';
 
 export interface LinkItem {
@@ -57,7 +57,7 @@ function BackgroundIcon({ id }: { id: string }) {
   }
 
   if (id === 'spray-paint') {
-    return <img className='linkImage' src={GAME_OF_LIFE_ICON} alt='game of life' aria-hidden='true' />;
+    return <img className='linkImage' src={SPRAY_CLICK_ICON} alt='game of life' aria-hidden='true' />;
   }
 
   return <img className='linkImage' src={NONE_ICON} alt='none' aria-hidden='true' />;

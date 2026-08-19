@@ -46,6 +46,7 @@ import code from '../assets/icons/code.svg';
 import certificate from '../assets/icons/certificate.svg';
 
 import spraysound from '../assets/sound/spray_sound.mp3';
+import sprayclick from '../assets/icons/spray_click.png';
 
 // image locations
 export const GITHUB_ICON = gitHubIcon;
@@ -95,6 +96,7 @@ export const CODE = code;
 export const CERTIFICATE = certificate;
 
 export const SPRAY_SOUND = spraysound;
+export const SPRAY_CLICK_ICON = sprayclick;
 
 // URL's
 export const GITHUB_URL = 'https://github.com/LegitAgent';
