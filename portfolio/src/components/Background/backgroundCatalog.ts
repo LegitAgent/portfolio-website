@@ -1,7 +1,8 @@
 import type { ComponentType } from 'react';
 import GameOfLife from './BackgroundTypes/GameofLife';
+import SprayPaint from './BackgroundTypes/SprayPaint';
 
-export type BackgroundId = 'game-of-life' | 'none';
+export type BackgroundId = 'game-of-life' | 'spray-paint' | 'none';
 
 interface BackgroundOption {
   id: BackgroundId;
@@ -14,6 +15,11 @@ export const BACKGROUNDS: BackgroundOption[] = [
     id: 'game-of-life',
     label: 'Game of Life',
     component: GameOfLife
+  },
+  {
+    id: 'spray-paint',
+    label: 'Spray Paint',
+    component: SprayPaint
   },
   {
     id: 'none',

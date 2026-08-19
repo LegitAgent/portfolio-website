@@ -1,4 +1,7 @@
 .contactContainer {
+  --contact-accent: 120, 183, 201;
+  --contact-surface: #101722;
+  --contact-surface-hover: #151f2d;
   width: min(100% - 2rem, 1320px);
   min-height: 100dvh;
   margin: 0 auto;
@@ -38,7 +41,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  color: rgba(134, 239, 172, 0.88);
+  color: rgba(var(--contact-accent), 0.92);
   font-family: 'Courier New', ui-monospace, monospace;
   font-size: 0.72rem;
   font-weight: 800;
@@ -50,8 +53,8 @@
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background: rgba(74, 222, 128, 0.96);
-  box-shadow: 0 0 12px rgba(34, 197, 94, 0.62);
+  background: rgb(var(--contact-accent));
+  box-shadow: 0 0 12px rgba(var(--contact-accent), 0.42);
   animation: contactStatusPulse 1.8s ease-in-out infinite;
 }
 
@@ -64,7 +67,7 @@
 }
 
 .contactHeader h1 > span {
-  color: rgba(134, 239, 172, 0.94);
+  color: rgb(var(--contact-accent));
 }
 
 .contactName {
@@ -89,11 +92,11 @@
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  border-top: 1px solid rgba(125, 188, 235, 0.18);
+  border-top: 1px solid rgba(var(--contact-accent), 0.24);
 }
 
 .contactSectionHeader > span {
-  color: rgba(134, 239, 172, 0.7);
+  color: rgba(var(--contact-accent), 0.72);
   font-family: 'Courier New', ui-monospace, monospace;
   font-size: 0.72rem;
   font-weight: 800;
@@ -101,7 +104,7 @@
 
 .contactSectionHeader p {
   margin: 0;
-  color: rgba(134, 239, 172, 0.8);
+  color: rgba(var(--contact-accent), 0.84);
   font-family: 'Courier New', ui-monospace, monospace;
   font-size: 0.7rem;
   font-weight: 800;
@@ -123,9 +126,9 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 1rem;
-  border: 1px solid rgb(96, 165, 250);
+  border: 1px solid rgba(var(--contact-accent), 0.48);
   border-radius: 10px;
-  background: #102238;
+  background: var(--contact-surface);
 }
 
 .emailIdentity {
@@ -141,9 +144,9 @@
   height: 2.75rem;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(96, 165, 250, 0.32);
+  border: 1px solid rgba(var(--contact-accent), 0.34);
   border-radius: 8px;
-  background: rgba(96, 165, 250, 0.11);
+  background: rgba(var(--contact-accent), 0.1);
 }
 
 .emailIdentity img {
@@ -162,7 +165,7 @@
 .emailIdentity p > span {
   display: block;
   margin-bottom: 0.25rem;
-  color: rgba(147, 197, 253, 0.72);
+  color: rgba(var(--contact-accent), 0.76);
   font-family: 'Courier New', ui-monospace, monospace;
   font-size: 0.65rem;
   font-weight: 800;
@@ -173,10 +176,10 @@
 .copyButton {
   min-height: 2.75rem;
   padding: 0.65rem 0.85rem;
-  border: 1px solid rgba(96, 165, 250, 0.32);
+  border: 1px solid rgba(var(--contact-accent), 0.34);
   border-radius: 7px;
   color: rgba(224, 240, 255, 0.94);
-  background: rgba(96, 165, 250, 0.1);
+  background: rgba(var(--contact-accent), 0.1);
   font-weight: 760;
   white-space: nowrap;
   transition:
@@ -187,8 +190,8 @@
 
 .copyButton:hover,
 .copyButton:focus-visible {
-  border-color: rgba(96, 165, 250, 0.58);
-  background: rgba(96, 165, 250, 0.17);
+  border-color: rgba(var(--contact-accent), 0.62);
+  background: rgba(var(--contact-accent), 0.17);
   outline: none;
   transform: translateY(-2px);
 }
@@ -213,12 +216,12 @@
   width: 100%;
   height: clamp(22rem, 48vw, 34rem);
   margin-top: 1rem;
-  padding: 3px;
+  padding: 1px;
   overflow: hidden;
   border-radius: 5px;
-  background: linear-gradient(135deg, rgba(125, 188, 235, 0.9), rgba(192, 132, 252, 0.62), rgba(134, 239, 172, 0.74));
+  background: rgba(var(--contact-accent), 0.72);
   box-shadow:
-    0 0 0 1px rgba(125, 188, 235, 0.12),
+    0 0 0 1px rgba(var(--contact-accent), 0.12),
     0 24px 58px rgba(0, 0, 0, 0.28);
 }
 
@@ -235,15 +238,15 @@
 .locationMap::before {
   top: 0.75rem;
   left: 0.75rem;
-  border-top: 2px solid rgba(190, 230, 255, 0.92);
-  border-left: 2px solid rgba(190, 230, 255, 0.92);
+  border-top: 2px solid rgba(var(--contact-accent), 0.84);
+  border-left: 2px solid rgba(var(--contact-accent), 0.84);
 }
 
 .locationMap::after {
   right: 0.75rem;
   bottom: 0.75rem;
-  border-right: 2px solid rgba(134, 239, 172, 0.86);
-  border-bottom: 2px solid rgba(134, 239, 172, 0.86);
+  border-right: 2px solid rgba(var(--contact-accent), 0.84);
+  border-bottom: 2px solid rgba(var(--contact-accent), 0.84);
 }
 
 .locationMap iframe {
@@ -276,10 +279,10 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgb(192, 132, 252);
+  border: 1px solid rgba(var(--contact-accent), 0.46);
   border-radius: 9px;
   color: inherit;
-  background: #241538;
+  background: var(--contact-surface);
   text-decoration: none;
   transition:
     border-color 180ms ease,
@@ -290,9 +293,9 @@
 
 .linkBox:hover,
 .linkBox:focus-visible {
-  border-color: rgb(216, 180, 254);
-  background: #2d1a45;
-  box-shadow: 0 18px 38px rgba(52, 25, 80, 0.18);
+  border-color: rgba(var(--contact-accent), 0.72);
+  background: var(--contact-surface-hover);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.2);
   outline: none;
   transform: translateY(-4px);
 }
@@ -308,9 +311,9 @@
   height: 2.6rem;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(192, 132, 252, 0.3);
+  border: 1px solid rgba(var(--contact-accent), 0.3);
   border-radius: 7px;
-  background: rgba(192, 132, 252, 0.1);
+  background: rgba(var(--contact-accent), 0.1);
 }
 
 .linkBoxTop img {
@@ -341,7 +344,7 @@
   width: 1rem;
   height: 1rem;
   fill: none;
-  stroke: rgba(216, 180, 252, 0.74);
+  stroke: rgba(var(--contact-accent), 0.78);
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -369,7 +372,7 @@
   grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.85fr);
   align-items: end;
   gap: 2rem;
-  border-bottom: 1px solid rgba(125, 188, 235, 0.18);
+  border-bottom: 1px solid rgba(var(--contact-accent), 0.22);
 }
 
 .interestMapIntro > p {
@@ -385,7 +388,7 @@
   grid-template-columns: auto 1fr auto 1fr auto 1fr auto 1fr auto;
   align-items: center;
   gap: 0.4rem;
-  color: rgba(174, 203, 228, 0.68);
+  color: rgba(var(--contact-accent), 0.7);
   font-family: 'Courier New', ui-monospace, monospace;
   font-size: 0.58rem;
   font-weight: 700;
@@ -394,7 +397,7 @@
 
 .interestTrail i {
   height: 1px;
-  background: rgba(125, 188, 235, 0.3);
+  background: rgba(var(--contact-accent), 0.32);
 }
 
 .interestTrail i::after {
@@ -404,7 +407,7 @@
   margin: -2px auto 0;
   display: block;
   border-radius: 50%;
-  background: rgba(134, 239, 172, 0.72);
+  background: rgba(var(--contact-accent), 0.82);
 }
 
 .interestsWorkbench {
@@ -465,12 +468,12 @@
   background: var(--module-surface-hover);
 }
 
-.interestModule--operating_systems { grid-column: span 5; --module-accent: 116, 183, 227; --module-surface: #102238; --module-surface-hover: #142b45; }
-.interestModule--cyber_security { grid-column: span 7; --module-accent: 110, 198, 164; --module-surface: #10261e; --module-surface-hover: #143126; }
-.interestModule--system_design { grid-column: span 7; --module-accent: 132, 176, 229; --module-surface: #111f35; --module-surface-hover: #162943; }
-.interestModule--data_analytics { grid-column: span 5; --module-accent: 205, 184, 119; --module-surface: #261f10; --module-surface-hover: #302814; }
-.interestModule--fullstack_development { grid-column: span 6; --module-accent: 151, 174, 213; --module-surface: #171e30; --module-surface-hover: #1d273d; }
-.interestModule--networking { grid-column: span 6; --module-accent: 104, 191, 188; --module-surface: #0f2628; --module-surface-hover: #143234; }
+.interestModule--operating_systems { grid-column: span 5; --module-accent: 229, 169, 92; --module-surface: #241d14; --module-surface-hover: #2d2519; }
+.interestModule--cyber_security { grid-column: span 7; --module-accent: 74, 222, 128; --module-surface: #10231a; --module-surface-hover: #142c20; }
+.interestModule--system_design { grid-column: span 7; --module-accent: 96, 165, 250; --module-surface: #101d30; --module-surface-hover: #142640; }
+.interestModule--data_analytics { grid-column: span 5; --module-accent: 192, 132, 252; --module-surface: #21162e; --module-surface-hover: #2a1b3a; }
+.interestModule--fullstack_development { grid-column: span 6; --module-accent: 251, 146, 60; --module-surface: #281a12; --module-surface-hover: #342117; }
+.interestModule--networking { grid-column: span 6; --module-accent: 34, 211, 238; --module-surface: #0c2027; --module-surface-hover: #102a32; }
 
 .interestModuleHeader {
   display: flex;
@@ -714,8 +717,8 @@
 
 .statusTable li {
   --status-color: 96, 165, 250;
-  --status-surface: #173755;
-  --status-surface-hover: #1d466b;
+  --status-surface: var(--contact-surface);
+  --status-surface-hover: var(--contact-surface-hover);
   min-width: 0;
   min-height: 10rem;
   padding: 1rem;
@@ -725,10 +728,7 @@
   border-radius: 9px;
   color: rgba(238, 247, 255, 0.94);
   background: var(--status-surface);
-  box-shadow:
-    0 0 0 1px rgba(var(--status-color), 0.12),
-    0 0 18px rgba(var(--status-color), 0.16),
-    inset 0 0 20px rgba(var(--status-color), 0.035);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
   transition:
     border-color 180ms ease,
     background-color 180ms ease,
@@ -739,10 +739,7 @@
 .statusTable li:hover {
   border-color: rgb(var(--status-color));
   background: var(--status-surface-hover);
-  box-shadow:
-    0 0 0 1px rgba(var(--status-color), 0.3),
-    0 0 30px rgba(var(--status-color), 0.38),
-    inset 0 0 26px rgba(var(--status-color), 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
   transform: translateY(-3px);
 }
 
@@ -824,28 +821,22 @@
 
 .statusTable li.green {
   --status-color: 74, 222, 128 !important;
-  --status-surface: #17472d;
-  --status-surface-hover: #1c5937;
 }
 .statusTable li.yellow {
   --status-color: 250, 204, 21 !important;
-  --status-surface: #4a3d0c;
-  --status-surface-hover: #5d4d0f;
 }
 .statusTable li.red {
   --status-color: 248, 113, 113 !important;
-  --status-surface: #4a2025;
-  --status-surface-hover: #5c282e;
 }
 
 .clockBox {
   width: min(100%, 30rem);
   margin-top: 1rem;
   padding: 1rem;
-  border: 1px solid rgb(52, 211, 153);
+  border: 1px solid rgba(var(--contact-accent), 0.48);
   border-radius: 9px;
-  color: rgba(205, 255, 230, 0.9);
-  background: #10261e;
+  color: rgba(220, 238, 243, 0.9);
+  background: var(--contact-surface);
   font-family: 'Courier New', ui-monospace, monospace;
   line-height: 1.6;
 }
@@ -901,10 +892,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  border: 1px solid rgba(125, 188, 235, 0.3);
+  border: 1px solid rgba(var(--contact-accent), 0.3);
   border-radius: 8px;
   color: rgba(238, 247, 255, 0.9);
-  background: rgba(3, 12, 29, 0.88);
+  background: rgba(16, 23, 34, 0.92);
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(12px);
   font-size: 0.75rem;
@@ -928,8 +919,8 @@
 
 .contactBackToTop:hover,
 .contactBackToTop:focus-visible {
-  border-color: rgba(134, 239, 172, 0.58);
-  background: rgba(10, 29, 55, 0.96);
+  border-color: rgba(var(--contact-accent), 0.62);
+  background: var(--contact-surface-hover);
   outline: none;
   transform: translateY(-3px);
 }

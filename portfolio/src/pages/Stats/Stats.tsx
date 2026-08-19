@@ -67,7 +67,7 @@ function TopicList({ title, topics }: { title: string; topics: SkillCount[] }) {
 
 function OverviewIcon({ type }: { type: 'projects' | 'leetcode' | 'github' | 'technologies' }) {
   if (type === 'projects') {
-    return <img className='statsOverviewIconImage' src={FOLDER_ICON} alt='folder icon' aria-hidden='true' />;
+    return <img className='statsOverviewIconImage statsOverviewIconImage--projects' src={FOLDER_ICON} alt='folder icon' aria-hidden='true' />;
   }
 
   if (type === 'leetcode') {
@@ -78,7 +78,7 @@ function OverviewIcon({ type }: { type: 'projects' | 'leetcode' | 'github' | 'te
     return <img className='statsOverviewIconImage statsOverviewIconImage--github' src={GITHUB_ICON} alt='github icon' aria-hidden='true' />;
   }
 
-  return <img className='statsOverviewIconImage' src={STACK_ICON} alt='leetcode icon' aria-hidden='true' />;
+  return <img className='statsOverviewIconImage statsOverviewIconImage--technologies' src={STACK_ICON} alt='technology stack icon' aria-hidden='true' />;
 }
 
 function GithubMetricIcon({ type }: { type: 'commits' | 'repositories' | 'stars' | 'forks' | 'followers' }) {
@@ -365,9 +365,8 @@ function Stats() {
   return (
     <main className='statsPage'>
       <header className='statsHeader'>
-        <p>Developer analytics</p>
         <h1>
-          Developer <span>Stats</span>
+          Developer Statistics
         </h1>
         <span>This is a view of my development activity, DSA progress, repositories, technologies, and portfolio data.</span>
       </header>

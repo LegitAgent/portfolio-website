@@ -81,6 +81,11 @@
   filter: invert(1);
 }
 
+.linkImage .backgroundIconCell {
+  fill: currentColor;
+  stroke: none;
+}
+
 .linkName {
   display: flex;
   align-items: center;

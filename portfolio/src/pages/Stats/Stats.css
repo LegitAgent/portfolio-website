@@ -132,7 +132,8 @@
 }
 
 .statsOverviewCard--projects {
-  --overview-accent: 96, 165, 250;
+  --overview-accent: 90, 150, 220;
+  background: #08193a;
 }
 .statsOverviewCard--leetcode {
   --overview-accent: 250, 204, 21;
@@ -143,7 +144,8 @@
   background: #161b22;
 }
 .statsOverviewCard--technologies {
-  --overview-accent: 52, 211, 153;
+  --overview-accent: 125, 135, 150;
+  background: #030407;
 }
 
 .statsOverviewCard:hover {
@@ -215,6 +217,10 @@
 
 .statsOverviewIconImage--github {
   filter: invert(1);
+}
+
+.statsOverviewIconImage--technologies {
+  filter: grayscale(1) brightness(1.7);
 }
 
 .statsOverviewValue {
@@ -1348,7 +1354,9 @@
 }
 
 .portfolioSection {
-  --portfolio-blue: 125, 188, 235;
+  --portfolio-blue: 90, 150, 220;
+  --portfolio-bg: #08193a;
+  --portfolio-surface: #0d2848;
   position: relative;
 }
 
@@ -1599,7 +1607,7 @@
 
 /* Opaque section surfaces keep each data source visually distinct from the page. */
 .statsOverviewCard--projects {
-  background: #102238;
+  background: #08193a;
 }
 
 .statsOverviewCard--leetcode {
@@ -1611,7 +1619,7 @@
 }
 
 .statsOverviewCard--technologies {
-  background: #10261e;
+  background: #030407;
 }
 
 .githubOverview,
@@ -1652,27 +1660,15 @@
 .portfolioMetricCard,
 .statusBreakdownItem,
 .technologyRanking > div {
-  border-color: rgb(var(--portfolio-blue)) !important;
-  background: #102238 !important;
+  border-color: rgba(var(--portfolio-blue), 0.62) !important;
+  background: var(--portfolio-bg) !important;
 }
 
 .portfolioMetricCard,
 .statusBreakdownItem,
 .technologyRanking > div {
-  background: #142b45 !important;
+  background: var(--portfolio-surface) !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 @media (max-width: 1000px) {
   .statsMetricGrid,

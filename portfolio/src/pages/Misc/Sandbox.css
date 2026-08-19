@@ -255,8 +255,8 @@
   box-shadow: 0 0 12px rgba(120, 240, 178, 0.32);
 }
 
-.gameOfLifeRules li:nth-child(3)::after,
-.gameOfLifeRules li:nth-child(4)::after {
+.gameOfLifeRules li:nth-child(1)::after,
+.gameOfLifeRules li:nth-child(3)::after {
   background: transparent;
   box-shadow: none;
 }
@@ -293,29 +293,6 @@
   place-items: center;
   overflow: hidden;
   background: #050d0f;
-}
-
-.gameOfLifeFigureMedia::before,
-.gameOfLifeFigureMedia::after {
-  content: '';
-  position: absolute;
-  width: 2.25rem;
-  height: 2.25rem;
-  pointer-events: none;
-}
-
-.gameOfLifeFigureMedia::before {
-  top: 0.7rem;
-  left: 0.7rem;
-  border-top: 1px solid #78f0b2;
-  border-left: 1px solid #78f0b2;
-}
-
-.gameOfLifeFigureMedia::after {
-  right: 0.7rem;
-  bottom: 0.7rem;
-  border-right: 1px solid #62d7ff;
-  border-bottom: 1px solid #62d7ff;
 }
 
 .gameOfLifeFigure img {

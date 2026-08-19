@@ -1,6 +1,6 @@
 import './NavDropDown.css';
 import { Link, useLocation } from 'react-router-dom';
-import { SKILLS, CODE, CERTIFICATE, RESUME_ICON } from '../../config/constants';
+import { SKILLS, CODE, CERTIFICATE, RESUME_ICON, GAME_OF_LIFE_ICON, NONE_ICON } from '../../config/constants';
 import { useEffect, useRef } from 'react';
 
 export interface LinkItem {
@@ -20,7 +20,7 @@ type NavDropDownItem = LinkItem | ActionItem;
 interface NavDropDownProps {
   id: string;
   itemsArray: NavDropDownItem[];
-  dropdownType: string;
+  dropdownType: 'Professional' | 'Background';
   isOpen: boolean;
   onNavigate: () => void;
   placement?: 'default' | 'up';
@@ -49,6 +49,18 @@ function ProfessionalIcon({ path }: { path?: string }) {
   }
 
   return <img className='resumeImage' src={RESUME_ICON} alt='resume' aria-hidden='true' />;
+}
+
+function BackgroundIcon({ id }: { id: string }) {
+  if (id === 'game-of-life') {
+    return <img className='linkImage' src={GAME_OF_LIFE_ICON} alt='game of life' aria-hidden='true' />;
+  }
+
+  if (id === 'spray-paint') {
+    return <img className='linkImage' src={GAME_OF_LIFE_ICON} alt='game of life' aria-hidden='true' />;
+  }
+
+  return <img className='linkImage' src={NONE_ICON} alt='none' aria-hidden='true' />;
 }
 
 export function NavDropDown({
@@ -113,7 +125,7 @@ export function NavDropDown({
                 onNavigate();
               }}
             >
-              <ProfessionalIcon />
+              <BackgroundIcon id={item.id} />
               {item.name}
             </button>
           );

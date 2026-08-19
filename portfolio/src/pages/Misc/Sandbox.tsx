@@ -98,7 +98,7 @@ function Sandbox({ selectedBackground }: SandboxProps) {
                   <section className='gameOfLifeSection'>
                     <header>
                       <span>01</span>
-                      <h2>The mechanics of Conway's Game of Life are as follows:</h2>
+                      <h2>The mechanics of Conway's Game of Life:</h2>
                     </header>
                     <ol className='gameOfLifeRules'>
                       <li>Any live (white / 1) cell with fewer than two live cell neighbors dies (black / 0). As if from underpopulation.</li>
