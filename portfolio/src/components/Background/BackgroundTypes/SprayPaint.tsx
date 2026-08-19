@@ -284,10 +284,12 @@ function SprayPaint() {
 
       for (let step = 1; step <= steps; step++) {
         const progress = step / steps;
-        paintAtPosition(
-          previousPointerPosition.x + deltaX * progress,
-          previousPointerPosition.y + deltaY * progress,
-        );
+        const x = previousPointerPosition.x + deltaX * progress;
+        const y = previousPointerPosition.y + deltaY * progress;
+        const target = document.elementFromPoint(x, y);
+        if (canSprayAt(target, x, y)) {
+          paintAtPosition(x, y);
+        }
       }
 
       previousPointerPosition = currentPosition;

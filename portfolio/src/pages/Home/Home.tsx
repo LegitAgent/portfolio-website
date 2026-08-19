@@ -12,10 +12,9 @@ function Home() {
 
         <div className='introductionContent'>
           <h1 id='home-title'>Martin Darius Alba</h1>
-          <p className='currentRole'>Software Developer · CS Student</p>
+          <p className='currentRole'>Aspiring Software Developer · CS Student</p>
           <p className='introContent'>
-            I build practical software across backend services, web products, and developer tools. My recent work focuses on reliable APIs, data-backed
-            applications, and learning system design by applying it to products people can use.
+            Hello! I like building tools and software that can help other people 
           </p>
 
           <div className='contactLinks' aria-label='Primary links'>
