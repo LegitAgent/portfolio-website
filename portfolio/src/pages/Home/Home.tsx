@@ -14,8 +14,9 @@ function Home() {
           <h1 id='home-title'>Martin Darius Alba</h1>
           <p className='currentRole'>Aspiring Software Developer · CS Student</p>
           <p className='introContent'>
-            Hello! I like building tools and software that help other people in either doing the smallest things, or addressing larger, more complex
-            problems that can improve how people work and live.
+            I like building tools and software that help other people in either doing the smallest things, or addressing larger, more complex
+            problems that can improve how people work and live. I like taking an idea or problem, breaking it down, and making it into something practical
+            that people can actually use.
           </p>
 
           <div className='contactLinks' aria-label='Primary links'>
@@ -38,39 +39,38 @@ function Home() {
       <section className='homeOverview' aria-label='Portfolio overview'>
         <article className='homeFeature'>
           <div>
-            <p className='homeFeatureLabel'>Currently building</p>
-            <h2>A portfolio powered by a real full-stack architecture</h2>
+            <p className='homeFeatureLabel'>What I am interested in</p>
+            <h2>About me</h2>
             <p>
-              This site combines React with a Cloudflare Worker, D1, R2, caching, rate limiting, and live GitHub and LeetCode data. It is also where I
-              document the engineering decisions behind my work.
+              When it comes to making software, I like the journey more than anything, the problems I encounter, the bugs to fix, the time spent researching, learning
+              and banging my head against a wall trying to see where it went wrong. 
+              <br />
+              <br />
+              I really like to think that the greatest obstacle in life isn't pain, its being too comfortable. That's why most of my projects don't repeat the tech stack, 
+              I try to do the path of most resistance with greatest reward. For me, the struggle of figuring something out is often where most of the reward comes from. 
             </p>
-          </div>
-          <div className='homeFeatureFooter'>
-            <ul aria-label='Current stack'>
-              <li>React</li>
-              <li>TypeScript</li>
-              <li>Cloudflare</li>
-              <li>D1</li>
-            </ul>
-            <Link to='/projects'>
-              Explore the work
-              <span aria-hidden='true'>→</span>
-            </Link>
           </div>
         </article>
 
         <div className='homeQuickLinks'>
           <Link to='/skills_experience'>
-            <span>Experience</span>
-            <strong>Work, tools, and technical scope</strong>
-            <p>See the technologies I use and the responsibilities behind my recent experience.</p>
-            <i aria-hidden='true'>01</i>
+            <span>Work, tools, and technical scope</span>
+            <strong>Skills and Experience</strong>
+            <p>See the technologies have used and are currently using, together with some of my experience in the tech industry</p>
+            <div className='homeQuickLinkFooter'>
+              Explore <span aria-hidden='true'>→</span>
+            </div>
           </Link>
           <Link to='/projects'>
-            <span>Projects</span>
-            <strong>Products and engineering decisions</strong>
-            <p>Browse applications, experiments, case studies, source code, and live demos.</p>
-            <i aria-hidden='true'>02</i>
+            <span>Products and engineering decisions</span>
+            <strong>Projects</strong>
+            <p>
+              Check out some of the notable projects I have made, each involving their different technologies, challenges, and some of 
+              the lessons learned along the way.
+            </p>
+            <div className='homeQuickLinkFooter'>
+              Explore the work <span aria-hidden='true'>→</span>
+            </div>
           </Link>
         </div>
       </section>
@@ -78,7 +78,7 @@ function Home() {
       <Link to='/resume' className='resumeViewer'>
         <div>
           <span>Resume</span>
-          <strong>A concise overview of my education, technical work, and experience.</strong>
+          <strong>A closer look to my education, technical experience, professional work, and some of the skills I have gained along the way.</strong>
         </div>
         <span aria-hidden='true'>Open resume →</span>
       </Link>
