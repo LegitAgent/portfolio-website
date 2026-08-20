@@ -14,7 +14,8 @@ function Home() {
           <h1 id='home-title'>Martin Darius Alba</h1>
           <p className='currentRole'>Aspiring Software Developer · CS Student</p>
           <p className='introContent'>
-            Hello! I like building tools and software that can help other people 
+            Hello! I like building tools and software that help other people in either doing the smallest things, or addressing larger, more complex
+            problems that can improve how people work and live.
           </p>
 
           <div className='contactLinks' aria-label='Primary links'>
