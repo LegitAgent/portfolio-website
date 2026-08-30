@@ -67,7 +67,6 @@ function Projects() {
   return (
     <main className='projectsPage'>
       <header className='projectsHeader'>
-        <p>Selected work</p>
         <h1>Projects</h1>
         <span>A collection of applications, experiments, and systems I have built while learning and working across the stack.</span>
       </header>

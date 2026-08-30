@@ -154,7 +154,7 @@ function Sandbox({ selectedBackground }: SandboxProps) {
                       </figcaption>
                     </figure>
                     <p>
-                      Hence, what makes this background so interesting to me is that its Turing complete since you can have moving data streams, an unbounded memory, and also persistent states. So given enough space, you can most likely simulate a basic calculator and more, from just these
+                      Hence, what makes this background so interesting to me is that its Turing complete since you can have moving data streams, an unbounded memory, and also persistent states. So given enough space, you can simulate a basic calculator, and even itself just from these
                       relatively simple rules.
                     </p>
                   </section>

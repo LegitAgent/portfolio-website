@@ -246,6 +246,15 @@
   stroke-linejoin: round;
 }
 
+.projectGithubIcon {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.88;
+}
+
 .projectLinks .projectLink {
   margin-left: auto;
   color: rgba(194, 252, 213, 0.92);

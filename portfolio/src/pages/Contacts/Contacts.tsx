@@ -33,114 +33,148 @@ interface ContactInterest {
 }
 
 function InterestArtifact({ type }: Pick<ContactInterest, 'type'>) {
-  if (type === 'operating_systems') {
-    return (
-      <div className='artifact artifact--terminal' aria-hidden='true'>
-        <div className='terminalBar'><span /><span /><span /><b>~/interests/os</b></div>
-        <div className='terminalBody'>
-          <p><i>martin@portfolio</i>:~/interests/os$ ./explore</p>
-          <p><b>status:</b> actively_exploring</p>
-          <p><b>focus:</b> processes memory filesystems</p>
-          <div className='processRow'><span>PID</span><span>STATE</span><span>LAYER</span></div>
-          <div className='processRow processRow--active'><span>2020</span><span>RUN</span><span>user -&gt; kernel</span></div>
-          <p className='terminalNote'># tracing how software meets hardware<span className='shellCursor' /></p>
-        </div>
-      </div>
-    );
-  }
-
   if (type === 'cyber_security') {
+    const hexRows = [
+      ['48', '65', '6C', '6C', '6F', 'A3', 'F2', '19'],
+      ['C7', '22', 'FF', '01', '3D', '9A', 'B8', '0E'],
+      ['7F', 'F6', 'A2', '13', 'D4', '8C', '2B', '90'],
+    ];
+
     return (
-      <div className='artifact artifact--security' aria-hidden='true'>
-        <div className='artifactTitle'><span>security_check()</span><b>ALLOW</b></div>
-        <div className='securityFlow'>
-          <span>input</span><i>101101</i><span>validate</span><i>r-x</i><span>protected</span>
+      <div className='interestVisual securityVisual' aria-hidden='true'>
+        <div className='securityScan' />
+        <div className='hexField'>
+          {hexRows.map((row, rowIndex) => (
+            <div key={rowIndex}>
+              {row.map((byte, byteIndex) => (
+                <span
+                  className={(rowIndex + byteIndex) % 5 === 0 ? 'is-scrambling' : ''}
+                  key={`${rowIndex}-${byte}`}
+                  data-alt={['0x', 'AF', '7C', 'E1'][byteIndex % 4]}
+                >
+                  {byte}
+                </span>
+              ))}
+            </div>
+          ))}
         </div>
-        <div className='auditTree'>
-          <p>├─ input validation <b>pass</b></p>
-          <p>├─ authorization <b>pass</b></p>
-          <p>├─ transport / TLS <b>pass</b></p>
-          <p>└─ IoT device trust <em>review</em></p>
+        <div className='hashTransform'>
+          <span>password123</span>
+          <i>SHA-256</i>
+          <code>ef92b778bafe771e89245b89ecbc08a44...</code>
         </div>
-        <small>more generated software means more surfaces to verify</small>
+        <div className='cryptoLegend'>
+          <span>AES-256</span><span>TLS 1.3</span><span>RSA</span><span>0x7FF6A2</span>
+        </div>
       </div>
     );
   }
 
-  if (type === 'system_design') {
+  if (type === 'networking') {
     return (
-      <div className='artifact artifact--architecture' aria-hidden='true'>
-        <div className='architectureScale'><span>1 user</span><i /><span>1M+ requests</span></div>
-        <div className='architectureMap'>
-          <div className='archNode'>client</div>
-          <div className='archNode'>load balancer</div>
-          <div className='archNode archNode--api'>api <span>01 / 02</span></div>
-          <div className='archNode archNode--cache'>cache <b>hit</b></div>
-          <div className='archNode'>database</div>
-          <div className='archBranch'><i /><span>queue -&gt; worker</span></div>
-          <span className='requestDot' />
+      <div className='interestVisual networkVisual' aria-hidden='true'>
+        <div className='osiRail'><span>APPLICATION</span><span>TRANSPORT</span><span>NETWORK</span><span>DATA LINK</span></div>
+        <svg className='networkRoutes' viewBox='0 0 560 220' preserveAspectRatio='none' role='presentation'>
+          <path id='network-route-a' d='M44 58 C150 18 188 168 286 110 S430 38 525 74' />
+          <path id='network-route-b' d='M32 170 C132 110 218 202 310 145 S428 116 530 176' />
+          <path id='network-route-c' d='M76 112 C160 104 205 54 292 62 S415 194 500 126' />
+          <g className='networkNodes'>
+            <circle cx='44' cy='58' r='7' /><circle cx='286' cy='110' r='9' /><circle cx='525' cy='74' r='7' />
+            <circle cx='32' cy='170' r='6' /><circle cx='310' cy='145' r='8' /><circle cx='530' cy='176' r='6' />
+          </g>
+        </svg>
+        <span className='networkPacket networkPacket--tcp'>TCP</span>
+        <span className='networkPacket networkPacket--dns'>DNS</span>
+        <span className='networkPacket networkPacket--ack'>ACK</span>
+        <div className='packetInspector'>
+          <span><b>SRC</b>192.168.1.24</span>
+          <span><b>DST</b>104.18.32.47</span>
+          <span><b>PROTO</b>TCP</span>
+          <span><b>PORT</b>443</span>
         </div>
-        <div className='architectureNotes'><span>request path</span><span>cache before storage</span><span>async work branches from API</span></div>
       </div>
     );
   }
 
-  if (type === 'data_analytics') {
+  if (type === 'operating_systems') {
+    const memoryCells = Array.from({ length: 20 });
+
     return (
-      <div className='artifact artifact--analytics' aria-hidden='true'>
-        <div className='analyticsTop'>
-          <div className='chartWrap'>
-            <svg viewBox='0 0 240 105' role='presentation'>
-              <path className='chartAxis' d='M22 8v78h208' />
-              <path className='chartGrid' d='M22 26h208M22 50h208M22 74h208' />
-              <path className='regressionLine' d='M30 76L218 21' />
-              <g className='dataPoints'>
-                <circle cx='40' cy='72' r='3' /><circle cx='65' cy='68' r='3' /><circle cx='89' cy='55' r='3' />
-                <circle cx='112' cy='60' r='3' /><circle cx='138' cy='43' r='3' /><circle cx='164' cy='38' r='3' />
-                <circle cx='190' cy='31' r='3' /><circle cx='213' cy='18' r='3' />
-              </g>
-            </svg>
-            <span>study time</span><i>score</i>
-          </div>
-          <div className='statBlock'><span>n = 120</span><span>μ = 64.2</span><span>σ = 8.7</span><span>r = 0.74</span></div>
+      <div className='interestVisual osVisual' aria-hidden='true'>
+        <div className='addressRail'>
+          <span>0x7FFF2A01</span><span>0x7FFF2A09</span><span>0x00401000</span><span>0x00401120</span>
         </div>
-        <div className='mathJourney'><span>before 2020<br /><b>avoided math</b></span><i /><span>now<br /><b>computation + applied math</b></span></div>
+        <div className='memoryMap'>
+          {memoryCells.map((_, index) => (
+            <i className={index % 3 !== 1 ? 'is-allocated' : ''} key={index} style={{ animationDelay: `${index * -230}ms` }} />
+          ))}
+        </div>
+        <div className='scheduler'>
+          <p><span>PID 1024</span><b className='processRunning'>RUNNING</b></p>
+          <p><span>PID 1337</span><b>WAITING</b></p>
+          <p><span>PID 2048</span><b>BLOCKED</b></p>
+        </div>
+        <div className='kernelTrace'><span>MMU</span><span>PAGE FAULT</span><span>SYSCALL</span><span>CONTEXT SWITCH</span></div>
       </div>
     );
   }
 
   if (type === 'fullstack_development') {
     return (
-      <div className='artifact artifact--fullstack' aria-hidden='true'>
-        <div className='stackPane stackPane--ui'>
-          <small>Product UI</small>
-          <div className='miniBrowser'><span /><span /><p>Useful project</p><button tabIndex={-1}>View details</button></div>
+      <div className='interestVisual fullstackVisual' aria-hidden='true'>
+        <div className='devBrowser'>
+          <div className='browserChrome'><i /><i /><i /><span>localhost:5173/projects</span></div>
+          <div className='browserCanvas'>
+            <b>Projects</b>
+            <span className='browserHero' />
+            <div><i /><i /><i /></div>
+          </div>
         </div>
-        <div className='requestPath'><span>GET</span><i /><span>200</span></div>
-        <div className='stackPane stackPane--code'>
-          <small>API + data</small>
-          <code><i>const</i> project = <b>await</b><br /> db.projects.find(id);<br /><em>return</em> project;</code>
+        <div className='devEditor'>
+          <div className='editorTab'>projects.tsx <span>TS</span></div>
+          <pre><code><i>const</i> response = <b>await</b>{'\n'}  fetch(<em>"/api/projects"</em>);{'\n'}{'\n'}setProjects({'\n'}  <b>await</b> response.json(){'\n'});</code></pre>
+          <div className='requestResult'><span>GET /api/projects</span><b>200 OK</b><i>42ms</i></div>
         </div>
+        <span className='hotReloadPulse'>HMR update</span>
+      </div>
+    );
+  }
+
+  if (type === 'data_analytics') {
+    const points = [
+      [48, 154], [82, 139], [111, 144], [142, 112], [172, 121],
+      [207, 88], [242, 97], [276, 65], [310, 72], [350, 42],
+    ];
+
+    return (
+      <div className='interestVisual analyticsVisual' aria-hidden='true'>
+        <svg className='analysisPlot' viewBox='0 0 400 205' preserveAspectRatio='none' role='presentation'>
+          <path className='plotGrid' d='M34 18V180H382M34 58H382M34 98H382M34 138H382M104 18V180M174 18V180M244 18V180M314 18V180' />
+          <path className='distributionArea' d='M40 172 C85 170 104 144 135 108 C168 68 194 40 225 74 C260 112 281 154 376 172 Z' />
+          <path className='regressionPath' d='M42 166L370 34' />
+          <g className='analysisPoints'>
+            {points.map(([cx, cy], index) => <circle cx={cx} cy={cy} key={cx} r='4' style={{ animationDelay: `${index * 90}ms` }} />)}
+          </g>
+        </svg>
+        <div className='analysisStats'><span>n = 120</span><span>μ = 64.2</span><span>σ = 8.7</span><span>r = 0.74</span><span>R² = .55</span></div>
+        <div className='analysisMath'><span>E[X]</span><span>Var(X)</span><span>P(A|B)</span><span>∂f/∂x</span><span>∇f</span></div>
       </div>
     );
   }
 
   return (
-    <div className='artifact artifact--network' aria-hidden='true'>
-      <div className='networkBoundary networkBoundary--lan'>LOCAL NETWORK</div>
-      <div className='networkBoundary networkBoundary--wan'>INTERNET</div>
-      <div className='networkMap'>
-        <div className='networkNode networkNode--laptop'><b>laptop</b><span>192.168.1.14</span></div>
-        <div className='networkNode networkNode--router'><b>router</b><span>Wi-Fi / DNS</span></div>
-        <div className='networkNode networkNode--shield'><b>security</b><span>TLS :443</span></div>
-        <div className='networkNode networkNode--server'><b>app server</b><span>HTTP / TCP</span></div>
-        <div className='networkNode networkNode--data'><b>data</b><span>query / analyze</span></div>
-        <span className='packet packet--one'>01</span><span className='packet packet--two'>02</span>
+    <div className='interestVisual scaleVisual' aria-hidden='true'>
+      <div className='requestRate'><span>10 req/s</span><i /><span>1K req/s</span><i /><b>100K req/s</b></div>
+      <div className='requestStream'>
+        {Array.from({ length: 14 }).map((_, index) => <i key={index} style={{ animationDelay: `${index * -180}ms` }} />)}
       </div>
+      <div className='proxyPlane'><span>NGINX</span><b>LOAD BALANCER</b></div>
+      <div className='serviceFleet'><span>API 01</span><span>API 02</span><span>API 03</span><span>API 04</span></div>
+      <div className='cacheRoute'><b>CACHE HIT</b><span>CACHE MISS</span></div>
+      <div className='storagePlane'><span>SHARD 01</span><span>SHARD 02</span><span>REPLICA</span><span>QUEUE</span></div>
     </div>
   );
 }
-
 function Contacts() {
   const proLinks: Array<ProfessionalLink> = [
     {
@@ -166,42 +200,42 @@ function Contacts() {
   ];
 
   const interest: Array<ContactInterest> = [
-    { 
-      name: 'Operating Systems', 
-      description: 'I am exploring how software interacts with processes, memory, filesystems, and hardware.', 
-      backstory: 'Learning how low-level systems work feels like looking underneath everything else I build. I find it fascinating that a set of core ideas can coordinate hardware and turn it into a platform for nearly every kind of software.', 
-      type: 'operating_systems' 
-    },
-    { 
-      name: 'Cybersecurity', 
-      description: 'Security interests me because reliable software must also protect the people and systems that depend on it.', 
+    {
+      name: 'Cybersecurity',
+      description: 'Reliable software also has to survive hostile inputs and hostile users.',
       backstory: 'As more software is generated and shipped quickly from AI, I want to understand how to verify what we build rather than simply trust it. Cybersecurity also connects naturally to my interest in operating systems, networking, and the mathematics behind modern cryptography.',
-      type: 'cyber_security' 
-    },
-    { 
-      name: 'System Design', 
-      description: 'I like thinking about how software changes as it moves from one user and one service to a much larger system.', 
-      backstory: 'I have always been curious about how products handle millions of users and connections. System design gives me a practical way to explore scaling, reliability, data flow, caching, queues, and the tradeoffs that appear as software grows.', 
-      type: 'system_design' 
-    },
-    { 
-      name: 'Data Analytics', 
-      description: 'Data analytics brings together statistics, computation, and the process of turning observations into useful decisions.', 
-      backstory: 'I did not enjoy mathematics when I was younger, but I returned to it during the pandemic and gradually became fond of it. Data analytics appeals to me because it combines that newer interest in applied mathematics with the computational work I already enjoy.', 
-      type: 'data_analytics' 
-    },
-    { 
-      name: 'Full-stack Development', 
-      description: 'Building end to end helps me connect backend decisions to interfaces that people can understand and use.', 
-      backstory: 'One reason I started programming was the possibility of building products that genuinely help people. Full-stack work lets me follow an idea from its data model and services through to the user-facing experience, then judge whether all of those pieces work well together.', 
-      type: 'fullstack_development' 
+      type: 'cyber_security',
     },
     {
       name: 'Networking',
-      description: 'Networking explains how the devices, applications, and infrastructure behind modern software communicate.',
+      description: 'I like understanding what happens between one machine sending a request and another answering it.',
       backstory: 'The internet and Wi-Fi can feel invisible when they work, which makes understanding them even more interesting to me. Networking also connects nearly all of my other interests: systems, security, distributed services, and data-driven applications.',
-      type: 'networking'
-    }
+      type: 'networking',
+    },
+    {
+      name: 'Operating Systems',
+      description: 'I want to understand what happens beneath applications: scheduling, memory, filesystems, and syscalls.',
+      backstory: 'Learning how low-level systems work feels like looking underneath everything else I build. I find it fascinating that a set of core ideas can coordinate hardware and turn it into a platform for nearly every kind of software.',
+      type: 'operating_systems',
+    },
+    {
+      name: 'Full-stack Development',
+      description: 'I like carrying an idea from its data model and API all the way to the interface people use.',
+      backstory: 'One reason I started programming was the possibility of building products that genuinely help people. Full-stack work lets me follow an idea from its data model and services through to the user-facing experience, then judge whether all of those pieces work well together.',
+      type: 'fullstack_development',
+    },
+    {
+      name: 'Data Analytics',
+      description: 'Statistics gives me a concrete way to turn messy observations into something I can reason about.',
+      backstory: 'I did not enjoy mathematics when I was younger, but I returned to it during the pandemic and gradually became fond of it. Data analytics appeals to me because it combines that newer interest in applied mathematics with the computational work I already enjoy.',
+      type: 'data_analytics',
+    },
+    {
+      name: 'System Design',
+      description: 'I like asking what breaks first when traffic grows, then designing around it.',
+      backstory: 'I have always been curious about how products handle millions of users and connections. System design gives me a practical way to explore scaling, reliability, data flow, caching, queues, and the tradeoffs that appear as software grows.',
+      type: 'system_design',
+    },
   ];
 
   const availabilityStatus = ['red', 'yellow', 'green'] as const;
@@ -323,12 +357,12 @@ function Contacts() {
         <header className='contactSectionHeader'>
           <span>02</span>
           <div>
-            <p>Technical interests · an active learning map</p>
+            <p>Technical interests</p>
             <h2>Areas of Interest</h2>
           </div>
         </header>
         <div className='interestMapIntro'>
-          <p>These are the systems, tools, and ideas I keep returning to, not necessarily a list of mastered skills, but a map of what I am learning and how the pieces connect.</p>
+          <p>Six fields I keep returning to, each for a different reason.</p>
         </div>
         <div className='interestsWorkbench'>
           {interest.map((interestItem, index) => {
@@ -342,11 +376,8 @@ function Contacts() {
                 <div className='interestModuleInner'>
                   <div className='interestModuleFace interestModuleFront' aria-hidden={isSelected}>
                     <div className='interestModuleHeader'>
-                      <div>
-                        <small>FIELD_{String(index + 1).padStart(2, '0')} · CURRENTLY EXPLORING</small>
-                        <h3>{interestItem.name}</h3>
-                      </div>
-                      <span className='learningStatus'><i /> actively exploring</span>
+                      <h3>{interestItem.name}</h3>
+                      <span className='interestIndex'>{String(index + 1).padStart(2, '0')}</span>
                     </div>
                     <p className='interestDescription'>{interestItem.description}</p>
                     <InterestArtifact type={interestItem.type} />
@@ -363,8 +394,7 @@ function Contacts() {
                   </div>
                   <div className='interestModuleFace interestModuleBack' id={panelId} aria-hidden={!isSelected}>
                     <div>
-                      <small>FIELD_{String(index + 1).padStart(2, '0')} · NOTES FROM THE JOURNEY</small>
-                      <p className='interestBackLabel'>Why {interestItem.name} matters to me</p>
+                      <p className='interestBackLabel'>Why it stays on my radar</p>
                       <h3>{interestItem.name}</h3>
                     </div>
                     <blockquote>{interestItem.backstory}</blockquote>

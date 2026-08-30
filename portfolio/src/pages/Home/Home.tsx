@@ -14,8 +14,8 @@ function Home() {
           <h1 id='home-title'>Martin Darius Alba</h1>
           <p className='currentRole'>Aspiring Software Developer · CS Student</p>
           <p className='introContent'>
-            I like building tools and software that help other people in either doing the smallest things, or addressing larger, more complex
-            problems that can improve how people work and live. I like taking an idea or problem, breaking it down, and making it into something practical
+            I like building software that help other people in either doing the smallest things, or addressing larger, more complex
+            problems that can improve how people work or live. I like taking an idea or problem, breaking it down, and making it into something practical
             that people can actually use.
           </p>
 
@@ -39,15 +39,15 @@ function Home() {
       <section className='homeOverview' aria-label='Portfolio overview'>
         <article className='homeFeature'>
           <div>
-            <p className='homeFeatureLabel'>What I am interested in</p>
+            <p className='homeFeatureLabel'>What I really like doing</p>
             <h2>About me</h2>
             <p>
-              When it comes to making software, I like the journey more than anything, the problems I encounter, the bugs to fix, the time spent researching, learning
+              When it comes to making software or almost anything in life, I like the journey more than anything. The problems I encounter, the bugs to fix, the time spent researching, learning
               and banging my head against a wall trying to see where it went wrong. 
               <br />
               <br />
-              I really like to think that the greatest obstacle in life isn't pain, its being too comfortable. That's why most of my projects don't repeat the tech stack, 
-              I try to do the path of most resistance with greatest reward. For me, the struggle of figuring something out is often where most of the reward comes from. 
+              I really like to think that the greatest obstacle in life isn't pain, its being too comfortable. It is a paradox of life that the most familiar environments are often the ones that breed stagnation.  That is why I intentionally rotate my tech stack with every new project.
+              I deliberately choose the path of most resistance, knowing that the true reward lies entirely in the struggle of figuring it out.
             </p>
           </div>
         </article>

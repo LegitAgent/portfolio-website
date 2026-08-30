@@ -1,7 +1,7 @@
 import './ProjectsDisplay.css';
 import type { ProjectDisplayProps } from '../../types/project.ts';
 import { Link } from 'react-router-dom';
-import { CLOUDFLARE_R2_BUCKET } from '../../config/constants.ts';
+import { CLOUDFLARE_R2_BUCKET, GITHUB_ICON } from '../../config/constants.ts';
 
 function ProjectsDisplay({ project }: ProjectDisplayProps) {
   const imageUrl = new URL(project.project_img_url, CLOUDFLARE_R2_BUCKET).toString();
@@ -32,10 +32,7 @@ function ProjectsDisplay({ project }: ProjectDisplayProps) {
 
         <div className='projectLinks'>
           <a href={project.project_github} target='_blank' rel='noreferrer'>
-            <svg viewBox='0 0 24 24' aria-hidden='true'>
-              <path d='M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.4 4 5 5 0 0 0 19.3.5S18.2.1 15 1.8a13.4 13.4 0 0 0-6 0C5.8.1 4.7.5 4.7.5A5 5 0 0 0 4.6 4a5.4 5.4 0 0 0-1.4 3.7c0 5.4 3.5 6.6 6.8 7A4.8 4.8 0 0 0 9 18v4' />
-              <path d='M9 18c-3 .9-3-1.5-4.2-2' />
-            </svg>
+            <img className='projectGithubIcon' src={GITHUB_ICON} alt='' aria-hidden='true' />
             <span>GitHub</span>
           </a>
 

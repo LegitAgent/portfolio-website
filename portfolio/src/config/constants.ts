@@ -28,9 +28,7 @@ import java from '../assets/icons/java.svg';
 import javascript from '../assets/icons/javascript.svg';
 import laravel from '../assets/icons/laravel.svg';
 import nodejs from '../assets/icons/nodejs.svg';
-import npm from '../assets/icons/npm.svg';
 import php from '../assets/icons/php.svg';
-import pip from '../assets/icons/pip.svg';
 import postgresql from '../assets/icons/postgresql.svg';
 import python from '../assets/icons/python.svg';
 import react from '../assets/icons/react.svg';
@@ -78,9 +76,7 @@ export const JAVA = java;
 export const JAVASCRIPT = javascript;
 export const LARAVEL = laravel;
 export const NODEJS = nodejs;
-export const NPM = npm;
 export const PHP = php;
-export const PIP = pip;
 export const POSTGRESQL = postgresql;
 export const PYTHON = python;
 export const REACT = react;
@@ -101,7 +97,7 @@ export const SPRAY_CLICK_ICON = sprayclick;
 // URL's
 export const GITHUB_URL = 'https://github.com/LegitAgent';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/martin-darius-alba-836826294/';
-export const CLOUDFLARE_GATEWAY = 'http://127.0.0.1:8787/';
+export const CLOUDFLARE_GATEWAY = 'http://127.0.0.1:8787/'; // todo
 export const CLOUDFLARE_R2_BUCKET = 'https://assets.martinalba.dev/';
 
 // updatables

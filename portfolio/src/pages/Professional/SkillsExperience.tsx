@@ -15,9 +15,7 @@ import {
   JAVASCRIPT,
   LARAVEL,
   NODEJS,
-  NPM,
   PHP,
-  PIP,
   POSTGRESQL,
   PYTHON,
   REACT,
@@ -26,7 +24,7 @@ import {
   TAILWIND,
   TYPESCRIPT,
   VITE,
-  NO_IMAGE
+  NO_IMAGE,
 } from '../../config/constants.ts';
 import { useEffect, useRef, useState } from 'react';
 import WorkDisplay from '../../components/WorkDisplay/WorkDisplay.tsx';
@@ -37,6 +35,49 @@ import type { WorkExperience, WorkExperienceResponse } from '../../types/work.ts
 
 const tagsGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/tags'; // path to tags db
 const workGatewayURL = CLOUDFLARE_GATEWAY + 'api/db/work'; // path to work db
+
+const skillIconSources: Record<string, string> = {
+  AWS,
+  Cloudflare: CLOUDFLARE,
+  'C++': CPP,
+  CSS,
+  Django: DJANGO,
+  Docker: DOCKER,
+  Git: GIT,
+  GitHub: GITHUB_ICON,
+  GraphQL: GRAPHQL,
+  HTML,
+  Java: JAVA,
+  JavaScript: JAVASCRIPT,
+  Laravel: LARAVEL,
+  'Node.js': NODEJS,
+  NodeJS: NODEJS,
+  PHP,
+  PostgreSQL: POSTGRESQL,
+  Python: PYTHON,
+  React: REACT,
+  REST,
+  'REST API': REST,
+  SQL,
+  Tailwind: TAILWIND,
+  'Tailwind CSS': TAILWIND,
+  TypeScript: TYPESCRIPT,
+  Vite: VITE,
+  default: NO_IMAGE,
+};
+
+function SkillTag({ skill }: { skill: Tag }) {
+  const iconSrc = skillIconSources[skill.tag_name] ?? skillIconSources.default;
+  const needsContrastInversion = ['GitHub', 'AWS'].includes(skill.tag_name);
+  const iconClassName = needsContrastInversion ? 'tagIcon tagIcon--contrast-invert' : 'tagIcon';
+
+  return (
+    <div className='tag' key={skill.tag_name}>
+      <img className={iconClassName} src={iconSrc} alt='' aria-hidden='true' loading='lazy' />
+      <span>{skill.tag_name}</span>
+    </div>
+  );
+}
 
 type JourneyFilter = 'all' | 'work' | 'internships' | 'hackathons' | 'competitions' | 'community';
 
@@ -118,61 +159,13 @@ function getNodeSymbol(category: Exclude<JourneyFilter, 'all'>, workType: WorkEx
   return '●';
 }
 
-const skillIconSources: Record<string, string> = {
-  AWS,
-  Cloudflare: CLOUDFLARE,
-  'C++': CPP,
-  CPP,
-  CSS,
-  Docker: DOCKER,
-  Django: DJANGO,
-  Git: GIT,
-  GitHub: GITHUB_ICON,
-  GraphQL: GRAPHQL,
-  HTML,
-  Java: JAVA,
-  JavaScript: JAVASCRIPT,
-  Laravel: LARAVEL,
-  'Node.js': NODEJS,
-  NodeJS: NODEJS,
-  npm: NPM,
-  NPM,
-  PHP,
-  pip: PIP,
-  PIP,
-  PostgreSQL: POSTGRESQL,
-  Python: PYTHON,
-  React: REACT,
-  REST,
-  'REST API': REST,
-  SQL,
-  Tailwind: TAILWIND,
-  'Tailwind CSS': TAILWIND,
-  TypeScript: TYPESCRIPT,
-  Vite: VITE,
-  default: NO_IMAGE
-};
-
-function SkillTag({ skill }: { skill: Tag }) {
-  const iconSrc = skillIconSources[skill.tag_name] ?? skillIconSources.default;
-  const needsContrastInversion = ['GitHub', 'AWS'].includes(skill.tag_name);
-  const iconClassName = needsContrastInversion ? 'tagIcon tagIcon--contrast-invert' : 'tagIcon';
-
-  return (
-    <div className='tag' key={skill.tag_name}>
-      <img className={iconClassName} src={iconSrc} alt='' aria-hidden='true' loading='lazy'/>
-      <span>{skill.tag_name}</span>
-    </div>
-  );
-}
-
 function SkillsExperience() {
   const [isLoadingTag, setIsLoadingTag] = useState<boolean>(true);
   const [tag, setTag] = useState<TagsResponse | null>(null);
   const [hasErrorTag, setHasErrorTag] = useState<boolean>(false);
 
-  const findSkill = (skill_type: SkillType, skills: TagsResponse): Tag[] => {
-    return skills.tags.filter((tag) => tag.skill_type === skill_type);
+  const findSkill = (skillType: SkillType, skills: TagsResponse): Tag[] => {
+    return skills.tags.filter((tagItem) => tagItem.skill_type === skillType);
   };
 
   useEffect(() => {
@@ -340,10 +333,10 @@ function SkillsExperience() {
     { title: 'Back-End', skills: [...backend, ...database, ...cloud] },
     { title: 'DevOps', skills: developerTool },
   ].filter((group) => group.skills.length > 0);
+
   return (
     <section className='seContainer'>
       <section className='skillsContainer'>
-        <p className='subtitleHeader'>Technologies & Tools</p>
         <h2>Technical Skills</h2>
         <p className='skillsDescription'>
           Here are some of the frameworks, languages, and infrastructure tools I use to design, build, and deploy reliable software, and I'm always
@@ -355,9 +348,9 @@ function SkillsExperience() {
               <div className='skillGroup' key={group.title}>
                 <p className='skillType'>{group.title}</p>
                 <div className='skillContainer'>
-                  {group.skills.map((skill) => {
-                    return <SkillTag skill={skill} key={skill.tag_name} />;
-                  })}
+                  {group.skills.map((skill) => (
+                    <SkillTag skill={skill} key={skill.tag_name} />
+                  ))}
                 </div>
               </div>
             );
@@ -367,18 +360,10 @@ function SkillsExperience() {
 
       <section className='experienceContainer' aria-labelledby='journey-title'>
         <header className='journeyHeader'>
-          <p className='subtitleHeader'>History / Field Log</p>
           <h1 id='journey-title'>Industry &amp; Technical Journey</h1>
         <p className='experienceDescription'>
           A record of the teams, systems, competitions, and technical communities that shaped how I build software.
         </p>
-          <div className='journeyIndex' aria-label='Experience represented in this archive'>
-            <span>Production Engineering</span>
-            <span>Internships</span>
-            <span>Hackathons</span>
-            <span>Competitions</span>
-            <span>Technical Communities</span>
-          </div>
         </header>
 
         <div className='journeyControls'>
