@@ -42,13 +42,83 @@ const isPointOverText = (x: number, y: number) => {
   });
 };
 
-const canSprayAt = (target: EventTarget | null, x: number, y: number) => {
+const MOBILE_CONTENT_SELECTOR = [
+  'a',
+  'button',
+  'input',
+  'textarea',
+  'select',
+  'label',
+  '[contenteditable="true"]',
+  'article',
+  'p',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'li',
+  'blockquote',
+  'pre',
+  'code',
+  'img',
+  'svg',
+  'video',
+  'iframe',
+  'canvas:not(.sprayContainer)',
+].join(',');
+
+const hasVisibleBackground = (element: Element) => {
+  const style = window.getComputedStyle(element);
+
+  if (style.backgroundImage !== 'none' || style.boxShadow !== 'none') {
+    return true;
+  }
+
+  const color = style.backgroundColor;
+  if (color === 'transparent') {
+    return false;
+  }
+
+  const alphaMatch = color.match(/rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\)/);
+  return !alphaMatch || Number(alphaMatch[1]) > 0.01;
+};
+
+const isBarePageBackground = (x: number, y: number) => {
+  const hitElement = document.elementFromPoint(x, y);
+  if (!hitElement) {
+    return false;
+  }
+
+  for (let element: Element | null = hitElement; element; element = element.parentElement) {
+    if (element.matches('html, body, #root, .app-shell, .page-shell, main, section, .sprayContainer')) {
+      continue;
+    }
+
+    if (element.matches(MOBILE_CONTENT_SELECTOR) || hasVisibleBackground(element)) {
+      return false;
+    }
+  }
+
+  return !isPointOverText(x, y);
+};
+
+const shouldUseBackgroundOnlyHitTest = (pointerType?: string) => {
+  return pointerType === 'touch' || window.matchMedia('(pointer: coarse)').matches;
+};
+
+const canSprayAt = (target: EventTarget | null, x: number, y: number, backgroundOnly = false) => {
   if (!(target instanceof Element)) {
     return false;
   }
 
   const isControl = target.closest('a, button, input, textarea, select, label, [contenteditable="true"]');
-  return !isControl && !isPointOverText(x, y);
+  if (isControl || isPointOverText(x, y)) {
+    return false;
+  }
+
+  return !backgroundOnly || isBarePageBackground(x, y);
 };
 
 function SprayPaint() {
@@ -204,7 +274,7 @@ function SprayPaint() {
 
     const handleTouchStart = (event: TouchEvent) => {
       const touch = event.touches[0];
-      if (event.touches.length === 1 && touch && canSprayAt(event.target, touch.clientX, touch.clientY)) {
+      if (event.touches.length === 1 && touch && canSprayAt(event.target, touch.clientX, touch.clientY, true)) {
         event.preventDefault();
       }
     };
@@ -231,7 +301,8 @@ function SprayPaint() {
       }
 
       const target = event.target;
-      if (!canSprayAt(target, event.clientX, event.clientY)) {
+      const backgroundOnly = shouldUseBackgroundOnlyHitTest(event.pointerType);
+      if (!canSprayAt(target, event.clientX, event.clientY, backgroundOnly)) {
         return;
       }
 
@@ -259,7 +330,8 @@ function SprayPaint() {
         return;
       }
 
-      if (!canSprayAt(event.target, event.clientX, event.clientY)) {
+      const backgroundOnly = shouldUseBackgroundOnlyHitTest(event.pointerType);
+      if (!canSprayAt(event.target, event.clientX, event.clientY, backgroundOnly)) {
         previousPointerPosition = null;
         stopSpraySound();
         return;
@@ -287,7 +359,7 @@ function SprayPaint() {
         const x = previousPointerPosition.x + deltaX * progress;
         const y = previousPointerPosition.y + deltaY * progress;
         const target = document.elementFromPoint(x, y);
-        if (canSprayAt(target, x, y)) {
+        if (canSprayAt(target, x, y, backgroundOnly)) {
           paintAtPosition(x, y);
         }
       }

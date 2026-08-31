@@ -389,7 +389,7 @@ function Contacts() {
                 className={`interestModule interestModule--${interestItem.type} ${isSelected ? 'is-selected' : ''}`}
               >
                 <div className='interestModuleInner'>
-                  <div className='interestModuleFace interestModuleFront' aria-hidden={isSelected}>
+                  <div className='interestModuleFace interestModuleFront' inert={isSelected}>
                     <div className='interestModuleHeader'>
                       <h3>{interestItem.name}</h3>
                       <span className='interestIndex'>{String(index + 1).padStart(2, '0')}</span>
@@ -400,14 +400,19 @@ function Contacts() {
                       className='interestDetailToggle'
                       type='button'
                       aria-label={`Show why ${interestItem.name} matters to me`}
+                      aria-controls={panelId}
+                      aria-expanded={isSelected}
                       tabIndex={isSelected ? -1 : 0}
-                      onClick={() => setSelectedInterest(index)}
+                      onClick={(event) => {
+                        event.currentTarget.blur();
+                        setSelectedInterest(index);
+                      }}
                     >
                       <span>Read More</span>
                       <i aria-hidden='true'>↗</i>
                     </button>
                   </div>
-                  <div className='interestModuleFace interestModuleBack' id={panelId} aria-hidden={!isSelected}>
+                  <div className='interestModuleFace interestModuleBack' id={panelId} inert={!isSelected}>
                     <div>
                       <p className='interestBackLabel'>Why I'm interested in</p>
                       <h3>{interestItem.name}</h3>
@@ -418,7 +423,10 @@ function Contacts() {
                       type='button'
                       aria-label={`Return to the ${interestItem.name} overview`}
                       tabIndex={isSelected ? 0 : -1}
-                      onClick={() => setSelectedInterest(null)}
+                      onClick={(event) => {
+                        event.currentTarget.blur();
+                        setSelectedInterest(null);
+                      }}
                     >
                       <span>Back to overview</span>
                       <i aria-hidden='true'>↙</i>

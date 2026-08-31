@@ -34,6 +34,10 @@
 
 .introductionContent {
   min-width: 0;
+  --hero-text-contrast:
+    0 1px 2px rgba(0, 0, 0, 1),
+    0 0 12px rgba(3, 7, 13, 0.96),
+    0 0 28px rgba(3, 7, 13, 0.82);
 }
 
 .homeFeatureLabel {
@@ -50,6 +54,7 @@
   font-weight: 720;
   letter-spacing: -0.055em;
   line-height: 0.96;
+  text-shadow: var(--hero-text-contrast);
 }
 
 .currentRole {
@@ -58,6 +63,7 @@
   color: var(--color-text-soft);
   font-size: 0.95rem;
   font-weight: 650;
+  text-shadow: var(--hero-text-contrast);
 }
 
 .introContent {
@@ -66,6 +72,7 @@
   color: var(--color-text-soft);
   font-size: clamp(1rem, 1.4vw, 1.1rem);
   line-height: 1.75;
+  text-shadow: var(--hero-text-contrast);
 }
 
 .contactLinks {
