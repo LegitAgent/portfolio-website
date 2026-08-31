@@ -382,7 +382,7 @@
 .interestsWorkbench {
   margin-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns: repeat(24, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -397,7 +397,7 @@
 }
 
 .interestModule--cyber_security {
-  grid-column: span 7;
+  grid-column: span 14;
   --module-accent: 255, 58, 72;
   --module-secondary: 156, 255, 90;
   --module-background:
@@ -406,7 +406,7 @@
 }
 
 .interestModule--networking {
-  grid-column: span 5;
+  grid-column: span 10;
   --module-accent: 40, 220, 255;
   --module-secondary: 42, 112, 255;
   --module-background:
@@ -415,7 +415,7 @@
 }
 
 .interestModule--operating_systems {
-  grid-column: span 5;
+  grid-column: span 11;
   --module-accent: 255, 175, 67;
   --module-secondary: 126, 147, 164;
   --module-background:
@@ -424,7 +424,7 @@
 }
 
 .interestModule--fullstack_development {
-  grid-column: span 7;
+  grid-column: span 13;
   --module-accent: 69, 203, 255;
   --module-secondary: 157, 102, 255;
   --module-background:
@@ -433,7 +433,7 @@
 }
 
 .interestModule--data_analytics {
-  grid-column: span 7;
+  grid-column: span 14;
   --module-accent: 241, 76, 255;
   --module-secondary: 75, 225, 255;
   --module-background:
@@ -442,7 +442,7 @@
 }
 
 .interestModule--system_design {
-  grid-column: span 5;
+  grid-column: span 10;
   --module-accent: 255, 147, 42;
   --module-secondary: 43, 217, 245;
   --module-background:

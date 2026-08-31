@@ -73,7 +73,6 @@ function InterestArtifact({ type }: Pick<ContactInterest, 'type'>) {
   if (type === 'networking') {
     return (
       <div className='interestVisual networkVisual' aria-hidden='true'>
-        <div className='osiRail'><span>APPLICATION</span><span>TRANSPORT</span><span>NETWORK</span><span>DATA LINK</span></div>
         <svg className='networkRoutes' viewBox='0 0 560 220' preserveAspectRatio='none' role='presentation'>
           <path id='network-route-a' d='M44 58 C150 18 188 168 286 110 S430 38 525 74' />
           <path id='network-route-b' d='M32 170 C132 110 218 202 310 145 S428 116 530 176' />
@@ -202,38 +201,57 @@ function Contacts() {
   const interest: Array<ContactInterest> = [
     {
       name: 'Cybersecurity',
-      description: 'Reliable software also has to survive hostile inputs and hostile users.',
-      backstory: 'As more software is generated and shipped quickly from AI, I want to understand how to verify what we build rather than simply trust it. Cybersecurity also connects naturally to my interest in operating systems, networking, and the mathematics behind modern cryptography.',
+      description: 'Reliable software also has to survive from adversaries trying to hack into your application. Especially now in the world of AI, where botnets are prevalent.',
+      backstory: `As more software is generated and shipped quickly from AI, I want to understand how to verify what we build rather
+                 than simply trust it. Cybersecurity also connects naturally to my interest in operating systems, networking, and the 
+                 mathematics behind modern cryptography. Things like VPN's, SSH and the underlying infrastructure behind it, and many more. I am also
+                 interested into seeing how the internet communicates securely, some topics include using SSL certificates and how they're made,
+                 understanding how HTTPS does the S part to encrypt packets to prevent a multitude of cybersecurity attacks just to name a few.`,
       type: 'cyber_security',
     },
     {
       name: 'Networking',
-      description: 'I like understanding what happens between one machine sending a request and another answering it.',
-      backstory: 'The internet and Wi-Fi can feel invisible when they work, which makes understanding them even more interesting to me. Networking also connects nearly all of my other interests: systems, security, distributed services, and data-driven applications.',
+      description: 'I like understanding what happens between one machine sending a request and another answering it and how the underlying infrastructure is made.',
+      backstory: `The internet and Wi-Fi can feel invisible when they work, which makes understanding them even more interesting to me. 
+                  Networking also connects to nearly all of my other interests.
+                  These all require a signifacant amount of knowledge on how two devices communicate and how it does so. I am also interested on how we 
+                  optimized fiber optic cables to deliver nearly a zettabyte of data over the internet daily, how the logistics is handled, and how the technology works of not just the
+                  internet, but also wifi or bluetooth technology.`,
       type: 'networking',
     },
     {
       name: 'Operating Systems',
-      description: 'I want to understand what happens beneath applications: scheduling, memory, filesystems, and syscalls.',
-      backstory: 'Learning how low-level systems work feels like looking underneath everything else I build. I find it fascinating that a set of core ideas can coordinate hardware and turn it into a platform for nearly every kind of software.',
+      description: 'I want to understand what happens beneath applications: scheduling, memory, filesystems, and syscalls. Something about software interacting with hardware is interesting for me.',
+      backstory: `I believe that Operating systems have to be one of the greatest inventions that humans have ever made, they turn raw and chaotic 
+                  hardware into a more predicatable, stable platform for software. Hence, I find it fascinating that a set of core ideas can coordinate hardware and turn it into a 
+                  platform for nearly every kind of software. Things like learning how physical memory maps to virtual memory or how an OS handles 
+                  deadlocks and concurrency. Once you learn and understand the OS, the OS stops becoming a black box to you and that 
+                  gives you a developer superpower of sorts.`,
       type: 'operating_systems',
     },
     {
       name: 'Full-stack Development',
-      description: 'I like carrying an idea from its data model and API all the way to the interface people use.',
-      backstory: 'One reason I started programming was the possibility of building products that genuinely help people. Full-stack work lets me follow an idea from its data model and services through to the user-facing experience, then judge whether all of those pieces work well together.',
+      description: 'I like carrying an idea from its data model and API all the way to the interface people use in their applications.',
+      backstory: `One reason I started programming was the possibility of building products that genuinely help people. Full-stack work lets me 
+                  follow an idea from its data model and services through to the user-facing experience, then judge whether all of those pieces 
+                  work well together.`,
       type: 'fullstack_development',
     },
     {
       name: 'Data Analytics',
       description: 'Statistics gives me a concrete way to turn messy observations into something I can reason about.',
-      backstory: 'I did not enjoy mathematics when I was younger, but I returned to it during the pandemic and gradually became fond of it. Data analytics appeals to me because it combines that newer interest in applied mathematics with the computational work I already enjoy.',
+      backstory: `I did not enjoy mathematics when I was younger, but I returned to it during the pandemic and gradually became fond of it. 
+                  Data analytics appeals to me because it combines that newer interest in applied mathematics with the computational work I 
+                  already enjoy. Making it interesting and fun for me to explore. I really like analyzing things and computing my statistical 
+                  probability of getting a certain thing in games or even in life, analyzing populations and deriving useful insights and wisdom 
+                  from there.`,
       type: 'data_analytics',
     },
     {
       name: 'System Design',
-      description: 'I like asking what breaks first when traffic grows, then designing around it.',
-      backstory: 'I have always been curious about how products handle millions of users and connections. System design gives me a practical way to explore scaling, reliability, data flow, caching, queues, and the tradeoffs that appear as software grows.',
+      description: 'I like asking what breaks first when traffic grows, then designing around it. System Design is one of those things that makes you really think about opportunity cost and scalability.',
+      backstory: `I have always been curious about how products handle millions of users and connections, apps like. System design gives me a practical 
+                  way to explore scaling, reliability, data flow, caching, queues, and the tradeoffs that appear as software grows.`,
       type: 'system_design',
     },
   ];
@@ -285,8 +303,6 @@ function Contacts() {
     <section className='contactContainer'>
       <header className='contactHeader'>
         <div className='contactStatusBadge'>
-          <span />
-          Open to conversations and collaborations
         </div>
         <h1>
           My Contacts
@@ -299,7 +315,6 @@ function Contacts() {
         <header className='contactSectionHeader'>
           <span>01</span>
           <div>
-            <p>Direct communication</p>
             <h2>Best Way To Reach Me</h2>
           </div>
         </header>
@@ -357,12 +372,11 @@ function Contacts() {
         <header className='contactSectionHeader'>
           <span>02</span>
           <div>
-            <p>Technical interests</p>
             <h2>Areas of Interest</h2>
           </div>
         </header>
         <div className='interestMapIntro'>
-          <p>Six fields I keep returning to, each for a different reason.</p>
+          <p>These are topics that I am currently interested in.</p>
         </div>
         <div className='interestsWorkbench'>
           {interest.map((interestItem, index) => {
@@ -388,13 +402,13 @@ function Contacts() {
                       tabIndex={isSelected ? -1 : 0}
                       onClick={() => setSelectedInterest(index)}
                     >
-                      <span>Why this matters to me</span>
+                      <span>Read More</span>
                       <i aria-hidden='true'>↗</i>
                     </button>
                   </div>
                   <div className='interestModuleFace interestModuleBack' id={panelId} aria-hidden={!isSelected}>
                     <div>
-                      <p className='interestBackLabel'>Why it stays on my radar</p>
+                      <p className='interestBackLabel'>Why I'm interested in</p>
                       <h3>{interestItem.name}</h3>
                     </div>
                     <blockquote>{interestItem.backstory}</blockquote>
@@ -420,7 +434,6 @@ function Contacts() {
         <header className='contactSectionHeader'>
           <span>03</span>
           <div>
-            <p>Current status</p>
             <h2>Availability</h2>
           </div>
         </header>
