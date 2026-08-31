@@ -571,7 +571,7 @@
 
 .hexField span:nth-child(3n) { color: rgba(255, 75, 86, 0.82); }
 .hexField span:nth-child(5n) { color: rgba(156, 255, 90, 0.74); }
-.hexField .is-scrambling { position: relative; color: transparent; }
+.hexField span.is-scrambling { position: relative; color: transparent; }
 .hexField .is-scrambling::after {
   position: absolute;
   inset: 0;

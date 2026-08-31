@@ -60,7 +60,7 @@ function InterestArtifact({ type }: Pick<ContactInterest, 'type'>) {
         </div>
         <div className='hashTransform'>
           <span>password123</span>
-          <i>SHA-256</i>
+          <i>Argon2</i>
           <code>ef92b778bafe771e89245b89ecbc08a44...</code>
         </div>
         <div className='cryptoLegend'>
@@ -203,10 +203,10 @@ function Contacts() {
       name: 'Cybersecurity',
       description: 'Reliable software also has to survive from adversaries trying to hack into your application. Especially now in the world of AI, where botnets are prevalent.',
       backstory: `As more software is generated and shipped quickly from AI, I want to understand how to verify what we build rather
-                 than simply trust it. Cybersecurity also connects naturally to my interest in operating systems, networking, and the 
-                 mathematics behind modern cryptography. Things like VPN's, SSH and the underlying infrastructure behind it, and many more. I am also
-                 interested into seeing how the internet communicates securely, some topics include using SSL certificates and how they're made,
-                 understanding how HTTPS does the S part to encrypt packets to prevent a multitude of cybersecurity attacks just to name a few.`,
+                than simply trust it. Cybersecurity also connects naturally to my interest in operating systems, networking, and the 
+                mathematics behind modern cryptography. Things like VPN's, SSH and the underlying infrastructure behind it, and many more. I am also
+                interested into seeing how the internet communicates securely, some topics include using SSL certificates and how they're made,
+                understanding how HTTPS does the S part to encrypt packets to prevent a multitude of cybersecurity attacks just to name a few.`,
       type: 'cyber_security',
     },
     {
@@ -251,7 +251,8 @@ function Contacts() {
       name: 'System Design',
       description: 'I like asking what breaks first when traffic grows, then designing around it. System Design is one of those things that makes you really think about opportunity cost and scalability.',
       backstory: `I have always been curious about how products handle millions of users and connections, apps like. System design gives me a practical 
-                  way to explore scaling, reliability, data flow, caching, queues, and the tradeoffs that appear as software grows.`,
+                  way to explore scaling, reliability, data flow, caching, queues, and the tradeoffs that appear as software grows. System design is crucial 
+                  when making actual architectural designs, hence it has been my interest to learn more about it, to be able to design helpful tools that are reliable and cost efficient as well. `,
       type: 'system_design',
     },
   ];
