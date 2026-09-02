@@ -178,19 +178,6 @@
   }
 }
 
-@keyframes lightSpaceBitFloat {
-  0%,
-  100% {
-    opacity: 0.92;
-    transform: translateY(0);
-  }
-
-  50% {
-    opacity: 1;
-    transform: translateY(-14px);
-  }
-}
-
 @keyframes wrongContentIn {
   from {
     opacity: 0;

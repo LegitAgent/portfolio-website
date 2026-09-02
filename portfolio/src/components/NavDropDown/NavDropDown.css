@@ -81,11 +81,6 @@
   filter: invert(1);
 }
 
-.linkImage .backgroundIconCell {
-  fill: currentColor;
-  stroke: none;
-}
-
 .linkName {
   display: flex;
   align-items: center;
@@ -208,19 +203,8 @@
   }
 }
 
-
-
-
-
-
-
-
 @media (prefers-reduced-motion: reduce) {
   .linkImage {
     transition: none;
   }
-}
-
-@media (hover: none) {
-
 }

@@ -388,7 +388,6 @@
 
 .interestModule {
   --module-accent: 125, 188, 235;
-  --module-secondary: 225, 238, 250;
   --module-background: #0b1724;
   min-width: 0;
   min-height: 31rem;
@@ -399,7 +398,6 @@
 .interestModule--cyber_security {
   grid-column: span 14;
   --module-accent: 255, 58, 72;
-  --module-secondary: 156, 255, 90;
   --module-background:
     radial-gradient(circle at 88% 10%, rgba(255, 29, 52, 0.17), transparent 34%),
     linear-gradient(145deg, #110709 0%, #090a0c 56%, #0d1210 100%);
@@ -408,7 +406,6 @@
 .interestModule--networking {
   grid-column: span 10;
   --module-accent: 40, 220, 255;
-  --module-secondary: 42, 112, 255;
   --module-background:
     radial-gradient(circle at 22% 12%, rgba(24, 157, 255, 0.2), transparent 40%),
     linear-gradient(155deg, #07182d 0%, #06111f 58%, #081b2b 100%);
@@ -417,7 +414,6 @@
 .interestModule--operating_systems {
   grid-column: span 11;
   --module-accent: 255, 175, 67;
-  --module-secondary: 126, 147, 164;
   --module-background:
     radial-gradient(circle at 82% 82%, rgba(255, 155, 42, 0.13), transparent 38%),
     linear-gradient(145deg, #181817 0%, #101315 58%, #16191a 100%);
@@ -426,7 +422,6 @@
 .interestModule--fullstack_development {
   grid-column: span 13;
   --module-accent: 69, 203, 255;
-  --module-secondary: 157, 102, 255;
   --module-background:
     radial-gradient(circle at 90% 20%, rgba(133, 82, 255, 0.19), transparent 38%),
     linear-gradient(145deg, #071c3d 0%, #0a1730 52%, #121534 100%);
@@ -435,7 +430,6 @@
 .interestModule--data_analytics {
   grid-column: span 14;
   --module-accent: 241, 76, 255;
-  --module-secondary: 75, 225, 255;
   --module-background:
     radial-gradient(circle at 18% 20%, rgba(218, 55, 255, 0.2), transparent 40%),
     linear-gradient(150deg, #17103d 0%, #100c2c 56%, #1c0d30 100%);
@@ -444,7 +438,6 @@
 .interestModule--system_design {
   grid-column: span 10;
   --module-accent: 255, 147, 42;
-  --module-secondary: 43, 217, 245;
   --module-background:
     radial-gradient(circle at 80% 12%, rgba(255, 120, 22, 0.17), transparent 36%),
     linear-gradient(150deg, #0e1115 0%, #07131c 64%, #101014 100%);
@@ -620,21 +613,6 @@
   background:
     radial-gradient(circle at 50% 48%, rgba(22, 184, 255, 0.14), transparent 38%),
     #061323;
-}
-
-.osiRail {
-  position: absolute;
-  top: 0.7rem;
-  bottom: 3.8rem;
-  left: 0.65rem;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  color: rgba(67, 211, 255, 0.38);
-  font-size: 0.42rem;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
 }
 
 .networkRoutes {

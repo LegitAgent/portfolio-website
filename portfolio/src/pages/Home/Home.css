@@ -150,39 +150,6 @@
   line-height: 1.72;
 }
 
-.homeFeatureFooter {
-  margin-top: 2rem;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.homeFeatureFooter ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  list-style: none;
-}
-
-.homeFeatureFooter li {
-  padding: 0.35rem 0.55rem;
-  border-radius: var(--radius-sm);
-  color: var(--color-text-muted);
-  background: #172630;
-  font-size: 0.78rem;
-  font-weight: 650;
-}
-
-.homeFeatureFooter a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--color-accent-strong);
-  font-weight: 750;
-  text-decoration: none;
-}
-
 .homeQuickLinks {
   display: grid;
   gap: 1rem;
@@ -369,7 +336,6 @@
     min-height: 0;
   }
 
-  .homeFeatureFooter,
   .resumeViewer {
     align-items: flex-start;
     flex-direction: column;

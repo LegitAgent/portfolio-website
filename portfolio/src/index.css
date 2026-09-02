@@ -13,7 +13,6 @@
     'Roboto', 'Segoe UI', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
   --color-bg: #070b12;
-  --color-bg-deep: #04070c;
   --color-surface: #101722;
   --color-surface-strong: #151f2d;
   --color-surface-subtle: #0c121c;
@@ -25,7 +24,6 @@
   --color-accent: #78b7c9;
   --color-accent-strong: #a8d5df;
   --color-accent-soft: #142933;
-  --radius-sm: 0.5rem;
   --radius-md: 0.85rem;
   --radius-lg: 1.15rem;
   --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.14);
