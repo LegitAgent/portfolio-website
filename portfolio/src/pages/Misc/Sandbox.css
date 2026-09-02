@@ -351,6 +351,363 @@
   background: #091417;
 }
 
+.sandboxInfoDialog[data-background='spray-paint'] {
+  border-color: rgba(42, 164, 238, 0.48);
+  background: #080d15;
+}
+
+.sandboxInfoDialog[data-background='spray-paint'] .sandboxInfoDialogHeader {
+  border-bottom-color: rgba(37, 157, 230, 0.38);
+  background: rgba(7, 12, 20, 0.97);
+}
+
+.sandboxInfoDialog[data-background='spray-paint'] .sandboxInfoDialogHeader h1::before {
+  content: 'SANDBOX / SPRAY WALL';
+  color: #38adf4;
+}
+
+.sandboxInfoDialogContent[data-background='spray-paint'] {
+  overflow: hidden;
+  background-color: #080d15;
+  background-image:
+    linear-gradient(rgba(72, 102, 137, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(72, 102, 137, 0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.sprayPaintInfo {
+  position: relative;
+  display: grid;
+  gap: clamp(3.5rem, 9vw, 7rem);
+  color: #c8d4df;
+  isolation: isolate;
+}
+
+.sprayPaintInfo p {
+  margin: 0;
+  color: #bccbd7;
+  font-size: clamp(0.97rem, 1.45vw, 1.07rem);
+  line-height: 1.85;
+}
+
+.sprayPaintDoodles {
+  position: absolute;
+  inset: -2rem -2.5rem;
+  z-index: -1;
+  width: calc(100% + 5rem);
+  height: calc(100% + 4rem);
+  overflow: visible;
+  pointer-events: none;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 5rem, #000 calc(100% - 5rem), transparent),
+    linear-gradient(to bottom, transparent, #000 5rem, #000 calc(100% - 5rem), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 5rem, #000 calc(100% - 5rem), transparent),
+    linear-gradient(to bottom, transparent, #000 5rem, #000 calc(100% - 5rem), transparent);
+  mask-composite: intersect;
+}
+
+.sprayDoodle {
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 12 7;
+  opacity: 0.2;
+  animation: sprayDoodleDrift 18s linear infinite;
+}
+
+.sprayDoodle--blue { stroke: #168ed9; }
+.sprayDoodle--orange { stroke: #ff9340; }
+.sprayDoodle--white { stroke: #eaf7ff; }
+
+.sprayPaintMist {
+  position: absolute;
+  z-index: -1;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: rgba(30, 158, 232, 0.32);
+  pointer-events: none;
+}
+
+.sprayPaintMist--one {
+  top: 8rem;
+  right: 1.5rem;
+  box-shadow:
+    18px -18px 0 rgba(30, 158, 232, 0.24),
+    42px 9px 0 rgba(30, 158, 232, 0.2),
+    -25px 24px 0 rgba(30, 158, 232, 0.24),
+    29px 42px 0 rgba(30, 158, 232, 0.16),
+    -47px -8px 0 rgba(30, 158, 232, 0.18),
+    -72px 38px 0 rgba(30, 158, 232, 0.12);
+}
+
+.sprayPaintMist--two {
+  right: 17%;
+  bottom: 7rem;
+  background: rgba(255, 147, 64, 0.28);
+  box-shadow:
+    16px -29px 0 rgba(255, 147, 64, 0.2),
+    49px -4px 0 rgba(255, 147, 64, 0.18),
+    -24px 31px 0 rgba(255, 147, 64, 0.22),
+    28px 45px 0 rgba(255, 147, 64, 0.13),
+    -53px -14px 0 rgba(255, 147, 64, 0.15);
+}
+
+.sprayPaintKicker,
+.sprayPaintSection > header > span,
+.sprayPaintSection > header p,
+.sprayPaintTag {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.sprayPaintKicker {
+  width: fit-content;
+  padding: 0.32rem 0.5rem;
+  display: block;
+  color: #06111c;
+  background: #3bb7ff;
+  transform: rotate(-1deg);
+}
+
+.sprayPaintIntro h2,
+.sprayPaintSection h2 {
+  margin: 0;
+  color: #f4f9fc;
+  font-size: clamp(1.65rem, 4vw, 2.75rem);
+  font-weight: 820;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+
+.sprayPaintIntro h2 {
+  max-width: 15ch;
+  margin-top: 0.85rem;
+  text-shadow: 3px 3px 0 rgba(16, 124, 190, 0.32);
+}
+
+.sprayPaintIntro > p {
+  max-width: 48rem;
+  margin-top: 1.15rem;
+}
+
+.sprayPaintReference {
+  width: min(100%, 49rem);
+  margin: 2rem 0 0;
+  overflow: hidden;
+  border: 1px solid rgba(64, 184, 255, 0.46);
+  border-radius: 5px;
+  background: #050a11;
+  box-shadow:
+    9px 10px 0 rgba(4, 8, 14, 0.78),
+    11px 12px 0 rgba(39, 155, 224, 0.26);
+  transform: rotate(-0.45deg);
+  transition: border-color 160ms ease, transform 180ms ease;
+}
+
+.sprayPaintReference:hover,
+.sprayPaintReference:focus-within {
+  border-color: #55c2ff;
+  transform: rotate(0deg) translateY(-2px);
+}
+
+.sprayPaintReference > a {
+  display: block;
+}
+
+.sprayPaintReference img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.sprayPaintReference figcaption {
+  padding: 0.8rem 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  border-top: 1px solid rgba(64, 184, 255, 0.25);
+  color: #8fa4b6;
+  background: #0a121d;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.sprayPaintReference figcaption a {
+  flex: 0 0 auto;
+  color: #57c4ff;
+  font-weight: 750;
+  text-underline-offset: 0.2rem;
+}
+
+.sprayPaintSection {
+  position: relative;
+}
+
+.sprayPaintMechanics {
+  padding: clamp(1.25rem, 4vw, 2.2rem);
+  border: 1px solid rgba(48, 163, 230, 0.3);
+  border-radius: 6px;
+  background: rgba(7, 16, 27, 0.92);
+  box-shadow: 14px 14px 0 rgba(17, 102, 154, 0.13);
+}
+
+.sprayPaintMechanics::after {
+  position: absolute;
+  top: 1.4rem;
+  right: -0.5rem;
+  width: 1rem;
+  height: 5.5rem;
+  background: #147dbd;
+  box-shadow:
+    0 1.15rem 0 rgba(20, 125, 189, 0.72),
+    0 2.45rem 0 rgba(20, 125, 189, 0.4);
+  content: '';
+  transform: rotate(4deg);
+}
+
+.sprayPaintSection > header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.9rem;
+}
+
+.sprayPaintSection > header > span {
+  color: #07101a;
+  background: #ff9847;
+  padding: 0.5rem;
+  transform: rotate(-3deg);
+}
+
+.sprayPaintSection > header p {
+  margin-bottom: 0.38rem;
+  color: #4abaff;
+  font-size: 0.58rem;
+  line-height: 1.2;
+}
+
+.sprayPaintSection h2 {
+  max-width: 19ch;
+  font-size: clamp(1.45rem, 3.4vw, 2.25rem);
+}
+
+.sprayPaintCopyColumns {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.sprayPaintCopyColumns p:first-child {
+  padding-left: 1rem;
+  border-left: 3px solid #259fdf;
+}
+
+.sprayPaintDataStrip {
+  margin-top: 1.75rem;
+  padding-top: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.5rem;
+  border-top: 1px dashed rgba(78, 179, 236, 0.32);
+  color: #dcecf5;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.sprayPaintDataStrip span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.sprayPaintDataStrip span::before {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: #2eb4ff;
+  box-shadow: 0 0 8px rgba(46, 180, 255, 0.7);
+  content: '';
+}
+
+.sprayPaintDataStrip i {
+  color: #778d9e;
+  font-size: 0.61rem;
+  font-style: normal;
+}
+
+.sprayPaintInteraction {
+  width: min(100%, 47rem);
+  margin-left: auto;
+}
+
+.sprayPaintInteraction::before {
+  position: absolute;
+  top: 1.3rem;
+  bottom: -1.3rem;
+  left: -1.3rem;
+  z-index: -1;
+  width: 42%;
+  background: rgba(16, 126, 190, 0.18);
+  content: '';
+  transform: rotate(1.5deg);
+}
+
+.sprayPaintInteraction > p {
+  margin-top: 1.15rem;
+  padding: 1rem 1.1rem;
+  border-left: 3px solid #39baff;
+  background: rgba(8, 17, 28, 0.88);
+}
+
+.sprayPaintInteraction > p + p {
+  margin-top: 0.65rem;
+  margin-left: clamp(0rem, 5vw, 3rem);
+  border-left-color: #ff9847;
+}
+
+.sprayPaintPersonal {
+  width: min(100%, 43rem);
+  padding: clamp(1.3rem, 4vw, 2.2rem);
+  border: 1px solid rgba(255, 151, 70, 0.38);
+  border-radius: 5px;
+  background: #111018;
+  transform: rotate(0.4deg);
+}
+
+.sprayPaintTag {
+  position: absolute;
+  top: -0.85rem;
+  left: 1.25rem;
+  padding: 0.38rem 0.58rem;
+  color: #111018;
+  background: #ff9847;
+  transform: rotate(-2deg);
+}
+
+.sprayPaintPersonal > svg {
+  width: 11rem;
+  margin-top: 1rem;
+  display: block;
+  fill: none;
+  stroke: #35b7ff;
+  stroke-width: 5;
+  stroke-linecap: round;
+  opacity: 0.62;
+}
+
+@keyframes sprayDoodleDrift {
+  to { stroke-dashoffset: -190; }
+}
+
 .sandboxInfoDialogContent[data-background='none'] {
   display: grid;
   place-items: center;
@@ -431,13 +788,49 @@
     align-items: flex-start;
     flex-direction: column;
   }
+
+  .sprayPaintInfo {
+    gap: 3.75rem;
+  }
+
+  .sprayPaintDoodles {
+    opacity: 0.65;
+  }
+
+  .sprayPaintReference {
+    box-shadow:
+      5px 6px 0 rgba(4, 8, 14, 0.78),
+      7px 8px 0 rgba(39, 155, 224, 0.26);
+  }
+
+  .sprayPaintReference figcaption {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sprayPaintCopyColumns {
+    grid-template-columns: 1fr;
+  }
+
+  .sprayPaintMechanics::after {
+    display: none;
+  }
+
+  .sprayPaintInteraction > p + p {
+    margin-left: 0.75rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .sandboxInfoButton,
   .sandboxInfoLightbox,
-  .sandboxInfoDialog {
+  .sandboxInfoDialog,
+  .sprayDoodle {
     animation: none;
+    transition: none;
+  }
+
+  .sprayPaintReference {
     transition: none;
   }
 }

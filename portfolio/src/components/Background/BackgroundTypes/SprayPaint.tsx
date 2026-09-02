@@ -128,7 +128,7 @@ function SprayPaint() {
   const showInstructionsRef = useRef<HTMLButtonElement>(null);
   const paintedAtRef = useRef(new Float64Array()); // timing array
   const activeCellsRef = useRef(new Set<number>());
-  const dimensionsRef = useRef<GridDimensions>({ rows: 0, cols: 0, cellSize: BASE_CELL_SIZE });
+  const dimensionsRef = useRef<GridDimensions>({ rows: 0, cols: 0, cellSize: BASE_CELL_SIZE }); // meta data for canvas
 
   useEffect(() => {
     // audio

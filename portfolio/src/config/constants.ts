@@ -45,6 +45,7 @@ import certificate from '../assets/icons/certificate.svg';
 
 import spraysound from '../assets/sound/spray_sound.mp3';
 import sprayclick from '../assets/icons/spray_click.png';
+import cfconnect from '../assets/misc/cloudflare_connect.webp';
 
 // image locations
 export const GITHUB_ICON = gitHubIcon;
@@ -62,6 +63,7 @@ export const GAME_OF_LIFE_ICON = gameOfLife;
 export const GLIDER_GUN_PATTERN = gliderGunPattern;
 export const GLIDER_GUN_ANIMATION = gliderGunAnimation;
 export const AND_GATE_ANIMATION = andGateAnimation;
+export const CF_CONNECT = cfconnect;
 
 export const AWS = aws;
 export const CLOUDFLARE = cloudflare;
