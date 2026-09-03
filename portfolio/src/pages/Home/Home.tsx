@@ -46,7 +46,8 @@ function Home() {
               and banging my head against a wall trying to see where it went wrong. 
               <br />
               <br />
-              I really like to think that the greatest obstacle in life isn't pain, its being too comfortable. It is a paradox of life that the most familiar environments are often the ones that breed stagnation.  That is why I intentionally rotate my tech stack with every new project.
+              I really like to think that the greatest obstacle in life isn't pain, its being too comfortable. It is a paradox of life that the most familiar environments are often the ones that breed stagnation. 
+              That is why I intentionally learn new and unfamiliar things with every new project, especially since I am still new in the tech industry.
               I deliberately choose the path of most resistance, knowing that the true reward lies entirely in the struggle of figuring it out.
             </p>
           </div>
@@ -56,7 +57,7 @@ function Home() {
           <Link to='/skills_experience'>
             <span>Work, tools, and technical scope</span>
             <strong>Skills and Experience</strong>
-            <p>See the technologies have used and are currently using, together with some of my experience in the tech industry</p>
+            <p>See the technologies I have used and are currently using, together with some of my experience in the industry</p>
             <div className='homeQuickLinkFooter'>
               Explore <span aria-hidden='true'>→</span>
             </div>

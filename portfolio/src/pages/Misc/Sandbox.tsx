@@ -146,7 +146,7 @@ function Sandbox({ selectedBackground }: SandboxProps) {
                         </a>
                       </figcaption>
                     </figure>
-                    <p>Using these glider guns, we can make logical gates, such as an NOT gate, AND gates, OR gates, and a whole lot more.</p>
+                    <p>Using these glider guns, we can make logical gates, such as NOT gate, AND gates, OR gates, and a whole lot more.</p>
                     <figure className='gameOfLifeFigure gameOfLifeFigureAndGate'>
                       <div className='gameOfLifeFigureMedia'>
                         <img src={AND_GATE_ANIMATION} alt='An animated AND gate built in Conway’s Game of Life' loading='lazy' />
@@ -159,7 +159,7 @@ function Sandbox({ selectedBackground }: SandboxProps) {
                       </figcaption>
                     </figure>
                     <p>
-                      Hence, what makes this background so interesting to me is that its Turing complete since you can have moving data streams, an unbounded memory, and also persistent states. So given enough space, you can simulate a basic calculator, and even itself just from these
+                      Hence, what makes this background so interesting to me is that its Turing complete since you can have moving data streams, an unbounded memory, and also persistent states. So given enough space, you can simulate a basic calculator, and even the game itself just from these
                       relatively simple rules.
                     </p>
                   </section>
@@ -171,8 +171,9 @@ function Sandbox({ selectedBackground }: SandboxProps) {
                     </header>
                     <p>
                       I wanted to implement it not only because it's interesting but also because I solved a Leetcode Problem, namely Problem 289. Game of Life, that does this exact same thing
-                      except in constant extra space. I solved it and found it interesting so here it is, but my implementation here isn't constant space. I use two Uint8Array buffers backed by
-                      ArrayBuffers, one for the current generation and one for the next, so reads and writes stay separate without encoding transitional states in a single grid.
+                      except in constant extra space with a neat trick. I solved it and found it interesting so here it is, but my implementation here isn't constant space. I use two Uint8Array buffers backed by
+                      ArrayBuffers, one for the current generation and one for the next, so reads and writes stay separate without encoding transitional states in a single grid which makes it faster 
+                      and cleaner to read and trace.
                     </p>
                   </section>
                 </div>
@@ -236,7 +237,7 @@ function Sandbox({ selectedBackground }: SandboxProps) {
 
                   <section className='sprayPaintSection sprayPaintInteraction'>
                     <span className='sprayPaintKicker'>03 / THE INTERACTION</span>
-                    <p>So how the dissapating effect works is that wee recalculate each cells alpha value every animation frame via requestAnimationFrame function.</p>
+                    <p>So how the dissapating effect works is that we recalculate each cells alpha value for every animation frame via the requestAnimationFrame function.</p>
                     <p>The feature also has text detection, so if your cursor is over a block of text, you can still select the text as you would, rather than spray painting the background.</p>
                   </section>
 

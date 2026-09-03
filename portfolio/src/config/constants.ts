@@ -99,7 +99,7 @@ export const SPRAY_CLICK_ICON = sprayclick;
 // URL's
 export const GITHUB_URL = 'https://github.com/LegitAgent';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/martin-darius-alba-836826294/';
-export const CLOUDFLARE_GATEWAY = 'https://api.martinalba.dev/'; // todo
+export const CLOUDFLARE_GATEWAY = 'https://api.martinalba.dev/';
 export const CLOUDFLARE_R2_BUCKET = 'https://assets.martinalba.dev/';
 
 // updatables
@@ -118,5 +118,5 @@ export const COLLAB_AVAILABILITY = YES;
 export const FREELANCE_AVAILABILITY = YES;
 
 export const POSITION_DESC = 'I am currently working as a backend developer intern in Hackazouk.';
-export const COLLAB_DESC = 'I am open to thoughtful project collaborations and hackathons focused on building useful, reliable software.';
-export const FREELANCE_DESC = 'I am available for scoped website and software projects where the requirements, timeline, and expected outcomes are clear.';
+export const COLLAB_DESC = 'I am open to thoughtful project collaborations and random hackathons.';
+export const FREELANCE_DESC = 'I specialize in websites, specialized trackers, and software extensions. But if you have a unique project or need something built from scratch, I am entirely open to exploring new technologies to make it happen.';

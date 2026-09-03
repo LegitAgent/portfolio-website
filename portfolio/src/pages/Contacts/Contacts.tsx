@@ -205,8 +205,8 @@ function Contacts() {
       backstory: `As more software is generated and shipped quickly from AI, I want to understand how to verify what we build rather
                 than simply trust it. Cybersecurity also connects naturally to my interest in operating systems, networking, and the 
                 mathematics behind modern cryptography. Things like VPN's, SSH and the underlying infrastructure behind it, and many more. I am also
-                interested into seeing how the internet communicates securely, some topics include using SSL certificates and how they're made,
-                understanding how HTTPS does the S part to encrypt packets to prevent a multitude of cybersecurity attacks just to name a few.`,
+                interested into seeing how the internet communicates securely. Some topics include how SSL certificates work and how they're made,
+                understanding how HTTPS works and how it encrypts packets to prevent a multitude of cybersecurity attacks just to name a few.`,
       type: 'cyber_security',
     },
     {
@@ -225,7 +225,7 @@ function Contacts() {
       backstory: `I believe that Operating systems have to be one of the greatest inventions that humans have ever made, they turn raw and chaotic 
                   hardware into a more predicatable, stable platform for software. Hence, I find it fascinating that a set of core ideas can coordinate hardware and turn it into a 
                   platform for nearly every kind of software. Things like learning how physical memory maps to virtual memory or how an OS handles 
-                  deadlocks and concurrency. Once you learn and understand the OS, the OS stops becoming a black box to you and that 
+                  deadlocks and concurrency. I want to think that once you learn and understand the OS, the OS stops becoming a black box to you and that 
                   gives you a developer superpower of sorts.`,
       type: 'operating_systems',
     },
@@ -243,15 +243,15 @@ function Contacts() {
       backstory: `I did not enjoy mathematics when I was younger, but I returned to it during the pandemic and gradually became fond of it. 
                   Data analytics appeals to me because it combines that newer interest in applied mathematics with the computational work I 
                   already enjoy. Making it interesting and fun for me to explore. I really like analyzing things and computing my statistical 
-                  probability of getting a certain thing in games or even in life, analyzing populations and deriving useful insights and wisdom 
+                  probability of getting a certain thing in games or in life, analyzing populations and deriving useful insights and wisdom 
                   from there.`,
       type: 'data_analytics',
     },
     {
       name: 'System Design',
       description: 'I like asking what breaks first when traffic grows, then designing around it. System Design is one of those things that makes you really think about opportunity cost and scalability.',
-      backstory: `I have always been curious about how products handle millions of users and connections, apps like. System design gives me a practical 
-                  way to explore scaling, reliability, data flow, caching, queues, and the tradeoffs that appear as software grows. System design is crucial 
+      backstory: `I have always been curious about how products handle millions of users and connections, apps like Facebook, AWS, or in general software and hardware that handles a lot of network traffic. 
+                  System design gives me a practical way to explore scaling, reliability, data flow, caching, queues, and the tradeoffs that appear as software grows. System design is crucial 
                   when making actual architectural designs, hence it has been my interest to learn more about it, to be able to design helpful tools that are reliable and cost efficient as well. `,
       type: 'system_design',
     },
@@ -309,7 +309,7 @@ function Contacts() {
           My Contacts
         </h1>
         <p className='contactName'>Martin Darius Alba</p>
-        <p className='contactIntro'>Reach out about software opportunities, project collaborations, or any of the engineering work documented in this portfolio.</p>
+        <p className='contactIntro'>Reach out about software opportunities, project collaborations, any of the engineering work documented in this portfolio, or if you just want to talk.</p>
       </header>
       
       <section className='contactSection'>
@@ -377,7 +377,8 @@ function Contacts() {
           </div>
         </header>
         <div className='interestMapIntro'>
-          <p>These are topics that I am currently interested in.</p>
+          <p>These are topics I am currently interested in. This is not a showcase of skills I already possess, 
+            but rather those I want to learn or am currently learning.</p>
         </div>
         <div className='interestsWorkbench'>
           {interest.map((interestItem, index) => {

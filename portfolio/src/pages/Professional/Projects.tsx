@@ -68,7 +68,7 @@ function Projects() {
     <main className='projectsPage'>
       <header className='projectsHeader'>
         <h1>Projects</h1>
-        <span>A collection of applications, experiments, and systems I have built while learning and working across the stack.</span>
+        <span>A collection of applications, experiments, and systems I have built while learning things and working across the stack.</span>
       </header>
 
       <div className='projectSearch'>
