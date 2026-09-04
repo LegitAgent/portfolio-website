@@ -46,8 +46,8 @@ function Home() {
               and banging my head against a wall trying to see where it went wrong. 
               <br />
               <br />
-              I really like to think that the greatest obstacle in life isn't pain, its being too comfortable. It is a paradox of life that the most familiar environments are often the ones that breed stagnation. 
-              That is why I intentionally learn new and unfamiliar things with every new project, especially since I am still new in the tech industry.
+              I love quoting Homer's idea that life’s greatest obstacle isn't pain, but comfort. It is a paradox of life that the most familiar environments are often the ones that breed stagnation. 
+              That is why I intentionally learn new and unfamiliar things with every new project, not that it's painful, but tedious and slow, especially since I am still new in the tech industry.
               I deliberately choose the path of most resistance, knowing that the true reward lies entirely in the struggle of figuring it out.
             </p>
           </div>
