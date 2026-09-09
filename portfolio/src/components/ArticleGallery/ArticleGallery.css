@@ -1,13 +1,14 @@
 .articleGallery {
   --article-blue: 125, 188, 235;
   --article-green: 134, 239, 172;
+  --article-gallery-radius: 14px;
   position: relative;
   width: min(100%, 1120px);
   min-width: 0;
   margin: clamp(1.75rem, 4vw, 3rem) auto 0;
-  overflow: visible;
+  overflow: hidden;
   border: 1px solid rgba(var(--article-blue), 0.18);
-  border-radius: 14px;
+  border-radius: var(--article-gallery-radius);
   color: rgba(238, 247, 255, 0.94);
   background: #0b111a;
   box-shadow:
@@ -28,12 +29,12 @@
   position: relative;
   height: clamp(18rem, 44vw, 520px);
   overflow: hidden;
-  border-radius: 13px 13px 0 0;
+  border-radius: calc(var(--article-gallery-radius) - 1px) calc(var(--article-gallery-radius) - 1px) 0 0;
   background: #070b11;
 }
 
 .articleGallery.has-single-image .projectArticleGalleryViewport {
-  border-radius: 9px;
+  border-radius: calc(var(--article-gallery-radius) - 1px);
 }
 
 .projectArticleGalleryTrigger {
@@ -183,8 +184,11 @@
   justify-content: center;
   gap: 1rem;
   border-top: 1px solid rgba(var(--article-blue), 0.12);
-  border-radius: 0 0 9px 9px;
   background: #101822;
+}
+
+.projectArticleGalleryFooter {
+  border-radius: 0 0 calc(var(--article-gallery-radius) - 1px) calc(var(--article-gallery-radius) - 1px);
 }
 
 .projectArticleGalleryFooter > span,

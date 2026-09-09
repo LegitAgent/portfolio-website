@@ -1512,12 +1512,65 @@
     min-height: 30rem;
   }
 
+  .interestModuleFace {
+    padding: 0.9rem;
+  }
+
+  .interestModuleHeader {
+    gap: 0.65rem;
+  }
+
+  .interestModuleHeader h3 {
+    font-size: clamp(1.22rem, 5.6vw, 1.55rem);
+  }
+
+  .interestIndex {
+    font-size: clamp(1rem, 4.5vw, 1.25rem);
+  }
+
   .interestDescription {
     min-height: 0;
+    margin-top: 0.5rem;
+    font-size: clamp(0.72rem, 2.2vw, 0.86rem);
+    line-height: 1.42;
   }
 
   .interestVisual {
     height: 13.5rem;
+    margin-top: 0.75rem;
+    min-height: 0;
+  }
+
+  .interestDetailToggle {
+    min-height: 2.6rem;
+    flex: 0 0 auto;
+    gap: 0.65rem;
+    font-size: clamp(0.58rem, 2.1vw, 0.68rem);
+  }
+
+  .interestDetailToggle span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .interestDetailToggle i {
+    margin-left: auto;
+    flex: 0 0 auto;
+  }
+
+  .interestModuleBack h3 {
+    font-size: clamp(1.3rem, 6vw, 1.7rem);
+  }
+
+  .interestBackLabel {
+    font-size: clamp(0.58rem, 2vw, 0.66rem);
+  }
+
+  .interestModuleBack blockquote {
+    min-height: 0;
+    padding: 0.7rem 0 0.7rem 0.75rem;
+    font-size: clamp(0.72rem, 2.3vw, 0.88rem);
+    line-height: 1.45;
   }
 
   .hashTransform {

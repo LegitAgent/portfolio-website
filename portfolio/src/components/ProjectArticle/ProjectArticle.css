@@ -265,38 +265,61 @@
 }
 
 .projectArticleActions .resumeAction {
+  --project-action-background: rgba(5, 17, 39, 0.98);
+  position: relative;
+  z-index: 0;
   min-height: 2.65rem;
   padding: 0.68rem 0.9rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  border: 1px solid rgba(var(--article-blue), 0.26);
+  overflow: hidden;
+  border: 0;
   border-radius: 6px;
   color: rgba(229, 240, 250, 0.9);
-  background: var(--article-panel-raised);
+  background: transparent;
   font-size: 0.82rem;
   font-weight: 750;
   line-height: 1;
   text-decoration: none;
+  isolation: isolate;
   transition:
     color 180ms ease,
-    transform 180ms ease,
-    border-color 180ms ease,
-    background-color 180ms ease;
+    transform 180ms ease;
+}
+
+.projectArticleActions .resumeAction::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -2;
+  width: 250%;
+  aspect-ratio: 1;
+  background: conic-gradient(from 0deg, transparent 0 38%, rgba(134, 239, 172, 0.9) 47%, rgba(125, 188, 235, 0.82) 53%, transparent 62% 100%);
+  content: '';
+  transform: translate(-50%, -50%);
+  animation: projectActionBorderOrbit 3.8s linear infinite;
+}
+
+.projectArticleActions .resumeAction::after {
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: 5px;
+  background: var(--project-action-background);
+  content: '';
+  transition: background-color 180ms ease;
 }
 
 .projectArticleActions .resumeAction--primary {
   color: rgba(238, 255, 244, 0.94);
-  border-color: rgba(var(--article-green), 0.3);
-  background: #173029;
 }
 
 .projectArticleActions .resumeAction:hover,
 .projectArticleActions .resumeAction:focus-visible {
+  --project-action-background: rgba(10, 29, 55, 0.98);
   color: white;
-  border-color: rgba(var(--article-green), 0.52);
-  background: rgba(10, 29, 55, 0.98);
   transform: translateY(-2px);
   outline: none;
 }
@@ -315,6 +338,11 @@
   height: 1em;
   flex: 0 0 1em;
   display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .projectArticleActions .projectArticleGithubIcon {
@@ -569,6 +597,16 @@
   }
 }
 
+@keyframes projectActionBorderOrbit {
+  from {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(1turn);
+  }
+}
+
 @keyframes projectArticleEnter {
   from {
     opacity: 0;
@@ -820,7 +858,8 @@
   }
 
   .projectArticleHeroCopy,
-  .projectArticleRoutePulse {
+  .projectArticleRoutePulse,
+  .projectArticleActions .resumeAction::before {
     animation: none;
   }
 

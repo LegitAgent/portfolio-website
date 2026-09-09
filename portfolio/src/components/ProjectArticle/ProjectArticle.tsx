@@ -157,7 +157,7 @@ function ProjectArticle() {
   const galleryImagePaths =
     articleContent.images?.length > 0
       ? articleContent.images
-      : articleContent.pArticle_image_url
+      : articleContent.pArticle_image_url // default of pArticle col if gallery can't load
         ? [articleContent.pArticle_image_url]
         : [];
   const galleryR2Url = articleContent.images?.length > 0 ? articleContent.r2_url : '';
