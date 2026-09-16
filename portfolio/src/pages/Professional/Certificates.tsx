@@ -68,7 +68,7 @@ function Certificates() {
     <main className='certificatesPage'>
       <header className='certificatesHeader'>
         <h1>Certificates</h1>
-        <span>Courses and credentials I have completed while developing my technical knowledge across software, cloud, and computer science.</span>
+        <span>Courses and credentials I have completed while developing my technical knowledge across software, cloud, and computer science. (Content still in progress)</span>
       </header>
 
       <div className='certificateSearch'>

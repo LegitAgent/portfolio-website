@@ -340,7 +340,7 @@ function SkillsExperience() {
         <h2>Technical Skills</h2>
         <p className='skillsDescription'>
           Here are some of the frameworks, languages, and infrastructure tools I use to design, build, and deploy reliable software, and I'm always
-          learning more.
+          learning more. (Content still in progress)
         </p>
         <section className='technicalSkills'>
           {skillGroups.map((group) => {
@@ -362,7 +362,7 @@ function SkillsExperience() {
         <header className='journeyHeader'>
           <h1 id='journey-title'>Industry &amp; Technical Journey</h1>
         <p className='experienceDescription'>
-          A record of the teams, systems, competitions, and technical communities that shaped how I build software.
+          A record of the teams, systems, competitions, and technical communities that shaped how I build software. (Content still in progress)
         </p>
         </header>
 

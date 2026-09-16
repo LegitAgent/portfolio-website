@@ -14,7 +14,7 @@ function Resume() {
           <img src={RESUME_ICON} alt='' className='resumeIcon' />
           <div>
             <p className='resumeEyebrow'>Professional profile</p>
-            <h1>Resume</h1>
+            <h1>Resume (Content still in progress)</h1>
           </div>
         </div>
         <p className='update'>
