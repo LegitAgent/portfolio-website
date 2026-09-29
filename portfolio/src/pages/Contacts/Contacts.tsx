@@ -490,7 +490,6 @@ function Contacts() {
         <header className='contactSectionHeader'>
           <span>04</span>
           <div>
-            <p>Local context</p>
             <h2>Location</h2>
           </div>
         </header>

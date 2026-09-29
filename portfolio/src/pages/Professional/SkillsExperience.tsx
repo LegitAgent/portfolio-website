@@ -110,36 +110,6 @@ function getJourneyCategory(work: WorkExperience): Exclude<JourneyFilter, 'all'>
   return 'work';
 }
 
-function getPhaseCopy(year: number, entries: WorkExperience[]) {
-  const categories = new Set(entries.map(getJourneyCategory));
-
-  if (entries.some((entry) => entry.is_current === 1)) {
-    return {
-      title: 'Active Practice',
-      description: 'Current work, evolving responsibilities, and the systems shaping how I build today.',
-    };
-  }
-
-  if (categories.has('hackathons') || categories.has('competitions')) {
-    return {
-      title: 'Building Under Pressure',
-      description: 'Time-boxed challenges where collaboration, judgment, and delivery mattered.',
-    };
-  }
-
-  if (categories.has('work') || categories.has('internships')) {
-    return {
-      title: 'Building in Teams',
-      description: 'Learning through shipped work, shared codebases, and real technical constraints.',
-    };
-  }
-
-  return {
-    title: 'Exploration & Community',
-    description: `A chapter of learning, contributing, and finding direction through the technical community in ${year}.`,
-  };
-}
-
 function getNodeSymbol(category: Exclude<JourneyFilter, 'all'>, workType: WorkExperience['type']) {
   if (workType === 'open_source') {
     return '⬢';
@@ -399,17 +369,8 @@ function SkillsExperience() {
               </div>
             )}
             {orderedYears.map((year) => {
-              const phase = getPhaseCopy(Number(year), workByYear[year]);
               return (
                 <section className='journeyPhase' aria-labelledby={`journey-year-${year}`} key={year}>
-                  <header className='journeyPhaseHeader'>
-                    <span className='journeyPhaseTick' aria-hidden='true'></span>
-                    <p className='journeyYear'>{year}</p>
-                    <div>
-                      <h2 id={`journey-year-${year}`}>{phase.title}</h2>
-                      <p>{phase.description}</p>
-                    </div>
-                  </header>
                   {workByYear[year].map((workStuff) => {
                     const index = timelineWork.findIndex((entry) => entry.work_id === workStuff.work_id);
                     const category = getJourneyCategory(workStuff);

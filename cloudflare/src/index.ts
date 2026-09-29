@@ -13,7 +13,6 @@
 // npx wrangler deploy
 import { getLeetCodeStats } from './services/leetcode';
 import { getGithubStats } from './services/github';
-import { cache } from "cloudflare:workers";
 
 interface LoadResult {
   data: unknown;
@@ -21,12 +20,6 @@ interface LoadResult {
 }
 
 const TESTING = true;
-
-async function purge(): Promise<Response> {
-  await cache.purge({purgeEverything: true});
-
-  return new Response("Purged everything", {status: 200});
-}
 
 /**
  * Parses data into JSON with JSON content and their respective headers.
@@ -555,10 +548,6 @@ export default {
           const TTL = TESTING ? TTL_TIME.TESTING : TTL_TIME.GITHUB;
 
           return cachedJson(request, ctx, TTL, allowedOrigin, loadGithub);
-        }
-
-        if (url.pathname === '/api/purge') {
-          return purge();
         }
 
         return json(
