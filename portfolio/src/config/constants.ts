@@ -103,7 +103,7 @@ export const CLOUDFLARE_GATEWAY = 'https://api.martinalba.dev/';
 export const CLOUDFLARE_R2_BUCKET = 'https://assets.martinalba.dev/';
 
 // updatables
-export const RESUME_NAME = '/resume-03-01-2026.pdf';
+export const RESUME_NAME = '/resume-09-29-2026.pdf';
 
 const NO = 0;
 const MAYBE = 1;
