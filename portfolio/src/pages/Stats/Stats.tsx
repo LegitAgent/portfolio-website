@@ -687,10 +687,10 @@ function Stats() {
             </div>
             <div className='statusBreakdown'>
               {portfolio.projectsByStatus.map((item) => (
-                <div className={`statusBreakdownItem statusBreakdownItem--${item.status.toLowerCase().replace(/\s+/g, '-')}`} key={item.status}>
+                <div className={`statusBreakdownItem statusBreakdownItem--${item.status?.toLowerCase().replace(/\s+/g, '-') ?? 'unknown'}`} key={item.status ?? 'unknown'}>
                   <span>
                     <i aria-hidden='true' />
-                    {item.status}
+                    {item.status ?? 'Status unknown'}
                   </span>
                   <strong>{item.count}</strong>
                 </div>

@@ -7,7 +7,8 @@ function ProjectsDisplay({ project }: ProjectDisplayProps) {
   const imageUrl = new URL(project.project_img_url, CLOUDFLARE_R2_BUCKET).toString();
   const isFeatured = Number(project.featured) === 1;
   const dateLabel = [project.started_at, project.ended_at].filter(Boolean).join(' - ');
-  const statusClassName = `projectStatus projectStatus--${project.status.toLowerCase()}`;
+  const statusClassName = `projectStatus projectStatus--${project.status?.toLowerCase() ?? 'unknown'}`;
+  const statusLabel = project.status ?? 'Status unknown';
 
   return (
     <article className={isFeatured ? 'projectDisplay is-featured' : 'projectDisplay'}>
@@ -23,9 +24,9 @@ function ProjectsDisplay({ project }: ProjectDisplayProps) {
           {dateLabel && <span>{dateLabel}</span>}
         </div>
 
-        <div className={statusClassName} aria-label={`Project status: ${project.status}`}>
+        <div className={statusClassName} aria-label={`Project status: ${statusLabel}`}>
           <span aria-hidden='true' />
-          {project.status}
+          {statusLabel}
         </div>
 
         <p className='projectDescription'>{project.project_description}</p>

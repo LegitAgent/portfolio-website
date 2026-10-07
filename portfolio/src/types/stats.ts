@@ -89,7 +89,7 @@ export interface PortfolioStats {
     projectCount: number;
   }>;
   projectsByStatus: Array<{
-    status: string;
+    status: string | null;
     count: number;
   }>;
 }

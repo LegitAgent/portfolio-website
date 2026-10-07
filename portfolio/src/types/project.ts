@@ -10,7 +10,7 @@ interface Project {
   started_at: string;
   ended_at: string | null;
   live_url?: string;
-  status: ProjectStatus;
+  status: ProjectStatus | null;
   tags: string[];
 }
 
@@ -34,7 +34,7 @@ interface ProjectArticle {
   project_github: string;
   started_at: string;
   live_url: string | null;
-  status: ProjectStatus;
+  status: ProjectStatus | null;
   featured: 0 | 1;
 }
 
