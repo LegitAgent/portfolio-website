@@ -446,15 +446,6 @@
   overflow-wrap: anywhere;
 }
 
-.workArticleSectionContent p:first-child::first-letter {
-  float: left;
-  margin: 0.08em 0.13em 0 0;
-  color: rgba(238, 247, 255, 0.95);
-  font-size: 3.3em;
-  font-weight: 760;
-  line-height: 0.8;
-}
-
 .workArticleList {
   margin: 1.35rem 0 0;
   padding: 0;
@@ -731,15 +722,6 @@
     font-size: 1rem;
     line-height: 1.72;
     overflow-wrap: break-word;
-  }
-
-  .workArticleSectionContent p:first-child::first-letter {
-    float: none;
-    margin: 0;
-    color: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
   }
 
   .workArticleList li {

@@ -534,15 +534,6 @@
   overflow-wrap: anywhere;
 }
 
-.projectArticleSectionContent p:first-child::first-letter {
-  float: left;
-  margin: 0.08em 0.13em 0 0;
-  color: rgba(238, 247, 255, 0.95);
-  font-size: 3.3em;
-  font-weight: 760;
-  line-height: 0.8;
-}
-
 .projectArticleFooter {
   width: min(100%, 1120px);
   margin-inline: auto;
@@ -825,15 +816,6 @@
     font-size: 1rem;
     line-height: 1.72;
     overflow-wrap: break-word;
-  }
-
-  .projectArticleSectionContent p:first-child::first-letter {
-    float: none;
-    margin: 0;
-    color: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
   }
 
   .projectArticleFooter {

@@ -12,11 +12,19 @@ function ProjectsDisplay({ project }: ProjectDisplayProps) {
 
   return (
     <article className={isFeatured ? 'projectDisplay is-featured' : 'projectDisplay'}>
-      <Link className='projectImageLink' to={`/projects/${project.pArticle_slug}`} aria-label={`Read about ${project.project_name}`}>
-        <img className='projectImage' src={imageUrl} alt={project.project_name} decoding='async' loading='lazy'/>
-        <span className='projectImageShade' aria-hidden='true' />
-        {isFeatured && <span className='projectFeaturedLabel'>Featured</span>}
-      </Link>
+      {project.pArticle_slug ? (
+        <Link className='projectImageLink' to={`/projects/${project.pArticle_slug}`} aria-label={`Read about ${project.project_name}`}>
+          <img className='projectImage' src={imageUrl} alt={project.project_name} decoding='async' loading='lazy'/>
+          <span className='projectImageShade' aria-hidden='true' />
+          {isFeatured && <span className='projectFeaturedLabel'>Featured</span>}
+        </Link>
+      ) : (
+        <div className='projectImageLink disabled'>
+          <img className='projectImage' src={imageUrl} alt={project.project_name} decoding='async' loading='lazy'/>
+          <span className='projectImageShade' aria-hidden='true' />
+          {isFeatured && <span className='projectFeaturedLabel'>Featured</span>}
+        </div>
+      )}
 
       <div className='projectContent'>
         <div className='projectTitleRow'>
