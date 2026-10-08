@@ -161,7 +161,8 @@ function ProjectArticle() {
         ? [articleContent.pArticle_image_url]
         : [];
   const galleryR2Url = articleContent.images?.length > 0 ? articleContent.r2_url : '';
-  const statusClassName = `projectArticleStatus projectArticleStatus--${articleContent.status.toLowerCase()}`;
+  const statusClassName = `projectArticleStatus projectArticleStatus--${articleContent.status?.toLowerCase() ?? 'unknown'}`;
+  const statusLabel = articleContent.status ?? 'Status unknown';
   const isFeatured = Number(articleContent.featured) === 1;
 
   return (
@@ -199,7 +200,7 @@ function ProjectArticle() {
           <div className='projectArticleLabels'>
             <span className={statusClassName}>
               <i aria-hidden='true' />
-              {articleContent.status}
+              {statusLabel}
             </span>
             {isFeatured && <span className='projectArticleFeatured'>Featured project</span>}
           </div>
