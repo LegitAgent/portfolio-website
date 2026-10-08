@@ -79,14 +79,13 @@ function SkillTag({ skill }: { skill: Tag }) {
   );
 }
 
-type JourneyFilter = 'all' | 'work' | 'internships' | 'hackathons' | 'competitions' | 'community';
+type JourneyFilter = 'all' | 'work' | 'internships' | 'hackathons' | 'community';
 
 const journeyFilters: Array<{ value: JourneyFilter; label: string }> = [
   { value: 'all', label: 'All' },
   { value: 'work', label: 'Work' },
   { value: 'internships', label: 'Internships' },
   { value: 'hackathons', label: 'Hackathons' },
-  { value: 'competitions', label: 'Competitions' },
   { value: 'community', label: 'Community' },
 ];
 
@@ -97,9 +96,6 @@ function getJourneyCategory(work: WorkExperience): Exclude<JourneyFilter, 'all'>
   }
   if (work.type === 'hackathon' || (work.type === 'project' && employment.includes('hackathon'))) {
     return 'hackathons';
-  }
-  if (work.type === 'competition') {
-    return 'competitions';
   }
   if (work.type === 'open_source') {
     return 'community';
@@ -116,9 +112,6 @@ function getNodeSymbol(category: Exclude<JourneyFilter, 'all'>, workType: WorkEx
   }
   if (category === 'hackathons') {
     return '◆';
-  }
-  if (category === 'competitions') {
-    return '★';
   }
   if (category === 'community') {
     return '■';
